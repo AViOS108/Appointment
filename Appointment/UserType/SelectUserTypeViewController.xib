@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectUserTypeViewController" customModule="Appointment" customModuleProvider="target">
+            <connections>
+                <outlet property="btnAlumini" destination="u5V-lz-Iox" id="ypx-9r-AuV"/>
+                <outlet property="btnCoach" destination="rNi-c2-7wc" id="dJF-vY-DPB"/>
+                <outlet property="btnER" destination="qMo-2S-3o1" id="eh2-Js-wLu"/>
+                <outlet property="btnStudent" destination="bTe-Ex-r66" id="Pdo-ix-zlS"/>
+                <outlet property="lblLoginas" destination="awZ-0N-nCX" id="knA-FP-b3l"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewBlur" destination="270-Gg-RMc" id="Kga-Mj-kdq"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="Aeq-MC-fcu">
+                    <rect key="frame" x="0.0" y="20" width="414" height="358.5"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="270-Gg-RMc">
+                    <rect key="frame" x="0.0" y="306.5" width="414" height="555.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login as" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awZ-0N-nCX">
+                            <rect key="frame" x="24" y="117.5" width="366" height="28"/>
+                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMo-2S-3o1">
+                            <rect key="frame" x="24" y="170.5" width="366" height="77"/>
+                            <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="btnERTapped:" destination="-1" eventType="touchUpInside" id="ael-L3-cjF"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTe-Ex-r66">
+                            <rect key="frame" x="24" y="262.5" width="366" height="81"/>
+                            <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="btnStudentTapped:" destination="-1" eventType="touchUpInside" id="wtz-cT-tIq"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rNi-c2-7wc">
+                            <rect key="frame" x="24" y="358.5" width="366" height="81"/>
+                            <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="btnCoachTapped:" destination="-1" eventType="touchUpInside" id="uzM-ui-mo1"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5V-lz-Iox">
+                            <rect key="frame" x="24" y="454.5" width="366" height="81"/>
+                            <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="btnAluminiTapped:" destination="-1" eventType="touchUpInside" id="ekb-21-OTe"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="bTe-Ex-r66" secondAttribute="trailing" constant="24" id="2U9-i7-yrf"/>
+                        <constraint firstItem="rNi-c2-7wc" firstAttribute="height" secondItem="bTe-Ex-r66" secondAttribute="height" id="5nW-BF-cRz"/>
+                        <constraint firstAttribute="trailing" secondItem="awZ-0N-nCX" secondAttribute="trailing" constant="24" id="9PF-L9-vdF"/>
+                        <constraint firstItem="u5V-lz-Iox" firstAttribute="height" secondItem="rNi-c2-7wc" secondAttribute="height" id="Is6-aW-Gok"/>
+                        <constraint firstAttribute="bottom" secondItem="u5V-lz-Iox" secondAttribute="bottom" constant="20" id="LP1-pi-zgR"/>
+                        <constraint firstItem="bTe-Ex-r66" firstAttribute="top" secondItem="qMo-2S-3o1" secondAttribute="bottom" constant="15" id="M8N-Uo-Axc"/>
+                        <constraint firstItem="u5V-lz-Iox" firstAttribute="top" secondItem="rNi-c2-7wc" secondAttribute="bottom" constant="15" id="NeK-nr-UJJ"/>
+                        <constraint firstAttribute="trailing" secondItem="rNi-c2-7wc" secondAttribute="trailing" constant="24" id="Rxc-5Y-rmb"/>
+                        <constraint firstItem="awZ-0N-nCX" firstAttribute="leading" secondItem="270-Gg-RMc" secondAttribute="leading" constant="24" id="Soo-mK-pIK"/>
+                        <constraint firstItem="rNi-c2-7wc" firstAttribute="top" secondItem="bTe-Ex-r66" secondAttribute="bottom" constant="15" id="T0h-80-XSU"/>
+                        <constraint firstItem="bTe-Ex-r66" firstAttribute="height" secondItem="qMo-2S-3o1" secondAttribute="height" multiplier="1.04698" id="VtF-nP-zdC"/>
+                        <constraint firstItem="qMo-2S-3o1" firstAttribute="top" secondItem="awZ-0N-nCX" secondAttribute="bottom" constant="25" id="aIL-f4-FFS"/>
+                        <constraint firstAttribute="trailing" secondItem="qMo-2S-3o1" secondAttribute="trailing" constant="24" id="bgG-hG-y3U"/>
+                        <constraint firstItem="awZ-0N-nCX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="270-Gg-RMc" secondAttribute="top" constant="8" id="e44-Ax-WHr"/>
+                        <constraint firstItem="u5V-lz-Iox" firstAttribute="leading" secondItem="270-Gg-RMc" secondAttribute="leading" constant="24" id="gmQ-4x-bpM"/>
+                        <constraint firstItem="bTe-Ex-r66" firstAttribute="leading" secondItem="270-Gg-RMc" secondAttribute="leading" constant="24" id="hwO-qz-GLH"/>
+                        <constraint firstItem="rNi-c2-7wc" firstAttribute="leading" secondItem="270-Gg-RMc" secondAttribute="leading" constant="24" id="m85-1X-UAu"/>
+                        <constraint firstItem="qMo-2S-3o1" firstAttribute="height" secondItem="270-Gg-RMc" secondAttribute="height" multiplier="0.139161" id="qNd-kX-nF6"/>
+                        <constraint firstItem="qMo-2S-3o1" firstAttribute="leading" secondItem="270-Gg-RMc" secondAttribute="leading" constant="24" id="xpu-CV-5sM"/>
+                        <constraint firstAttribute="trailing" secondItem="u5V-lz-Iox" secondAttribute="trailing" constant="24" id="y5v-a6-Q57"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="270-Gg-RMc" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="2aG-ld-F0h"/>
+                <constraint firstItem="270-Gg-RMc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5Oa-kj-XJa"/>
+                <constraint firstItem="Aeq-MC-fcu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="BeS-uC-jW4"/>
+                <constraint firstItem="Aeq-MC-fcu" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.4" id="GTK-Xm-EKv"/>
+                <constraint firstItem="Aeq-MC-fcu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WYq-tt-Snv"/>
+                <constraint firstItem="270-Gg-RMc" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Wtu-3Y-f42"/>
+                <constraint firstItem="Aeq-MC-fcu" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="tgU-hA-m2a"/>
+                <constraint firstItem="270-Gg-RMc" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.62" id="vBo-7d-VIR"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="81.696428571428569"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Image" width="268.5" height="202.5"/>
+    </resources>
+</document>

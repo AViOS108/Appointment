@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SanFranciscoText-Medium.otf">
+            <string>SanFranciscoText-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="oDA-eZ-QzJ" customClass="ActivityIndicatorView" customModule="Resume" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oou-YY-1tr">
+                    <rect key="frame" x="40" y="291" width="295" height="85"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Shape" translatesAutoresizingMaskIntoConstraints="NO" id="nvV-fh-9Sj">
+                            <rect key="frame" x="117.5" y="7.5" width="60" height="60"/>
+                            <color key="tintColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="UnX-fx-26V"/>
+                                <constraint firstAttribute="width" constant="60" id="tIM-I1-fll"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spinner_logo" translatesAutoresizingMaskIntoConstraints="NO" id="Pnk-wV-KPw">
+                            <rect key="frame" x="120" y="10" width="55" height="55"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="55" id="opd-b9-9ka"/>
+                                <constraint firstAttribute="width" constant="55" id="va9-kB-sH7"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Syb-L9-boo">
+                            <rect key="frame" x="5" y="75" width="285" height="0.0"/>
+                            <fontDescription key="fontDescription" name="SanFranciscoText-Medium" family="San Francisco Text" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Syb-L9-boo" firstAttribute="centerX" secondItem="Oou-YY-1tr" secondAttribute="centerX" id="1Rp-0P-9vl"/>
+                        <constraint firstItem="Syb-L9-boo" firstAttribute="top" secondItem="nvV-fh-9Sj" secondAttribute="bottom" constant="7.5" id="6eh-3O-RKY"/>
+                        <constraint firstItem="nvV-fh-9Sj" firstAttribute="top" secondItem="Oou-YY-1tr" secondAttribute="top" constant="7.5" id="785-GA-Ogg"/>
+                        <constraint firstItem="Pnk-wV-KPw" firstAttribute="centerX" secondItem="Oou-YY-1tr" secondAttribute="centerX" id="KoJ-WI-Asa"/>
+                        <constraint firstAttribute="trailing" secondItem="Syb-L9-boo" secondAttribute="trailing" constant="5" id="Qvf-oP-SAo"/>
+                        <constraint firstItem="Syb-L9-boo" firstAttribute="top" secondItem="Pnk-wV-KPw" secondAttribute="bottom" constant="10" id="Rly-ba-Ura"/>
+                        <constraint firstAttribute="bottom" secondItem="Syb-L9-boo" secondAttribute="bottom" constant="10" id="ZGt-g0-Jg9"/>
+                        <constraint firstItem="nvV-fh-9Sj" firstAttribute="centerX" secondItem="Oou-YY-1tr" secondAttribute="centerX" id="aeu-Ad-XxX"/>
+                        <constraint firstItem="Pnk-wV-KPw" firstAttribute="top" secondItem="Oou-YY-1tr" secondAttribute="top" constant="10" id="dNC-LC-0WA"/>
+                        <constraint firstItem="Syb-L9-boo" firstAttribute="leading" secondItem="Oou-YY-1tr" secondAttribute="leading" constant="5" id="mZ1-R2-sS2"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="Oou-YY-1tr" firstAttribute="leading" secondItem="oDA-eZ-QzJ" secondAttribute="leading" constant="40" id="VND-Ac-3MF"/>
+                <constraint firstItem="Oou-YY-1tr" firstAttribute="centerY" secondItem="oDA-eZ-QzJ" secondAttribute="centerY" id="pKU-gp-jaQ"/>
+                <constraint firstAttribute="trailing" secondItem="Oou-YY-1tr" secondAttribute="trailing" constant="40" id="xpq-ZU-1HH"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="bdU-UT-ch0"/>
+            <connections>
+                <outlet property="loaderArcImage" destination="nvV-fh-9Sj" id="dGS-XL-cXj"/>
+                <outlet property="loaderImage" destination="Pnk-wV-KPw" id="qv5-wY-j0t"/>
+                <outlet property="messageLabel" destination="Syb-L9-boo" id="Pah-uD-CPf"/>
+            </connections>
+            <point key="canvasLocation" x="-55.5" y="88.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Shape" width="60" height="60"/>
+        <image name="spinner_logo" width="55" height="55"/>
+    </resources>
+</document>

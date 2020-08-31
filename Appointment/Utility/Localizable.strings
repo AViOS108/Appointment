@@ -1,0 +1,41 @@
+
+//  Created by Anurag Bhakuni on 15/01/20.
+//  Copyright © 2020 Anurag Bhakuni. All rights reserved.
+
+"Login as" = "Login as";
+//Mark: Event
+"No Connection" =  "No Connection";
+"Connect To network" =  "Connect To network";
+
+//Mark: Fonts
+
+"FontDemiBold" = "Avenir Next Demi Bold";
+"FontMedium" = "Avenir Next Medium";
+"FontRegular" = "AvenirNext-Regular";
+"FontBold" = "AvenirNext-Bold";
+"FontHeavy" =  "Avenir-Heavy";
+"FontBook" =  "Avenir-Book";
+
+"Interested" = "Interested";
+"Share" = "Share";
+"Going" = "Going";
+"DressCode" = "Dress Code";
+"EventFormat" = "Event Format";
+"Description" = "Description";
+"SOMETHIGWENTWRONG"  = "Dear user, it seems that something went wrong while connecting to our server.Please check your internet Connectivity or wait for while, we are fixing the issue for you.";
+"NOEVENT" = "There is no event to display";
+"NOEVENTSELECTEDFILTER" = "There is no event to display for selected filter";
+"AboutTheSpeaker" = "About the Speakers";
+"LOGOUT" = "Are you sure you want to logout?";
+
+
+"Student" = "Student";
+"ER" = "Employer Representative";
+"Coach" = "Coach";
+"Alumini" = "Alumini";
+
+"ENY" = "Events Near You";
+"MARKATT" = "Mark Attendance";
+"Swipetomarkattendence" = "Swipe to mark attendance";
+"ATTENDENCEMARKED" = "Attendance Marked";
+"ATTENDENCESEND" = "Attendance Sent";

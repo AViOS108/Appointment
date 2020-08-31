@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CalenderCollectionViewCell" customModule="Appointment" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1eH-eu-Ybf">
+                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                        <connections>
+                            <action selector="BtnDaySelectTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="vAk-9E-CIP"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mi5-Nd-SXr">
+                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="mGW-5r-MkX"/>
+                            <constraint firstAttribute="height" constant="40" id="n2N-G3-7UQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Mi5-Nd-SXr" secondAttribute="bottom" id="2KC-pg-ZfE"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Mi5-Nd-SXr" secondAttribute="trailing" id="2mq-qb-jHT"/>
+                <constraint firstItem="1eH-eu-Ybf" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="C6f-UW-rSn"/>
+                <constraint firstItem="Mi5-Nd-SXr" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="DI6-E7-t0k"/>
+                <constraint firstAttribute="trailing" secondItem="1eH-eu-Ybf" secondAttribute="trailing" id="DaT-Mf-fxw"/>
+                <constraint firstItem="Mi5-Nd-SXr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" id="INf-hY-Au6"/>
+                <constraint firstItem="Mi5-Nd-SXr" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="TfE-s5-1En"/>
+                <constraint firstAttribute="bottom" secondItem="1eH-eu-Ybf" secondAttribute="bottom" id="dLv-AJ-P3n"/>
+                <constraint firstItem="Mi5-Nd-SXr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="leading" id="hNL-Xp-ZVv"/>
+                <constraint firstItem="1eH-eu-Ybf" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="j4x-PG-xOA"/>
+                <constraint firstItem="1eH-eu-Ybf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="lG9-aq-1HD"/>
+                <constraint firstItem="1eH-eu-Ybf" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="xgH-Gd-Ozt"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="44" height="44"/>
+            <connections>
+                <outlet property="btnSelect" destination="1eH-eu-Ybf" id="CYq-ig-n3O"/>
+                <outlet property="lblDay" destination="Mi5-Nd-SXr" id="Sgh-vs-37U"/>
+            </connections>
+            <point key="canvasLocation" x="-40.579710144927539" y="70.3125"/>
+        </collectionViewCell>
+    </objects>
+</document>
