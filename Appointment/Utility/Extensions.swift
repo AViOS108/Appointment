@@ -265,6 +265,16 @@ extension NSDate {
 }
 
 extension Date {
+    
+        func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
+            return calendar.dateComponents(Set(components), from: self)
+        }
+
+        func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+            return calendar.component(component, from: self)
+        }
+    
+    
     func fixNotificationDate() -> Date {
         
         let set = Set(arrayLiteral: Calendar.Component.day, Calendar.Component.month,Calendar.Component.year,Calendar.Component.hour,Calendar.Component.minute)
@@ -274,6 +284,15 @@ extension Date {
         
         return Calendar.current.date(from: dateComponets)!
     }
+    
+    func days(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.day], from: self , to: date).day ?? 0
+    }
+    
+    
+    
+    
+    
 }
 
 extension FileManager{

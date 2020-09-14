@@ -145,14 +145,10 @@ class HomeTableView: UIViewController, UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-//        let coachModal = viewControllerI.dataFeedingModal?.coaches[indexPath.row];
-//        let coachModalI = (viewControllerI.dataFeedingModal?.coaches.filter({
-//            $0.id == coachModal?.id
-//        }))!
-//        var selectedModal = viewControllerI.dataFeedingModal
-//        selectedModal?.coaches.removeAll();
-//        selectedModal?.coaches.append(contentsOf: coachModalI)
-//        viewControllerI.selectedDataFeedingModal = selectedModal
+        var coachModal = viewControllerI.dataFeedingModal?.coaches[indexPath.row];
+        coachModal?.isSelected = true
+        viewControllerI.dataFeedingModal?.coaches.remove(at: indexPath.row)
+        viewControllerI.dataFeedingModal?.coaches.insert(coachModal!, at: indexPath.row)
         viewControllerI.redirection(redirectionType: .coachSelection)
     }
     

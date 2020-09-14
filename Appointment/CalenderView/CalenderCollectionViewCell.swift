@@ -23,6 +23,7 @@ class CalenderCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var btnSelect: UIButton!
     var calenderModal : CalenderModal!
+    
     var delegate : CalenderCollectionViewCellDelegate!
     
     override func awakeFromNib() {

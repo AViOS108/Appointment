@@ -8,11 +8,20 @@
 
 import UIKit
 
+
+protocol CoachAluminiViewControllerDelegate: AnyObject {
+  func reloadCollectionView()
+    
+    
+}
+
+
+
 class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
     
     @IBOutlet weak var viewFooterBtnCoach: UIView!
     @IBOutlet weak var viewFooterBtnAlumini: UIView!
-    
+    var delegate :CoachAluminiViewControllerDelegate!
     @IBOutlet weak var nslayoutConstraintTop: NSLayoutConstraint!
     
     @IBOutlet weak var viewInner: UIView!
@@ -51,13 +60,13 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
         tblVIew.register(UINib.init(nibName: "CoachAluminiSelectionTableViewCell", bundle: nil), forCellReuseIdentifier: "CoachAluminiSelectionTableViewCell")
 
         // Do any additional setup after loading the view.
     }
     
     func customize()  {
-        
         self.tblVIew.reloadData()
     }
     
@@ -98,13 +107,11 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
             
         }
         
-        view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
+        
         
         nslayoutConstraintTop.constant = pointSign?.y as! CGFloat
         drawArrowFromPoint()
         tapGesture()
-        
-        
         
         // corner radius
         viewOuter.layer.cornerRadius = 10
@@ -132,6 +139,8 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
 
           viewControllerI!.dismiss(animated: false) {
+            
+            self.delegate.reloadCollectionView()
             }
 
          }

@@ -25,6 +25,8 @@ class HeaderSectionCoach: UITableViewHeaderFooterView {
     var delegate : HeaderSectionCoachDelegate?
     
     func customization() {
+        
+        
         let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         UILabel.labelUIHandling(label: lblheader, text:  GeneralUtility.optionalHandling(_param: sectionHeader?.name, _returnType: String.self),  textColor: ILColor.color(index: 5), isBold: false, fontType: fontMedium,  backgroundColor: .white)
         

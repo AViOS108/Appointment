@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="92" id="KGk-i7-Jjw" customClass="ConfirmationPopupFileShareTableViewCell" customModule="Appointment" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="92"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="92"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sTX-Ch-O9k">
+                        <rect key="frame" x="0.0" y="10" width="320" height="82"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5k-ra-GFa">
+                                <rect key="frame" x="8" y="24" width="54" height="34"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="btnDocSelectedTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Abg-b1-l3g"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="u5k-ra-GFa" firstAttribute="centerY" secondItem="sTX-Ch-O9k" secondAttribute="centerY" id="fF4-lB-fvf"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="u5k-ra-GFa" secondAttribute="trailing" constant="8" id="ht3-e6-fr8"/>
+                            <constraint firstItem="u5k-ra-GFa" firstAttribute="leading" secondItem="sTX-Ch-O9k" secondAttribute="leading" constant="8" id="iWD-U6-MrP"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M9Z-FT-cMU">
+                        <rect key="frame" x="8" y="18" width="30" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="5jc-tu-L6D"/>
+                            <constraint firstAttribute="width" constant="30" id="fHX-1V-Wgq"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qoi-LK-amI">
+                        <rect key="frame" x="46" y="18" width="266" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="sfM-OZ-Q80"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <connections>
+                            <action selector="btnFileAttachedTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rCj-FX-kus"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLF-ep-Uaa">
+                        <rect key="frame" x="46" y="47" width="258" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="sTX-Ch-O9k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="86T-2D-o6D"/>
+                    <constraint firstAttribute="bottom" secondItem="sTX-Ch-O9k" secondAttribute="bottom" id="8kE-Uj-n1T"/>
+                    <constraint firstItem="WLF-ep-Uaa" firstAttribute="leading" secondItem="Qoi-LK-amI" secondAttribute="leading" id="9nf-d5-BRC"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="WLF-ep-Uaa" secondAttribute="bottom" constant="4" id="CYa-HL-EX8"/>
+                    <constraint firstItem="WLF-ep-Uaa" firstAttribute="top" secondItem="Qoi-LK-amI" secondAttribute="bottom" constant="2" id="KtG-64-rKP"/>
+                    <constraint firstAttribute="trailing" secondItem="Qoi-LK-amI" secondAttribute="trailing" constant="8" id="LVh-8s-n5B"/>
+                    <constraint firstItem="M9Z-FT-cMU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="gNa-0F-aNi"/>
+                    <constraint firstItem="M9Z-FT-cMU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="gcz-Wb-tdU"/>
+                    <constraint firstItem="WLF-ep-Uaa" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="hN4-ef-6Bd"/>
+                    <constraint firstItem="Qoi-LK-amI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="lH4-TE-mWs"/>
+                    <constraint firstItem="Qoi-LK-amI" firstAttribute="leading" secondItem="M9Z-FT-cMU" secondAttribute="trailing" constant="8" id="qxc-LS-p2v"/>
+                    <constraint firstAttribute="trailing" secondItem="sTX-Ch-O9k" secondAttribute="trailing" id="tRB-8m-Pxc"/>
+                    <constraint firstItem="sTX-Ch-O9k" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="yIF-aH-26b"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="btnDocSelected" destination="u5k-ra-GFa" id="v5d-Sx-u2d"/>
+                <outlet property="btnFileAttached" destination="Qoi-LK-amI" id="vmh-Ba-O1a"/>
+                <outlet property="imageAttached" destination="M9Z-FT-cMU" id="iVk-sE-Vw7"/>
+                <outlet property="lblBottom" destination="WLF-ep-Uaa" id="voV-6i-wGF"/>
+                <outlet property="viewDocumentSelected" destination="sTX-Ch-O9k" id="z1S-Ds-5Gh"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="117.85714285714285"/>
+        </tableViewCell>
+    </objects>
+</document>

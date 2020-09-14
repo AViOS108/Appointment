@@ -19,20 +19,21 @@ struct CalenderModal {
 }
 
 
-
+protocol CalenderViewDelegate{
+       func dateSelected(calenderModal : CalenderModal)
+       
+   }
+   
 
 class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout ,UIGestureRecognizerDelegate{
     
-    
+    var delegate : CalenderViewDelegate!
+
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var nslayoutConstraintCollectionHeight: NSLayoutConstraint!
-    
     var pointSign : CGPoint?
-
     var viewControllerI : UIViewController?
-    
     @IBOutlet weak var lblMonth: UILabel!
-    
     var numberOFDays, firstWeekDay: Int!
     
     @IBOutlet weak var viewCollection: UICollectionView!
@@ -53,10 +54,7 @@ class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,U
         if let point = self.pointSign
         {
             self.drawArrowFromPoint()
-            
         }
-        
-        
         // corner radius
         viewContainer.layer.cornerRadius = 10
         
@@ -100,15 +98,15 @@ class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,U
     func creatModalForSelectMonth()  {
         
         let Todayformatter = DateFormatter()
-        Todayformatter.dateFormat = "dd-MM-yyyy"
-        var todayDate = Todayformatter.string(from: Date())
+        Todayformatter.dateFormat = "yyyy-MM-dd"
+        let todayDate = Todayformatter.string(from: Date())
         
         
         
         calenderModalArr = [CalenderModal]()
         let dateFormatter = DateFormatter()
         let date = Date()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         let comp: DateComponents = Calendar.current.dateComponents([.year, .month], from: date)
         var startOfMonth = Calendar.current.date(from: comp)!
         var dateCompStartChange = DateComponents()
@@ -313,6 +311,10 @@ extension CalenderView:CalenderCollectionViewCellDelegate
         calenderIndexSelected.isSelected = true
         self.calenderModalArr.insert(calenderIndexSelected, at: indexSelected!)
          self.viewCollection.reloadData()
+        viewControllerI!.dismiss(animated: false) {
+                }
+        delegate.dateSelected(calenderModal: calenderIndexSelected);
+        
     }
     
     

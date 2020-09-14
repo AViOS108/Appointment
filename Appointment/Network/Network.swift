@@ -42,57 +42,54 @@ class Network {
     
     
     func stopAllSessions() {
-        Network.alamoFireManagerEventList.session.getTasksWithCompletionHandler { dataTasks, uploadTasks, downloadTasks in
-        dataTasks.forEach { $0.cancel() }
-        uploadTasks.forEach { $0.cancel() }
-        downloadTasks.forEach { $0.cancel() }
+        Network.alamoFireManagerEventList.session.getAllTasks { tasks in
+            tasks.forEach { $0.cancel() }
         }
     }
     
     
-    func makeApiEventRequestStopSession(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
-           
-        self.stopAllSessions()
-        
-           var requestParams = params
-           if(!addHeader){
-            Network.alamoFireManagerEventList.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default).responseData{
-                   response in
-                   switch response.result {
-                   case .success:
-                    completion(response.data!)
-                   case .failure(let error):
-                       failure(self.errorMsgFailure(error._code),error._code)
-                   }
-               }
-           }else{
-               Network.alamoFireManagerEventList.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default,headers: header).responseData {
-                   response in
-                   switch response.result {
-                   case .success:
-                       let responseI = JSON(response.result.value!)
-                       if self.isErrorPresentInSuccessResponse(responseI){
-                           if let error = self.getErrorInSuccessResponse(responseI){
-                               if LogoutHandler.shouldLogout(errorCode: error.code){
-                                   LogoutHandler.invalidateCurrentUser()
-                               }
-                               failure(error.message,error.code)
-                           }
-                       }
-                       else {
-                        
-                        completion(response.data!)
-                        
-                    }
-                   case .failure(let error):
-                       if LogoutHandler.shouldLogout(errorCode: error._code){
-                           LogoutHandler.invalidateCurrentUser()
-                       }
-                       failure(self.errorMsgFailure(error._code),error._code)
-                   }
-               }
-           }
-       }
+    func makeApiglobalCompanies(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: SwiftyJSON.JSON) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
+              
+           self.stopAllSessions()
+                  
+                  var requestParams = params
+                  if(!addHeader){
+                    Network.alamoFireManagerEventList.request(url, method: methodType, parameters: requestParams, encoding: URLEncoding.default).responseJSON() {
+                          response in
+                          switch response.result {
+                          case .success:
+                              completion(JSON(response.result.value!))
+                          case .failure(let error):
+                              failure(self.errorMsgFailure(error._code),error._code)
+                          }
+                      }
+                  }else{
+                    Network.alamoFireManagerEventList.request(url, method: methodType, parameters: requestParams, encoding: URLEncoding.default,headers: header).responseJSON {
+                          response in
+                          switch response.result {
+                          case .success:
+                              let response = JSON(response.result.value!)
+                              if self.isErrorPresentInSuccessResponse(response){
+                                  if let error = self.getErrorInSuccessResponse(response){
+                                      if LogoutHandler.shouldLogout(errorCode: error.code){
+                                          LogoutHandler.invalidateCurrentUser()
+                                      }
+                                      failure(error.message,error.code)
+                                  }
+                              }
+                              else {completion(response)}
+                          case .failure(let error):
+                              if LogoutHandler.shouldLogout(errorCode: error._code){
+                                  LogoutHandler.invalidateCurrentUser()
+                              }
+                              failure(self.errorMsgFailure(error._code),error._code)
+                          }
+                      }
+                  }
+          }
+    
+    
+
     
     func makeApiCoachRequest(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
         
@@ -180,6 +177,72 @@ class Network {
               }
           }
        
+    
+    
+    func makeApiUploadFile(_ addHeader : Bool,url : String,methodType: HTTPMethod , params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
+
+        let URL2 = try! URLRequest(url: url, method: .post, headers: ["Authorization" :"Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"])
+
+        
+        var params = params
+        
+        
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+
+            let paramI = (params["attachments_public"] as! Array<Data>)[0]
+            
+            multipartFormData.append(paramI , withName: "attachments_public[0]", fileName: "filename", mimeType: "text/plain")
+          
+            params.removeValue(forKey: "attachments_public")
+
+           
+            
+            for id in  params["user_purpose_ids"] as! Array<String> {
+                
+                multipartFormData.append((id as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "user_purpose_ids[]")
+                
+            }
+
+            params.removeValue(forKey: "user_purpose_ids")
+
+            
+            for (key, value) in params {
+                multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
+            }
+        }, with: URL2 , encodingCompletion: { (result) in
+
+            switch result {
+                case .success(let upload, _, _):
+                    print("s")
+                    upload.responseJSON {
+                        response in
+                        
+                          completion(response.data!)
+                        
+                        if let JSON = response.result.value as? [String : Any]{
+                            let messageString = JSON["message"] as? String
+                             // use the JSON
+                            }else {
+                               //error hanlding
+                            }
+
+                        }
+                
+            case .failure(let encodingError):
+                
+                 failure(self.errorMsgFailure(encodingError._code),encodingError._code)
+                
+                break
+                                  // error handling
+                               }
+                
+                    }
+               
+        );
+        
+        
+    }
+    
     
     
     

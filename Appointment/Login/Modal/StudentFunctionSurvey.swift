@@ -9,7 +9,7 @@
 import Foundation
 struct StudentFunctionSurvey: Codable {
     var results: [Result]
-    
+
     init() {
         self.results = [Result]()
     }
@@ -19,7 +19,7 @@ struct StudentFunctionSurvey: Codable {
 struct Result: Codable {
     var id: Int
     var name, isPopular: String
-    
+    var isSelected = true
     init() {
         self.id = 0
         self.name = ""

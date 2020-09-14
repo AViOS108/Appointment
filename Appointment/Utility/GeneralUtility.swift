@@ -367,10 +367,17 @@ class GeneralUtility {
         let dateString = emiDate
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let token = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
+
         formatter.timeZone = TimeZone.init(abbreviation: "UTC")
+
+        
+
+        
         var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
         if let date = formatter.date(from: dateString) {
-            formatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+            
+            formatter.timeZone = TimeZone.init(identifier: token)
             formatter.dateFormat = "hh:mm a"
             return formatter.string(from: date)
         }
@@ -475,4 +482,19 @@ class GeneralUtility {
             return upper.uppercased()
         }
     }
+    
+    func getCurrentTimeZone() -> String{
+
+        return  TimeZone.current.identifier
+
+    }
+    
+    func currentOffset() -> String {
+        let hours = TimeZone.current.secondsFromGMT()/3600
+        let minutes = abs(TimeZone.current.secondsFromGMT()/60) % 60
+        let tz_hr = String(format: "%+.2d:%.2d", hours, minutes) // "+hh:mm"
+        return "UTC "+tz_hr
+    }
+    
+    
 }

@@ -11,6 +11,8 @@
 
 "FontDemiBold" = "Avenir Next Demi Bold";
 "FontMedium" = "Avenir Next Medium";
+"FontMediumWithoutNext" = "Avenir Medium";
+
 "FontRegular" = "AvenirNext-Regular";
 "FontBold" = "AvenirNext-Bold";
 "FontHeavy" =  "Avenir-Heavy";

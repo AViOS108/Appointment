@@ -8,12 +8,23 @@
 
 import UIKit
 
+
+protocol CoachImageOverlayLayoutDelegate: AnyObject {
+    func collectionViewReload(width: Int)
+    
+    
+}
+
 class CoachImageOverlayLayout: UICollectionViewLayout {
 
+    
+    weak var delegate: CoachImageOverlayLayoutDelegate?
+
+    
     private let numberOfColumns = 4
 
     // 3
-    private var cache: [UICollectionViewLayoutAttributes] = []
+    var cache: [UICollectionViewLayoutAttributes] = []
 
     // 4
     private var contentHeight: CGFloat {
@@ -24,7 +35,7 @@ class CoachImageOverlayLayout: UICollectionViewLayout {
       return collectionView.bounds.height - (insets.left + insets.right)
     }
 
-    private var contentWidth : CGFloat = 0
+     var contentWidth : CGFloat = 0
 
     // 5
     override var collectionViewContentSize: CGSize {
@@ -35,6 +46,8 @@ class CoachImageOverlayLayout: UICollectionViewLayout {
       {
         collectionView?.frame.size.height = contentHeight
         collectionView?.frame.size.width = contentWidth
+        delegate?.collectionViewReload(width: Int(contentWidth))
+
 
       }
       return CGSize(width: contentWidth, height: contentHeight)
@@ -49,10 +62,10 @@ class CoachImageOverlayLayout: UICollectionViewLayout {
            return
        }
        // 2
-       let columnWidth = 40.0
+        let columnWidth = 52.0
        var xOffset: [CGFloat] = []
        for column in 0..<numberOfColumns {
-        xOffset.append(CGFloat(column) * (0.2 * CGFloat(columnWidth))  )
+        xOffset.append(CGFloat(column) * (0.5 * CGFloat(columnWidth))  )
        }
        var column = 0
        var yOffset: [CGFloat] = .init(repeating: 0, count: numberOfColumns)
@@ -60,10 +73,10 @@ class CoachImageOverlayLayout: UICollectionViewLayout {
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: item, section: 0)
             // 4
-            let photoHeight = 40
+            let photoHeight = 44
             let frame = CGRect(x: xOffset[column],
                                y: yOffset[column],
-                               width: CGFloat(photoHeight),
+                               width: CGFloat(columnWidth),
                                height: CGFloat(photoHeight))
             //         let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             
@@ -91,7 +104,7 @@ class CoachImageOverlayLayout: UICollectionViewLayout {
            attributes.zIndex = index
            visibleLayoutAttributes.append(attributes)
          }
-         index = index - 2
+//         index = index + 2
        }
 
        return visibleLayoutAttributes

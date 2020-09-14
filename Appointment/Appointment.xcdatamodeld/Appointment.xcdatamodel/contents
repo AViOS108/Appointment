@@ -6,7 +6,15 @@
         <attribute name="isMobileEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="tagName" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="TimeZoneSel" representedClassName="TimeZoneSel" syncable="YES" codeGenerationType="class">
+        <attribute name="displayName" optional="YES" attributeType="String"/>
+        <attribute name="group" optional="YES" attributeType="String"/>
+        <attribute name="identifier" optional="YES" attributeType="String"/>
+        <attribute name="keywords" optional="YES" attributeType="Transformable" customClassName="Array&lt;String&gt;"/>
+        <attribute name="offset" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
-        <element name="CommunityList" positionX="-54" positionY="-9" width="128" height="103"/>
+        <element name="CommunityList" positionX="-350.40625" positionY="-60.12890625" width="234.9140625" height="103"/>
+        <element name="TimeZoneSel" positionX="-23.22265625" positionY="-27.53515625" width="128" height="118"/>
     </elements>
 </model>

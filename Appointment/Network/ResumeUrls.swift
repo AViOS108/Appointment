@@ -247,76 +247,25 @@ class Urls {
     }
     
     
-    func filterTypeList() -> String {
-       
-           let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-//           let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
-
-           
-           if isStudent ?? true
-           {
-               return "\(typeEvent1)students/events/types"
-
-           }
-           else
-           {
-               return "\(typeEvent1)community/events/types"
-
-           }
-           
-       }
-    
-    
-    func eventDetail(id:String) -> String {
-             let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-//             let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
-
-             
-             if isStudent ?? true
-             {
-                 return "\(typeEvent1)students/events/\(id)"
-
-             }
-             else
-             {
-                 return "\(typeEvent1)community/events/\(id)"
-
-             }
-             
-         }
-    
-    func eventGoingRsvp(id:String) -> String {
-        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-//        let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
-        
-        
-        if isStudent ?? true
-        {
-            return "\(typeEvent1)students/events/\(id)/rsvp"
-            
-        }
-        else
-        {
-            return "\(typeEvent1)community/events/\(id)/rsvp"
-            
-        }
+    func timezoneList() -> String {
+            return "\(typeEvent1)students/events/timezones"
         
     }
-    func eventInterestBookMark(id:String) -> String {
-        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        
-        if isStudent ?? true
-        {
-            return "\(typeEvent1)students/events/\(id)/bookmark"
-            
-        }
-        else
-        {
-            return "\(typeEvent1)community/events/\(id)/bookmark"
-            
-        }
+
+    func openHourCCList() -> String {
+            return "\(typeEvent1)students/appointment-slots"
         
     }
+
+    func openHourECList() -> String {
+            return "\(typeEvent1)students/external-appointment-slots"
+        
+    }
+    
+    func confirmAppointment(id:String) -> String {
+              return "\(typeEvent1)students/appointment-slots/" + id
+          
+      }
     
     
     
@@ -381,6 +330,16 @@ class Urls {
           
       }
     
-    
+    func studentFunctionList() -> String {
+    return "\(typeJob1)students/functional-area/list"
+    }
+
+    func studentIndustriesList() -> String {
+    return "\(typeJob2)student/industries"
+    }
+    func globalCompanyList() -> String {
+               return "\(typeJob2)student/global-companies/name"
+           
+       }
     
 }

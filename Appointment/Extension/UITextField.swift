@@ -13,16 +13,21 @@ extension UITextField {
 class LeftPaddedTextField: UITextField {
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return CGRect(x: bounds.origin.x + 10, y: bounds.origin.y, width: bounds.width, height: bounds.height)
+        return CGRect(x: bounds.origin.x + 10, y: bounds.origin.y, width: bounds.width-10, height: bounds.height)
     }
 
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return CGRect(x: bounds.origin.x + 10, y: bounds.origin.y, width: bounds.width, height: bounds.height)
+        return CGRect(x: bounds.origin.x + 10, y: bounds.origin.y, width: bounds.width-10, height: bounds.height)
     }
 
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return CGRect(x: bounds.origin.x + 10, y: bounds.origin.y, width: bounds.width, height: bounds.height)
+        return CGRect(x: bounds.origin.x + 10, y: bounds.origin.y, width: bounds.width-10, height: bounds.height)
     }
     
+    override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x:bounds.width - 18 , y: 12, width: 14, height: 10)
+        
+    }
+   
     
 }

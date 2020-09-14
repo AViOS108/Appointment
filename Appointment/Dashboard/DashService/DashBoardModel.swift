@@ -25,12 +25,6 @@ struct StudentHeaderModel {
 }
 
 
-
-
-
-
-
-
 struct DashBoardModel: Codable {
     let social: [JSONAny]
     var coaches: [Coach]

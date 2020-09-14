@@ -27,6 +27,7 @@ enum RedirectionType {
 class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     
+    var calenderModal: CalenderModal?
 
     @IBOutlet weak var btnSelectMuliple: UIButton!
     var isAnyCoachSelected = false
@@ -53,9 +54,9 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     var tableviewHandler = HomeTableView()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+self.callingViewModal()
         self.view.backgroundColor = ILColor.color(index: 22)
-        callingViewModal()
+        
         GeneralUtility.customeNavigationBar(viewController: self,title:"Schedule");
         // Do any additional setup after loading the view.
     }
@@ -66,8 +67,8 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     override  func calenderClicked(sender: UIButton) {
         let frame = sender.convert(sender.frame, from:AppDelegate.getDelegate().window)
-        
         let viewCalender = CalenderViewController.init(nibName: "CalenderViewController", bundle: nil)
+        viewCalender.viewControllerI = self
         viewCalender.pointSign = CGPoint.init(x: abs(frame.origin.x) + abs(frame.size.width/2), y: abs(frame.origin.y) + abs(frame.size.height/2) + 10 )
         viewCalender.modalPresentationStyle = .overFullScreen
         self.present(viewCalender, animated: false) {
@@ -131,6 +132,13 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     
     override func viewDidAppear(_ animated: Bool) {
+        
+//        self.dashBoardViewModal.fetchTimeZoneCall { (timeArr) in
+//
+//                          }
+        
+        
+       
         btnSelectMuliple.isHidden = true
         let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
 
@@ -154,7 +162,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
 
     
     func callingViewModal()  {
-        
+       
         let param : Dictionary<String, AnyObject> = ["roles":["external_coach","career_coach"]] as Dictionary<String, AnyObject>
         
         dashBoardViewModal.viewController = self
@@ -394,14 +402,33 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
 
 extension HomeViewController : HomeViewcontrollerRedirection{
     
-    func selectedModal() -> DashBoardModel  {
+    func selectedModal() -> DashBoardModel?  {
+        
+        if (self.dataFeedingModal?.coaches.count ?? 0) > 0 {
+            
+        }
+        else{
+            return nil
+        }
+        
         var selectedModal = self.dataFeedingModal;
         var coachesI = [Coach]()
-        for coaches in self.dataFeedingModal!.coaches
+        var index = 0;
+        
+        let coachSelected = self.dataFeedingModal?.coaches.filter({$0.isSelected == true})
+        
+        for var coaches in coachSelected!
         {
-            if coaches.isSelected {
-                coachesI.append(coaches)
+            if index == 0{
+                coaches.isExpanded = true
             }
+            else
+            {
+                coaches.isExpanded = false
+
+            }
+            coachesI.append(coaches)
+            index += 1
         }
         selectedModal?.coaches.removeAll()
         selectedModal?.coaches.append(contentsOf: coachesI)
@@ -424,35 +451,33 @@ extension HomeViewController : HomeViewcontrollerRedirection{
     
 }
 
-extension HomeViewController: CalenderCollectionViewCellDelegate{
+extension HomeViewController: CalenderViewDelegate{
     func dateSelected(calenderModal: CalenderModal) {
+        self.calenderModal = calenderModal
+        self.redirection(redirectionType: .coachSelection)
         
     }
-    
 }
 
 
 
 extension HomeViewController{
-    
-    
     func redirection(redirectionType : RedirectionType)  {
         switch redirectionType {
         case .about:
             break
         case .coachSelection:
             
-            
-            if isAnyCoachSelected {
-                let coachSelectionViewController = CoachSelectionViewController.init(nibName: "CoachSelectionViewController", bundle: nil)
-                coachSelectionViewController.selectedDataFeedingModal = self.selectedModal()
-                coachSelectionViewController.dataFeedingModal = self.dataFeedingModalConst
-                self.navigationController?.pushViewController(coachSelectionViewController, animated: false)
+            isCoachSelected()
+            self.reloadTablview()
+            let coachSelectionViewController = CoachSelectionViewController.init(nibName: "CoachSelectionViewController", bundle: nil)
+            coachSelectionViewController.selectedDataFeedingModal = self.selectedModal()
+            if self.calenderModal != nil{
+                coachSelectionViewController.calenderModal = self.calenderModal
+                
             }
-            else
-            {
-                CommonFunctions().showError(title: "Error", message: StringConstants.nocoachSelected)
-            }
+            coachSelectionViewController.dataFeedingModal = self.dataFeedingModalConst
+            self.navigationController?.pushViewController(coachSelectionViewController, animated: false)
             
             break
         case .profile:

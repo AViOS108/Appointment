@@ -71,6 +71,14 @@ extension UIView {
            self.layer.cornerRadius = 3
           
        }
+    func dropShadowSeprator() {
+        self.clipsToBounds = false
+        self.layer.shadowColor = ILColor.color(index: 19).cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowRadius = 1
+        
+    }
     
     func dropShadowDate() {
        self.clipsToBounds = false

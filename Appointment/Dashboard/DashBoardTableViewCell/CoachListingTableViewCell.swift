@@ -149,6 +149,10 @@ class CoachListingTableViewCell: UITableViewCell {
             
             btnSelect.isUserInteractionEnabled = true
             btnSelect.isEnabled = true
+
+            BtnAppointment.isUserInteractionEnabled = false
+            BtnAppointment.isEnabled = false
+
             
             if self.coachModal!.isSelected{
                 UIButton.buttonUIHandling(button: btnSelect, text: "", backgroundColor:UIColor.clear )

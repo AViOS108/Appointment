@@ -70,5 +70,10 @@ class StringConstants{
     static let sectionNotIncludedText = "Your college template recommends you to add this section"
     static let exceedFileSizeText = "Please upload a file with size less than 2MB"
     static let nocoachSelected = "Please Select any coach"
+    static let cantDeselectAll = "You have to select atleast one coach or alumini"
+    static let FetchingCoachSelection = "Fetching Data "
 
+    static let PURPOSEERROR = "Please select atleast one purpose"
+    static let CONFIRMAPPOINTMENT = "Confirming Appointment..."
+    static let KUPGRADETOLATESTOS = "This particular functionality needs latest OS, please upgarde your iOS version"
 }
