@@ -188,6 +188,7 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
             cell.indexPath = indexPath
             cell.delegate = self
             cell.arrNameSurvey = self.makeModal(indexpath: indexPath)
+            cell.tblview = self.tblView
             cell.viewController = self.tblView
             if indexPath.row == 4{
                 cell.isAPiHIt = true
@@ -252,13 +253,21 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
     
     
     
-    func sendApiResult(item: [SearchTextFieldItem]) {
-        if item.count > 0 {
-            let selected = searchGlobalCompanies.filter({$0.isSelected == true})
-            self.searchGlobalCompanies = item
-            self.searchGlobalCompanies.append(contentsOf: selected)
-                    self.tblView.reloadData();
+    func sendApiResult(item: [SearchTextFieldItem],isApi: Bool) {
+        if isApi{
+            if item.count > 0 {
+                let selected = searchGlobalCompanies.filter({$0.isSelected == true})
+                self.searchGlobalCompanies = item
+                self.searchGlobalCompanies.append(contentsOf: selected)
+                        self.tblView.reloadData();
+            }
+             self.tblView.reloadData();
         }
+        else{
+             self.tblView.reloadData();
+        }
+        
+        
        
     }
     

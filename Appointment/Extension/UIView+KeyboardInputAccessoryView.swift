@@ -55,5 +55,33 @@ extension UIView {
             textField.inputAccessoryView = toolbar
         }
     }
+    
+    @objc func addInputAccessoryForTextView(textVIew: UITextView, dismissable: Bool = true, previousNextable: Bool = false) {
+        
+        let toolbar: UIToolbar = UIToolbar()
+        toolbar.sizeToFit()
+        var items = [UIBarButtonItem]()
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action:#selector(TableviewCellSuperClass.actnResignKeyboard))
+        
+        items.append(contentsOf: [spacer, doneButton])
+        toolbar.setItems(items, animated: false)
+        textVIew.inputAccessoryView = toolbar
+    }
+    
+  
+    
+    
+    
+    
+}
+
+class TableviewCellSuperClass: UITableViewCell  {
+    
+    @objc func actnResignKeyboard() {
+
+       }
+    
 }
 

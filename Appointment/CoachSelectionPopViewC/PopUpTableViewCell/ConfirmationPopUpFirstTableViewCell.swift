@@ -11,7 +11,7 @@ import UIKit
 protocol changeModalConfirmationPopUpDelegate {
     
     func changeModal(searchItem : SearchTextFieldItem, indexPAth : IndexPath,isAdded: Bool)
-       func sendApiResult(item: [SearchTextFieldItem])
+       func sendApiResult(item: [SearchTextFieldItem],isApi: Bool)
 
 
 }
@@ -35,7 +35,8 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
     var viewController : UIView!
     var viewControllerI : UIViewController!
     var isAPiHIt : Bool!
-
+    var tblview : UITableView!
+    
     @IBOutlet weak var viewHeightConstraint: NSLayoutConstraint!
     var arrNameSurvey : [SearchTextFieldItem]!
 
@@ -55,8 +56,26 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
            searchViewController.maxHeight = 200;
            let frameI =
                sender.superview?.convert(sender.frame, to: nil)
+        
+        var changedFrame = frameI
+        
+        if frameI!.origin.y > self.viewControllerI.view.frame.height/2{
+            
+            tblview.contentOffset = CGPoint.init(x: tblview.contentOffset.x, y: tblview.contentOffset.y + 300)
+            changedFrame = CGRect.init(x: (changedFrame?.origin.x)!, y: ((changedFrame?.origin.y)! - 300), width: (changedFrame?.size.width)!, height: (changedFrame?.size.height)!)
+        }
+        else if frameI!.origin.y > self.viewControllerI.view.frame.height/3{
+            tblview.contentOffset = CGPoint.init(x: tblview.contentOffset.x, y: tblview.contentOffset.y + 200)
+            changedFrame = CGRect.init(x: (changedFrame?.origin.x)!, y: ((changedFrame?.origin.y)! - 200), width: (changedFrame?.size.width)!, height: (changedFrame?.size.height)!)
+        }
+        
+        
+        
+        
+        
+        
            searchViewController.arrNameSurvey = self.arrNameSurvey.filter({$0.isSelected == false})
-           searchViewController.txtfieldRect = frameI
+           searchViewController.txtfieldRect = changedFrame
            searchViewController.isAPiHIt = isAPiHIt
            if self.indexPath.row == 0{
                searchViewController.showWithoutText = true
@@ -231,8 +250,8 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
 }
 
 extension ConfirmationPopUpFirstTableViewCell: SearchViewControllerDelegate{
-    func sendApiResult(item: [SearchTextFieldItem]) {
-        self.delegate.sendApiResult(item: item)
+    func sendApiResult(item: [SearchTextFieldItem],isApi: Bool) {
+        self.delegate.sendApiResult(item: item, isApi: isApi)
     }
     
     

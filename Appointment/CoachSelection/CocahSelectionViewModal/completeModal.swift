@@ -56,7 +56,7 @@ class CoachSelectionViewModal {
             self.openHourExternalCoach(params: parameter(typeUser: "external_coach"))
         }
         
-         activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.loginApiLoader)
+         activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.FetchingCoachSelection)
         
         
     }

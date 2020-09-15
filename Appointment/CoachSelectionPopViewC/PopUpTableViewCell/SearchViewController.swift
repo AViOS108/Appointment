@@ -14,12 +14,12 @@ import SwiftyJSON
 protocol SearchViewControllerDelegate {
     func sendSelectedItem(item: SearchTextFieldItem)
     
-    func sendApiResult(item: [SearchTextFieldItem])
+    func sendApiResult(item: [SearchTextFieldItem],isApi: Bool)
 
 }
 
 
-class SearchViewController: UIViewController {
+class SearchViewController: SuperViewController {
     var activityIndicator: ActivityIndicatorView?
     var viewControllerI : UIViewController!
     var txtfieldRect: CGRect!
@@ -30,7 +30,7 @@ class SearchViewController: UIViewController {
     var textField : UITextField!
     var selectedTextZone : String!
     var tblView: UITableView!
-    var arrNameSurvey : [SearchTextFieldItem]!
+    var arrNameSurvey = [SearchTextFieldItem]()
     var arrNameSurveyConst : [SearchTextFieldItem]!
     let indicator = UIActivityIndicatorView(style: .gray)
     
@@ -38,6 +38,8 @@ var showWithoutText = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         arrNameSurveyConst = arrNameSurvey
                 view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
 //        view.backgroundColor = .clear
@@ -50,6 +52,8 @@ var showWithoutText = false
         tblView = UITableView.init(frame: CGRect.init(x: txtfieldRect.origin.x, y: txtfieldRect.origin.y + txtfieldRect.size.height, width: txtfieldRect.size.width, height: 200))
         textField.backgroundColor = .white
         textField.delegate = self
+        textField.autocorrectionType = .no
+        textField.spellCheckingType = .no
         self.textField.text = selectedTextZone
         self.textField.font = fontHeavy
         self.textField.layer.borderColor = ILColor.color(index: 22).cgColor
@@ -91,12 +95,21 @@ var showWithoutText = false
           tblView.frame =  CGRect.init(x: tblView.frame.origin.x, y: tblView.frame.origin.y, width:  tblView.contentSize.width, height:  height)
         }
         
-        
+        self.addInputAccessoryForTextFields(textFields: [textField], dismissable: true, previousNextable: false)
         
          
         self.tapGesture()
         // Do any additional setup after loading the view.
     }
+    
+    override  func actnResignKeyboard() {
+        self.delegate.sendApiResult(item: arrNameSurvey, isApi: isAPiHIt);
+        textField.resignFirstResponder()
+        self.dismiss(animated: false) {
+            
+        }
+        
+      }
     
     
      func tapGesture()  {
@@ -108,6 +121,8 @@ var showWithoutText = false
            
        @objc func handleTap(_ sender: UITapGestureRecognizer) {
            
+        self.delegate.sendApiResult(item: arrNameSurvey, isApi: isAPiHIt);
+        
            self.dismiss(animated: false) {
                
            }
@@ -147,13 +162,15 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-//        self.textField.text = self.timeZoneArrI[indexPath.row].displayName;
-      
+        //        self.textField.text = self.timeZoneArrI[indexPath.row].displayName;
+        
+        if isAPiHIt{
+            self.delegate.sendApiResult(item: arrNameSurvey, isApi: isAPiHIt);
+        }
         self.delegate.sendSelectedItem(item: self.arrNameSurvey[indexPath.row])
-     
         self.dismiss(animated: false) {
-             
-         }
+            
+        }
     }
     
    
@@ -288,18 +305,13 @@ extension SearchViewController{
             arrNameSurvey.append(searchItem)
         }
         
-          delegate.sendApiResult(item: arrNameSurvey);
         indicator.stopAnimating()
         let imageView = UIImageView.init(image: UIImage.init(named: "dropdown"))
         imageView.contentMode = .center
         imageView.frame.size = CGSize.init(width: 20, height: 20)
         textField.rightView = imageView
         textField.rightViewMode = .always
-
-        
         reloadAndSizeTableView()
-        
-        
     }
 
 

@@ -14,7 +14,7 @@ protocol SendDEscriptionConfirmationPopUpSecondDelegate {
 
 
 
-class ConfirmationPopUpSecondTableViewCell: UITableViewCell,UITextViewDelegate {
+class ConfirmationPopUpSecondTableViewCell: TableviewCellSuperClass,UITextViewDelegate {
     
     @IBOutlet weak var lblHeader: UILabel!
     var delegate : SendDEscriptionConfirmationPopUpSecondDelegate!
@@ -24,10 +24,19 @@ class ConfirmationPopUpSecondTableViewCell: UITableViewCell,UITextViewDelegate {
         // Initialization code
     }
     
+    override func actnResignKeyboard() {
+        txtDescription.resignFirstResponder()
+         }
+    
     func customization()  {
+        
+        self.addInputAccessoryForTextView(textVIew: txtDescription )
+        
         let fontNextMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         UILabel.labelUIHandling(label: lblHeader, text: "Description", textColor:ILColor.color(index: 31) , isBold: false , fontType: fontNextMedium,   backgroundColor:.white )
         txtDescription.backgroundColor = ILColor.color(index: 22)
+        txtDescription.autocorrectionType = .no
+        txtDescription.spellCheckingType = .no
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         txtDescription.font = fontMedium
         txtDescription.delegate = self

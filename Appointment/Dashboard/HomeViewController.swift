@@ -75,7 +75,12 @@ self.callingViewModal()
         }
     }
     
-    
+    override func logout(sender: UIButton) {
+        
+        GeneralUtility.alertViewLogout(title: "".localized(), message: "LOGOUT".localized(), viewController: self, buttons: ["Cancel","Ok"]);
+        
+        
+    }
     override func changeNavigation(sender: UIBarButtonItem) {
         GeneralUtility.customeNavigationBar(viewController: self,title:"Schedule");
         self.dataFeedingModal = self.dataFeedingModalConst

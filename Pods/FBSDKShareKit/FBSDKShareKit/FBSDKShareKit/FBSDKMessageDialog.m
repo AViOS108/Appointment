@@ -127,7 +127,9 @@
 - (BOOL)validateWithError:(NSError *__autoreleasing *)errorRef
 {
   if (self.shareContent) {
-    if ([self.shareContent isKindOfClass:[FBSDKShareLinkContent class]]) {
+    if ([self.shareContent isKindOfClass:[FBSDKShareLinkContent class]] ||
+        [self.shareContent isKindOfClass:[FBSDKSharePhotoContent class]] ||
+        [self.shareContent isKindOfClass:[FBSDKShareVideoContent class]]) {
     } else {
       if (errorRef != NULL) {
         NSString *message = [NSString stringWithFormat:@"Message dialog does not support %@.",
@@ -206,19 +208,19 @@
 {
   NSMutableDictionary * parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:FBSDKAppEventsDialogOutcomeValue_Failed, FBSDKAppEventParameterDialogOutcome, nil];
   if (error) {
-    parameters[FBSDKAppEventParameterDialogErrorMessage] = [NSString stringWithFormat:@"%@", error];
+    [FBSDKTypeUtility dictionary:parameters setObject:[NSString stringWithFormat:@"%@", error] forKey:FBSDKAppEventParameterDialogErrorMessage];
+
+    [FBSDKAppEvents logInternalEvent:FBSDKAppEventNameFBSDKEventMessengerShareDialogResult
+                          parameters:parameters
+                  isImplicitlyLogged:YES
+                         accessToken:[FBSDKAccessToken currentAccessToken]];
+
+    if (!_delegate) {
+      return;
+    }
+
+    [_delegate sharer:self didFailWithError:error];
   }
-
-  [FBSDKAppEvents logInternalEvent:FBSDKAppEventNameFBSDKEventMessengerShareDialogResult
-                        parameters:parameters
-                isImplicitlyLogged:YES
-                       accessToken:[FBSDKAccessToken currentAccessToken]];
-
-  if (!_delegate) {
-    return;
-  }
-
-  [_delegate sharer:self didFailWithError:error];
 }
 
 - (void)_logDialogShow

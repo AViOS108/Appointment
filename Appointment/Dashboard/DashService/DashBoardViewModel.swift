@@ -19,7 +19,7 @@ class DashBoardViewModel  {
     
     func fetchCall(params: Dictionary<String,AnyObject>,success:@escaping (DashBoardModel) -> Void,failure:@escaping (String,Int) -> Void)
     {
-        activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.loginApiLoader)
+        activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.coachInfoApiLoader)
         
         DashboardService().coachListApi(params: params, { (jsonData) in
             

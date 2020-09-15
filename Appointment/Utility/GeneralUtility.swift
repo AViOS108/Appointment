@@ -121,6 +121,22 @@ class GeneralUtility {
         calenderButton.addTarget(viewController, action: #selector(SuperViewController.calenderClicked(sender:)), for: .touchUpInside)
         calenderButton.setImage(UIImage.init(named: "Calendar"), for: .normal)
         let calender =  UIBarButtonItem(customView: calenderButton)
+        
+        
+        
+        let logOutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+        logOutButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        logOutButton.addTarget(viewController, action: #selector(SuperViewController.logout(sender:)), for: .touchUpInside)
+        logOutButton.setImage(UIImage.init(named: "logout-xxl"), for: .normal)
+        let logOut =  UIBarButtonItem(customView: logOutButton)
+        
+        
+        
+        
+        
+        
+        
         let hamburger = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
         hamburger.contentMode = .scaleAspectFit
         //        searchButton.backgroundColor = .red
@@ -129,7 +145,7 @@ class GeneralUtility {
         let slider =  UIBarButtonItem(customView: hamburger)
         viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
         
-        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([search,calender], animated: true)
+        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut,search,calender], animated: true)
         viewController.navigationController?.navigationBar.topItem?.setLeftBarButtonItems([slider], animated: true)
         
         viewController.navigationController?.navigationBar.topItem?.title = title;
@@ -157,7 +173,7 @@ class GeneralUtility {
         viewController.navigationItem.rightBarButtonItems = [calender];
         
         viewController.navigationController?.navigationBar.isTranslucent = true
-//        viewController.navigationController?.navigationBar.topItem?.title = title;
+        viewController.navigationController?.navigationBar.topItem?.title = title;
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);

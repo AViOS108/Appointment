@@ -33,6 +33,10 @@ class SuperViewController: UIViewController {
 
     }
     
+    @objc func logout(sender: UIButton) {
+
+       }
+    
     @objc func humbergerCilcked(sender: UIBarButtonItem) {
 
     }
