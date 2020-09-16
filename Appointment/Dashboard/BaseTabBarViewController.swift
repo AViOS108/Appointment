@@ -30,7 +30,7 @@ class BaseTabBarViewController: UITabBarController, UITabBarControllerDelegate {
         item1 = HomeViewController()
         item1?.userTypeHome = .Student
         item2 = HomeViewController()
-        item2?.userTypeHome = .Student
+        item2?.userTypeHome = .StudentMyAppointment
 
         delegate = self
     }

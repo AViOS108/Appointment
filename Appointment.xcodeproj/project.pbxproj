@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A0053A52511ED780065C63E /* HomeMyAppointmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0053A42511ED780065C63E /* HomeMyAppointmentTableViewController.swift */; };
 		1A1DD5A724FE3CC90005250C /* TimeZoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1DD5A524FE3CC90005250C /* TimeZoneViewController.swift */; };
 		1A1DD5A824FE3CC90005250C /* TimeZoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A1DD5A624FE3CC90005250C /* TimeZoneViewController.xib */; };
 		1A54700924B59460005F1058 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54700824B59460005F1058 /* AppDelegate.swift */; };
@@ -209,6 +210,7 @@
 /* Begin PBXFileReference section */
 		04B75BD63A4BAA590E61170D /* Pods-Appointment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appointment.debug.xcconfig"; path = "Target Support Files/Pods-Appointment/Pods-Appointment.debug.xcconfig"; sourceTree = "<group>"; };
 		0CC3332F129F5E9EB205C668 /* Pods_AppointmentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppointmentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A0053A42511ED780065C63E /* HomeMyAppointmentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyAppointmentTableViewController.swift; sourceTree = "<group>"; };
 		1A1DD5A524FE3CC90005250C /* TimeZoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneViewController.swift; sourceTree = "<group>"; };
 		1A1DD5A624FE3CC90005250C /* TimeZoneViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeZoneViewController.xib; sourceTree = "<group>"; };
 		1A54700524B59460005F1058 /* Appointment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Appointment.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -688,6 +690,7 @@
 				1A54711C24B5E98A005F1058 /* HomeViewController.swift */,
 				1A54711D24B5E98A005F1058 /* HomeViewController.xib */,
 				1AEB677324EBAEB0006F9C05 /* HomeTableView.swift */,
+				1A0053A42511ED780065C63E /* HomeMyAppointmentTableViewController.swift */,
 			);
 			name = Dashboard;
 			path = Appointment/Dashboard;
@@ -1283,6 +1286,7 @@
 				1A5470F524B5D2AE005F1058 /* LogoutHandler.swift in Sources */,
 				1A54708A24B5D242005F1058 /* StudentIndustrySurvey.swift in Sources */,
 				1A61EFFB250A13E300257CB5 /* ConfirmationPopupFileShareTableViewCell.swift in Sources */,
+				1A0053A52511ED780065C63E /* HomeMyAppointmentTableViewController.swift in Sources */,
 				1A54706B24B5D241005F1058 /* SelectCommunityViewController.swift in Sources */,
 				1A54708624B5D242005F1058 /* LoginService.swift in Sources */,
 				1A54708724B5D242005F1058 /* CheckLoginStatusService.swift in Sources */,
@@ -1532,14 +1536,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2J62BWA9ZJ;
 				INFOPLIST_FILE = Appointment/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmock.app.Appointment;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1555,14 +1560,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2J62BWA9ZJ;
 				INFOPLIST_FILE = Appointment/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmock.app.Appointment;
 				PRODUCT_NAME = "$(TARGET_NAME)";

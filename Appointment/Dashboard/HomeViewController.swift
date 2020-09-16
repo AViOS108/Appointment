@@ -12,7 +12,7 @@ import UIKit
 enum userType {
     case ER
     case Student
-    case Coaches
+    case StudentMyAppointment
 
 }
 enum RedirectionType {
@@ -54,7 +54,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     var tableviewHandler = HomeTableView()
     override func viewDidLoad() {
         super.viewDidLoad()
-self.callingViewModal()
+          self.callingViewModal()
         self.view.backgroundColor = ILColor.color(index: 22)
         
         GeneralUtility.customeNavigationBar(viewController: self,title:"Schedule");
@@ -85,7 +85,7 @@ self.callingViewModal()
         GeneralUtility.customeNavigationBar(viewController: self,title:"Schedule");
         self.dataFeedingModal = self.dataFeedingModalConst
         self.zeroStateLogic()
-        self.reloadTablview()
+        self.reloadTablviewCocahList()
         
     }
     
@@ -127,7 +127,7 @@ self.callingViewModal()
     }
     
     
-    func reloadTablview()  {
+    func reloadTablviewCocahList()  {
         tableviewHandler.customization()
         if  isAnyCoachSelected{
             self.tblView.contentSize.height = self.tblView.contentSize.height + 100
@@ -160,7 +160,7 @@ self.callingViewModal()
             }
             self.dataFeedingModal?.coaches = filterdcoahes!
             self.zeroStateLogic()
-            self.reloadTablview()
+            self.reloadTablviewCocahList()
         }
         searchBar.resignFirstResponder();
     }
@@ -266,7 +266,7 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
         self.dataFeedingModal?.sectionHeader?.insert(selectedHeader!, at: index!)
         self.zeroStateLogic()
         isCoachSelected()
-        self.reloadTablview()
+        self.reloadTablviewCocahList()
         
         
     }
@@ -330,7 +330,7 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
         self.dataFeedingModal?.sectionHeader?.insert(selectedHeader!, at: index!)
         self.zeroStateLogic()
         isCoachSelected()
-        self.reloadTablview()
+        self.reloadTablviewCocahList()
 
     }
     
@@ -347,7 +347,7 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
             self.dataFeedingModal?.sectionHeader?.insert(selectedHeader!, at: index!)
             self.zeroStateLogic()
             isCoachSelected()
-            self.reloadTablview()
+            self.reloadTablviewCocahList()
             
         }
         else
@@ -388,7 +388,7 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
         self.dataFeedingModal?.coaches.insert(selectedCoach!, at: index!)
         self.zeroStateLogic()
         isCoachSelected()
-        self.reloadTablview()
+        self.reloadTablviewCocahList()
     }
 
     func changeBottomBtn(isVisible: Bool)  {
@@ -474,7 +474,7 @@ extension HomeViewController{
         case .coachSelection:
             
             isCoachSelected()
-            self.reloadTablview()
+            self.reloadTablviewCocahList()
             let coachSelectionViewController = CoachSelectionViewController.init(nibName: "CoachSelectionViewController", bundle: nil)
             coachSelectionViewController.selectedDataFeedingModal = self.selectedModal()
             if self.calenderModal != nil{
