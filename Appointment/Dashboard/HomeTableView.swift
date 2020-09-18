@@ -145,10 +145,31 @@ class HomeTableView: UIViewController, UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        var coachModal = viewControllerI.dataFeedingModal?.coaches[indexPath.row];
-        coachModal?.isSelected = true
-        viewControllerI.dataFeedingModal?.coaches.remove(at: indexPath.row)
-        viewControllerI.dataFeedingModal?.coaches.insert(coachModal!, at: indexPath.row)
+        
+        if indexPath.section == 0{
+             
+             var coachModalArr = viewControllerI.dataFeedingModal?.coaches.filter({$0.roleMachineName.rawValue == "career_coach"})
+            var coachModal = viewControllerI.dataFeedingModal?.coaches.filter({$0.roleMachineName.rawValue == "career_coach"})[indexPath.row];
+            coachModal?.isSelected = true
+            coachModalArr!.remove(at: indexPath.row)
+            coachModalArr!.insert(coachModal!, at: indexPath.row)
+            viewControllerI.dataFeedingModal?.coaches.removeAll(where: {$0.roleMachineName.rawValue == "career_coach"})
+            viewControllerI.dataFeedingModal?.coaches.append(contentsOf: coachModalArr!)
+            
+        }
+        else{
+            
+            
+           var coachModalArr = viewControllerI.dataFeedingModal?.coaches.filter({$0.roleMachineName.rawValue == "external_coach"})
+            var coachModal = viewControllerI.dataFeedingModal?.coaches.filter({$0.roleMachineName.rawValue == "external_coach"})[indexPath.row];
+            coachModal?.isSelected = true
+            coachModalArr!.remove(at: indexPath.row)
+            coachModalArr!.insert(coachModal!, at: indexPath.row)
+            viewControllerI.dataFeedingModal?.coaches.removeAll(where: {$0.roleMachineName.rawValue == "external_coach"})
+            viewControllerI.dataFeedingModal?.coaches.append(contentsOf: coachModalArr!)
+            
+        }
+        
         viewControllerI.redirection(redirectionType: .coachSelection)
     }
     

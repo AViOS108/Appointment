@@ -7,16 +7,160 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4E721B74-C1AE-4A0D-BC54-1FF75BB6CCA8"
-            shouldBeEnabled = "No"
+            uuid = "7C50B750-FF10-4D7E-8D63-AB28C4FB257A"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Appointment/Dashboard/HomeTableView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A1F6F877-FD8F-497D-A6FB-231004305E39"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Appointment/Login/Controller/CheckStatusViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "20C32235-712B-4B9D-9457-7854AC26BE2E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Appointment/Login/Controller/CheckStatusViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "nextButtonTapped(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2FC806D9-A56D-4E61-BFF4-405B06FA35DB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Appointment/Login/Controller/CheckStatusViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "checkUserStatusAPI(link:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2FC806D9-A56D-4E61-BFF4-405B06FA35DB - 39c811448e337bc0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Appointment.CheckStatusViewController.checkUserStatusAPI(link: Swift.String) -&gt; ()"
+                  moduleName = "Appointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/Login/Controller/CheckStatusViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "167"
+                  endingLineNumber = "167"
+                  offsetFromSymbolStart = "1882">
+               </Location>
+               <Location
+                  uuid = "2FC806D9-A56D-4E61-BFF4-405B06FA35DB - 189e974ded9af5af"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SwiftyJSON.JSON) -&gt; () in Appointment.CheckStatusViewController.checkUserStatusAPI(link: Swift.String) -&gt; ()"
+                  moduleName = "Appointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/Login/Controller/CheckStatusViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "457">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "551D03E3-D909-4AB7-A2F5-C1A8F50E8D1C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Appointment/Login/Service/CheckLoginStatusService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "checkLoginStatusCall(headerIncluded:params:header:_:failure:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "551D03E3-D909-4AB7-A2F5-C1A8F50E8D1C - a24c5413fcd358f5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Appointment.CheckLoginStatusService.checkLoginStatusCall(headerIncluded: Swift.Bool, params: Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, header: Swift.Dictionary&lt;Swift.String, Swift.String&gt;, _: (SwiftyJSON.JSON) -&gt; (), failure: (Swift.String, Swift.Int) -&gt; ()) -&gt; ()"
+                  moduleName = "Appointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/Login/Service/CheckLoginStatusService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "551D03E3-D909-4AB7-A2F5-C1A8F50E8D1C - d4976a61c7c1fb38"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SwiftyJSON.JSON) -&gt; () in Appointment.CheckLoginStatusService.checkLoginStatusCall(headerIncluded: Swift.Bool, params: Swift.Dictionary&lt;Swift.String, Swift.AnyObject&gt;, header: Swift.Dictionary&lt;Swift.String, Swift.String&gt;, _: (SwiftyJSON.JSON) -&gt; (), failure: (Swift.String, Swift.Int) -&gt; ()) -&gt; ()"
+                  moduleName = "Appointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/Login/Service/CheckLoginStatusService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "307">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2DF249ED-4B9F-4CBA-BF00-353C4E8A35C3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Appointment/Network/Network.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
+            landmarkName = "makeApiRequest(_:url:methodType:params:header:completion:failure:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
