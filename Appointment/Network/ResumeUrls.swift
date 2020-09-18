@@ -42,11 +42,18 @@ class Urls {
         static let SharingEvents = testShareEvents
     
     #else
-        static let runningEnv = liveEnv
-        static let runningHost = liveHost
-        static let runningEnvJobs = liveEnvJobs
-        static let runningEnvEvents = liveEnvEvents
-        static let SharingEvents = liveShareEvents
+    
+    static let runningEnv = testEnv
+         static let runningHost = testHost
+         static let runningEnvJobs = testEnvJobs
+         static let runningEnvEvents = testEnvEvents
+         static let SharingEvents = testShareEvents
+    
+//        static let runningEnv = liveEnv
+//        static let runningHost = liveHost
+//        static let runningEnvJobs = liveEnvJobs
+//        static let runningEnvEvents = liveEnvEvents
+//        static let SharingEvents = liveShareEvents
     #endif
     
 //    var type1 = "\(devEnv)ravindra2/dashboard/accounts/public/api/v1/"

@@ -628,10 +628,10 @@ CoachConfirmationPopUpSecondViewCDelegate
                 }
                 else
                 {
-                    self.studentHit()
+//                    self.studentHit()
                 }
             } catch  {
-                self.studentHit()
+//                self.studentHit()
             }
             
             
@@ -648,11 +648,11 @@ CoachConfirmationPopUpSecondViewCDelegate
             do {
                    try self.setupStudentIndustries(response: response);
             } catch {
-                self.studentIndustries()
+//                self.studentIndustries()
             }
             
         }) { (error, errorCode) in
-            self.studentIndustries()
+//            self.studentIndustries()
         }
     }
     
