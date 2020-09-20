@@ -352,6 +352,13 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
         }
         else
         {
+            
+            if (self.dataFeedingModal?.coaches.filter({$0.roleMachineName.rawValue == modal.id}).count ?? 0) <= 0{
+                return
+            }
+            
+            
+            
             if selectedHeaderI!.seeAll{
                 self.withSeeAll(modal: modal, seeMore: seeMore)
             }

@@ -103,33 +103,42 @@ class CoachSelectionViewModal {
     func openHourCarrerCoach(params: Dictionary<String,AnyObject>)
     {
         CoachSelectionService().openHourCarrerCoachListApi(params: params, { (jsonData) in
-            let carrerCoachLocal = try? JSONDecoder().decode(OpenHourCoachModal.self, from: jsonData)
-            
-            if self.carrerCoachModal != nil{
-                if (carrerCoachLocal?.results?.count)! > 0
+            do {
+                let carrerCoachLocal = try
+                    JSONDecoder().decode(OpenHourCoachModal.self, from: jsonData)
+                if self.carrerCoachModal != nil{
+                    if (carrerCoachLocal.results?.count)! > 0
+                    {
+                        self.carrerCoachModal?.results?.append(contentsOf: (carrerCoachLocal.results)!);
+                    }
+                    
+                }
+                else
                 {
-                    self.carrerCoachModal?.results?.append(contentsOf: (carrerCoachLocal?.results)!);
+                    self.carrerCoachModal = carrerCoachLocal
                 }
                 
-            }
-            else
-            {
-                self.carrerCoachModal = carrerCoachLocal
+                if self.carrerCoachModal?.results?.count == carrerCoachLocal.total{
+                    self.apiHitogic[0] = 1
+                    let setI = Set(self.apiHitogic)
+                    
+                    if setI.count == 1
+                    {
+                        self.formingDataModal()
+                    }
+                }
+                else{
+                    
+                    self.openHourCarrerCoach(params: self.parameter(typeUser: "career_coach"))
+                }
+                
+                
+            } catch let error_ as NSError {
+                self.activityIndicator?.hide()
+                CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
             }
             
-            if self.carrerCoachModal?.results?.count == carrerCoachLocal?.total{
-                self.apiHitogic[0] = 1
-                let setI = Set(self.apiHitogic)
-                
-                if setI.count == 1
-                {
-                    self.formingDataModal()
-                }
-            }
-            else{
-                
-                self.openHourCarrerCoach(params: self.parameter(typeUser: "career_coach"))
-            }
+           
         }) { (error, errorCode) in
             self.activityIndicator?.hide()
             CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)

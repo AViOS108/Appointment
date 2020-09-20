@@ -76,7 +76,7 @@ struct CreatedBy: Codable {
     let id: Int?
     let name, email: String?
     let communityID: Int?
-    let communityName: CommunityName?
+    let communityName: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name, email
@@ -85,10 +85,6 @@ struct CreatedBy: Codable {
     }
 }
 
-enum CommunityName: String, Codable {
-    case chicagoBoothSchoolOfBusiness = "Chicago Booth School Of Business"
-    case georgiaState = "Georgia State"
-}
 
 // MARK: - Participant
 struct Participant: Codable {
@@ -107,7 +103,7 @@ struct Participant: Codable {
     let benchmarkID: Int?
     let benchmarkName: String?
     let communityID: Int?
-    let communityName: CommunityName?
+    let communityName: String?
     let miUserID: Int?
 
     enum CodingKeys: String, CodingKey {

@@ -7,49 +7,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8B25380C-9BA8-4659-B9AF-E5742616B1D2"
+            uuid = "542E59F7-2891-4E33-B674-8145931665E0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Appointment/CoachSelection/CoachSelectionViewController.swift"
+            filePath = "Appointment/CoachSelection/CocahSelectionViewModal/completeModal.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "623"
-            endingLineNumber = "623"
-            landmarkName = "studentHit()"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "openHourExternalCoach(params:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8B25380C-9BA8-4659-B9AF-E5742616B1D2 - bb1d01b5ab059c15"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Appointment.CoachSelectionViewController.studentHit() -&gt; ()"
-                  moduleName = "Appointment"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelection/CoachSelectionViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "623"
-                  endingLineNumber = "623"
-                  offsetFromSymbolStart = "26">
-               </Location>
-               <Location
-                  uuid = "8B25380C-9BA8-4659-B9AF-E5742616B1D2 - 67030707a2cb409a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (SwiftyJSON.JSON) -&gt; () in Appointment.CoachSelectionViewController.studentHit() -&gt; ()"
-                  moduleName = "Appointment"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelection/CoachSelectionViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "626"
-                  endingLineNumber = "626"
-                  offsetFromSymbolStart = "123">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E6807A03-D4D6-45DD-990A-342532F425F1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Appointment/CoachSelection/CocahSelectionViewModal/completeModal.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "openHourCarrerCoach(params:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
