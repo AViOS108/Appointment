@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1A0053A52511ED780065C63E /* HomeMyAppointmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0053A42511ED780065C63E /* HomeMyAppointmentTableViewController.swift */; };
+		1A0053A725173E130065C63E /* DashBoardStudentAppointmentVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0053A625173E130065C63E /* DashBoardStudentAppointmentVM.swift */; };
+		1A0053AA251761180065C63E /* DashBoardAppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0053A8251761180065C63E /* DashBoardAppointmentTableViewCell.swift */; };
+		1A0053AB251761180065C63E /* DashBoardAppointmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A0053A9251761180065C63E /* DashBoardAppointmentTableViewCell.xib */; };
 		1A1DD5A724FE3CC90005250C /* TimeZoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1DD5A524FE3CC90005250C /* TimeZoneViewController.swift */; };
 		1A1DD5A824FE3CC90005250C /* TimeZoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A1DD5A624FE3CC90005250C /* TimeZoneViewController.xib */; };
 		1A54700924B59460005F1058 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54700824B59460005F1058 /* AppDelegate.swift */; };
@@ -149,6 +152,16 @@
 		1A67F083250208EE00CCC00B /* CoachSelectionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A67F082250208EE00CCC00B /* CoachSelectionTableView.swift */; };
 		1A67F08625020B3100CCC00B /* CoachOpenhourTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A67F08425020B3100CCC00B /* CoachOpenhourTableViewCell.swift */; };
 		1A67F08725020B3100CCC00B /* CoachOpenhourTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A67F08525020B3100CCC00B /* CoachOpenhourTableViewCell.xib */; };
+		1A6CAF92251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CAF90251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.swift */; };
+		1A6CAF93251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6CAF91251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.xib */; };
+		1A6CAF96251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CAF94251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.swift */; };
+		1A6CAF97251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6CAF95251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.xib */; };
+		1A6CAF9A251DFEE3000C9887 /* NextStepAppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CAF98251DFEE3000C9887 /* NextStepAppointmentTableViewCell.swift */; };
+		1A6CAF9B251DFEE3000C9887 /* NextStepAppointmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6CAF99251DFEE3000C9887 /* NextStepAppointmentTableViewCell.xib */; };
+		1A6CAF9D251DFFEC000C9887 /* NextStepCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CAF9C251DFFEC000C9887 /* NextStepCollectionView.swift */; };
+		1A6CAFA0251E006A000C9887 /* NextStepCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CAF9E251E006A000C9887 /* NextStepCollectionViewCell.swift */; };
+		1A6CAFA1251E006A000C9887 /* NextStepCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6CAF9F251E006A000C9887 /* NextStepCollectionViewCell.xib */; };
+		1A6CAFA325222C09000C9887 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6CAFA225222C09000C9887 /* Settings.storyboard */; };
 		1A712B6224FE3E1000D761D2 /* TimeZoneModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A712B6124FE3E1000D761D2 /* TimeZoneModal.swift */; };
 		1A78314924F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A78314324F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib */; };
 		1A78314A24F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A78314424F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.xib */; };
@@ -168,8 +181,25 @@
 		1A78316624F8D5250054AAF8 /* CoachImageOverlayCiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78316424F8D5250054AAF8 /* CoachImageOverlayCiCollectionViewCell.swift */; };
 		1A78316724F8D5250054AAF8 /* CoachImageOverlayCiCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A78316524F8D5250054AAF8 /* CoachImageOverlayCiCollectionViewCell.xib */; };
 		1A78316924F8DA480054AAF8 /* CoachImageOverlayLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78316824F8DA480054AAF8 /* CoachImageOverlayLayout.swift */; };
+		1A79151D25383C7900BC0AA7 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A79151B25383C7900BC0AA7 /* FeedbackViewController.swift */; };
+		1A79151E25383C7900BC0AA7 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A79151C25383C7900BC0AA7 /* FeedbackViewController.xib */; };
+		1A8B502F251A07D000111C77 /* AppointmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B502D251A07D000111C77 /* AppointmentDetailViewController.swift */; };
+		1A8B5030251A07D000111C77 /* AppointmentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B502E251A07D000111C77 /* AppointmentDetailViewController.xib */; };
+		1A8B5033251A07E500111C77 /* AppointmentFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5031251A07E500111C77 /* AppointmentFeedbackViewController.swift */; };
+		1A8B5034251A07E500111C77 /* AppointmentFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B5032251A07E500111C77 /* AppointmentFeedbackViewController.xib */; };
+		1A8B5036251A1E4A00111C77 /* AppoinmentdetailViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5035251A1E4A00111C77 /* AppoinmentdetailViewModal.swift */; };
+		1A8B5039251A368A00111C77 /* AppoinmentDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5038251A368A00111C77 /* AppoinmentDetailModal.swift */; };
+		1A8B503D251B640A00111C77 /* NotesAppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B503B251B640A00111C77 /* NotesAppointmentTableViewCell.swift */; };
+		1A8B503E251B640A00111C77 /* NotesAppointmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B503C251B640A00111C77 /* NotesAppointmentTableViewCell.xib */; };
+		1A8B5040251B676000111C77 /* NoteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B503F251B676000111C77 /* NoteCollectionView.swift */; };
+		1A8B5043251B6A0E00111C77 /* NoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5041251B6A0E00111C77 /* NoteCollectionViewCell.swift */; };
+		1A8B5044251B6A0E00111C77 /* NoteCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B5042251B6A0E00111C77 /* NoteCollectionViewCell.xib */; };
+		1A8B5046251C73E400111C77 /* NotesCollectionViewlayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5045251C73E400111C77 /* NotesCollectionViewlayout.swift */; };
 		1AC5F69824FE5D490052D276 /* TimeZoneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5F69624FE5D490052D276 /* TimeZoneTableViewCell.swift */; };
 		1AC5F69924FE5D490052D276 /* TimeZoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5F69724FE5D490052D276 /* TimeZoneTableViewCell.xib */; };
+		1AD257C6253DABE5004E622A /* FeedBackModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD257C5253DABE5004E622A /* FeedBackModal.swift */; };
+		1AE9E7FF252C881300843D88 /* EditNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE9E7FD252C881300843D88 /* EditNotesViewController.swift */; };
+		1AE9E800252C881300843D88 /* EditNotesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AE9E7FE252C881300843D88 /* EditNotesViewController.xib */; };
 		1AEB677424EBAEB0006F9C05 /* HomeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEB677324EBAEB0006F9C05 /* HomeTableView.swift */; };
 		1AEB678024EBFCB4006F9C05 /* DashBoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEB677F24EBFCB4006F9C05 /* DashBoardService.swift */; };
 		1AEB678224EBFE95006F9C05 /* DashBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEB678124EBFE95006F9C05 /* DashBoardViewModel.swift */; };
@@ -211,6 +241,9 @@
 		04B75BD63A4BAA590E61170D /* Pods-Appointment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appointment.debug.xcconfig"; path = "Target Support Files/Pods-Appointment/Pods-Appointment.debug.xcconfig"; sourceTree = "<group>"; };
 		0CC3332F129F5E9EB205C668 /* Pods_AppointmentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppointmentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0053A42511ED780065C63E /* HomeMyAppointmentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMyAppointmentTableViewController.swift; sourceTree = "<group>"; };
+		1A0053A625173E130065C63E /* DashBoardStudentAppointmentVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardStudentAppointmentVM.swift; sourceTree = "<group>"; };
+		1A0053A8251761180065C63E /* DashBoardAppointmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardAppointmentTableViewCell.swift; sourceTree = "<group>"; };
+		1A0053A9251761180065C63E /* DashBoardAppointmentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashBoardAppointmentTableViewCell.xib; sourceTree = "<group>"; };
 		1A1DD5A524FE3CC90005250C /* TimeZoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneViewController.swift; sourceTree = "<group>"; };
 		1A1DD5A624FE3CC90005250C /* TimeZoneViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeZoneViewController.xib; sourceTree = "<group>"; };
 		1A54700524B59460005F1058 /* Appointment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Appointment.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -358,6 +391,16 @@
 		1A67F082250208EE00CCC00B /* CoachSelectionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachSelectionTableView.swift; sourceTree = "<group>"; };
 		1A67F08425020B3100CCC00B /* CoachOpenhourTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachOpenhourTableViewCell.swift; sourceTree = "<group>"; };
 		1A67F08525020B3100CCC00B /* CoachOpenhourTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoachOpenhourTableViewCell.xib; sourceTree = "<group>"; };
+		1A6CAF90251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppoinmentDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		1A6CAF91251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppoinmentDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		1A6CAF94251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppoinmentPurposeTableViewCell.swift; sourceTree = "<group>"; };
+		1A6CAF95251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppoinmentPurposeTableViewCell.xib; sourceTree = "<group>"; };
+		1A6CAF98251DFEE3000C9887 /* NextStepAppointmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextStepAppointmentTableViewCell.swift; sourceTree = "<group>"; };
+		1A6CAF99251DFEE3000C9887 /* NextStepAppointmentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NextStepAppointmentTableViewCell.xib; sourceTree = "<group>"; };
+		1A6CAF9C251DFFEC000C9887 /* NextStepCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextStepCollectionView.swift; sourceTree = "<group>"; };
+		1A6CAF9E251E006A000C9887 /* NextStepCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextStepCollectionViewCell.swift; sourceTree = "<group>"; };
+		1A6CAF9F251E006A000C9887 /* NextStepCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NextStepCollectionViewCell.xib; sourceTree = "<group>"; };
+		1A6CAFA225222C09000C9887 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1A712B6124FE3E1000D761D2 /* TimeZoneModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeZoneModal.swift; sourceTree = "<group>"; };
 		1A78314324F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizontalAppointmentInfoCollectionViewCell.xib; sourceTree = "<group>"; };
 		1A78314424F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizonatlDateCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -377,8 +420,25 @@
 		1A78316424F8D5250054AAF8 /* CoachImageOverlayCiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachImageOverlayCiCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A78316524F8D5250054AAF8 /* CoachImageOverlayCiCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoachImageOverlayCiCollectionViewCell.xib; sourceTree = "<group>"; };
 		1A78316824F8DA480054AAF8 /* CoachImageOverlayLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachImageOverlayLayout.swift; sourceTree = "<group>"; };
+		1A79151B25383C7900BC0AA7 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		1A79151C25383C7900BC0AA7 /* FeedbackViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
+		1A8B502D251A07D000111C77 /* AppointmentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentDetailViewController.swift; sourceTree = "<group>"; };
+		1A8B502E251A07D000111C77 /* AppointmentDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppointmentDetailViewController.xib; sourceTree = "<group>"; };
+		1A8B5031251A07E500111C77 /* AppointmentFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentFeedbackViewController.swift; sourceTree = "<group>"; };
+		1A8B5032251A07E500111C77 /* AppointmentFeedbackViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppointmentFeedbackViewController.xib; sourceTree = "<group>"; };
+		1A8B5035251A1E4A00111C77 /* AppoinmentdetailViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppoinmentdetailViewModal.swift; sourceTree = "<group>"; };
+		1A8B5038251A368A00111C77 /* AppoinmentDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppoinmentDetailModal.swift; sourceTree = "<group>"; };
+		1A8B503B251B640A00111C77 /* NotesAppointmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesAppointmentTableViewCell.swift; sourceTree = "<group>"; };
+		1A8B503C251B640A00111C77 /* NotesAppointmentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotesAppointmentTableViewCell.xib; sourceTree = "<group>"; };
+		1A8B503F251B676000111C77 /* NoteCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCollectionView.swift; sourceTree = "<group>"; };
+		1A8B5041251B6A0E00111C77 /* NoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCollectionViewCell.swift; sourceTree = "<group>"; };
+		1A8B5042251B6A0E00111C77 /* NoteCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteCollectionViewCell.xib; sourceTree = "<group>"; };
+		1A8B5045251C73E400111C77 /* NotesCollectionViewlayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewlayout.swift; sourceTree = "<group>"; };
 		1AC5F69624FE5D490052D276 /* TimeZoneTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneTableViewCell.swift; sourceTree = "<group>"; };
 		1AC5F69724FE5D490052D276 /* TimeZoneTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeZoneTableViewCell.xib; sourceTree = "<group>"; };
+		1AD257C5253DABE5004E622A /* FeedBackModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackModal.swift; sourceTree = "<group>"; };
+		1AE9E7FD252C881300843D88 /* EditNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotesViewController.swift; sourceTree = "<group>"; };
+		1AE9E7FE252C881300843D88 /* EditNotesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditNotesViewController.xib; sourceTree = "<group>"; };
 		1AEB677324EBAEB0006F9C05 /* HomeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableView.swift; sourceTree = "<group>"; };
 		1AEB677F24EBFCB4006F9C05 /* DashBoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardService.swift; sourceTree = "<group>"; };
 		1AEB678124EBFE95006F9C05 /* DashBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardViewModel.swift; sourceTree = "<group>"; };
@@ -445,6 +505,7 @@
 		1A546FFC24B59460005F1058 = {
 			isa = PBXGroup;
 			children = (
+				1A8B502C2519F06A00111C77 /* AppoinmnetDetailAndFeedback */,
 				1A61EFE1250616C500257CB5 /* CoachSelectionPopViewC */,
 				1AF8188224F64AF400C52286 /* CoachSelection */,
 				1AEB679C24F553E6006F9C05 /* CoachAluminiView */,
@@ -620,6 +681,7 @@
 		1A54706724B5D241005F1058 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1A6CAFA225222C09000C9887 /* Settings.storyboard */,
 				1A54706824B5D241005F1058 /* Login.storyboard */,
 			);
 			path = Views;
@@ -814,6 +876,8 @@
 				1A78315424F8D3D20054AAF8 /* SliderTableViewCell.xib */,
 				1A78315524F8D3D20054AAF8 /* CoachListingTableViewCell.swift */,
 				1A78315124F8D3D20054AAF8 /* CoachListingTableViewCell.xib */,
+				1A0053A8251761180065C63E /* DashBoardAppointmentTableViewCell.swift */,
+				1A0053A9251761180065C63E /* DashBoardAppointmentTableViewCell.xib */,
 			);
 			path = DashBoardTableViewCell;
 			sourceTree = "<group>";
@@ -838,6 +902,56 @@
 			path = CoachSelectionCollectionView;
 			sourceTree = "<group>";
 		};
+		1A8B502C2519F06A00111C77 /* AppoinmnetDetailAndFeedback */ = {
+			isa = PBXGroup;
+			children = (
+				1A8B503A251B53F200111C77 /* AppoinmentTableViewCell */,
+				1A8B5037251A367800111C77 /* AppoinmentModals */,
+				1A8B502D251A07D000111C77 /* AppointmentDetailViewController.swift */,
+				1A8B502E251A07D000111C77 /* AppointmentDetailViewController.xib */,
+				1A8B5031251A07E500111C77 /* AppointmentFeedbackViewController.swift */,
+				1A8B5032251A07E500111C77 /* AppointmentFeedbackViewController.xib */,
+				1A8B5035251A1E4A00111C77 /* AppoinmentdetailViewModal.swift */,
+				1A8B5045251C73E400111C77 /* NotesCollectionViewlayout.swift */,
+				1A79151B25383C7900BC0AA7 /* FeedbackViewController.swift */,
+				1A79151C25383C7900BC0AA7 /* FeedbackViewController.xib */,
+			);
+			name = AppoinmnetDetailAndFeedback;
+			path = Appointment/AppoinmnetDetailAndFeedback;
+			sourceTree = "<group>";
+		};
+		1A8B5037251A367800111C77 /* AppoinmentModals */ = {
+			isa = PBXGroup;
+			children = (
+				1A8B5038251A368A00111C77 /* AppoinmentDetailModal.swift */,
+				1AD257C5253DABE5004E622A /* FeedBackModal.swift */,
+			);
+			path = AppoinmentModals;
+			sourceTree = "<group>";
+		};
+		1A8B503A251B53F200111C77 /* AppoinmentTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				1A6CAF90251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.swift */,
+				1A6CAF91251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.xib */,
+				1A6CAF94251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.swift */,
+				1A6CAF95251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.xib */,
+				1A8B503B251B640A00111C77 /* NotesAppointmentTableViewCell.swift */,
+				1A8B503C251B640A00111C77 /* NotesAppointmentTableViewCell.xib */,
+				1A8B503F251B676000111C77 /* NoteCollectionView.swift */,
+				1A8B5041251B6A0E00111C77 /* NoteCollectionViewCell.swift */,
+				1A8B5042251B6A0E00111C77 /* NoteCollectionViewCell.xib */,
+				1A6CAF98251DFEE3000C9887 /* NextStepAppointmentTableViewCell.swift */,
+				1A6CAF99251DFEE3000C9887 /* NextStepAppointmentTableViewCell.xib */,
+				1A6CAF9C251DFFEC000C9887 /* NextStepCollectionView.swift */,
+				1A6CAF9E251E006A000C9887 /* NextStepCollectionViewCell.swift */,
+				1A6CAF9F251E006A000C9887 /* NextStepCollectionViewCell.xib */,
+				1AE9E7FD252C881300843D88 /* EditNotesViewController.swift */,
+				1AE9E7FE252C881300843D88 /* EditNotesViewController.xib */,
+			);
+			path = AppoinmentTableViewCell;
+			sourceTree = "<group>";
+		};
 		1AC5F69524FE5D290052D276 /* TimeZoneTableViewDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -855,6 +969,7 @@
 				1AEB677F24EBFCB4006F9C05 /* DashBoardService.swift */,
 				1AEB678124EBFE95006F9C05 /* DashBoardViewModel.swift */,
 				1AEB678324EC0D21006F9C05 /* DashBoardModel.swift */,
+				1A0053A625173E130065C63E /* DashBoardStudentAppointmentVM.swift */,
 			);
 			path = DashService;
 			sourceTree = "<group>";
@@ -1037,24 +1152,35 @@
 				1AC5F69924FE5D490052D276 /* TimeZoneTableViewCell.xib in Resources */,
 				1A78314A24F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.xib in Resources */,
 				1AEB679B24EFE048006F9C05 /* CalenderViewController.xib in Resources */,
+				1A8B5044251B6A0E00111C77 /* NoteCollectionViewCell.xib in Resources */,
 				1AEB679724EFDA92006F9C05 /* CalenderCollectionViewCell.xib in Resources */,
 				1A5470D624B5D2AE005F1058 /* ActivityIndicatorView.xib in Resources */,
 				1A78314924F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib in Resources */,
 				1AEB67A024F55406006F9C05 /* CoachAluminiViewController.xib in Resources */,
+				1A0053AB251761180065C63E /* DashBoardAppointmentTableViewCell.xib in Resources */,
+				1A8B5034251A07E500111C77 /* AppointmentFeedbackViewController.xib in Resources */,
+				1A6CAFA1251E006A000C9887 /* NextStepCollectionViewCell.xib in Resources */,
 				1A78315724F8D3D20054AAF8 /* CoachListingTableViewCell.xib in Resources */,
 				1A78315A24F8D3D20054AAF8 /* SliderTableViewCell.xib in Resources */,
 				1A78316724F8D5250054AAF8 /* CoachImageOverlayCiCollectionViewCell.xib in Resources */,
 				1A54708E24B5D242005F1058 /* Login.storyboard in Resources */,
+				1A6CAF93251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.xib in Resources */,
 				1A54701824B5946D005F1058 /* LaunchScreen.storyboard in Resources */,
+				1AE9E800252C881300843D88 /* EditNotesViewController.xib in Resources */,
+				1A79151E25383C7900BC0AA7 /* FeedbackViewController.xib in Resources */,
+				1A6CAFA325222C09000C9887 /* Settings.storyboard in Resources */,
 				1AF8188624F64B0E00C52286 /* CoachSelectionViewController.xib in Resources */,
 				1A5470FF24B5DE9D005F1058 /* SliderViewController.xib in Resources */,
+				1A6CAF9B251DFEE3000C9887 /* NextStepAppointmentTableViewCell.xib in Resources */,
 				1A61EFFC250A13E300257CB5 /* ConfirmationPopupFileShareTableViewCell.xib in Resources */,
 				1A61EFF8250773EE00257CB5 /* ConfirmationPopUpSecondTableViewCell.xib in Resources */,
 				1A78315624F8D3D20054AAF8 /* HeaderSectionCoach.xib in Resources */,
 				1A78316024F8D4110054AAF8 /* CoachAluminiSelectionTableViewCell.xib in Resources */,
 				1A1DD5A824FE3CC90005250C /* TimeZoneViewController.xib in Resources */,
+				1A8B503E251B640A00111C77 /* NotesAppointmentTableViewCell.xib in Resources */,
 				1A61EFF4250773DA00257CB5 /* ConfirmationPopUpFirstTableViewCell.xib in Resources */,
 				1A5470F624B5D2AE005F1058 /* Localizable.strings in Resources */,
+				1A6CAF97251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.xib in Resources */,
 				1A5470E324B5D2AE005F1058 /* ErrorView.xib in Resources */,
 				1A54707624B5D241005F1058 /* DemoViewController.xib in Resources */,
 				1A67F08725020B3100CCC00B /* CoachOpenhourTableViewCell.xib in Resources */,
@@ -1063,6 +1189,7 @@
 				1A54711F24B5E98A005F1058 /* HomeViewController.xib in Resources */,
 				1A78314B24F8D37F0054AAF8 /* HorizontalCalender.xib in Resources */,
 				1A61F000250A3F2B00257CB5 /* SearchViewController.xib in Resources */,
+				1A8B5030251A07D000111C77 /* AppointmentDetailViewController.xib in Resources */,
 				1AEB679324EFD777006F9C05 /* CalenderView.xib in Resources */,
 				1A54701524B5946D005F1058 /* Assets.xcassets in Resources */,
 				1A54710524B5DF64005F1058 /* SelectUserTypeViewController.xib in Resources */,
@@ -1229,9 +1356,11 @@
 			files = (
 				1A5470E424B5D2AE005F1058 /* ILColor.swift in Sources */,
 				1A5470E224B5D2AE005F1058 /* GoogleAnalyticsUtility.swift in Sources */,
+				1A8B5040251B676000111C77 /* NoteCollectionView.swift in Sources */,
 				1A54711B24B5E2E0005F1058 /* UIPaddedLabel.swift in Sources */,
 				1A67F07A24FFA0D100CCC00B /* CoachHorizontalSelectionLayout.swift in Sources */,
 				1A5470FA24B5D2AE005F1058 /* AppSyncData.swift in Sources */,
+				1A6CAF9D251DFFEC000C9887 /* NextStepCollectionView.swift in Sources */,
 				1A78315924F8D3D20054AAF8 /* SliderTableViewCell.swift in Sources */,
 				1AEB679124EFD769006F9C05 /* CalenderView.swift in Sources */,
 				1A61EFEE2507702A00257CB5 /* CoachConfirmationPopUpSecondViewC.swift in Sources */,
@@ -1252,11 +1381,14 @@
 				1A54706D24B5D241005F1058 /* CheckStatusViewController.swift in Sources */,
 				1A5470A324B5D264005F1058 /* Configuration.swift in Sources */,
 				1A61EFEB250753AE00257CB5 /* IndustriesFunctionViewModal.swift in Sources */,
+				1A8B5039251A368A00111C77 /* AppoinmentDetailModal.swift in Sources */,
+				1A6CAF92251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.swift in Sources */,
 				1A54707924B5D241005F1058 /* AgreementConsentViewController.swift in Sources */,
 				1A54710124B5DE9D005F1058 /* SliderViewController.swift in Sources */,
 				1A54707024B5D241005F1058 /* VerificatonCompletedViewController.swift in Sources */,
 				1A54707A24B5D241005F1058 /* ResumeNotEnabledViewController.swift in Sources */,
 				1A54700D24B59460005F1058 /* ViewController.swift in Sources */,
+				1A8B503D251B640A00111C77 /* NotesAppointmentTableViewCell.swift in Sources */,
 				1AEB679F24F55406006F9C05 /* CoachAluminiViewController.swift in Sources */,
 				1AEB678624ECFD60006F9C05 /* ErEventService.swift in Sources */,
 				1A54708024B5D242005F1058 /* CustomizedViewController.swift in Sources */,
@@ -1264,17 +1396,21 @@
 				1AC5F69824FE5D490052D276 /* TimeZoneTableViewCell.swift in Sources */,
 				1A54711E24B5E98A005F1058 /* HomeViewController.swift in Sources */,
 				1A54708224B5D242005F1058 /* ResendVerificationService.swift in Sources */,
+				1A6CAFA0251E006A000C9887 /* NextStepCollectionViewCell.swift in Sources */,
 				1A61EFF3250773DA00257CB5 /* ConfirmationPopUpFirstTableViewCell.swift in Sources */,
 				1AF8188524F64B0E00C52286 /* CoachSelectionViewController.swift in Sources */,
 				1A67F07F2500F72400CCC00B /* CoachSelectionService.swift in Sources */,
 				1A5470F124B5D2AE005F1058 /* AppConstants.swift in Sources */,
+				1A8B5043251B6A0E00111C77 /* NoteCollectionViewCell.swift in Sources */,
 				1A5470EA24B5D2AE005F1058 /* FileManager.swift in Sources */,
 				1A54711424B5E2E0005F1058 /* NibView.swift in Sources */,
 				1A54707524B5D241005F1058 /* ModifiedRegisterViewController.swift in Sources */,
 				1A54708424B5D242005F1058 /* ForgotPasswordService.swift in Sources */,
+				1A8B502F251A07D000111C77 /* AppointmentDetailViewController.swift in Sources */,
 				1A5470A524B5D264005F1058 /* UserInfoService.swift in Sources */,
 				1A54711824B5E2E0005F1058 /* UIImageView.swift in Sources */,
 				1A54707424B5D241005F1058 /* VerificationPendingViewController.swift in Sources */,
+				1A8B5046251C73E400111C77 /* NotesCollectionViewlayout.swift in Sources */,
 				1A54711924B5E2E0005F1058 /* UILabel.swift in Sources */,
 				1A54707124B5D241005F1058 /* LoginNavigationViewController.swift in Sources */,
 				1A78314C24F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.swift in Sources */,
@@ -1283,8 +1419,10 @@
 				1A5470F024B5D2AE005F1058 /* PasswordValidator.swift in Sources */,
 				1A5470E924B5D2AE005F1058 /* StringValidation.swift in Sources */,
 				1A78315F24F8D4110054AAF8 /* CoachAluminiSelectionTableViewCell.swift in Sources */,
+				1A0053AA251761180065C63E /* DashBoardAppointmentTableViewCell.swift in Sources */,
 				1A5470F524B5D2AE005F1058 /* LogoutHandler.swift in Sources */,
 				1A54708A24B5D242005F1058 /* StudentIndustrySurvey.swift in Sources */,
+				1A8B5036251A1E4A00111C77 /* AppoinmentdetailViewModal.swift in Sources */,
 				1A61EFFB250A13E300257CB5 /* ConfirmationPopupFileShareTableViewCell.swift in Sources */,
 				1A0053A52511ED780065C63E /* HomeMyAppointmentTableViewController.swift in Sources */,
 				1A54706B24B5D241005F1058 /* SelectCommunityViewController.swift in Sources */,
@@ -1298,6 +1436,7 @@
 				1A54700B24B59460005F1058 /* SceneDelegate.swift in Sources */,
 				1A5470DF24B5D2AE005F1058 /* String.swift in Sources */,
 				1A5470DD24B5D2AE005F1058 /* ManageSingleton.swift in Sources */,
+				1A0053A725173E130065C63E /* DashBoardStudentAppointmentVM.swift in Sources */,
 				1A5470E124B5D2AE005F1058 /* StoryboardExtensions.swift in Sources */,
 				1A5470EF24B5D2AE005F1058 /* AESEncryption.swift in Sources */,
 				1A54712724B74959005F1058 /* ERLoginViewController.swift in Sources */,
@@ -1323,6 +1462,7 @@
 				1A54709D24B5D264005F1058 /* AppShortcuts.swift in Sources */,
 				1A5470A824B5D264005F1058 /* ResumeUrls.swift in Sources */,
 				1A54707824B5D241005F1058 /* ForgotPasswordViewController.swift in Sources */,
+				1AE9E7FF252C881300843D88 /* EditNotesViewController.swift in Sources */,
 				1A54708D24B5D242005F1058 /* StudentFunctionSurvey.swift in Sources */,
 				1A67F083250208EE00CCC00B /* CoachSelectionTableView.swift in Sources */,
 				1A5470A724B5D264005F1058 /* TrackingServices.swift in Sources */,
@@ -1336,6 +1476,8 @@
 				1A5470F824B5D2AE005F1058 /* CustomNavigationController.swift in Sources */,
 				1A67F07D2500F1CF00CCC00B /* completeModal.swift in Sources */,
 				1A5470E824B5D2AE005F1058 /* WebViewController.swift in Sources */,
+				1A6CAF96251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.swift in Sources */,
+				1A79151D25383C7900BC0AA7 /* FeedbackViewController.swift in Sources */,
 				1A5470D424B5D2AE005F1058 /* CTRegionHighlighter.swift in Sources */,
 				1A5470EC24B5D2AE005F1058 /* SubscriptionType.swift in Sources */,
 				1A54711624B5E2E0005F1058 /* UITextField.swift in Sources */,
@@ -1349,10 +1491,13 @@
 				1A1DD5A724FE3CC90005250C /* TimeZoneViewController.swift in Sources */,
 				1A5470A624B5D264005F1058 /* Network.swift in Sources */,
 				1A5470F924B5D2AE005F1058 /* Extensions.swift in Sources */,
+				1A8B5033251A07E500111C77 /* AppointmentFeedbackViewController.swift in Sources */,
+				1AD257C6253DABE5004E622A /* FeedBackModal.swift in Sources */,
 				1A78314E24F8D37F0054AAF8 /* HorizontalCalender.swift in Sources */,
 				1A54711224B5E2E0005F1058 /* UIView.swift in Sources */,
 				1A54708C24B5D242005F1058 /* ResumeSurveyQuestion.swift in Sources */,
 				1A54707724B5D241005F1058 /* DemoViewController.swift in Sources */,
+				1A6CAF9A251DFEE3000C9887 /* NextStepAppointmentTableViewCell.swift in Sources */,
 				1A54710624B5DF64005F1058 /* SelectUserTypeViewController.swift in Sources */,
 				1A5470EE24B5D2AE005F1058 /* CustomWindow.swift in Sources */,
 				1A78314D24F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.swift in Sources */,

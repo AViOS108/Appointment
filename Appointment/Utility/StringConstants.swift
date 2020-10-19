@@ -73,10 +73,18 @@ class StringConstants{
     static let cantDeselectAll = "You have to select atleast one coach or alumini"
     static let FetchingCoachSelection = "Fetching Data... "
 
+    
+    
+    static let SavingNotes = "Saving Notes... "
+    static let DeletingNotes = "Deleting Notes... "
+
+    static let FeedbackNotes = "Submit Feedback... "
+
     static let PURPOSEERROR = "Please select atleast one purpose"
     static let CONFIRMAPPOINTMENT = "Confirming Appointment..."
     static let KUPGRADETOLATESTOS = "This particular functionality needs latest OS, please upgarde your iOS version"
     static let coachInfoApiLoader = "Getting coach details"
+    static let appointmentInfoApiLoader = "Getting Appointment details"
 
     
 }

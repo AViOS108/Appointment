@@ -93,6 +93,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
     
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        let appVersion = CommonFunctions.getAppVersion()
+        let iosResumeMinimumVersion = UserDefaultsDataSource(key: "iosResumeMinimumVersion").readData() as? String
+        if let minVersion = iosResumeMinimumVersion, CommonFunctions.isProvidedVersionGreater(than : appVersion , providedVersion : minVersion) {
+//            NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
+//            return
+        }
+        updateUserInfo()
+        AppDataSync.shared.beginTimer()
+    }
+    
+    
+    
+    
+    func updateUserInfo(){
+           let loggedInStatus = (UserDefaultsDataSource(key: "loggedIn").readData() as? Bool) ?? false
+           if loggedInStatus {
+               let isPremium = SubscriptionType.get()
+               LoginService().getUserInfo({ response in
+                   if isPremium != SubscriptionType.get() {
+//                       NotificationCenter.default.post(name: Notification.Name("changePremiumStatus"), object: nil)
+                   }
+                   LoginService().getCustomizations({ response in
+//                       NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
+                   },failure: {(error,errorCode) in
+                   })
+               }, failure: {(error,errorCode) in
+               })
+           }
+       }
+    
+    
+    
     
     @objc func checkLoginState(){
         

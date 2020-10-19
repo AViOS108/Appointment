@@ -24,11 +24,22 @@ class DashBoardViewModel  {
         DashboardService().coachListApi(params: params, { (jsonData) in
             
             self.activityIndicator?.hide()
-            var welcome = try? JSONDecoder().decode(DashBoardModel.self, from: jsonData)
-            let welcomeI = welcome?.coaches.sorted(by: { $0.name < $1.name })
-            welcome?.coaches.removeAll()
-            welcome?.coaches.append(contentsOf: welcomeI!)
-            success(welcome!)
+            
+            do{
+                var welcome = try JSONDecoder().decode(DashBoardModel.self, from: jsonData)
+                let welcomeI = welcome.coaches.sorted(by: { $0.name < $1.name })
+                
+              
+                    welcome.coaches.removeAll()
+                    welcome.coaches.append(contentsOf: welcomeI)
+                    success(welcome)
+                    
+                
+            }catch{
+                print("Unable to load data: \(error)")
+                CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
+            }
+            
             
         }) { (error, errorCode) in
             self.activityIndicator?.hide()

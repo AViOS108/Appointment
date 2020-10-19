@@ -15,18 +15,5 @@ struct TimeZoneModal: Codable {
     }
 }
 
-enum Group: String, Codable {
-    case africa = "Africa"
-    case america = "America"
-    case antarctica = "Antarctica"
-    case arctic = "Arctic"
-    case asia = "Asia"
-    case atlantic = "Atlantic"
-    case australia = "Australia"
-    case europe = "Europe"
-    case indian = "Indian"
-    case pacific = "Pacific"
-    case utc = "UTC"
-}
 
 typealias TimeZoneArr = [TimeZoneModal]

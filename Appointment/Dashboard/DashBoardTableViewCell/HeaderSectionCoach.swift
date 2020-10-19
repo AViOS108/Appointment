@@ -24,7 +24,18 @@ class HeaderSectionCoach: UITableViewHeaderFooterView {
     var sectionHeader : sectionHead?
     var delegate : HeaderSectionCoachDelegate?
     
+    @IBOutlet weak var nslayoutWidthSelectAllButton: NSLayoutConstraint!
     func customization() {
+        
+        if sectionHeader?.id == "-10" || sectionHeader?.id == "-09"
+        {
+            self.nslayoutWidthSelectAllButton.constant = 0
+            btnSelectAll.isHidden = true
+        }
+        else{
+            self.nslayoutWidthSelectAllButton.constant = 30
+            btnSelectAll.isHidden = false
+        }
         
         
         let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)

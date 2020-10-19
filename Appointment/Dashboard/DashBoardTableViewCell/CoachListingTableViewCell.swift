@@ -123,7 +123,7 @@ class CoachListingTableViewCell: UITableViewCell {
                 GeneralUtility.optionalHandling(_param: self.coachModal?.profilePicURL?.isBlank, _returnType: Bool.self)
             {
                 
-                self.imageView?.isHidden = true
+                self.imgView?.isHidden = true
                 self.lblImageView.isHidden = false
                 
                 var stringImg = GeneralUtility.startNameCharacter(stringName: self.coachModal?.name ?? " ")
@@ -140,7 +140,7 @@ class CoachListingTableViewCell: UITableViewCell {
             else
             {
                 self.lblImageView.isHidden = true
-                self.imageView?.isHidden = false
+                self.imgView?.isHidden = false
                 
             }
             

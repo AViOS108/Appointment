@@ -44,7 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             SlideMenuOptions.contentViewScale = 1.0
             windowI.backgroundColor = .clear
-            windowI.rootViewController = v1
+            windowI.rootViewController = navigationController
             windowI.makeKeyAndVisible()
         }else{
             let viewUserType = SelectUserTypeViewController.init(nibName: "SelectUserTypeViewController", bundle: nil);
@@ -70,7 +70,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     
                     window.makeKeyAndVisible()
               }    }
+    
+    
+    
+    func updateUserInfo(){
+             let loggedInStatus = (UserDefaultsDataSource(key: "loggedIn").readData() as? Bool) ?? false
+             if loggedInStatus {
+                 let isPremium = SubscriptionType.get()
+                 LoginService().getUserInfo({ response in
+                     if isPremium != SubscriptionType.get() {
+//                         NotificationCenter.default.post(name: Notification.Name("changePremiumStatus"), object: nil)
+                     }
+                     LoginService().getCustomizations({ response in
+//                         NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
+                     },failure: {(error,errorCode) in
+                     })
+                 }, failure: {(error,errorCode) in
+                 })
+             }
+         }
+    
+    
+    
+    
     @available(iOS 13.0, *)
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
@@ -79,8 +103,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     @available(iOS 13.0, *)
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        let appVersion = CommonFunctions.getAppVersion()
+        let iosResumeMinimumVersion = UserDefaultsDataSource(key: "iosResumeMinimumVersion").readData() as? String
+        if let minVersion = iosResumeMinimumVersion, CommonFunctions.isProvidedVersionGreater(than : appVersion , providedVersion : minVersion) {
+//            NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
+//            return
+        }
+        updateUserInfo()
+        AppDataSync.shared.beginTimer()
     }
     @available(iOS 13.0, *)
     func sceneWillResignActive(_ scene: UIScene) {

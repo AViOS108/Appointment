@@ -159,6 +159,46 @@ class GeneralUtility {
     }
     
     
+    class func customeNavigationBarMyAppoinment(viewController: UIViewController,title:String){
+           
+          
+           
+           let logOutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+           logOutButton.contentMode = .scaleAspectFit
+           //        searchButton.backgroundColor = .red
+           logOutButton.addTarget(viewController, action: #selector(SuperViewController.logout(sender:)), for: .touchUpInside)
+           logOutButton.setImage(UIImage.init(named: "logout-xxl"), for: .normal)
+           let logOut =  UIBarButtonItem(customView: logOutButton)
+           
+           
+           let hamburger = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+           hamburger.contentMode = .scaleAspectFit
+           //        searchButton.backgroundColor = .red
+           hamburger.addTarget(viewController, action: #selector(SuperViewController.humbergerCilcked(sender:)), for: .touchUpInside)
+           hamburger.setImage(UIImage.init(named: "humberger"), for: .normal)
+           let slider =  UIBarButtonItem(customView: hamburger)
+           viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
+           
+           viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut], animated: true)
+           viewController.navigationController?.navigationBar.topItem?.setLeftBarButtonItems([slider], animated: true)
+           
+           viewController.navigationController?.navigationBar.topItem?.title = title;
+           let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+           viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
+           viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+           
+           //        let bounds = viewController.navigationController!.navigationBar.bounds
+           //        viewController.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 64)
+           
+       }
+    
+    
+    
+    
+    
+    
+    
+    
     class func customeNavigationBarWithBack(viewController: UIViewController,title:String){
         let back = UIBarButtonItem(title: title, style: .plain, target: viewController, action: #selector(SuperViewController.buttonClicked(sender:)));
         back.image = UIImage.init(named: "Back");
@@ -179,7 +219,18 @@ class GeneralUtility {
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
     }
     
-    
+    class func customeNavigationBarWithOnlyBack(viewController: UIViewController,title:String){
+        let back = UIBarButtonItem(title: title, style: .plain, target: viewController, action: #selector(SuperViewController.buttonClicked(sender:)));
+        back.image = UIImage.init(named: "Back");
+        viewController.navigationItem.leftBarButtonItems = [back];
+
+        
+        viewController.navigationController?.navigationBar.isTranslucent = true
+        viewController.navigationController?.navigationBar.topItem?.title = title;
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+    }
     
     public class func optionalHandling<T>(_param: T!, _returnType: T.Type) -> T {
         if let value = _param {
@@ -267,6 +318,41 @@ class GeneralUtility {
     
     
     
+    
+    public  class func   todayDate() -> String {
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+           return dateFormatter.string(from: Date())
+       }
+    
+    
+    public  class func   isPastDate(date : String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = dateFormatter.date(from: date)
+        if date! < Date(){
+            return true
+        }
+        else{
+            
+        }
+        return false
+    }
+    
+    
+    
+    
+    public  class func   isFeedbackEnable(particpant : [Participant]) -> Bool {
+        let userEmail = UserDefaultsDataSource(key: "userEmail").readData() as? String
+        let partiLogic =  particpant.filter({$0.email == userEmail})
+        if partiLogic.count > 0 {
+            if partiLogic[0].feedback == nil{
+                 return true
+            }
+        }
+          return false
+      }
+    
     public  class func   currentDate(emiDate : String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -337,8 +423,20 @@ class GeneralUtility {
          return false
 
       }
-      
     
+    public  class func dateComponent(date: String,component: Calendar.Component)-> DateComponents?{
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateI = dateFormatter.date(from: date)
+        if let dateOp = dateI{
+            let tomorrow = Calendar.current.date(byAdding: .day, value: 0, to: dateI!)
+            return tomorrow!.get(component)
+        }
+        else{
+            return nil
+        }
+    }
     
     
     
@@ -378,6 +476,27 @@ class GeneralUtility {
         return ""
     }
     
+    
+      public  class func   currentDateDetailType4(emiDate : String) -> String {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+    //
+    //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+            let date = dateFormatter.date(from: emiDate)
+            dateFormatter.dateFormat = "dd MMM yyyy"
+            if let dateF  = date{
+                return dateFormatter.string(from: dateF)
+            }
+            
+            return ""
+        }
+        
+    
+    
+    
+    
     public  class func   currentDateDetailType3(emiDate : String) -> String {
         
         let dateString = emiDate
@@ -400,6 +519,32 @@ class GeneralUtility {
       
         return ""
     }
+    
+    
+    public  class func   startAndEndDateDetail(startDate : String,endDate : String) -> String {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let token = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
+        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        if let date = formatter.date(from: startDate), let enddate = formatter.date(from: endDate) {
+            formatter.timeZone = TimeZone.init(identifier: token)
+            formatter.dateFormat = "yyyy-MM-dd hh:mm a"
+            let strTime = formatter.string(from: date)
+            formatter.timeZone = TimeZone.init(identifier: token)
+            formatter.dateFormat = "hh:mm a"
+            let endTime = formatter.string(from: enddate)
+            return strTime.lowercased() + " - " + endTime.lowercased()
+        }
+        return ""
+    }
+    
+    
+    
+    
+    
+    
     
     
     public  class func   monthFromGivenDate(emiDate : String) -> String {

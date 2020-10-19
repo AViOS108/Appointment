@@ -18,8 +18,6 @@ protocol CoachImageOverlayViewDelegate {
 
 class CoachImageOverlayView: UIView, UICollectionViewDataSource,UICollectionViewDelegate,CoachImageOverlayLayoutDelegate {
    
-
-    
     func collectionViewReload(width: Int)  {
         viewcontrollerI.nslayoutconstraintWidthCollection.constant = CGFloat(width)
         viewCollection.frame.size.width = CGFloat(width)
@@ -56,8 +54,6 @@ class CoachImageOverlayView: UIView, UICollectionViewDataSource,UICollectionView
     }
     
     
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (viewcontrollerI.selectedDataFeedingModal?.coaches.count)!
      }
@@ -81,6 +77,5 @@ class CoachImageOverlayView: UIView, UICollectionViewDataSource,UICollectionView
         
     }
    
-
 }
 

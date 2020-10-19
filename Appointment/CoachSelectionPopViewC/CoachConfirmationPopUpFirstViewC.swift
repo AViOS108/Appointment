@@ -228,7 +228,7 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
             , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
         let nextLine1 = NSAttributedString.init(string: "\n")
         
-        let strLocation = NSAttributedString.init(string: results.locationsUniversityRoom!
+        let strLocation = NSAttributedString.init(string: results.locationsUniversityRoom ?? ""
             , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
         let paraSlot = NSMutableParagraphStyle.init()
         //            para.alignment = .center

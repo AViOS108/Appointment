@@ -130,7 +130,8 @@ class LoginService{
             if response["error"]["code"] != JSON.null{
                 failure(response["error"]["message"].string!,response["error"]["code"].int!)
             }else{
-                if response["threshold_score_to_request_feedback"] != nil {
+                if response["threshold_score_to_request_feedback"].exists()
+                {
                     UserDefaultsDataSource(key: "thresholdScore").writeData(response["threshold_score_to_request_feedback"].int! + 1)
                 }else{
                     UserDefaultsDataSource(key: "thresholdScore").writeData(0)

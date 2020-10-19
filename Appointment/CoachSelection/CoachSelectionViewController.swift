@@ -74,13 +74,9 @@ class CoachSelectionViewController: SuperViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         GeneralUtility.customeNavigationBarWithBack(viewController: self,title:"Schedule");
-        
-        
-        
-        
         UserDefaultsDataSource(key: "timeZoneOffset").writeData(TimeZone.current.identifier)
 
-        
+
         // Do any additional setup after loading the view.
     }
     
@@ -404,8 +400,6 @@ extension CoachSelectionViewController:CoachAluminiSelectionTableViewCellDelegat
 
 extension CoachSelectionViewController{
     // Time Zone
-    
-    
     @IBAction func btnSelectTimeZoneTapped(_ sender: UIButton) {
         let frameI =
         txtTimeZone.superview?.convert(txtTimeZone.frame, to: nil)
@@ -414,9 +408,7 @@ extension CoachSelectionViewController{
         self.present(timeZoneViewController, animated: false) {
             self.timeZoneViewController.reloadTableview()
         }
-        
     }
-    
 }
 
 
@@ -612,11 +604,7 @@ CoachConfirmationPopUpSecondViewCDelegate
         self.present(coachConfirmation, animated: false) {
             
         }
-        
-        
     }
-    
-
     
     func studentHit()
     {
@@ -628,10 +616,10 @@ CoachConfirmationPopUpSecondViewCDelegate
                 }
                 else
                 {
-                    self.studentHit()
+//                    self.studentHit()
                 }
             } catch  {
-                self.studentHit()
+//                self.studentHit()
             }
             
             
@@ -648,11 +636,11 @@ CoachConfirmationPopUpSecondViewCDelegate
             do {
                    try self.setupStudentIndustries(response: response);
             } catch {
-                self.studentIndustries()
+//                self.studentIndustries()
             }
             
         }) { (error, errorCode) in
-            self.studentIndustries()
+//            self.studentIndustries()
         }
     }
     

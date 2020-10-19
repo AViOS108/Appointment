@@ -19,6 +19,8 @@ enum RedirectionType {
     case profile
     case about
     case coachSelection
+    case feedback
+    case appointmentDetail
 }
 
 
@@ -28,10 +30,10 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     
     var calenderModal: CalenderModal?
-
+    
     @IBOutlet weak var btnSelectMuliple: UIButton!
     var isAnyCoachSelected = false
-
+    
     
     @IBAction func btnSelectMultipleTapped(_ sender: Any) {
         self.redirection(redirectionType: .coachSelection)
@@ -48,24 +50,94 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     @IBOutlet weak var viewHeader: UIView!
     var dataFeedingModal : DashBoardModel?
     var selectedDataFeedingModal : DashBoardModel?
-
+    
     var dashBoardViewModal = DashBoardViewModel()
+    var dashBoardViewStudentApVModal = DashBoardStudentAppointmentVM()
+    var selectedAppointmentModal : OpenHourCoachModalResult?
+    
+    
+    
+    var dataFeedingAppointmentModal :OpenHourCoachModal?
+    var dataFeedingAppointmentModalConst :OpenHourCoachModal?
+    
+    var tableviewHandlerAppointment = HomeMyAppointmentTableViewController()
+    
+    
+    
     var dataFeedingModalConst : DashBoardModel?
     var tableviewHandler = HomeTableView()
     override func viewDidLoad() {
         super.viewDidLoad()
-          self.callingViewModal()
+        UserDefaultsDataSource(key: "timeZoneOffset").writeData(TimeZone.current.identifier)
+
+        switch userTypeHome {
+        case .Student:
+            self.callingViewModal()
+                         break;
+        case .StudentMyAppointment:
+            
+            self.studentAppoimnetViewModal()
+            break;
+            
+            
+        default:
+            break;
+        }
+        
+        
         self.view.backgroundColor = ILColor.color(index: 22)
         
-        GeneralUtility.customeNavigationBar(viewController: self,title:"Schedule");
+       
         // Do any additional setup after loading the view.
     }
-   
+    
     override func searchEvent(sender: UIBarButtonItem) {
-     GeneralUtility.customeNavigationBarTextfield(viewController: self, searchText: "");
+        
+        
+        switch userTypeHome {
+        case .Student:
+            
+            guard dataFeedingModalConst != nil else {
+               
+                return
+            }
+            
+            GeneralUtility.customeNavigationBarTextfield(viewController: self, searchText: "");
+            break;
+        case .StudentMyAppointment:
+            
+            guard dataFeedingAppointmentModalConst != nil else {
+                return
+            }
+            
+            
+            GeneralUtility.customeNavigationBarTextfield(viewController: self, searchText: "");
+            
+            break;
+            
+        default:
+            break;
+        }
+        
+        
     }
     
     override  func calenderClicked(sender: UIButton) {
+        
+        switch userTypeHome {
+        case .Student:
+            guard dataFeedingModalConst != nil else {
+                return
+            }
+            break;
+        case .StudentMyAppointment:
+            guard dataFeedingAppointmentModalConst != nil else {
+                return
+            }
+            break;
+        default:
+            break;
+        }
         let frame = sender.convert(sender.frame, from:AppDelegate.getDelegate().window)
         let viewCalender = CalenderViewController.init(nibName: "CalenderViewController", bundle: nil)
         viewCalender.viewControllerI = self
@@ -94,10 +166,10 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         if self.dataFeedingModal?.coaches.count == 0
         {
             let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
-
+            
             self.viewZeroState.isHidden = false
             self.viewZeroState.backgroundColor = ILColor.color(index: 22)
-
+            
             self.tblView.isHidden = true
             UILabel.labelUIHandling(label: lblZeroState, text: "No Coach/Alumni available for schedule", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)
             self.imageViewZeroState.image = UIImage.init(named: "nocoach_Alumni")
@@ -110,7 +182,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     }
     
     func isCoachSelected()  {
-       
+        
         
         isAnyCoachSelected = false
         guard self.dataFeedingModal != nil else {
@@ -138,19 +210,36 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         
-//        self.dashBoardViewModal.fetchTimeZoneCall { (timeArr) in
-//
-//                          }
+
+               
+               
+        
+        switch userTypeHome {
+        case .Student:
+            studentBottomLogic()
+            GeneralUtility.customeNavigationBar(viewController: self,title:"Schedule");
+            break;
+        case .StudentMyAppointment:
+             GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"My Appoinment");
+            
+            break;
+            
+        default:
+            break;
+        }
         
         
-       
+    }
+    
+    func studentBottomLogic()  {
         btnSelectMuliple.isHidden = true
         let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
-
+        
         UIButton.buttonUIHandling(button: btnSelectMuliple, text: "Schedule an appointment", backgroundColor:ILColor.color(index: 23)  , textColor:.white , cornerRadius: 5, isUnderlined: false, fontType: fontHeavy2)
         
         self.isCoachSelected()
     }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         self.dataFeedingModal = self.dataFeedingModalConst
         if searchBar.text != ""
@@ -164,10 +253,10 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         }
         searchBar.resignFirstResponder();
     }
-
+    
     
     func callingViewModal()  {
-       
+        
         let param : Dictionary<String, AnyObject> = ["roles":["external_coach","career_coach"]] as Dictionary<String, AnyObject>
         
         dashBoardViewModal.viewController = self
@@ -194,8 +283,8 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     }
     
     
-
-   
+    
+    
     func customization()  {
         switch userTypeHome {
         case .ER:
@@ -218,12 +307,13 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     
     
-
+    
 }
 
 extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCoachDelegate{
     
     func withSeeAll(modal: sectionHead, seeMore: Bool)  {
+        
         let index =    self.dataFeedingModal?.sectionHeader?.firstIndex(where: {$0.id == modal.id})
         
         var selectedHeader =   self.dataFeedingModal?.sectionHeader!.filter{
@@ -267,6 +357,7 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
         self.zeroStateLogic()
         isCoachSelected()
         self.reloadTablviewCocahList()
+        
         
         
     }
@@ -331,43 +422,68 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
         self.zeroStateLogic()
         isCoachSelected()
         self.reloadTablviewCocahList()
-
+        
     }
     
     func changeModal(modal: sectionHead, seeMore: Bool) {
-        let index =    self.dataFeedingModal?.sectionHeader?.firstIndex(where: {$0.id == modal.id})
-        var selectedHeader =   self.dataFeedingModal?.sectionHeader!.filter{
-            $0.id == modal.id
-            }[0];
-        let selectedHeaderI = selectedHeader;
         
-        if seeMore{
-            selectedHeader?.seeAll = !selectedHeaderI!.seeAll
-            self.dataFeedingModal?.sectionHeader?.remove(at: index!)
-            self.dataFeedingModal?.sectionHeader?.insert(selectedHeader!, at: index!)
-            self.zeroStateLogic()
-            isCoachSelected()
-            self.reloadTablviewCocahList()
+        if modal.id == "-10" || modal.id == "-09"{
+            // MY APPOINTMENT LOGIC
+            let index =    self.dataFeedingAppointmentModal?.sectionHeader?.firstIndex(where: {$0.id == modal.id})
+            var selectedHeader =   self.dataFeedingAppointmentModal?.sectionHeader!.filter{
+                $0.id == modal.id
+                }[0];
+            var selectedHeaderI = selectedHeader;
+            selectedHeaderI!.seeAll = !selectedHeader!.seeAll
+            self.dataFeedingAppointmentModal?.sectionHeader?.remove(at: index ?? 0)
+            self.dataFeedingAppointmentModal?.sectionHeader?.insert(selectedHeaderI!, at: index ?? 0)
+            self.zeroStateLogicAppointment()
+            tableviewHandlerAppointment.customizaTionMyApointment()
             
         }
-        else
-        {
-            if selectedHeaderI!.seeAll{
-                self.withSeeAll(modal: modal, seeMore: seeMore)
+        else{
+            
+            
+            let index =    self.dataFeedingModal?.sectionHeader?.firstIndex(where: {$0.id == modal.id})
+            var selectedHeader =   self.dataFeedingModal?.sectionHeader!.filter{
+                $0.id == modal.id
+                }[0];
+            let selectedHeaderI = selectedHeader;
+            
+            if seeMore{
+                selectedHeader?.seeAll = !selectedHeaderI!.seeAll
+                self.dataFeedingModal?.sectionHeader?.remove(at: index!)
+                self.dataFeedingModal?.sectionHeader?.insert(selectedHeader!, at: index!)
+                self.zeroStateLogic()
+                isCoachSelected()
+                self.reloadTablviewCocahList()
+                
             }
             else
             {
-                if (self.dataFeedingModal?.coaches.count)! < 2
-                {
-                    self.withSeeAll(modal: modal, seeMore: seeMore)
-                }
-                else{
-                    self.withSeeLess(modal: modal, seeMore: seeMore)
+                
+                if (self.dataFeedingModal?.coaches.filter({$0.roleMachineName.rawValue == modal.id}).count ?? 0) <= 0{
+                    return
                 }
                 
+                
+                
+                if selectedHeaderI!.seeAll{
+                    self.withSeeAll(modal: modal, seeMore: seeMore)
+                }
+                else
+                {
+                    if (self.dataFeedingModal?.coaches.count)! < 2
+                    {
+                        self.withSeeAll(modal: modal, seeMore: seeMore)
+                    }
+                    else{
+                        self.withSeeLess(modal: modal, seeMore: seeMore)
+                    }
+                    
+                }
             }
         }
-       
     }
     
     
@@ -390,10 +506,10 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
         isCoachSelected()
         self.reloadTablviewCocahList()
     }
-
+    
     func changeBottomBtn(isVisible: Bool)  {
-            btnSelectMuliple.isHidden = !isVisible
-       
+        btnSelectMuliple.isHidden = !isVisible
+        
     }
     
     func scheduleAppoinment(modal: Coach) {
@@ -430,7 +546,7 @@ extension HomeViewController : HomeViewcontrollerRedirection{
             else
             {
                 coaches.isExpanded = false
-
+                
             }
             coachesI.append(coaches)
             index += 1
@@ -456,12 +572,20 @@ extension HomeViewController : HomeViewcontrollerRedirection{
     
 }
 
-extension HomeViewController: CalenderViewDelegate{
+extension HomeViewController: CalenderViewDelegate,feedbackViewControllerDelegate{
+    func feedbackSucessFullySent() {
+        dashBoardViewStudentApVModal.customizeVM();
+
+    }
+    
     func dateSelected(calenderModal: CalenderModal) {
         self.calenderModal = calenderModal
         self.redirection(redirectionType: .coachSelection)
         
     }
+    
+    
+    
 }
 
 
@@ -487,9 +611,125 @@ extension HomeViewController{
             break
         case .profile:
             break
+            
+        case .feedback:
+            let objFeedbackViewController = FeedbackViewController.init(nibName: "FeedbackViewController", bundle: nil)
+            
+            objFeedbackViewController.delegate = self
+            objFeedbackViewController.selectedAppointmentModal = selectedAppointmentModal
+            
+            objFeedbackViewController.modalPresentationStyle = .overFullScreen
+            self.present(objFeedbackViewController, animated: false, completion: nil)
+            
+            
+            break
+        case .appointmentDetail:
+            
+            let appoinmentDetailViewController = AppointmentDetailViewController.init(nibName: "AppointmentDetailViewController", bundle: nil)
+            
+            appoinmentDetailViewController.selectedAppointmentModal = selectedAppointmentModal
+            self.navigationController?.pushViewController(appoinmentDetailViewController, animated: false)
+            
+            
+            break
+            
+            
         default:
             break
         }
     }
     
 }
+
+
+// ALL STUDENT APPOINMENT LOGIC
+
+extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppointmentTableViewCellDelegate{
+    func redirectAppoinment(openMOdal: OpenHourCoachModalResult, isFeedback: Bool) {
+        
+        selectedAppointmentModal = openMOdal;
+        
+        if isFeedback{
+            self.redirection(redirectionType: .feedback)
+
+        }
+        else{
+            self.redirection(redirectionType: .appointmentDetail)
+
+        }
+        
+    }
+    
+    
+    
+    
+    func sentDataViewController(dataAppoinmentModal: OpenHourCoachModal) {
+        
+        self.dataFeedingAppointmentModal = dataAppoinmentModal
+        var sectionHeaderI = [sectionHead]()
+        let section1 = sectionHead.init(name: "Upcoming Appointments", id:"-09", selectAll: false, seeAll: false)
+        sectionHeaderI.append(section1);
+        let section2 = sectionHead.init(name: "Past Apointment", id:"-10", selectAll: false, seeAll: false)
+        sectionHeaderI.append(section2);
+        self.dataFeedingAppointmentModal?.sectionHeader = sectionHeaderI
+        self.dataFeedingAppointmentModalConst = self.dataFeedingAppointmentModal;
+        self.zeroStateLogicAppointment()
+        self.customizationAppointment()
+        
+        
+    }
+    func zeroStateLogicAppointment()  {
+        if self.dataFeedingAppointmentModal?.results?.count == 0
+        {
+            let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
+            
+            self.viewZeroState.isHidden = false
+            self.viewZeroState.backgroundColor = ILColor.color(index: 22)
+            
+            self.tblView.isHidden = true
+            UILabel.labelUIHandling(label: lblZeroState, text: "No Appointments available", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)
+            self.imageViewZeroState.image = UIImage.init(named: "nocoach_Alumni")
+        }
+        else{
+            self.viewZeroState.isHidden = true
+            self.tblView.isHidden = false
+            
+        }
+    }
+    
+    func customizationAppointment()  {
+        btnSelectMuliple.isHidden = true
+        
+        let myView = Bundle.loadView(fromNib: "HorizontalCalender", withType: HorizontalCalender.self)
+        myView.frame = CGRect.init(x: 0, y: 0, width: viewHeader.frame.width, height: viewHeader.frame.height);
+        viewHeader.addSubview(myView);
+        myView.enumHeadType = .student
+        myView.customize()
+        
+        tableviewHandlerAppointment.viewControllerI = self
+        tblView.register(UINib.init(nibName: "DashBoardAppointmentTableViewCell", bundle: nil), forCellReuseIdentifier: "DashBoardAppointmentTableViewCell")
+        
+        let headerNib = UINib.init(nibName: "HeaderSectionCoach", bundle: Bundle.main)
+        tblView.register(headerNib, forHeaderFooterViewReuseIdentifier: "HeaderSectionCoach")
+        tableviewHandlerAppointment.customizaTionMyApointment()
+    }
+    
+    
+    
+    func studentAppoimnetViewModal()  {
+        dashBoardViewStudentApVModal.viewController = self
+        dashBoardViewStudentApVModal.delegate = self
+        let viewcontrollerfirst = ((self.tabBarController?.viewControllers![0])! as! HomeViewController)
+        if viewcontrollerfirst.dataFeedingModalConst != nil{
+            dashBoardViewStudentApVModal.dashBoardModal = viewcontrollerfirst.dataFeedingModalConst
+        }
+        dashBoardViewStudentApVModal.customizeVM();
+        
+    }
+    
+}
+
+
+
+
+

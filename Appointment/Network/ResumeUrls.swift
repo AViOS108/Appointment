@@ -23,6 +23,7 @@ class Urls {
     
     static let devEnvEvents = "https://employerdev.vmock.com/khagesh/api/calendar-management/public/"
     static let testEnvEvents = "https://employerdev.vmock.com/khagesh/api/test-calendar-management/public/"
+    
     static let stagingEnvEvents = "https://api-employer-staging.vmock.com/calendar-management/"
     static let liveEnvEvents = "https://api-employer.vmock.com/calendar-management/"
     
@@ -33,6 +34,10 @@ class Urls {
     static let liveShareEvents = "https://vmock.com/dashboard/events/my-events"
     
     
+    static let testEnvNotes = "https://employerdev.vmock.com/khagesh/api/test-notes/public/"
+
+    
+    
     
     #if DEVELOPMENT
         static let runningEnv = testEnv
@@ -40,13 +45,22 @@ class Urls {
         static let runningEnvJobs = testEnvJobs
         static let runningEnvEvents = testEnvEvents
         static let SharingEvents = testShareEvents
-    
+        static let runningEnvNotes = testEnvNotes
+
     #else
-        static let runningEnv = liveEnv
-        static let runningHost = liveHost
-        static let runningEnvJobs = liveEnvJobs
-        static let runningEnvEvents = liveEnvEvents
-        static let SharingEvents = liveShareEvents
+    
+    static let runningEnv = testEnv
+         static let runningHost = testHost
+         static let runningEnvJobs = testEnvJobs
+         static let runningEnvEvents = testEnvEvents
+         static let SharingEvents = testShareEvents
+        static let runningEnvNotes = testEnvNotes
+
+//        static let runningEnv = liveEnv
+//        static let runningHost = liveHost
+//        static let runningEnvJobs = liveEnvJobs
+//        static let runningEnvEvents = liveEnvEvents
+//        static let SharingEvents = liveShareEvents
     #endif
     
 //    var type1 = "\(devEnv)ravindra2/dashboard/accounts/public/api/v1/"
@@ -268,6 +282,17 @@ class Urls {
       }
     
     
+       func nextStepAppointment(id:String) -> String {
+                 return "\(typeEvent1)students/appointment-slots/"+id+"/next-steps"
+             
+         }
+    
+    func notesAppointment(id:String) -> String {
+        return "\(Urls.runningEnvNotes)api/v1/student/notes/list"
+                
+            }
+   
+    
     
     func eventErChalleges(stringEmail:String) -> String {
            return "\(ErLoginType1)auth/login/challenges?email=\(stringEmail)"
@@ -341,5 +366,27 @@ class Urls {
                return "\(typeJob2)student/global-companies/name"
            
        }
+    
+    func saveNotes()-> String{
+        
+        return "\(Urls.testEnvNotes)api/v1/student/notes"
+        
+    }
+    
+    func deletesNotes(id: String)-> String{
+           
+           return "\(Urls.testEnvNotes)api/v1/student/notes/" + id
+           
+       }
+       
+   
+    func feedBack(id: String)-> String{
+             
+             return "\(Urls.testEnvEvents)api/v1/students/appointment-slots/\(id)/feedback"
+             
+         }
+    
+    
+    
     
 }

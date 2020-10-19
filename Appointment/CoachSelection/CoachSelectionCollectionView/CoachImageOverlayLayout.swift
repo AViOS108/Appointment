@@ -70,7 +70,16 @@ class CoachImageOverlayLayout: UICollectionViewLayout {
        var column = 0
        var yOffset: [CGFloat] = .init(repeating: 0, count: numberOfColumns)
        // 3
-        for item in 0..<collectionView.numberOfItems(inSection: 0) {
+         var  index = 0
+        var totalColloumn = 0
+        if numberOfColumns < collectionView.numberOfItems(inSection: 0){
+            totalColloumn = numberOfColumns
+        }
+        else{
+             totalColloumn = collectionView.numberOfItems(inSection: 0)
+        }
+        
+        for item in 0..<totalColloumn {
             let indexPath = IndexPath(item: item, section: 0)
             // 4
             let photoHeight = 44
@@ -83,10 +92,12 @@ class CoachImageOverlayLayout: UICollectionViewLayout {
             // 5
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = frame
+            attributes.zIndex = index
             cache.append(attributes)
             // 6
+            index = index + 2
+
             contentWidth = max(contentWidth, frame.maxX)
-            yOffset[column] = 0
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
         }
 
@@ -98,13 +109,12 @@ class CoachImageOverlayLayout: UICollectionViewLayout {
        var visibleLayoutAttributes: [UICollectionViewLayoutAttributes] = []
        
        // Loop through the cache and look for items in the rect
-           var index = 0;
+         
        for attributes in cache {
          if attributes.frame.intersects(rect) {
-           attributes.zIndex = index
+//            attributes.zIndex = index
            visibleLayoutAttributes.append(attributes)
          }
-//         index = index + 2
        }
 
        return visibleLayoutAttributes

@@ -142,14 +142,51 @@ import UIKit
             return UIColor.init(red: 242/255, green: 251/255, blue: 255/255, alpha: 1.0)
         }
         else if index == 31 {
-                   // secondary color #151515
-                   return UIColor.init(red: 21/255, green: 21/255, blue: 21/255, alpha: 1.0)
+            // secondary color #151515
+            return UIColor.init(red: 21/255, green: 21/255, blue: 21/255, alpha: 1.0)
+        }
+            
+        else if index == 32 {
+            // secondary color #adadad
+            return UIColor.init(red: 173/255, green: 173/255, blue: 173/255, alpha: 1.0)
+        }
+        else if index == 33 {
+            // secondary color #ee4c3c
+            return UIColor.init(red: 238/255, green: 76/255, blue: 60/255, alpha: 1.0)
+        }
+        else if index == 34 {
+            // secondary color #363636
+            return UIColor.init(red: 54/255, green: 54/255, blue: 54/255, alpha: 1.0)
+        }
+        
+        else if index == 35 {
+                   // secondary color #2a363b
+            return UIColor.init(red: 43/255, green: 45/255, blue: 47/255, alpha: 1)
                }
         
-        else if index == 32 {
-                          // secondary color #adadad
-                          return UIColor.init(red: 173/255, green: 173/255, blue: 173/255, alpha: 1.0)
-                      }
+        else if index == 36 {
+               // secondary color #6a6a6a
+        return UIColor.init(red: 106/255, green: 106/255, blue: 106/255, alpha: 1)
+           }
+        else if index == 37 {
+               // secondary color #4e4e4e
+        return UIColor.init(red: 76/255, green: 76/255, blue: 76/255, alpha: 1)
+           }
+        else if index == 38 {
+            // secondary color #383838
+            return UIColor.init(red: 56/255, green: 56/255, blue: 56/255, alpha: 1.0)
+        }
+        else if index == 39 {
+            // secondary color #5f5f5f
+            return UIColor.init(red: 95/255, green: 95/255, blue: 95/255, alpha: 1.0)
+        }
+        else if index == 40 {
+                   // secondary color #2b2b2b
+                   return UIColor.init(red: 43/255, green: 43/255, blue: 43/255, alpha: 1.0)
+               }
+
+
+        
         return UIColor.clear
     }
 }

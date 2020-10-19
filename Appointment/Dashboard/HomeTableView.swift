@@ -16,6 +16,12 @@ class HomeTableView: UIViewController, UITableViewDelegate,UITableViewDataSource
     var nocoach = false,noAlumini = false
     
     func customization()  {
+        
+        guard viewControllerI != nil else {
+                return
+        }
+        
+        
         viewControllerI.tblView.delegate = self
         viewControllerI.tblView.dataSource = self
         if (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "career_coach"

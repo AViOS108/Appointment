@@ -82,6 +82,8 @@ extension UIViewController {
         textVIew.inputAccessoryView = toolbar
     }
     
+    
+       
     func reloadViewFromNib() {
         let parent = view.superview
         view.removeFromSuperview()
