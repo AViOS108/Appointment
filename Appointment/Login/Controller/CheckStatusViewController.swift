@@ -9,9 +9,56 @@
 import UIKit
 import SwiftyJSON
 import TTTAttributedLabel
+import AuthenticationServices
 
 class CheckStatusViewController: CustomizedViewController {
     
+    @IBOutlet weak var btnAppleIDSign: UIButton!
+
+    @IBAction func appleSignTapped(_ sender: Any) {
+        
+        let appleClientId = UserDefaultsDataSource(key: "appleClientId").readData() as? String
+        let appleScope = UserDefaultsDataSource(key: "appleScope").readData() as? String
+        let appleResponseType = UserDefaultsDataSource(key: "appleResponseType").readData() as? String
+        let appleUrl = UserDefaultsDataSource(key: "appleUrl").readData() as? String
+        
+        if let appleScope = appleScope,let appleClientId = appleClientId,let appleResponseType = appleResponseType,let appleUrl = appleUrl {
+            
+            
+            let url = URL(string: "\(appleUrl)?client_id=\(appleClientId)&&scope=\(appleScope)&&redirect_uri=\(self.redirectURL)?provider=apple&&state=\(self.state)&&response_type=\(appleResponseType)&&auth_type=rerequest")
+         
+            if #available(iOS 13.0, *) {
+                      self.emailTextField.text = ""
+                      UserDefaultsDataSource(key: "userEmail").removeData()
+                      let social = UIStoryboard.socialLoginView()
+                      social.state = self.state
+                      social.provider = "apple"
+                      social.link =  self.link;
+                      social.url = url
+                      social.redirectUri = self.redirectURL
+                      social.nameRequired = self.nameRequired
+                      social.captchaRequired = self.captchRequired
+                      social.passwordRequired = true
+                      social.code = "apple"
+                      self.navigationController?.pushViewController(social, animated: false)
+                      
+                  } else {
+                      // Fallback on earlier versions
+                  }
+            
+            
+            
+        }
+
+        
+        
+        
+        
+        
+      
+        
+    }
+    @IBOutlet weak var stackVIew: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var emailContainerView: UIView!
     @IBOutlet weak var emailTextField: UITextField!
@@ -35,40 +82,16 @@ class CheckStatusViewController: CustomizedViewController {
     
     // SocialLogin
     var state: String = "p63HTSc7gJIbzwgLgXADMpvM9j52CCgsbWXilD63"
-    let redirectURL = "https://\(Urls.runningHost)/"
+    let redirectURL = "https://\(Urls.runningHost)/login/"
+  
+//    let redirectURL = "https://dashboard-test.vmock.com/login/"
     
-    @IBOutlet weak var nslayoutViewBottom: NSLayoutConstraint!
     // Vmock Logo
     @IBOutlet weak var communityLogo: UIImageView!
     @IBOutlet weak var communityName: UILabel!
     @IBOutlet weak var communityLogoHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var communityLogoWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var enclosingView: UIView!
-    
-    
-    
-    //MARK: Keyboard Handling
-
-    
-     override func viewDidDisappear(_ animated: Bool) {
-               super.viewDidDisappear(animated)
-               NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-               NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-           }
-           
-           @objc private func keyboardWillShow(notification: NSNotification) {
-                  self.nslayoutViewBottom.constant = -100;
-    //                 self.view.layoutIfNeeded()
-           }
-        
-        
-        @objc private func keyboardWillHide(notification: Notification) {
-               UIView.animate(withDuration: 3) {
-                self.nslayoutViewBottom.constant = -42;
-    //               self.view.layoutIfNeeded()
-               }
-           }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,11 +112,11 @@ class CheckStatusViewController: CustomizedViewController {
     func setupViewForProviders() {
         let linkedInAllowed = (UserDefaultsDataSource(key: "linkedInAllowed").readData() as? Bool) ?? false
         let facebookAllowed = (UserDefaultsDataSource(key: "facebookAllowed").readData() as? Bool) ?? false
+        let appleAllowed = (UserDefaultsDataSource(key: "appleAllowed").readData() as? Bool) ?? false
         linkedInButton.isHidden = !linkedInAllowed
         facebookButton.isHidden = !facebookAllowed
-//        view_social.isHidden = !(!facebookButton.isHidden || !facebookButton.isHidden)
-        view_social.isHidden = true
-
+        btnAppleIDSign.isHidden = !appleAllowed
+        view_social.isHidden = !(!facebookButton.isHidden || !facebookButton.isHidden || !btnAppleIDSign.isHidden)
         
         view_sso.isHidden = !UserDefaults.standard.bool(forKey: "ssoAllowed")
     }
@@ -103,8 +126,9 @@ class CheckStatusViewController: CustomizedViewController {
         self.link = UserDefaultsDataSource(key: "link").readData() as! String
         GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: Check Email Status")
         CommonFunctions().changeLinkGlobalToLocal()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name:UIResponder.keyboardWillShowNotification, object: nil)
-               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+      
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -356,6 +380,8 @@ class CheckStatusViewController: CustomizedViewController {
         let facebookUrl = UserDefaultsDataSource(key: "facebookUrl").readData() as? String
         
         if let facebookScope = facebookScope,let facebookClientId = facebookClientId,let facebookResponseType = facebookResponseType,let facebookUrl = facebookUrl {
+            
+            
             let url = URL(string: "\(facebookUrl)?client_id=\(facebookClientId)&&scope=\(facebookScope)&&redirect_uri=\(self.redirectURL)?provider=facebook&&state=\(self.state)&&response_type=\(facebookResponseType)&&auth_type=rerequest")
             if let localUrl = url{
                 sendSocialLoginRequest(provider: "facebook",url: localUrl)
@@ -439,4 +465,6 @@ extension CheckStatusViewController: TTTAttributedLabelDelegate {
         }
     }
 }
+
+
 

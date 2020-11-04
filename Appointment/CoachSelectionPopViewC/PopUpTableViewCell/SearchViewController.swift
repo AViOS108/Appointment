@@ -33,7 +33,8 @@ class SearchViewController: SuperViewController {
     var arrNameSurvey = [SearchTextFieldItem]()
     var arrNameSurveyConst : [SearchTextFieldItem]!
     let indicator = UIActivityIndicatorView(style: .gray)
-    
+    var indexPath : IndexPath!
+
 var showWithoutText = false
     
     override func viewDidLoad() {
@@ -62,7 +63,19 @@ var showWithoutText = false
         
         textField.backgroundColor = ILColor.color(index: 22)
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
-        textField.attributedPlaceholder = NSAttributedString(string: "Select", attributes: [
+        
+        
+        var placeholder = "Select"
+               if indexPath.row == 4{
+                   placeholder = "Type minimum 2 characters to search"
+               }
+               else
+               {
+                   placeholder = "Select"
+               }
+               
+        
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [
             .foregroundColor: ILColor.color(index: 32),
             .font: fontMedium
         ])
@@ -314,6 +327,22 @@ extension SearchViewController{
         reloadAndSizeTableView()
     }
 
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+           
+           super.viewWillTransition(to: size, with: coordinator)
+          self.dismiss(animated: false) {
+                    
+                }
+        
+        coordinator.animate(alongsideTransition: nil, completion: { (_) in
+            self.reloadAndSizeTableView()
+              
+           })
+           
+       }
+    
+    
 
 }
 

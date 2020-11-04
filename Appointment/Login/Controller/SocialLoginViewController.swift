@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import WebKit
+import AuthenticationServices
 
 class SocialLoginViewController: LoginParentViewController {
     
@@ -20,7 +21,8 @@ class SocialLoginViewController: LoginParentViewController {
     var link: String = ""
     var redirectUri: String = ""
     var state: String = ""
-    
+    var code: String?
+
     // Required Fields
     var nameRequired = false
     var emailRequired = false
@@ -34,29 +36,77 @@ class SocialLoginViewController: LoginParentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //        webView.delegate = self
-        activityIndicator = ActivityIndicatorView.showActivity(view:view, message: "Redirecting")
         //        webView.loadRequest()
-        let request = NSURLRequest(url: url!) as URLRequest
-        webView.navigationDelegate = self
-        webView.load(request)
+        
+        
+        let dataStore = WKWebsiteDataStore.default()
+               dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
+                   for record in records {
+                           dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: [record], completionHandler: {
+                               print("Deleted: " + record.displayName);
+                           })
+                       
+                   }
+               }
+               
+               
+               let cookieStorage = HTTPCookieStorage.shared
+               for each: HTTPCookie in cookieStorage.cookies! {
+                   cookieStorage.deleteCookie(each)
+               }
+        
+        
+        if self.code != nil
+        {
+           if #available(iOS 13.0, *) {
+                        self.handleAppleIdRequest()
+            activityIndicator = ActivityIndicatorView.showActivity(view:view, message: "Redirecting")
+                       } else {
+                           // Fallback on earlier versions
+                       }
+            
+        }
+        else
+        {
+            activityIndicator = ActivityIndicatorView.showActivity(view:view, message: "Redirecting")
+            let request = NSURLRequest(url: url!) as URLRequest
+            webView.navigationDelegate = self
+
+            webView.load(request)
+        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if provider == "facebook"{
-            GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: Facebook Webview")
-        }else if provider == "linkedin"{
-            GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: LinkedIn Webview")
-        }else{
-            GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: SSO Webview")
+        
+        
+        if self.code != nil
+        {
+            
+            GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: Apple SignIn")
+           
         }
+        else
+        {
+            if provider == "facebook"{
+                       GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: Facebook Webview")
+                   }else if provider == "linkedin"{
+                       GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: LinkedIn Webview")
+                   }else{
+                       GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: SSO Webview")
+                   }
+        }
+        
+       
+        
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        let cookieStorage = HTTPCookieStorage.shared
-        for each: HTTPCookie in cookieStorage.cookies! {
-            cookieStorage.deleteCookie(each)
-        }
+        
+       
     }
     
     func replaceControllerInStack(_ vc: UIViewController){
@@ -70,6 +120,17 @@ class SocialLoginViewController: LoginParentViewController {
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    override func errorHandler(error: String, errorCode: Int, params: Dictionary<String, AnyObject>, headerIncluded: Bool, header: Dictionary<String, String>) {
+        super.errorHandler(error: error, errorCode: errorCode, params: params, headerIncluded: headerIncluded, header: header)
+        if ErrorView.canShowForErrorCode(errorCode){
+            self.errorView = ErrorView.showOnView(self.view, forErrorOn: nil, errorCode: errorCode, completion: {
+                self.loginCall(params: params, headerIncluded: headerIncluded, header: header)
+            })
+        }else{
+            CommonFunctions().showError(title: "Error", message: error)
+        }
+    }
+
     
 }
 
@@ -77,20 +138,22 @@ extension SocialLoginViewController: WKNavigationDelegate {
     
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
         var action: WKNavigationActionPolicy?
         
-        defer {
-            decisionHandler(action ?? .allow)
-        }
+       
+        self.webView.isHidden = false
         
-        guard let url = navigationAction.request.url else { return }
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.cancel)
+        return }
         print("decidePolicyFor - url: \(url)")
         
         if url.host == Urls.runningHost {
             if (url.absoluteString.range(of: "error_reason") != nil){
                 let urlParts = url.absoluteString.components(separatedBy: "?")
                 let error = urlParts[1].components(separatedBy: "&")[3]
-                let errorReason = error.components(separatedBy: "=")[1]
+                _ = error.components(separatedBy: "=")[1]
                 let cookieStorage = HTTPCookieStorage.shared
                 for each: HTTPCookie in cookieStorage.cookies! {
                     cookieStorage.deleteCookie(each)
@@ -106,82 +169,49 @@ extension SocialLoginViewController: WKNavigationDelegate {
                         }
                     }
                     self.activityIndicator?.hide()
+                    
                     let params = ["code": code,
                                   "provider": self.provider,
                                   "link": self.link,
                                   "state": self.state,
                                   "redirect_uri": self.redirectUri]
+                    
+                    self.webView.isHidden = true
                     self.checkEmailStatus(params: params as Dictionary<String, AnyObject>)
                 }
             }
         }
-        if let activityIndicatorView = self.activityIndicator, activityIndicatorView.isShown {
-            return
+        
+        if (url.host == "www.vmock.com" )  {
+                   print("redirect detected..")
+                   decisionHandler(.cancel)
+                   return
+               }
+        
+       
+        
+        if (navigationAction.targetFrame?.isMainFrame ?? false) {
+            
+            if let activityIndicatorView = self.activityIndicator, activityIndicatorView.isShown {
+                       
+                   }
+           else
+            {
+               activityIndicator = ActivityIndicatorView.showActivity(view:view, message: "Redirecting")
+            }
+            
         }
-        activityIndicator = ActivityIndicatorView.showActivity(view:view, message: "Redirecting")
-        return
+        
+       
+        decisionHandler(.allow)
+    }
+    
+    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+         self.activityIndicator?.hide()
     }
     
     
-    
-    //    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-    //        let url = request.url!
-    //        if url.host == Urls.runningHost {
-    //            if (url.absoluteString.range(of: "error_reason") != nil){
-    //                let urlParts = url.absoluteString.components(separatedBy: "?")
-    //                let error = urlParts[1].components(separatedBy: "&")[3]
-    //                let errorReason = error.components(separatedBy: "=")[1]
-    //                let cookieStorage = HTTPCookieStorage.shared
-    //                for each: HTTPCookie in cookieStorage.cookies! {
-    //                    cookieStorage.deleteCookie(each)
-    //                }
-    //                self.navigationController?.popToRootViewController(animated: true)
-    //            }else if (url.absoluteString.range(of: "code") != nil){
-    //                if let queryParams = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems, queryParams.count > 0 {
-    //                    var code = ""
-    //                    for item in queryParams where item.name == "code" {
-    //                        if let temp = item.value {
-    //                            code = temp
-    //                            break
-    //                        }
-    //                    }
-    //                    self.activityIndicator?.hide()
-    //                    let params = ["code": code,
-    //                                  "provider": self.provider,
-    //                                  "link": self.link,
-    //                                  "state": self.state,
-    //                                  "redirect_uri": self.redirectUri]
-    //                    self.checkEmailStatus(params: params as Dictionary<String, AnyObject>)
-    //                }
-    //            }
-    //        }
-    //        if let activityIndicatorView = self.activityIndicator, activityIndicatorView.isShown {
-    //            return true
-    //        }
-    //        activityIndicator = ActivityIndicatorView.showActivity(view:view, message: "Redirecting")
-    //        return true
-    //    }
-    
-    //    func webViewDidFinishLoad(_ webView: UIWebView) {
-    //        self.activityIndicator?.hide()
-    //    }
-    //    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-    //        activityIndicator?.hide()
-    //        if error._code == -1009 || error._code == -1018 || error._code == -1001{
-    //            self.navigationController?.popViewController(animated: true)
-    //            let cookieStorage = HTTPCookieStorage.shared
-    //            for each: HTTPCookie in cookieStorage.cookies! {
-    //                cookieStorage.deleteCookie(each)
-    //            }
-    //            CommonFunctions().showError(title: "Error", message: error.localizedDescription)
-    //        }
-    //    }
-    
-    
-    
-    
-    
-    
+   
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.activityIndicator?.hide()
@@ -198,7 +228,6 @@ extension SocialLoginViewController: WKNavigationDelegate {
             CommonFunctions().showError(title: "Error", message: error.localizedDescription)
         }
     }
-    
     
     
     
@@ -401,15 +430,76 @@ extension SocialLoginViewController {
         })
     }
     
-//    override func errorHandler(error: String, errorCode: Int, params: Dictionary<String, AnyObject>, headerIncluded: Bool, header: Dictionary<String, String>) {
-//        super.errorHandler(error: error, errorCode: errorCode, params: params, headerIncluded: headerIncluded, header: header)
-//        if ErrorView.canShowForErrorCode(errorCode){
-//            self.errorView = ErrorView.showOnView(self.view, forErrorOn: nil, errorCode: errorCode, completion: {
-//                self.loginCall(params: params, headerIncluded: headerIncluded, header: header)
-//            })
-//        }else{
-//            CommonFunctions().showError(title: "Error", message: error)
-//        }
-//    }
+}
+
+//MARK: APPLE SIGN IN
+
+@available(iOS 13.0, *)
+extension SocialLoginViewController : ASAuthorizationControllerDelegate{
+
+
+    
+    @objc func handleAppleIdRequest() {
+            
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            request.state = self.state
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            authorizationController.delegate = self
+            authorizationController.performRequests()
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as?  ASAuthorizationAppleIDCredential {
+              
+            let code = String(data: appleIDCredential.authorizationCode!, encoding: .utf8);
+            
+            let name = (appleIDCredential.fullName?.givenName ?? "") + " " + (appleIDCredential.fullName?.familyName ?? "")
+            
+//            if let email = appleIDCredential.email {
+//                           if email.contains("@privaterelay.appleid.com"){
+//                               CommonFunctions.alertViewLogout(title: "", message: "For best user experience and seamless communication, we suggest you to share your email address", viewController: self, buttons: ["Ok"])
+//                              return
+//                           }
+//                       }
+//                       else
+//                       {
+//                           CommonFunctions.alertViewLogout(title: "", message: "For best user experience and seamless communication, we suggest you to share your email address", viewController: self, buttons: ["Ok"])
+//
+//                          return
+//                       }
+            
+            if appleIDCredential.fullName != nil
+            {
+                UserDefaultsDataSource(key: "name").writeData(name)
+
+            }
+           
+            
+            //"name" : UserDefaultsDataSource(key: "name").readData()
+            
+            let params = ["code": code,
+                          "provider": self.provider,
+                          "link": self.link,
+                          "state": appleIDCredential.state,
+                          "redirect_uri": self.redirectUri,
+                          "app" : Bundle.main.bundleIdentifier
+                           ]
+            self.activityIndicator?.hide()
+            self.checkEmailStatus(params: params as Dictionary<String, AnyObject>)
+            
+        }
+    }
+    
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // Handle error.
+        print(error)
+        self.activityIndicator?.hide()
+        self.navigationController?.popViewController(animated: false)
+        
+        
+    }
 }
 

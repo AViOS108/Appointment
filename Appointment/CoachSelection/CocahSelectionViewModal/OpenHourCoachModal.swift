@@ -49,6 +49,8 @@ struct OpenHourCoachModalResult: Codable {
     let purposes: [Purpose]?
     var coach : Coach?
     let appointmentIsCompleted: Int?
+    let locations: [Location]?
+
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -79,13 +81,11 @@ struct OpenHourCoachModalResult: Codable {
         case inTimezone = "in_timezone"
         case createdBy = "created_by"
         case appointmentIsCompleted = "appointment_is_completed"
-
+        case locations
         case purposes
     }
     
 }
-
-
 
 struct Parent: Codable {
     let timezone, state, createdAt, originalStartDatetimeUTC: String?

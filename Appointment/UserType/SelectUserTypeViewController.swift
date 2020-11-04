@@ -98,10 +98,10 @@ class SelectUserTypeViewController: UIViewController {
         if let FontDemiBold = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
         {
             
-            UIButton.buttonUIHandling(button: btnStudent, text: "Student".localized(), backgroundColor:ILColor.color(index: 23) , textColor: ILColor.color(index: 3), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
-            UIButton.buttonUIHandling(button: btnER, text: "ER".localized(), backgroundColor: ILColor.color(index: 23), textColor: ILColor.color(index: 3), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
-            UIButton.buttonUIHandling(button: btnCoach, text: "Coach".localized(), backgroundColor: ILColor.color(index: 23), textColor: ILColor.color(index: 3), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
-            UIButton.buttonUIHandling(button: btnAlumini, text: "Alumini".localized(), backgroundColor: ILColor.color(index: 23), textColor: ILColor.color(index: 3), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
+            UIButton.buttonUIHandling(button: btnStudent, text: "Student".localized(), backgroundColor:ILColor.color(index: 23) , textColor: ILColor.color(index: 3), cornerRadius: 5, isTitleLeftAligned : true, isUnderlined: false, fontType: FontDemiBold)
+            UIButton.buttonUIHandling(button: btnER, text: "ER".localized(), backgroundColor: ILColor.color(index: 23), textColor: ILColor.color(index: 3), cornerRadius: 5,isTitleLeftAligned : true, isUnderlined: false, fontType: FontDemiBold)
+            UIButton.buttonUIHandling(button: btnCoach, text: "Coach".localized(), backgroundColor: ILColor.color(index: 23), textColor: ILColor.color(index: 3), cornerRadius: 5,isTitleLeftAligned : true, isUnderlined: false, fontType: FontDemiBold)
+            UIButton.buttonUIHandling(button: btnAlumini, text: "Alumni".localized(), backgroundColor: ILColor.color(index: 23), textColor: ILColor.color(index: 3), cornerRadius: 5,isTitleLeftAligned : true, isUnderlined: false, fontType: FontDemiBold)
             
             
         }
@@ -110,11 +110,7 @@ class SelectUserTypeViewController: UIViewController {
             
             UILabel.labelUIHandling(label: lblLoginas, text: "Login as".localized(), textColor: ILColor.color(index: 4), isBold: false, fontType: FontHeavy);
         }
-        
-        
-        
     }
-    
-    
+   
     
 }

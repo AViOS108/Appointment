@@ -39,10 +39,10 @@ class NextStepCollectionViewCell: UICollectionViewCell {
             viewContainer.isHidden = false
             
             
-            let weekDay = ["Sun","Mon","Tues","Wed","Thus","Fri","Sat"]
+            let weekDay = ["Sun","Mon","Tues","Wed","Thu","Fri","Sat"]
             let componentDay = GeneralUtility.dateComponent(date: self.nextModalObj?.createdAt ?? "", component: .weekday)
             let date = GeneralUtility.currentDateDetailType4(emiDate: self.nextModalObj?.createdAt ?? "");
-            let timeText = "\(weekDay[componentDay?.weekday ?? 1 - 1]), " + date;
+            let timeText = "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " + date;
             let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             UILabel.labelUIHandling(label: lblDate, text: timeText, textColor: ILColor.color(index: 38), isBold: false, fontType: fontMedium)

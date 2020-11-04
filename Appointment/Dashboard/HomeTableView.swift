@@ -80,7 +80,7 @@ class HomeTableView: UIViewController, UITableViewDelegate,UITableViewDataSource
                     })![indexPath.row];
                 
             }
-            cell.customization(noCoach: noAlumini, text: "No Alumini Found !")
+            cell.customization(noCoach: noAlumini, text: "No Alumni Found !")
         }
         return cell
     }

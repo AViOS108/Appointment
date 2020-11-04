@@ -57,6 +57,19 @@ class ProviderServcie{
                         UserDefaultsDataSource(key: "linkedInAllowed").writeData(true)
                     case "vmock_url":
                         debugPrint("ignore")
+                    case "apple":
+                        let linkedInDetails = response["providers"][key]
+                        UserDefaultsDataSource(key: "appleUrl").writeData(linkedInDetails["oauth2"]["url"].string)
+                        UserDefaultsDataSource(key: "appleClientId").writeData(linkedInDetails["oauth2"]["params"]["client_id"].string)
+                        UserDefaultsDataSource(key: "appleScope").writeData(linkedInDetails["oauth2"]["params"]["scope"].string)
+                        UserDefaultsDataSource(key: "appleState").writeData(linkedInDetails["oauth2"]["params"]["state"].string)
+                        UserDefaultsDataSource(key: "appleResponseType").writeData(linkedInDetails["oauth2"]["params"]["response_type"].string)
+                        UserDefaultsDataSource(key: "appleAllowed").writeData(true)
+                        
+                        debugPrint("ignore")
+                        
+                        
+                        
                     default:
                         let ssoDetails = response["providers"][key]
                         UserDefaultsDataSource(key: "ssoName").writeData(ssoDetails["name"].string)

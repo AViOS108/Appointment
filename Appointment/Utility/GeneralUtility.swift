@@ -92,13 +92,16 @@ class GeneralUtility {
 
             }
             searchBar.text = searchText
-            searchBar.placeholder = "Search Coaches/Alumini"
+            searchBar.placeholder = "Search Coaches/Alumni"
             searchBar.sizeToFit()
             //        searchBar.isTranslucent = false
             searchBar.backgroundImage = UIImage()
             searchBar.delegate = viewController as? UISearchBarDelegate
             viewController.navigationController?.navigationBar.topItem?.titleView = searchBar  ;
             viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([back], animated: true)
+        
+         viewController.navigationController?.navigationBar.topItem?.leftBarButtonItem = nil
+        
     //        let bounds = viewController.navigationController!.navigationBar.bounds
     //        viewController.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 64)
         }
@@ -133,20 +136,27 @@ class GeneralUtility {
         
         
         
-        
-        
-        
-        
-        let hamburger = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+        let hamburger = UIButton(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
         hamburger.contentMode = .scaleAspectFit
-        //        searchButton.backgroundColor = .red
         hamburger.addTarget(viewController, action: #selector(SuperViewController.humbergerCilcked(sender:)), for: .touchUpInside)
+        
         hamburger.setImage(UIImage.init(named: "humberger"), for: .normal)
-        let slider =  UIBarButtonItem(customView: hamburger)
+        hamburger.contentHorizontalAlignment = .left
+        
+        let hamburgerBarButton =  UIBarButtonItem(customView: hamburger)
+        
+        let currWidth = hamburgerBarButton.customView?.widthAnchor.constraint(equalToConstant: 40)
+        currWidth?.isActive = true
+        let currHeight = hamburgerBarButton.customView?.heightAnchor.constraint(equalToConstant: 40)
+        currHeight?.isActive = true
+        viewController.navigationController?.navigationBar.topItem?.setLeftBarButton(hamburgerBarButton, animated: true)
+        
+        
+        
         viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
         
-        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut,search,calender], animated: true)
-        viewController.navigationController?.navigationBar.topItem?.setLeftBarButtonItems([slider], animated: true)
+        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut,calender,search], animated: true)
+        //        viewController.navigationController?.navigationBar.topItem?.setLeftBarButtonItems([hamburgerBarButton], animated: true)
         
         viewController.navigationController?.navigationBar.topItem?.title = title;
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
@@ -194,15 +204,24 @@ class GeneralUtility {
     
     
     
-    
-    
-    
-    
-    
     class func customeNavigationBarWithBack(viewController: UIViewController,title:String){
-        let back = UIBarButtonItem(title: title, style: .plain, target: viewController, action: #selector(SuperViewController.buttonClicked(sender:)));
-        back.image = UIImage.init(named: "Back");
-        viewController.navigationItem.leftBarButtonItems = [back];
+        
+        
+        
+        let backButton = UIButton(type: .custom)
+        backButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        backButton.addTarget(viewController, action: #selector(SuperViewController.buttonClicked(sender:)), for: .touchUpInside)
+        backButton.setImage(UIImage.init(named: "Back"), for: .normal)
+        backButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: -30, bottom: 0, right: 0)
+        backButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: -40, bottom: 0, right: 0)
+
+        backButton.setTitle(title, for: .normal)
+        backButton.semanticContentAttribute = .forceLeftToRight
+        
+        let back =  UIBarButtonItem(customView: backButton)
+        viewController.navigationItem.leftBarButtonItem = back
+
         
         let calenderButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
         calenderButton.contentMode = .scaleAspectFit
@@ -211,24 +230,24 @@ class GeneralUtility {
         calenderButton.setImage(UIImage.init(named: "Calendar"), for: .normal)
         let calender =  UIBarButtonItem(customView: calenderButton)
         viewController.navigationItem.rightBarButtonItems = [calender];
-        
-        viewController.navigationController?.navigationBar.isTranslucent = true
-        viewController.navigationController?.navigationBar.topItem?.title = title;
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-        viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
     }
     
     class func customeNavigationBarWithOnlyBack(viewController: UIViewController,title:String){
-        let back = UIBarButtonItem(title: title, style: .plain, target: viewController, action: #selector(SuperViewController.buttonClicked(sender:)));
-        back.image = UIImage.init(named: "Back");
-        viewController.navigationItem.leftBarButtonItems = [back];
-
         
-        viewController.navigationController?.navigationBar.isTranslucent = true
-        viewController.navigationController?.navigationBar.topItem?.title = title;
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-        viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        let backButton = UIButton(type: .custom)
+        backButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        backButton.addTarget(viewController, action: #selector(SuperViewController.buttonClicked(sender:)), for: .touchUpInside)
+        backButton.setImage(UIImage.init(named: "Back"), for: .normal)
+        backButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: -30, bottom: 0, right: 0)
+        backButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: -40, bottom: 0, right: 0)
+        
+        backButton.setTitle(title, for: .normal)
+        backButton.semanticContentAttribute = .forceLeftToRight
+        
+        let back =  UIBarButtonItem(customView: backButton)
+        viewController.navigationItem.leftBarButtonItem = back
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
     }
     
@@ -339,6 +358,22 @@ class GeneralUtility {
         return false
     }
     
+    
+    public  class func   isPastDateDifferentDateFormater(date : String) -> Bool {
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "yyyy-MM-dd"
+           let dateI = dateFormatter.date(from: date)
+        
+        let diffInDays = Calendar.current.dateComponents([.day], from: dateI ?? Date(), to: Date()).day
+
+        if diffInDays ?? 0 <= 0{
+            return false
+        }
+        
+        
+        
+           return true
+       }
     
     
     
@@ -530,12 +565,13 @@ class GeneralUtility {
         var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
         if let date = formatter.date(from: startDate), let enddate = formatter.date(from: endDate) {
             formatter.timeZone = TimeZone.init(identifier: token)
-            formatter.dateFormat = "yyyy-MM-dd hh:mm a"
+            formatter.dateFormat = "dd MMM yyyy hh:mm a"
             let strTime = formatter.string(from: date)
             formatter.timeZone = TimeZone.init(identifier: token)
             formatter.dateFormat = "hh:mm a"
             let endTime = formatter.string(from: enddate)
-            return strTime.lowercased() + " - " + endTime.lowercased()
+            return strTime + " - " + endTime
+                //.lowercased()
         }
         return ""
     }

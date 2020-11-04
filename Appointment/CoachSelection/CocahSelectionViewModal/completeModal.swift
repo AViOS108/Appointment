@@ -32,7 +32,7 @@ class CoachSelectionViewModal {
     
     var carrerCoachModal :OpenHourCoachModal?
     var externalCoachModal: OpenHourCoachModal?
-    
+
     
     var apiHitogic = Array<Int>()
     
@@ -50,11 +50,11 @@ class CoachSelectionViewModal {
         }
         
         if isCarrerSelected{
-            self.openHourCarrerCoach(params: parameter(typeUser: "career_coach"))
+            self.openHourCarrerCoach(params: parameter(typeUser: "career_coach", skip: 0))
             
         }
         if isAluminiSelected{
-            self.openHourExternalCoach(params: parameter(typeUser: "external_coach"))
+            self.openHourExternalCoach(params: parameter(typeUser: "external_coach", skip: 0))
         }
         
          activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.FetchingCoachSelection)
@@ -62,7 +62,7 @@ class CoachSelectionViewModal {
         
     }
     
-    func parameter(typeUser: String) -> Dictionary<String,AnyObject> {
+    func parameter(typeUser: String,skip : Int) -> Dictionary<String,AnyObject> {
         
         let particularCoach = selectedDataModal.coaches.filter({$0.roleMachineName.rawValue == typeUser})
         
@@ -82,7 +82,8 @@ class CoachSelectionViewModal {
                 "from"  : previousDate(strDate: dateStirng) + " 23:59:00",
                 "to" :  dateStirng + " 23:59:00",
                 "created_by":arrCreatedBy,
-                "timezone":"utc"
+                "timezone":"utc",
+                "skip": skip
             ],
             ParamName.PARAMINTIMEZONEEL : "utc",
             ParamName.PARAMCSRFTOKEN : csrftoken
@@ -119,7 +120,27 @@ class CoachSelectionViewModal {
                     self.carrerCoachModal = carrerCoachLocal
                 }
                 
-                if self.carrerCoachModal?.results?.count == carrerCoachLocal.total{
+                if GeneralUtility.isPastDateDifferentDateFormater(date: self.dateStirng){
+                    if self.carrerCoachModal != nil {
+                        if self.carrerCoachModal?.results?.count ?? 0 > 0
+                        {
+                            self.carrerCoachModal?.results?.removeAll()
+                        }
+                    }
+                    self.apiHitogic[0] = 1
+                    let setI = Set(self.apiHitogic)
+                    
+                    if setI.count == 1
+                    {
+                        self.formingDataModal()
+                    }
+                    
+                   return
+                    
+                }
+                
+                
+                if self.carrerCoachModal?.results?.count ?? 0 >= carrerCoachLocal.total ?? 0{
                     self.apiHitogic[0] = 1
                     let setI = Set(self.apiHitogic)
                     
@@ -130,7 +151,7 @@ class CoachSelectionViewModal {
                 }
                 else{
                     
-                    self.openHourCarrerCoach(params: self.parameter(typeUser: "career_coach"))
+                    self.openHourCarrerCoach(params: self.parameter(typeUser: "career_coach", skip: self.carrerCoachModal?.results?.count ?? 0))
                 }
                 
                 
@@ -149,37 +170,70 @@ class CoachSelectionViewModal {
     func openHourExternalCoach(params: Dictionary<String,AnyObject>)  {
         
         CoachSelectionService().openHourExternalListApi(params: params, { (jsonData) in
-            
-            let externalCoachModalLocal = try? JSONDecoder().decode(OpenHourCoachModal.self, from: jsonData)
-            if self.externalCoachModal != nil{
-                if (externalCoachModalLocal?.results?.count)! > 0
-                {
-                    self.externalCoachModal?.results?.append(contentsOf: (externalCoachModalLocal?.results)!);
+            do {
+                let externalCoachModalLocal = try JSONDecoder().decode(OpenHourCoachModal.self, from: jsonData)
+                if self.externalCoachModal != nil{
+                    if (externalCoachModalLocal.results?.count)! > 0
+                    {
+                        self.externalCoachModal?.results?.append(contentsOf: (externalCoachModalLocal.results)!);
+                    }
                 }
-            }
-            else
-            {
-                self.externalCoachModal = externalCoachModalLocal
-            }
-            
-            if self.externalCoachModal?.results?.count == externalCoachModalLocal?.total{
-                if self.apiHitogic.count > 1{
-                    self.apiHitogic[1] = 1
+                else
+                {
+                    self.externalCoachModal = externalCoachModalLocal
+                }
+                
+                
+                if GeneralUtility.isPastDateDifferentDateFormater(date: self.dateStirng){
+                    
+                    if self.externalCoachModal != nil {
+                        if self.externalCoachModal?.results?.count ?? 0 > 0
+                        {
+                            self.externalCoachModal?.results?.removeAll()
+                        }
+                        
+                    }
+                    
+                    
+                    
+                    
+                    if self.apiHitogic.count > 1{
+                        self.apiHitogic[1] = 1
+                    }
+                    else{
+                        self.apiHitogic[0] = 1
+                    }
+                    let setI = Set(self.apiHitogic)
+                    
+                    if setI.count == 1
+                    {
+                        self.formingDataModal()
+                    }
+                    
+                }
+    
+                if self.externalCoachModal?.results?.count ?? 0   >= externalCoachModalLocal.total ?? 0{
+                    if self.apiHitogic.count > 1{
+                        self.apiHitogic[1] = 1
+                    }
+                    else{
+                        self.apiHitogic[0] = 1
+                    }
+                    let setI = Set(self.apiHitogic)
+                    
+                    if setI.count == 1
+                    {
+                        self.formingDataModal()
+                    }
                 }
                 else{
-                    self.apiHitogic[0] = 1
+                    
+                    self.openHourExternalCoach(params: self.parameter(typeUser: "external_coach", skip: self.carrerCoachModal?.results?.count ?? 0))
                 }
-                let setI = Set(self.apiHitogic)
-                
-                if setI.count == 1
-                {
-                    self.formingDataModal()
-                }
+            } catch  {
+                print(error)
             }
-            else{
-                
-                self.openHourExternalCoach(params: self.parameter(typeUser: "external_coach"))
-            }
+            
             
         }) { (error, errorCode) in
             self.activityIndicator?.hide()

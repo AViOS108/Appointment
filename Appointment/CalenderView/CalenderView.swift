@@ -123,10 +123,10 @@ class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,U
         
        
          let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE16)
-        
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
         let dateFormatterText = DateFormatter()
         dateFormatterText.dateFormat = "MMM yyyy"        
-        UILabel.labelUIHandling(label: lblMonth, text: dateFormatterText.string(from: startOfMonth), textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)
+        UILabel.labelUIHandling(label: lblMonth, text: dateFormatterText.string(from: startOfMonth), textColor:ILColor.color(index: 23) , isBold: false, fontType: fontHeavy)
         
         for str in ["S","M","T","W","T","F","S"]{
             var calenderMo = CalenderModal()

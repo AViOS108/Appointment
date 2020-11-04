@@ -45,7 +45,7 @@ class StringConstants{
     static let userVerifyError = "Something went wrong. Please try again"
     static let reminderInPastError = "Reminder cannot be scheduled in the past"
     
-    static let forgotPasswordScreenText = "We will send a reset password  link to"
+    static let forgotPasswordScreenText = "We will send a reset password link to"
     static let forgotPasswordSuccessText = "Password reset link has been mailed. Check your junk mail or spam folder."
     
     static let resendVerificationScreenText = "We have sent a verification link to"
@@ -70,7 +70,7 @@ class StringConstants{
     static let sectionNotIncludedText = "Your college template recommends you to add this section"
     static let exceedFileSizeText = "Please upload a file with size less than 2MB"
     static let nocoachSelected = "Please Select any coach"
-    static let cantDeselectAll = "You have to select atleast one coach or alumini"
+    static let cantDeselectAll = "You have to select atleast one coach or alumni"
     static let FetchingCoachSelection = "Fetching Data... "
 
     

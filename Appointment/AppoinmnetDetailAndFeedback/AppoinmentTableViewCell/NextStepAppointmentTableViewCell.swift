@@ -36,7 +36,8 @@ class NextStepAppointmentTableViewCell: UITableViewCell {
      
     
     func customization()  {
-        
+        self.backgroundColor = .clear
+
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
         UILabel.labelUIHandling(label: lblNextStepHeader, text: "Next steps", textColor: ILColor.color(index: 34), isBold: false,fontType: fontHeavy)
 

@@ -43,7 +43,7 @@ class HorizontalAppointmentInfoCollectionViewCell: UICollectionViewCell {
             lblDescribtion.attributedText = strHeader
         }
         self.imgView.image = UIImage.init(named: (self.studentHeader?.ImageName)!);
-        self.imgView.contentMode = .scaleToFill
+        self.imgView.contentMode = .scaleAspectFill
     }
 
 }

@@ -45,6 +45,7 @@ class AppoinmentPurposeTableViewCell: UITableViewCell {
     func customization(){
         
         self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 3)
+        self.backgroundColor = .clear
 
         let strHeaderDescription = NSMutableAttributedString.init()
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14),let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)

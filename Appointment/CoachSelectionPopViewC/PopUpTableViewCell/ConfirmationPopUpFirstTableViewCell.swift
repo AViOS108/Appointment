@@ -56,7 +56,7 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
            searchViewController.maxHeight = 200;
            let frameI =
                sender.superview?.convert(sender.frame, to: nil)
-        
+        searchViewController.indexPath =  indexPath
         var changedFrame = frameI
         
         if frameI!.origin.y > self.viewControllerI.view.frame.height/2{
@@ -99,7 +99,17 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         setDynamicView()
         txtField.backgroundColor = ILColor.color(index: 22)
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
-        txtField.attributedPlaceholder = NSAttributedString(string: "Select", attributes: [
+        
+        var placeholder = "Select"
+        if indexPath.row == 4{
+            placeholder = "Type minimum 2 characters to search"
+        }
+        else
+        {
+            placeholder = "Select"
+        }
+        
+        txtField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [
             .foregroundColor: ILColor.color(index: 32),
             .font: fontMedium
         ])
@@ -110,10 +120,27 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         txtField.rightView = imageView
         txtField.rightViewMode = .always
 
-        let fontNextMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         
-        UILabel.labelUIHandling(label: lblHeader, text: arraYHeader[indexPath.row], textColor:ILColor.color(index: 31) , isBold: false , fontType: fontNextMedium,   backgroundColor:.white )
+        let strHeader = NSMutableAttributedString.init()
+
         
+        if let fontNextMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
+               {
+                   let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: arraYHeader[indexPath.row], _returnType: String.self)
+                       , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontNextMedium]);
+                   let strType = NSAttributedString.init(string: " ⃰"
+                    , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontNextMedium]);
+                   let para = NSMutableParagraphStyle.init()
+                   //            para.alignment = .center
+                   strHeader.append(strTiTle)
+                if indexPath.row == 0{
+                     strHeader.append(strType)
+                }
+                  
+                   strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+                   lblHeader.attributedText = strHeader
+               }
+         
         
        var alreadyAdded = self.arrNameSurvey.filter({$0.isSelected == true})
         
@@ -219,7 +246,7 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         viewC.addSubview(viewBtn);
         viewBtn.tag = viewC.tag
         viewBtn.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(named: "Cross")
+        let image = UIImage(named: "noun_Cross")
         viewBtn.setImage(image, for: .normal)
         viewBtn.imageEdgeInsets = UIEdgeInsets.init(top: 3, left: 3, bottom: 3, right: 3)
         viewBtn.imageView?.tintColor = UIColor.white

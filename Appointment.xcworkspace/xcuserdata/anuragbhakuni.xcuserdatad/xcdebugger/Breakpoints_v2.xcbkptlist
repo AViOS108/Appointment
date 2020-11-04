@@ -7,127 +7,95 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "92129241-46CC-424C-B73B-DD9BFCED3C42"
+            uuid = "105EE656-D790-44E1-8E3D-F5B7EA13432D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Appointment/Utility/WebViewController.swift"
+            filePath = "Appointment/Dashboard/DashService/DashBoardStudentAppointmentVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "webView(_:didFinish:)"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "customizeVM()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "99ADE9F3-4FE1-464D-A841-4867EA9EB974"
+            uuid = "0B5CC0BA-0304-420E-905F-FB6980A73188"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Appointment/Utility/WebViewController.swift"
+            filePath = "Appointment/CoachSelectionPopViewC/PopUpTableViewCell/SearchViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "webView(_:didFail:withError:)"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
+            landmarkName = "viewWillTransition(to:with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "35BDDD1D-5FD6-4C8A-8BB1-D90220945651"
+            uuid = "B391AEF5-6A0C-4D66-BA0B-3EB20A0FDADA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Appointment/Utility/WebViewController.swift"
+            filePath = "Appointment/CoachSelectionPopViewC/PopUpTableViewCell/SearchViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
+            landmarkName = "reloadAndSizeTableView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "629F87EC-BFF6-42B8-8AC5-47A68051476C"
+            uuid = "E8B7DB62-53C8-49BB-8316-E4086A571A02"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Appointment/AppoinmnetDetailAndFeedback/AppoinmentdetailViewModal.swift"
+            filePath = "Appointment/CoachAluminiView/CoachAluminiViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "saveNotes(objnoteModal:text:identifier:)"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "viewDidAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DB47F573-176F-4674-B214-4A96376C7B65"
+            uuid = "3DA5E74B-9252-4876-8195-29A13FEF7EAE"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Appointment/AppoinmnetDetailAndFeedback/AppoinmentdetailViewModal.swift"
+            filePath = "Appointment/CoachSelection/CocahSelectionViewModal/completeModal.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
-            landmarkName = "saveNotes(objnoteModal:text:identifier:)"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "openHourExternalCoach(params:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1531ED50-9E03-4ACA-AE9C-82266A62B515"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Appointment/AppoinmnetDetailAndFeedback/AppoinmentTableViewCell/NotesAppointmentTableViewCell.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "BtnSavesTapped(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "80002A24-EAE0-4EF9-9EF4-0567C166E51C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Appointment/AppoinmnetDetailAndFeedback/AppointmentDetailViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "refreshApi()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1B4FFFB5-1C2E-4ECA-8166-2728DB8ADE3D"
+            uuid = "48B6645D-7647-487D-9CD3-15D12147225D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Appointment/Network/Network.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "makeApiEventRequest(_:url:methodType:params:header:completion:failure:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -135,48 +103,128 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2DAA0C4A-E5FB-42D7-A5CA-DAE40762D17C"
+            uuid = "F55E2C4B-DC95-47FC-952C-17E15ACED685"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Appointment/AppoinmnetDetailAndFeedback/AppoinmentTableViewCell/NextStepCollectionViewCell.swift"
+            filePath = "Appointment/Dashboard/DashBoardTableViewCell/HeaderSectionCoach.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "customization(isNextStep:)"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "customization()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4D5684C7-F53A-4F07-BF17-ED675CE45351"
+            uuid = "4D80B044-0BAD-4C47-AE2A-10780329F184"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Appointment/AppoinmnetDetailAndFeedback/AppoinmentTableViewCell/NextStepCollectionViewCell.swift"
+            filePath = "Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "customization(isNextStep:)"
+            startingLineNumber = "446"
+            endingLineNumber = "446"
+            landmarkName = "confirmAppointment()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4D80B044-0BAD-4C47-AE2A-10780329F184 - a3d5510923c092f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Appointment.CoachConfirmationPopUpSecondViewC.confirmAppointment() -&gt; ()"
+                  moduleName = "Appointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "441"
+                  endingLineNumber = "441"
+                  offsetFromSymbolStart = "8142">
+               </Location>
+               <Location
+                  uuid = "4D80B044-0BAD-4C47-AE2A-10780329F184 - a28f1c132089e75a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 (Foundation.Data) -&gt; () in Appointment.CoachConfirmationPopUpSecondViewC.confirmAppointment() -&gt; ()"
+                  moduleName = "Appointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "442"
+                  endingLineNumber = "442"
+                  offsetFromSymbolStart = "49">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "69987F70-44FA-4D49-8C7B-388506638446"
+            uuid = "96B5C278-382B-4D88-9C11-40BE98D505FE"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Appointment/Utility/GeneralUtility.swift"
+            filePath = "Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
-            landmarkName = "dateComponent(date:component:)"
+            startingLineNumber = "448"
+            endingLineNumber = "448"
+            landmarkName = "confirmAppointment()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "96B5C278-382B-4D88-9C11-40BE98D505FE - a28f1c132089e75a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 (Foundation.Data) -&gt; () in Appointment.CoachConfirmationPopUpSecondViewC.confirmAppointment() -&gt; ()"
+                  moduleName = "Appointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "444"
+                  endingLineNumber = "444"
+                  offsetFromSymbolStart = "81">
+               </Location>
+               <Location
+                  uuid = "96B5C278-382B-4D88-9C11-40BE98D505FE - 11ec68a28ed8958c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #5 (Foundation.Data) -&gt; () in Appointment.CoachConfirmationPopUpSecondViewC.confirmAppointment() -&gt; ()"
+                  moduleName = "Appointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "445"
+                  endingLineNumber = "445"
+                  offsetFromSymbolStart = "70">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3B6B83FE-3F7D-4256-A151-79C3D4DC0775"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Appointment/Network/Network.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "makeApiEventRequest(_:url:methodType:params:header:completion:failure:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

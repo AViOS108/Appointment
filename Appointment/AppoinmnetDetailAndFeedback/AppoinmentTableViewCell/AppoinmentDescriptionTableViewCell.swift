@@ -42,6 +42,8 @@ class AppoinmentDescriptionTableViewCell: UITableViewCell {
     
     func customization()  {
         
+        self.backgroundColor = .clear
+        
         let strHeader = NSMutableAttributedString.init()
         
         self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 3)
@@ -63,10 +65,10 @@ class AppoinmentDescriptionTableViewCell: UITableViewCell {
         }
         var coachType = ""
         if self.appoinmentDetailModalObj?.coach?.roleMachineName.rawValue == "career_coach"{
-            coachType = "Carrer Coach"
+            coachType = "Career Coach"
         }
         else{
-            coachType = "Alumini"
+            coachType = "Alumni"
         }
         
         
@@ -115,7 +117,7 @@ class AppoinmentDescriptionTableViewCell: UITableViewCell {
         let strHeaderDescription = NSMutableAttributedString.init()
 
         
-        let weekDay = ["Sun","Mon","Tues","Wed","Thus","Fri","Sat"]
+        let weekDay = ["Sun","Mon","Tues","Wed","Thu","Fri","Sat"]
         var componentDay = GeneralUtility.dateComponent(date: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", component: .weekday)
         
         if let fontMedium = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -134,7 +136,7 @@ class AppoinmentDescriptionTableViewCell: UITableViewCell {
             let nextLine1 = NSAttributedString.init(string: "\n")
             let strMeetingText = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Meeting Date & Time", _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontMedium]);
-            let strMeetingValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "\(weekDay[componentDay?.weekday ?? 1 - 1]), " +   GeneralUtility.startAndEndDateDetail(startDate: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", endDate: self.appoinmentDetailModalObj?.endDatetimeUTC ?? ""),
+            let strMeetingValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +   GeneralUtility.startAndEndDateDetail(startDate: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", endDate: self.appoinmentDetailModalObj?.endDatetimeUTC ?? ""),
                                                                                                   _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontBook]);
             
@@ -143,15 +145,36 @@ class AppoinmentDescriptionTableViewCell: UITableViewCell {
             
             
             var strLocation = "Not available"
-            if let strL =  self.appoinmentDetailModalObj?.locationsUniversityRoom  {
-                if !strL.isEmpty{
-                     strLocation = strL
+            var zoomLink = false
+            
+            if let str = self.appoinmentDetailModalObj?.locations{
+                if str.count > 0 {
+                    strLocation = (str[0].data?.value) ?? "Not available"
+                    if str[0].provider == "zoom_link"{
+                                       zoomLink = true
+                                       strLocation = " Zoom"
+                                   }
                 }
+                
+               
+                
+                
             }
+                   
+            
+            
+            let image1Attachment = NSTextAttachment()
+            image1Attachment.image = UIImage(named: "linkdin")
+image1Attachment.image = UIImage(named: "linkdin")
+            // wrap the attachment in its own attributed string so we can append it
+          image1Attachment.bounds = CGRect.init(x: 0, y: -5, width: 20, height: 20)
+            let imageZoom = NSAttributedString(attachment: image1Attachment)
             
             
             
-            let strLocationValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: strLocation.capitalized, _returnType: String.self)
+            
+            
+            let strLocationValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: strLocation, _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontBook]);
             
             
@@ -185,6 +208,10 @@ class AppoinmentDescriptionTableViewCell: UITableViewCell {
             
             strHeaderDescription.append(strLocationText)
             strHeaderDescription.append(nextLine1)
+            if zoomLink{
+                strHeaderDescription.append(imageZoom)
+
+            }
             strHeaderDescription.append(strLocationValue)
             
             strHeaderDescription.append(nextLine1)

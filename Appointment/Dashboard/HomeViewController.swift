@@ -21,6 +21,8 @@ enum RedirectionType {
     case coachSelection
     case feedback
     case appointmentDetail
+    case cancelAppoinment
+
 }
 
 
@@ -85,7 +87,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         }
         
         
-        self.view.backgroundColor = ILColor.color(index: 22)
+        self.view.backgroundColor = ILColor.color(index: 41)
         
        
         // Do any additional setup after loading the view.
@@ -218,9 +220,16 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         case .Student:
             studentBottomLogic()
             GeneralUtility.customeNavigationBar(viewController: self,title:"Schedule");
+
+            self.dataFeedingModal = self.dataFeedingModalConst
+            self.zeroStateLogic()
+            self.reloadTablviewCocahList()
+            isCoachSelected()
+            
+            
             break;
         case .StudentMyAppointment:
-             GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"My Appoinment");
+             GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"My Appointments");
             
             break;
             
@@ -233,9 +242,10 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     func studentBottomLogic()  {
         btnSelectMuliple.isHidden = true
-        let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+        let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
         
-        UIButton.buttonUIHandling(button: btnSelectMuliple, text: "Schedule an appointment", backgroundColor:ILColor.color(index: 23)  , textColor:.white , cornerRadius: 5, isUnderlined: false, fontType: fontHeavy2)
+        btnSelectMuliple.layoutIfNeeded()
+        UIButton.buttonUIHandling(button: btnSelectMuliple, text: "Schedule an Appointment", backgroundColor:ILColor.color(index: 24)  , textColor:.white , cornerRadius: 5, isUnderlined: false, fontType: fontHeavy2)
         
         self.isCoachSelected()
     }
@@ -267,7 +277,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
             let section1 = sectionHead.init(name: "Select all Coaches", id:"career_coach", selectAll: false, seeAll: false)
             sectionHeaderI.append(section1);
             
-            let section2 = sectionHead.init(name: "Select all Alumini", id:"external_coach", selectAll: false, seeAll: false)
+            let section2 = sectionHead.init(name: "Select all Alumni", id:"external_coach", selectAll: false, seeAll: false)
             sectionHeaderI.append(section2);
             self.dataFeedingModal?.sectionHeader = sectionHeaderI
             self.dataFeedingModalConst = self.dataFeedingModal;
@@ -633,6 +643,15 @@ extension HomeViewController{
             
             break
             
+        case .cancelAppoinment:
+            
+            let appoinmentCancelViewController = AppointmentCancelViewController.init(nibName: "AppointmentCancelViewController", bundle: nil)
+            appoinmentCancelViewController.selectedAppointmentModal = selectedAppointmentModal
+            self.navigationController?.pushViewController(appoinmentCancelViewController, animated: false)
+            
+            break
+            
+            
             
         default:
             break
@@ -645,17 +664,26 @@ extension HomeViewController{
 // ALL STUDENT APPOINMENT LOGIC
 
 extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppointmentTableViewCellDelegate{
-    func redirectAppoinment(openMOdal: OpenHourCoachModalResult, isFeedback: Bool) {
+    
+    // 1 : - Feedback
+    // 2 :- View Detail
+    // 3:- Cancel
+    
+    
+    func redirectAppoinment(openMOdal: OpenHourCoachModalResult, isFeedback: Int) {
         
         selectedAppointmentModal = openMOdal;
         
-        if isFeedback{
+        if isFeedback == 1{
             self.redirection(redirectionType: .feedback)
 
         }
-        else{
+         else if isFeedback == 2{
             self.redirection(redirectionType: .appointmentDetail)
 
+        }
+        else {
+            self.redirection(redirectionType: .cancelAppoinment)
         }
         
     }
@@ -669,7 +697,7 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
         var sectionHeaderI = [sectionHead]()
         let section1 = sectionHead.init(name: "Upcoming Appointments", id:"-09", selectAll: false, seeAll: false)
         sectionHeaderI.append(section1);
-        let section2 = sectionHead.init(name: "Past Apointment", id:"-10", selectAll: false, seeAll: false)
+        let section2 = sectionHead.init(name: "Past Appointments", id:"-10", selectAll: false, seeAll: false)
         sectionHeaderI.append(section2);
         self.dataFeedingAppointmentModal?.sectionHeader = sectionHeaderI
         self.dataFeedingAppointmentModalConst = self.dataFeedingAppointmentModal;
@@ -684,7 +712,7 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
             let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
             
             self.viewZeroState.isHidden = false
-            self.viewZeroState.backgroundColor = ILColor.color(index: 22)
+            self.viewZeroState.backgroundColor = ILColor.color(index: 41)
             
             self.tblView.isHidden = true
             UILabel.labelUIHandling(label: lblZeroState, text: "No Appointments available", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)

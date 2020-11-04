@@ -84,6 +84,27 @@ class CommonFunctions{
         }
     }
     
+    public  class func  alertViewLogout(title : String,message : String,viewController : UIViewController,buttons:[String])  {
+              let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+              for string in buttons{
+                  alert.addAction(UIAlertAction(title: string, style: .default, handler: { action in
+                      switch action.title{
+                      case "Ok":
+                       viewController.navigationController?.popViewController(animated: false)
+                       case "Cancel":
+                       print("")
+                      case .none:
+                       break;
+                      case .some(_):
+                       break;
+                      @unknown default:
+                          print("destructive")
+                      }}))
+              }
+              viewController.present(alert, animated: true, completion: nil)
+          }
+       
+    
     func returnBulletColorOnScoreBasis(bulletScore: String) -> UIColor{
         var colorCode = UIColor()
         if Int(bulletScore) == 2 {

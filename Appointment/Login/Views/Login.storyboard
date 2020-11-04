@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="44v-xe-QA7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="44v-xe-QA7">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,14 +11,14 @@
         <array key="BauerBodoniStd-Bold.otf">
             <string>BauerBodoniStd-Bold</string>
         </array>
+        <array key="SFRegular.otf">
+            <string>SanFranciscoText-Regular</string>
+        </array>
         <array key="SanFranciscoText-Bold.otf">
             <string>SanFranciscoText-Bold</string>
         </array>
         <array key="SanFranciscoText-Medium.otf">
             <string>SanFranciscoText-Medium</string>
-        </array>
-        <array key="SanFranciscoText-Regular.otf">
-            <string>SanFranciscoText-Regular</string>
         </array>
     </customFonts>
     <scenes>
@@ -342,8 +343,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get started to avail personalized resume feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="NzF-If-bAU">
-                                <rect key="frame" x="24" y="153.5" width="327" height="47"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="NzF-If-bAU">
+                                <rect key="frame" x="24" y="153.5" width="327" height="0.0"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoText-Bold" family="San Francisco Text" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -352,7 +353,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you are invited by your school, please ensure to provide your school name for customized experience" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mfL-nA-mDy" customClass="TTTAttributedLabel">
-                                <rect key="frame" x="24" y="208.5" width="327" height="56"/>
+                                <rect key="frame" x="24" y="161.5" width="327" height="56"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -361,7 +362,7 @@
                                 </variation>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AIX-MB-tQg">
-                                <rect key="frame" x="24" y="297.5" width="327" height="50"/>
+                                <rect key="frame" x="24" y="250.5" width="327" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your school name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="cbY-kz-FUd" customClass="SearchTextField" customModule="Appointment" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="327" height="48"/>
@@ -380,7 +381,7 @@
                                 </constraints>
                             </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Results Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhg-13-GH6">
-                                <rect key="frame" x="230" y="355.5" width="121" height="18"/>
+                                <rect key="frame" x="230" y="308.5" width="121" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -440,7 +441,7 @@
                         <viewLayoutGuide key="safeArea" id="qXn-Fi-OL6"/>
                     </view>
                     <navigationItem key="navigationItem" id="9IC-lg-Ebm">
-                        <barButtonItem key="leftBarButtonItem" image="Back" id="tBr-X0-0NP">
+                        <barButtonItem key="leftBarButtonItem" image="BackBlue" id="tBr-X0-0NP">
                             <connections>
                                 <action selector="btnBackTapped:" destination="2Rn-8Z-FnN" id="HP5-Uf-a6S"/>
                             </connections>
@@ -780,7 +781,7 @@
                                                         </variation>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="oIZ-NK-453">
-                                                        <rect key="frame" x="89.5" y="60" width="128" height="48"/>
+                                                        <rect key="frame" x="49.5" y="60" width="208" height="48"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewd-RV-0In">
                                                                 <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
@@ -802,6 +803,17 @@
                                                                 <state key="normal" image="linkdin"/>
                                                                 <connections>
                                                                     <action selector="linkedInButtonTapped:" destination="0YG-9v-YHp" eventType="touchUpInside" id="aUI-3V-iBn"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aco-dn-952">
+                                                                <rect key="frame" x="160" y="0.0" width="48" height="48"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="48" id="1Fv-4e-6l5"/>
+                                                                    <constraint firstAttribute="width" constant="48" id="UwI-tw-yTl"/>
+                                                                </constraints>
+                                                                <state key="normal" image="applelogo"/>
+                                                                <connections>
+                                                                    <action selector="appleSignTapped:" destination="0YG-9v-YHp" eventType="touchUpInside" id="eo8-q2-lgW"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -909,6 +921,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnAppleIDSign" destination="Aco-dn-952" id="vhw-7G-fOD"/>
                         <outlet property="communityLogo" destination="j0C-TD-JbA" id="3s1-ti-QO6"/>
                         <outlet property="communityLogoHeightConstraint" destination="ILg-WO-4rG" id="x5U-3A-ojC"/>
                         <outlet property="communityLogoWidthConstraint" destination="oGJ-6j-xzd" id="dUf-GT-icg"/>
@@ -919,7 +932,6 @@
                         <outlet property="facebookButton" destination="ewd-RV-0In" id="Yjw-hh-0oZ"/>
                         <outlet property="linkedInButton" destination="wNJ-cx-M9g" id="fIa-fC-gAq"/>
                         <outlet property="nextButton" destination="QBV-Vb-l3K" id="ILx-Pm-IKG"/>
-                        <outlet property="nslayoutViewBottom" destination="4FP-X7-bwM" id="pg4-US-Q8S"/>
                         <outlet property="otherCommunityLabel" destination="Z56-bF-IT5" id="xam-kf-2y6"/>
                         <outlet property="scrollView" destination="SN1-jz-z78" id="Hnt-Li-cWM"/>
                         <outlet property="view_social" destination="dSv-gz-gly" id="yHd-6I-kQi"/>
@@ -945,25 +957,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8c-IL-gaF">
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crW-Yr-HSx">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="delegate" destination="WpS-KT-rqI" id="pmz-e3-aFe"/>
-                                </connections>
-                            </webView>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="NY4-OU-5YI" firstAttribute="trailing" secondItem="A8c-IL-gaF" secondAttribute="trailing" id="67t-lr-EvG"/>
-                            <constraint firstItem="NY4-OU-5YI" firstAttribute="bottom" secondItem="A8c-IL-gaF" secondAttribute="bottom" id="Xba-zU-Qdw"/>
-                            <constraint firstItem="A8c-IL-gaF" firstAttribute="top" secondItem="NY4-OU-5YI" secondAttribute="top" id="Xj3-b6-Do5"/>
-                            <constraint firstItem="A8c-IL-gaF" firstAttribute="leading" secondItem="NY4-OU-5YI" secondAttribute="leading" id="qSY-nj-mNf"/>
+                            <constraint firstItem="crW-Yr-HSx" firstAttribute="leading" secondItem="HfC-Je-PUJ" secondAttribute="leading" id="57F-1t-eql"/>
+                            <constraint firstItem="NY4-OU-5YI" firstAttribute="bottom" secondItem="crW-Yr-HSx" secondAttribute="bottom" id="Blg-ql-Nld"/>
+                            <constraint firstItem="crW-Yr-HSx" firstAttribute="top" secondItem="NY4-OU-5YI" secondAttribute="top" id="WN2-9c-nV5"/>
+                            <constraint firstItem="NY4-OU-5YI" firstAttribute="trailing" secondItem="crW-Yr-HSx" secondAttribute="trailing" id="gc2-MY-RXg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NY4-OU-5YI"/>
                     </view>
                     <navigationItem key="navigationItem" id="2Ll-tg-59E">
-                        <barButtonItem key="leftBarButtonItem" image="Back" id="KJq-no-KME">
+                        <barButtonItem key="leftBarButtonItem" image="BackBlue" id="KJq-no-KME">
                             <color key="tintColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="backButtonTapped:" destination="WpS-KT-rqI" id="8p7-Ap-CRs"/>
@@ -971,7 +984,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="webView" destination="A8c-IL-gaF" id="qP7-ks-KSO"/>
+                        <outlet property="webView" destination="crW-Yr-HSx" id="C3o-Kw-F6H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U2u-dC-s2p" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1135,7 +1148,7 @@
                         <viewLayoutGuide key="safeArea" id="7pj-fg-e6D"/>
                     </view>
                     <navigationItem key="navigationItem" id="BFS-Lr-FMG">
-                        <barButtonItem key="leftBarButtonItem" image="Back" id="ehr-ai-g2W">
+                        <barButtonItem key="leftBarButtonItem" image="BackBlue" id="ehr-ai-g2W">
                             <connections>
                                 <action selector="backButtonTapped:" destination="fvc-Uc-K4r" id="A6U-dg-3Vu"/>
                             </connections>
@@ -1548,7 +1561,7 @@
                         <viewLayoutGuide key="safeArea" id="Q9O-e7-HVE"/>
                     </view>
                     <navigationItem key="navigationItem" id="IG4-pX-zdV">
-                        <barButtonItem key="leftBarButtonItem" image="Back" id="xP9-Mp-mgB">
+                        <barButtonItem key="leftBarButtonItem" image="BackBlue" id="xP9-Mp-mgB">
                             <connections>
                                 <action selector="backButtonTapped:" destination="rxL-4e-fEp" id="ZPO-sI-Ad2"/>
                             </connections>
@@ -3231,8 +3244,10 @@
     <resources>
         <image name="Artboard" width="375" height="157"/>
         <image name="Back" width="48" height="48"/>
+        <image name="BackBlue" width="13" height="19"/>
         <image name="Reload" width="21" height="20"/>
         <image name="Splash Icon" width="147" height="62"/>
+        <image name="applelogo" width="96" height="96"/>
         <image name="back arrow" width="6.5" height="7"/>
         <image name="facebook" width="48" height="48"/>
         <image name="forward arrow" width="6.5" height="7"/>

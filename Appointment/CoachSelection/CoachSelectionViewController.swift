@@ -257,10 +257,10 @@ class CoachSelectionViewController: SuperViewController {
             }
             var coachType = ""
             if selectedDataFeedingModal?.coaches[0].roleMachineName.rawValue == "career_coach"{
-                coachType = "Carrer Coach"
+                coachType = "Career Coach"
             }
             else{
-                coachType = "Alumini"
+                coachType = "Alumni"
             }
             let strHeader = NSMutableAttributedString.init()
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -287,12 +287,14 @@ class CoachSelectionViewController: SuperViewController {
             nslayoutconstraintWidthCollection.constant = 0
             self.viewCollection.isHidden = true
             UILabel.labelUIHandling(label: lblMore, text: "No Coach Selected", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+            GeneralUtility.customeNavigationBarWithBack(viewController: self,title:"Schedule");
+
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let coachCarrerCoach = Coach.init(id: -1, name: "Selecte All", email: "", profilePicURL: "", summary: "", headline: "", roleID: -1, roleMachineName: .careerCoach, requestedResumes: nil,isSelected: false)
-        let coachExternalCoach = Coach.init(id: -1, name: "Selecte All", email: "", profilePicURL: "", summary: "", headline: "", roleID: -1, roleMachineName: .externalCoach, requestedResumes: nil,isSelected: false)
+        let coachCarrerCoach = Coach.init(id: -1, name: "Select All", email: "", profilePicURL: "", summary: "", headline: "", roleID: -1, roleMachineName: .careerCoach, requestedResumes: nil,isSelected: false)
+        let coachExternalCoach = Coach.init(id: -1, name: "Select All", email: "", profilePicURL: "", summary: "", headline: "", roleID: -1, roleMachineName: .externalCoach, requestedResumes: nil,isSelected: false)
         self.dataFeedingModal?.coaches.insert(coachCarrerCoach, at: 0)
         self.dataFeedingModal?.coaches.insert(coachExternalCoach, at: 0)
     }
@@ -478,7 +480,7 @@ extension CoachSelectionViewController {
     
     
     func convertNextDate(index : Int){
-        let weekDay = ["Sun","Mon","Tues","Wed","Thus","Fri","Sat"]
+        let weekDay = ["Sun","Mon","Tues","Wed","Thu","Fri","Sat"]
         let monthI   = ["Jan","Feb","Mar","Apr","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
         
         let dateFormatter = DateFormatter()
@@ -487,11 +489,14 @@ extension CoachSelectionViewController {
         
         let components = tomorrow!.get(.day, .month, .year,.weekday)
         let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE16)
+        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+
+        
         
         if let day = components.day, let month = components.month, let year = components.year,let weekday = components.weekday {
-            UILabel.labelUIHandling(label: lblDay, text: "\(weekDay[weekday-1]) " + "\(day)", textColor:ILColor.color(index: 4) , isBold: false, fontType: fontMedium)
+            UILabel.labelUIHandling(label: lblDay, text: "\(weekDay[weekday-1]) " + "\(day)", textColor:ILColor.color(index: 4) , isBold: false, fontType: fontHeavy1)
             
-            UILabel.labelUIHandling(label: lblMonth, text: "\(monthI[month-1]), " + "\(year)", textColor:ILColor.color(index: 4) , isBold: false, fontType: fontMedium)
+            UILabel.labelUIHandling(label: lblMonth, text: "\(monthI[month-1]), " + "\(year)", textColor:ILColor.color(index: 4) , isBold: false, fontType: fontHeavy1)
         }
         
         var calenderModal = CalenderModal()
@@ -588,8 +593,24 @@ extension CoachSelectionViewController{
 extension CoachSelectionViewController:passDataSecondViewDelegate,
 CoachConfirmationPopUpSecondViewCDelegate
 {
-    func refreshSelectionView() {
-        self.formingModal()
+    func refreshSelectionView(isBack : Bool, results: OpenHourCoachModalResult!) {
+        if isBack{
+            
+            let coachConfirmation = CoachConfirmationPopUpFirstViewC.init(nibName: "CoachConfirmationPopUpFirstViewC", bundle: nil)
+            coachConfirmation.delegate = self
+            coachConfirmation.dataFeedingModal = self.dataFeedingModal
+            coachConfirmation.results = results
+            coachConfirmation.modalPresentationStyle = .overFullScreen
+            self.present(coachConfirmation, animated: false) {
+                
+            }
+        }
+        else
+        {
+            self.formingModal()
+        }
+        
+        
     }
     
     func passData(results: OpenHourCoachModalResult) {
@@ -616,10 +637,10 @@ CoachConfirmationPopUpSecondViewCDelegate
                 }
                 else
                 {
-//                    self.studentHit()
+                    //                    self.studentHit()
                 }
             } catch  {
-//                self.studentHit()
+                //                self.studentHit()
             }
             
             
@@ -634,13 +655,13 @@ CoachConfirmationPopUpSecondViewCDelegate
     {
         IndustriesFunctionViewModal().studentIndustries({ (response) in
             do {
-                   try self.setupStudentIndustries(response: response);
+                try self.setupStudentIndustries(response: response);
             } catch {
-//                self.studentIndustries()
+                //                self.studentIndustries()
             }
             
         }) { (error, errorCode) in
-//            self.studentIndustries()
+            //            self.studentIndustries()
         }
     }
     
@@ -679,7 +700,7 @@ CoachConfirmationPopUpSecondViewCDelegate
     }
     
     
-
+    
 }
 
 

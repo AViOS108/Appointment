@@ -163,10 +163,10 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
         let coachText = selectedCoach?.name
         var coachType = ""
         if selectedCoach?.roleMachineName.rawValue == "career_coach"{
-            coachType = "Carrer Coach"
+            coachType = "Career Coach"
         }
         else{
-            coachType = "Alumini"
+            coachType = "Alumni"
         }
         let strHeader = NSMutableAttributedString.init()
         
@@ -188,7 +188,7 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
         
         let strHeader1 = NSMutableAttributedString.init()
         
-        let strSlot = NSAttributedString.init(string: "Available Slot on"
+        let strSlot = NSAttributedString.init(string: "Available Slot on "
             , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
         
         
@@ -228,14 +228,40 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
             , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
         let nextLine1 = NSAttributedString.init(string: "\n")
         
-        let strLocation = NSAttributedString.init(string: results.locationsUniversityRoom ?? ""
+        var strLocationText = "Not available"
+        var zoomLink = false
+
+        if let str = results.locations{
+            if str.count > 0 {
+                strLocationText = (str[0].data?.value) ?? "Not available"
+                if str[0].provider == "zoom_link"{
+                               zoomLink = true
+                               strLocationText = " Zoom"
+                           }
+            }
+            
+           
+            
+        }
+        
+        let image1Attachment = NSTextAttachment()
+                 image1Attachment.image = UIImage(named: "linkdin")
+image1Attachment.bounds = CGRect.init(x: 0, y: -5, width: 20, height: 20)
+                 // wrap the attachment in its own attributed string so we can append it
+                 let imageZoom = NSAttributedString(attachment: image1Attachment)
+                 
+        
+        let strLocation = NSAttributedString.init(string: strLocationText
             , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
         let paraSlot = NSMutableParagraphStyle.init()
         //            para.alignment = .center
         paraSlot.lineSpacing = 1
         strHeader1.append(strLocationHeader)
         strHeader1.append(nextLine1)
-        
+        if zoomLink{
+                     strHeader1.append(imageZoom)
+
+                 }
         strHeader1.append(strLocation)
         strHeader1.addAttribute(NSAttributedString.Key.paragraphStyle, value: paraSlot, range: NSMakeRange(0, strHeader1.length))
         lblLocation.attributedText = strHeader1

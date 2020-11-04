@@ -70,16 +70,15 @@ UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregro
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         if isStudent ?? true {
             let icon1 = UITabBarItem(title: "Schedule", image: UIImage(named: "Scheedule_light"), selectedImage: UIImage(named: "Schedule"))
-            let icon2 = UITabBarItem(title: "My Appointment", image: UIImage(named: "myevent"), selectedImage: UIImage(named: "myeventselected"))
+            let icon2 = UITabBarItem(title: "My Appointments", image: UIImage(named: "My_Appointment"), selectedImage: UIImage(named: "My_Appoinntment_2"))
             
             item2!.tabBarItem = icon2
             item1!.tabBarItem = icon1
         }
         else{
-            let icon1 = UITabBarItem(title: "Event List", image: UIImage(named: "Eventlist"), selectedImage: UIImage(named: "Eventlistselected"))
-            
-            let icon2 = UITabBarItem(title: "Mark Attendance", image: UIImage(named: "Markattendance"), selectedImage: UIImage(named: "Markattendanceselected"))
-            
+            let icon1 = UITabBarItem(title: "Schedule", image: UIImage(named: "Scheedule_light"), selectedImage: UIImage(named: "Schedule"))
+                      let icon2 = UITabBarItem(title: "My Appointments", image: UIImage(named: "My_Appointment"), selectedImage: UIImage(named: "My_Appoinntment_2"))
+               
             item2!.tabBarItem = icon2
             item1!.tabBarItem = icon1
         }

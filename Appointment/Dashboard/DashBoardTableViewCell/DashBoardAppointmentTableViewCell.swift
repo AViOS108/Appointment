@@ -8,9 +8,13 @@
 
 import UIKit
 
+// 1 : - Feedback
+// 2 :- View Detail
+// 3:- Cancel
+
 
 protocol DashBoardAppointmentTableViewCellDelegate {
-    func redirectAppoinment(openMOdal:OpenHourCoachModalResult,isFeedback: Bool)
+    func redirectAppoinment(openMOdal:OpenHourCoachModalResult,isFeedback: Int)
 }
 
 class DashBoardAppointmentTableViewCell: UITableViewCell {
@@ -29,13 +33,24 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
     var delegate : DashBoardAppointmentTableViewCellDelegate!
     
     @IBAction func btnViewDetailTapped(_ sender: Any) {
-        
-        delegate.redirectAppoinment(openMOdal: self.appointmentModal, isFeedback: false)
+       delegate.redirectAppoinment(openMOdal: self.appointmentModal, isFeedback: 2)
+
+       
         
     }
     @IBOutlet weak var btnFeedback: UIButton!
     @IBAction func btnFeedbackTapped(_ sender: Any) {
-        delegate.redirectAppoinment(openMOdal: self.appointmentModal, isFeedback: true)
+        
+        
+         if self.appointmentModal.isPastAppointment{
+                    delegate.redirectAppoinment(openMOdal: self.appointmentModal, isFeedback: 1)
+               }
+               else
+               {
+                   delegate.redirectAppoinment(openMOdal: self.appointmentModal, isFeedback: 3)
+
+               }
+        
 
     }
     func customize(noAppoinment: Bool,text:String)  {
@@ -67,10 +82,10 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
             }
             var coachType = ""
             if self.appointmentModal.coach?.roleMachineName.rawValue == "career_coach"{
-                coachType = "Carrer Coach"
+                coachType = "Career Coach"
             }
             else{
-                coachType = "Alumini"
+                coachType = "Alumni"
             }
             
             
@@ -91,7 +106,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                 strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
                 lblDescribtion.attributedText = strHeader
             }
-            let weekDay = ["Sun","Mon","Tues","Wed","Thus","Fri","Sat"]
+            let weekDay = ["Sun","Mon","Tues","Wed","Thu","Fri","Sat"]
             var componentDay = GeneralUtility.dateComponent(date: self.appointmentModal.startDatetimeUTC!, component: .weekday)
             
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -105,13 +120,42 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                     , _returnType: String.self)
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
                 let nextLine1 = NSAttributedString.init(string: "\n")
-                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.appointmentModal.locationsUniversityRoom, _returnType: String.self)
+                
+                var strLocation = "Not available"
+                var zoomLink = false
+
+                if let str = self.appointmentModal?.locations{
+                    if str.count > 0 {
+                        strLocation = (str[0].data?.value) ?? "Not available"
+                        
+                        if str[0].provider == "zoom_link"{
+                            zoomLink = true
+                            strLocation = " Zoom"
+                        }
+                    }
+                   
+                }
+                
+                let image1Attachment = NSTextAttachment()
+                         image1Attachment.image = UIImage(named: "linkdin")
+                image1Attachment.bounds = CGRect.init(x: 0, y: -5, width: 20, height: 20)
+
+
+                         // wrap the attachment in its own attributed string so we can append it
+                         let imageZoom = NSAttributedString(attachment: image1Attachment)
+                         
+                
+                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: strLocation, _returnType: String.self)
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
                 let para = NSMutableParagraphStyle.init()
                 //            para.alignment = .center
                 para.lineSpacing = 4
                 strHeaderDesc.append(strTiTle)
                 strHeaderDesc.append(nextLine1)
+                if zoomLink{
+                               strHeaderDesc.append(imageZoom)
+
+                           }
                 strHeaderDesc.append(strType)
                 strHeaderDesc.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeaderDesc.length))
                 lblTimeVenue.attributedText = strHeaderDesc
@@ -155,6 +199,16 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                 btnFeedback.isHidden = false
             }
             else{
+                
+                if self.appointmentModal.isPastAppointment{
+                    
+                }
+                else{
+                    UIButton.buttonUIHandling(button: btnFeedback, text: "Cancel", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+
+                }
+                
+                
                 btnFeedback.isHidden = true
             }
             
@@ -189,7 +243,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
             
         }
         
-       
+        self.backgroundColor = .clear
         
     }
     

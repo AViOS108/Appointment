@@ -185,7 +185,15 @@ import UIKit
                    return UIColor.init(red: 43/255, green: 43/255, blue: 43/255, alpha: 1.0)
                }
 
-
+        else if index == 41 {
+                   // background appointment color #F8FAF8A8
+                   return UIColor.init(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
+               }
+        else if index == 42 {
+                          // background appointment color #444444
+                          return UIColor.init(red: 68/255, green: 68/255, blue: 68/255, alpha: 1.0)
+                      }
+        
         
         return UIColor.clear
     }

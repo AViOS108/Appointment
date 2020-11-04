@@ -21,6 +21,8 @@ class HomeMyAppointmentTableViewController: UITableViewController {
     
     
     func customizaTionMyApointment()  {
+        self.view.backgroundColor = .clear
+        self.tableView.backgroundColor = .clear
         viewControllerI.tblView.dataSource = self
         viewControllerI.tblView.delegate = self
         if viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == false}).count == 0

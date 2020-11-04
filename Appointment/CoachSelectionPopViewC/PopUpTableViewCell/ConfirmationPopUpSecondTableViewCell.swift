@@ -32,8 +32,31 @@ class ConfirmationPopUpSecondTableViewCell: TableviewCellSuperClass,UITextViewDe
         
         self.addInputAccessoryForTextView(textVIew: txtDescription )
         
-        let fontNextMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
-        UILabel.labelUIHandling(label: lblHeader, text: "Description", textColor:ILColor.color(index: 31) , isBold: false , fontType: fontNextMedium,   backgroundColor:.white )
+        let strHeader = NSMutableAttributedString.init()
+               
+               if let fontNextMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
+                      {
+                          let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Description ", _returnType: String.self)
+                              , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontNextMedium]);
+                          let strType = NSAttributedString.init(string: " ⃰"
+                           , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontNextMedium]);
+                          let para = NSMutableParagraphStyle.init()
+                          //            para.alignment = .center
+                          strHeader.append(strTiTle)
+                            strHeader.append(strType)
+                         
+                          strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+                          lblHeader.attributedText = strHeader
+                      }
+                
+        
+        
+        
+        
+        
+        
+        
+        
         txtDescription.backgroundColor = ILColor.color(index: 22)
         txtDescription.autocorrectionType = .no
         txtDescription.spellCheckingType = .no

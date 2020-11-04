@@ -32,6 +32,8 @@ class NotesAppointmentTableViewCell: TableviewCellSuperClass,UITextViewDelegate 
             objAppointment.callbackVC = { (success:Bool) in
                  self.activityIndicator?.hide()
                 if success{
+                                CommonFunctions().showError(title: "", message: "Successfully Saved")
+
                     self.delegate?.refreshApi()
                 }
                 
@@ -95,7 +97,8 @@ class NotesAppointmentTableViewCell: TableviewCellSuperClass,UITextViewDelegate 
     
     
     func customization()  {
-        
+        self.backgroundColor = .clear
+      BtnSaveNotes.isHidden = true
         self.layoutIfNeeded()
         let fontNextMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         self.viewContainer.backgroundColor = .white

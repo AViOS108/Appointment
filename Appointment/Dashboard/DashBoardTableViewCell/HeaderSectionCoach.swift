@@ -38,8 +38,9 @@ class HeaderSectionCoach: UITableViewHeaderFooterView {
         }
         
         
-        let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
-        UILabel.labelUIHandling(label: lblheader, text:  GeneralUtility.optionalHandling(_param: sectionHeader?.name, _returnType: String.self),  textColor: ILColor.color(index: 5), isBold: false, fontType: fontMedium,  backgroundColor: .white)
+        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE15)
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+        UILabel.labelUIHandling(label: lblheader, text:  GeneralUtility.optionalHandling(_param: sectionHeader?.name, _returnType: String.self),  textColor: ILColor.color(index: 34), isBold: false, fontType: fontMedium,  backgroundColor: .white)
         
         
         if self.sectionHeader!.selectAll{
@@ -53,10 +54,10 @@ class HeaderSectionCoach: UITableViewHeaderFooterView {
         }
         
         if self.sectionHeader!.seeAll{
-            UIButton.buttonUIHandling(button: btnMultiPurpose, text: "See Less", backgroundColor:UIColor.clear,textColor: ILColor.color(index: 23),fontType: fontMedium )
+            UIButton.buttonUIHandling(button: btnMultiPurpose, text: "See less", backgroundColor:UIColor.clear,textColor: ILColor.color(index: 23),fontType: fontHeavy )
         }
         else{
-            UIButton.buttonUIHandling(button: btnMultiPurpose, text: "See All", backgroundColor:UIColor.clear,textColor: ILColor.color(index: 23),fontType: fontMedium)
+            UIButton.buttonUIHandling(button: btnMultiPurpose, text: "See all", backgroundColor:UIColor.clear,textColor: ILColor.color(index: 23),fontType: fontHeavy)
             
         }
         

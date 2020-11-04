@@ -38,7 +38,7 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
         isCoachSelected = true
         let FontDemiBold = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
         UIButton.buttonUIHandling(button: btnCoach, text: "Coaches", backgroundColor:.white , textColor: ILColor.color(index: 23), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
-        UIButton.buttonUIHandling(button: btnAlumini, text: "Alumini", backgroundColor:.white , textColor: ILColor.color(index: 28), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
+        UIButton.buttonUIHandling(button: btnAlumini, text: "Alumni", backgroundColor:.white , textColor: ILColor.color(index: 28), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
         viewFooterBtnCoach.backgroundColor = ILColor.color(index: 23)
         viewFooterBtnAlumini.backgroundColor = ILColor.color(index: 22)
 
@@ -52,7 +52,7 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
         isCoachSelected = false
         let FontDemiBold = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
         UIButton.buttonUIHandling(button: btnCoach, text: "Coaches", backgroundColor:.white , textColor: ILColor.color(index: 28), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
-        UIButton.buttonUIHandling(button: btnAlumini, text: "Alumini", backgroundColor:.white , textColor: ILColor.color(index: 23), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
+        UIButton.buttonUIHandling(button: btnAlumini, text: "Alumni", backgroundColor:.white , textColor: ILColor.color(index: 23), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
         viewFooterBtnCoach.backgroundColor = ILColor.color(index: 22)
         viewFooterBtnAlumini.backgroundColor = ILColor.color(index: 23)
         
@@ -79,7 +79,7 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
         {
             UIButton.buttonUIHandling(button: btnCoach, text: "Coaches", backgroundColor:.white , textColor: ILColor.color(index: 23), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
             
-            UIButton.buttonUIHandling(button: btnAlumini, text: "Alumini", backgroundColor:.white , textColor: ILColor.color(index: 28), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
+            UIButton.buttonUIHandling(button: btnAlumini, text: "Alumni", backgroundColor:.white , textColor: ILColor.color(index: 28), cornerRadius: 5, isUnderlined: false, fontType: FontDemiBold)
             
             viewFooterBtnCoach.backgroundColor = ILColor.color(index: 23)
             viewFooterBtnAlumini.backgroundColor = ILColor.color(index: 22)
@@ -87,7 +87,7 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
         }
         
         if (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "career_coach"
-            })!.count == 0
+            })!.count == 1
         {
             nocoach = true
         }
@@ -98,7 +98,7 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
         }
         
         if (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "external_coach"
-            })!.count == 0
+            })!.count == 1
         {
             noAlumini = true
         }
@@ -202,7 +202,7 @@ extension CoachAluminiViewController: UITableViewDelegate,UITableViewDataSource{
                     cell.coachModal = (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "external_coach"
                         })![indexPath.row ];
             }
-            cell.customization(noCoach: noAlumini, text: "No Alumini Found !", row: indexPath.row)
+            cell.customization(noCoach: noAlumini, text: "No Alumni Found !", row: indexPath.row)
         }
         return cell
     }

@@ -40,6 +40,8 @@ struct AppoinmentDetailModal: Codable {
     let purposes: [Purpose]?
     var coach : Coach?
     var parent: [Parent]?
+    let locations: [Location]?
+
     enum CodingKeys: String, CodingKey {
         case id
         case eventTypeID = "event_type_id"
@@ -75,6 +77,7 @@ struct AppoinmentDetailModal: Codable {
         case endDatetime = "end_datetime"
         case inTimezone = "in_timezone"
         case purposes
+        case locations
     }
 }
 

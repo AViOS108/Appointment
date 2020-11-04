@@ -132,6 +132,8 @@
 		1A54712724B74959005F1058 /* ERLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54712324B74959005F1058 /* ERLoginViewController.swift */; };
 		1A54712824B74959005F1058 /* ERLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A54712424B74959005F1058 /* ERLoginViewController.xib */; };
 		1A54712B24B75052005F1058 /* EventErLoginModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54712A24B75052005F1058 /* EventErLoginModal.swift */; };
+		1A59A15325500FEE00307756 /* AppointmentCancelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A59A15125500FEE00307756 /* AppointmentCancelViewController.swift */; };
+		1A59A15425500FEE00307756 /* AppointmentCancelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A59A15225500FEE00307756 /* AppointmentCancelViewController.xib */; };
 		1A61EFE4250616F300257CB5 /* CoachConfirmationPopUpFirstViewC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A61EFE2250616F200257CB5 /* CoachConfirmationPopUpFirstViewC.swift */; };
 		1A61EFE5250616F300257CB5 /* CoachConfirmationPopUpFirstViewC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A61EFE3250616F200257CB5 /* CoachConfirmationPopUpFirstViewC.xib */; };
 		1A61EFEB250753AE00257CB5 /* IndustriesFunctionViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A61EFEA250753AE00257CB5 /* IndustriesFunctionViewModal.swift */; };
@@ -371,6 +373,8 @@
 		1A54712324B74959005F1058 /* ERLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERLoginViewController.swift; sourceTree = "<group>"; };
 		1A54712424B74959005F1058 /* ERLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ERLoginViewController.xib; sourceTree = "<group>"; };
 		1A54712A24B75052005F1058 /* EventErLoginModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventErLoginModal.swift; sourceTree = "<group>"; };
+		1A59A15125500FEE00307756 /* AppointmentCancelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentCancelViewController.swift; sourceTree = "<group>"; };
+		1A59A15225500FEE00307756 /* AppointmentCancelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppointmentCancelViewController.xib; sourceTree = "<group>"; };
 		1A61EFE2250616F200257CB5 /* CoachConfirmationPopUpFirstViewC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachConfirmationPopUpFirstViewC.swift; sourceTree = "<group>"; };
 		1A61EFE3250616F200257CB5 /* CoachConfirmationPopUpFirstViewC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoachConfirmationPopUpFirstViewC.xib; sourceTree = "<group>"; };
 		1A61EFEA250753AE00257CB5 /* IndustriesFunctionViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustriesFunctionViewModal.swift; sourceTree = "<group>"; };
@@ -402,6 +406,7 @@
 		1A6CAF9F251E006A000C9887 /* NextStepCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NextStepCollectionViewCell.xib; sourceTree = "<group>"; };
 		1A6CAFA225222C09000C9887 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1A712B6124FE3E1000D761D2 /* TimeZoneModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeZoneModal.swift; sourceTree = "<group>"; };
+		1A736CD42547FDD6009C7500 /* Appointment.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Appointment.entitlements; sourceTree = "<group>"; };
 		1A78314324F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizontalAppointmentInfoCollectionViewCell.xib; sourceTree = "<group>"; };
 		1A78314424F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizonatlDateCollectionViewCell.xib; sourceTree = "<group>"; };
 		1A78314524F8D37F0054AAF8 /* HorizontalCalender.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizontalCalender.xib; sourceTree = "<group>"; };
@@ -540,6 +545,7 @@
 		1A54700724B59460005F1058 /* Appointment */ = {
 			isa = PBXGroup;
 			children = (
+				1A736CD42547FDD6009C7500 /* Appointment.entitlements */,
 				1A54700824B59460005F1058 /* AppDelegate.swift */,
 				1A54700A24B59460005F1058 /* SceneDelegate.swift */,
 				1A54700C24B59460005F1058 /* ViewController.swift */,
@@ -915,6 +921,8 @@
 				1A8B5045251C73E400111C77 /* NotesCollectionViewlayout.swift */,
 				1A79151B25383C7900BC0AA7 /* FeedbackViewController.swift */,
 				1A79151C25383C7900BC0AA7 /* FeedbackViewController.xib */,
+				1A59A15125500FEE00307756 /* AppointmentCancelViewController.swift */,
+				1A59A15225500FEE00307756 /* AppointmentCancelViewController.xib */,
 			);
 			name = AppoinmnetDetailAndFeedback;
 			path = Appointment/AppoinmnetDetailAndFeedback;
@@ -1188,6 +1196,7 @@
 				1A61EFE5250616F300257CB5 /* CoachConfirmationPopUpFirstViewC.xib in Resources */,
 				1A54711F24B5E98A005F1058 /* HomeViewController.xib in Resources */,
 				1A78314B24F8D37F0054AAF8 /* HorizontalCalender.xib in Resources */,
+				1A59A15425500FEE00307756 /* AppointmentCancelViewController.xib in Resources */,
 				1A61F000250A3F2B00257CB5 /* SearchViewController.xib in Resources */,
 				1A8B5030251A07D000111C77 /* AppointmentDetailViewController.xib in Resources */,
 				1AEB679324EFD777006F9C05 /* CalenderView.xib in Resources */,
@@ -1376,6 +1385,7 @@
 				1A78316624F8D5250054AAF8 /* CoachImageOverlayCiCollectionViewCell.swift in Sources */,
 				1A54706C24B5D241005F1058 /* IntroViewController.swift in Sources */,
 				1A54706E24B5D241005F1058 /* SearchFooter.swift in Sources */,
+				1A59A15325500FEE00307756 /* AppointmentCancelViewController.swift in Sources */,
 				1AEB678424EC0D21006F9C05 /* DashBoardModel.swift in Sources */,
 				1A5470DB24B5D2AE005F1058 /* InitialsImageView.swift in Sources */,
 				1A54706D24B5D241005F1058 /* CheckStatusViewController.swift in Sources */,
@@ -1680,8 +1690,9 @@
 			baseConfigurationReference = 04B75BD63A4BAA590E61170D /* Pods-Appointment.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Appointment/Appointment.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 2J62BWA9ZJ;
 				INFOPLIST_FILE = Appointment/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1689,7 +1700,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmock.app.Appointment;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1704,8 +1715,9 @@
 			baseConfigurationReference = 2DC097B2BD697C87C12EA2D4 /* Pods-Appointment.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Appointment/Appointment.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 2J62BWA9ZJ;
 				INFOPLIST_FILE = Appointment/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1713,7 +1725,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vmock.app.Appointment;
 				PRODUCT_NAME = "$(TARGET_NAME)";

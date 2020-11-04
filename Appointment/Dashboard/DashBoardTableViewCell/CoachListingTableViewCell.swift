@@ -85,6 +85,15 @@ class CoachListingTableViewCell: UITableViewCell {
                 
             }
             
+            var coachType = ""
+                   if coachModal?.roleMachineName.rawValue == "career_coach"{
+                       coachType = "Career Coach"
+                   }
+                   else{
+                       coachType = "Alumni"
+                   }
+            
+            
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
                 
             {
@@ -92,7 +101,7 @@ class CoachListingTableViewCell: UITableViewCell {
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
                 let nextLine1 = NSAttributedString.init(string: "\n")
                 
-                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.coachModal?.headline, _returnType: String.self)
+                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: coachType, _returnType: String.self)
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
                 
                 let strDesc = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.coachModal?.summary, _returnType: String.self)
@@ -104,11 +113,9 @@ class CoachListingTableViewCell: UITableViewCell {
                 
                 strHeader.append(strTiTle)
                 
-                if GeneralUtility.optionalHandling(_param: self.coachModal?.headline, _returnType: String.self) != ""{
-                    strHeader.append(nextLine1)
-                    strHeader.append(strType)
-                    
-                }
+                strHeader.append(nextLine1)
+                strHeader.append(strType)
+                
                 if GeneralUtility.optionalHandling(_param: self.coachModal?.summary, _returnType: String.self) != ""{
                     strHeader.append(nextLine1)
                     strHeader.append(strDesc)

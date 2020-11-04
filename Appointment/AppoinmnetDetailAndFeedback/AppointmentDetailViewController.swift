@@ -24,7 +24,8 @@ class AppointmentDetailViewController: SuperViewController,UITableViewDelegate,U
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
-        
+        self.view.backgroundColor = ILColor.color(index: 41)
+
     }
     override func viewDidAppear(_ animated: Bool) {
         tblVIew.register(UINib.init(nibName: "NotesAppointmentTableViewCell", bundle: nil), forCellReuseIdentifier: "NotesAppointmentTableViewCell")
@@ -153,6 +154,9 @@ extension AppointmentDetailViewController : NotesAppointmentTableViewCellDelegat
                 (success:Bool) in
                 self.activityIndicator?.hide()
                 if success{
+                    
+                    CommonFunctions().showError(title: "", message: "Successfully Deleted")
+                    
                     self.refreshApi()
                 }
             }

@@ -19,7 +19,7 @@ struct  DocUploadedModal{
 
  
 protocol  CoachConfirmationPopUpSecondViewCDelegate{
-    func refreshSelectionView()
+    func refreshSelectionView(isBack : Bool, results: OpenHourCoachModalResult!)
     
 }
 
@@ -51,7 +51,8 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
             
         }
     }
-    
+    @IBOutlet weak var viewSeperator: UIView!
+
     @IBOutlet weak var BtnNext: UIButton!
     
     @IBAction func btnNextTapped(_ sender: UIButton) {
@@ -59,8 +60,17 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
     
     }
     
+    @IBOutlet weak var lblHeader: UILabel!
     
+    @IBOutlet weak var btnback: UIButton!
     
+    @IBAction func btnBAckTapped(_ sender: Any) {
+        
+        self.dismiss(animated: false) {
+            self.delegate.refreshSelectionView(isBack: true, results: self.results)
+                   }
+        
+    }
     
     var arraYHeader = ["Purpose of the Meeting","Description","Target Functions (Max 3)","Target Industries (Max 3)","Target Companies (Max 3)"]
     
@@ -82,6 +92,13 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
         docUploaded.docName = ""
         docUploaded.isDocUploaded = false
         
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+        
+        UILabel.labelUIHandling(label: lblHeader, text: "Confirm Appointment", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy)
+        
+        UIButton.buttonUIHandling(button: btnback, text: "", backgroundColor: .white,  buttonImage: UIImage.init(named: "noun_back_black"))
+        viewSeperator.backgroundColor = ILColor.color(index:19);
+
         // Do any additional setup after loading the view.
     }
     
@@ -149,7 +166,7 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
 
         UIButton.buttonUIHandling(button: btnCancel, text: "Cancel", backgroundColor:.white , textColor: ILColor.color(index: 23), fontType: fontMedium)
-        UIButton.buttonUIHandling(button: BtnNext, text: "Next", backgroundColor:.white , textColor: ILColor.color(index: 23), fontType: fontHeavy)
+        UIButton.buttonUIHandling(button: BtnNext, text: "Submit", backgroundColor:.white , textColor: ILColor.color(index: 23), fontType: fontHeavy)
         
     }
     
@@ -405,12 +422,17 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
 
         var params = [
             "title" : strtitle,
-            "description" : strDescription,
             "in_timezone" : "Asia/Kolkata",
             "user_purpose_ids": userPurposeId,
             ParamName.PARAMCSRFTOKEN : csrftoken
 
         ]  as [String : Any]
+        
+        if strDescription != "" {
+            params["description"] = strDescription
+            
+        }
+        
         
         if let doc = docUploaded.docData{
             let convertedString = String(data: doc, encoding: .utf8) // the data will be converted to the string
@@ -425,7 +447,7 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
             activityIndicator.hide()
             
             self.dismiss(animated: false) {
-                self.delegate.refreshSelectionView()
+                self.delegate.refreshSelectionView(isBack: false, results: self.results)
             }
             
 

@@ -76,7 +76,7 @@ struct FeedBackModal: Codable {
 struct Location: Codable {
     let id: Int?
     let eventID, provider: String?
-    let meetingID: JSONNull?
+    let meetingID: Int?
     let data: DataClass?
 
     enum CodingKeys: String, CodingKey {
