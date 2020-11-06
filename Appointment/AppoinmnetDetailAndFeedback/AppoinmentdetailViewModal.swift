@@ -259,6 +259,27 @@ class AppoinmentdetailViewModal{
     }
     
     
+    func cancelAppoinment(id : String)   {
+        
+        let params = [
+            "appointment_cancellation_reason" :"",
+            "_method" : "patch",
+            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
+            ] as [String : AnyObject]
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+        
+        Network().makeApiEventRequest(true, url: Urls().cancelAppoinment(id: id), methodType: .post, params: params, header: headers, completion: { (data) in
+            self.callbackVC!(true)
+        }) { (error, errorCode) in
+            CommonFunctions().showError(title: "", message: error)
+            self.callbackVC!(false)
+        }
+        
+    }
+    
+    
+    
+    
     
     func postFeedback(selectedAppointmentModal : OpenHourCoachModalResult?,objFeedBackMOdal:feedbackModal)   {
           

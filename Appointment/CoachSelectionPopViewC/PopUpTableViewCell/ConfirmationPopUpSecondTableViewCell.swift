@@ -43,7 +43,6 @@ class ConfirmationPopUpSecondTableViewCell: TableviewCellSuperClass,UITextViewDe
                           let para = NSMutableParagraphStyle.init()
                           //            para.alignment = .center
                           strHeader.append(strTiTle)
-                            strHeader.append(strType)
                          
                           strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
                           lblHeader.attributedText = strHeader

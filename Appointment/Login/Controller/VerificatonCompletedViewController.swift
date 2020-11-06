@@ -36,9 +36,13 @@ class VerificatonCompletedViewController: UIViewController {
     @IBOutlet weak var communityNameLabel: UILabel!
     @IBOutlet weak var enclosingView: UIView!
     
+    
+    override func viewDidDisappear(_ animated: Bool) {
+             AppUtility.lockOrientation(.all)
+       }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         verifyApiCall()
         let communityLogoLocal = UserDefaultsDataSource(key: "communityLogoLocal").readData()
         CommonFunctions().loadLogo(communityName: communityNameLabel, imageView: communityLogo, enclosingView: enclosingView,logo: communityLogoLocal as? String,communityLogoName: "VMock Default")
@@ -50,6 +54,8 @@ class VerificatonCompletedViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+
         GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: Verification Completed")
     }
     

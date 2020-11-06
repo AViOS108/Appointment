@@ -8,6 +8,9 @@
 
 import UIKit
 
+
+
+
 class AppointmentCancelViewController: UIViewController,UIGestureRecognizerDelegate {
     
     
@@ -18,8 +21,11 @@ class AppointmentCancelViewController: UIViewController,UIGestureRecognizerDeleg
     @IBOutlet weak var lblDesce: UILabel!
     
     @IBAction func denyCancelTapped(_ sender: Any) {
+        self.dismiss(animated: false) {
+                 }
     }
-    
+    var delegate : EditNotesViewControllerDelegate!
+
     @IBOutlet var viewSeprators: [UIView]!
     @IBOutlet weak var denyCancel: UIButton!
     
@@ -28,6 +34,23 @@ class AppointmentCancelViewController: UIViewController,UIGestureRecognizerDeleg
     @IBOutlet weak var viewInner: UIView!
     
     @IBAction func confirmationCancelTapped(_ sender: Any) {
+        
+        let objAppointment = AppoinmentdetailViewModal()
+        let  activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.CancelAppointment)
+        objAppointment.callbackVC = {
+            (success:Bool) in
+            activityIndicator.hide()
+            if success{
+                
+                CommonFunctions().showError(title: "", message: "Successfully Cancelled")
+
+                self.dismiss(animated: false) {
+                    self.delegate?.refreshApi()
+                }
+            }
+        }
+        objAppointment.cancelAppoinment(id: selectedAppointmentModal?.identifier ?? "")
+        
     }
     
     var selectedAppointmentModal : OpenHourCoachModalResult?
@@ -45,7 +68,7 @@ class AppointmentCancelViewController: UIViewController,UIGestureRecognizerDeleg
         
         UILabel.labelUIHandling(label: lblCancel, text: "Cancel Schedule", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy)
         
-        UILabel.labelUIHandling(label: lblDesce, text: "Are you sure, you want to cancel this schedule with Alima Amos?", textColor: ILColor.color(index: 42), isBold: false, fontType: fontHeavy1)
+        UILabel.labelUIHandling(label: lblDesce, text: "Are you sure, you want to cancel this schedule with " + (selectedAppointmentModal?.coach?.name ?? "") + " ?", textColor: ILColor.color(index: 42), isBold: false, fontType: fontHeavy1)
         
         
         self.viewSeprators.forEach { (viewSeperator) in
@@ -54,7 +77,7 @@ class AppointmentCancelViewController: UIViewController,UIGestureRecognizerDeleg
         
         UIButton.buttonUIHandling(button: denyCancel, text: "No", backgroundColor: .white, textColor: ILColor.color(index: 23), cornerRadius: 3,  borderColor: ILColor.color(index: 23), borderWidth: 1, fontType: fontMedium)
         
-        UIButton.buttonUIHandling(button: denyCancel, text: "Yes", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3,   fontType: fontMedium)
+        UIButton.buttonUIHandling(button: confirmationCancel, text: "Yes", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3,   fontType: fontMedium)
         
         // corner radius
         viewContainer.layer.cornerRadius = 10
@@ -84,7 +107,7 @@ class AppointmentCancelViewController: UIViewController,UIGestureRecognizerDeleg
       }
       
       func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-          if touch.view?.isDescendant(of: self.view) == true  && touch.view?.tag != 19682  {
+          if touch.view?.isDescendant(of: self.view) == true  && touch.view?.tag != 19682 && touch.view?.tag != 19683  {
               self.view.resignFirstResponder()
               
               return false

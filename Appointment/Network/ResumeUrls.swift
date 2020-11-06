@@ -379,6 +379,13 @@ class Urls {
            
        }
        
+    
+    func cancelAppoinment(id: String)-> String{
+              
+              return "\(typeEvent1)students/appointment-slots/meetings/\(id)/cancel"
+              
+          }
+    
    
     func feedBack(id: String)-> String{
              

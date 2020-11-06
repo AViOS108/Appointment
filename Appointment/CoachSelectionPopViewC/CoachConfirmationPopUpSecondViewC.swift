@@ -77,8 +77,23 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
     
     
     @IBOutlet weak var tblView: UITableView!
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+             AppUtility.lockOrientation(.all)
+       }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if  (Device.IS_IPAD)
+        {
+            
+        }
+        else
+        {
+            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+
+        }
         tblView.register(UINib.init(nibName: "ConfirmationPopUpFirstTableViewCell", bundle: nil), forCellReuseIdentifier: "ConfirmationPopUpFirstTableViewCell")
         
         tblView.register(UINib.init(nibName: "ConfirmationPopUpSecondTableViewCell", bundle: nil), forCellReuseIdentifier: "ConfirmationPopUpSecondTableViewCell")
@@ -157,6 +172,15 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if  (Device.IS_IPAD)
+        {
+            
+        }
+        else
+        {
+            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+
+        }
         tblView.delegate = self
         tblView.dataSource = self
         self.viewContainer.cornerRadius = 3;

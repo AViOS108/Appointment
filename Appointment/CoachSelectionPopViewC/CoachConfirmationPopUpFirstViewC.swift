@@ -54,12 +54,34 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if  (Device.IS_IPAD)
+        {
+            
+        }
+        else
+        {
+            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+
+        }
+        
+        
         // Do any additional setup after loading the view.
     }
     
-    
+    override func viewDidDisappear(_ animated: Bool) {
+          AppUtility.lockOrientation(.all)
+    }
     override func viewDidAppear(_ animated: Bool) {
         self.customization()
+        if  (Device.IS_IPAD)
+        {
+            
+        }
+        else
+        {
+            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+            
+        }
         self.view.tag = 19682
         tapGesture()
         view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)

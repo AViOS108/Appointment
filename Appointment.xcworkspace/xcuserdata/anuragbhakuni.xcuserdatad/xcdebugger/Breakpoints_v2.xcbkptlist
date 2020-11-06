@@ -7,40 +7,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "105EE656-D790-44E1-8E3D-F5B7EA13432D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Appointment/Dashboard/DashService/DashBoardStudentAppointmentVM.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "customizeVM()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0B5CC0BA-0304-420E-905F-FB6980A73188"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Appointment/CoachSelectionPopViewC/PopUpTableViewCell/SearchViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
-            landmarkName = "viewWillTransition(to:with:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "B391AEF5-6A0C-4D66-BA0B-3EB20A0FDADA"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Appointment/CoachSelectionPopViewC/PopUpTableViewCell/SearchViewController.swift"
@@ -49,22 +17,6 @@
             startingLineNumber = "266"
             endingLineNumber = "266"
             landmarkName = "reloadAndSizeTableView()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E8B7DB62-53C8-49BB-8316-E4086A571A02"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Appointment/CoachAluminiView/CoachAluminiViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "viewDidAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -87,38 +39,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "48B6645D-7647-487D-9CD3-15D12147225D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Appointment/Network/Network.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "makeApiEventRequest(_:url:methodType:params:header:completion:failure:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F55E2C4B-DC95-47FC-952C-17E15ACED685"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Appointment/Dashboard/DashBoardTableViewCell/HeaderSectionCoach.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "customization()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "4D80B044-0BAD-4C47-AE2A-10780329F184"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -126,8 +46,8 @@
             filePath = "Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "446"
-            endingLineNumber = "446"
+            startingLineNumber = "470"
+            endingLineNumber = "470"
             landmarkName = "confirmAppointment()"
             landmarkType = "7">
             <Locations>
@@ -142,9 +62,9 @@
                   urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "441"
-                  endingLineNumber = "441"
-                  offsetFromSymbolStart = "8142">
+                  startingLineNumber = "470"
+                  endingLineNumber = "470"
+                  offsetFromSymbolStart = "8590">
                </Location>
                <Location
                   uuid = "4D80B044-0BAD-4C47-AE2A-10780329F184 - a28f1c132089e75a"
@@ -157,8 +77,8 @@
                   urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "442"
-                  endingLineNumber = "442"
+                  startingLineNumber = "471"
+                  endingLineNumber = "471"
                   offsetFromSymbolStart = "49">
                </Location>
             </Locations>
@@ -174,8 +94,8 @@
             filePath = "Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "448"
-            endingLineNumber = "448"
+            startingLineNumber = "472"
+            endingLineNumber = "472"
             landmarkName = "confirmAppointment()"
             landmarkType = "7">
             <Locations>
@@ -190,8 +110,8 @@
                   urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "444"
-                  endingLineNumber = "444"
+                  startingLineNumber = "473"
+                  endingLineNumber = "473"
                   offsetFromSymbolStart = "81">
                </Location>
                <Location
@@ -205,8 +125,8 @@
                   urlString = "file:///Users/anuragbhakuni/Desktop/ProjectsVMock/Appointment/Appointment/CoachSelectionPopViewC/CoachConfirmationPopUpSecondViewC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "445"
-                  endingLineNumber = "445"
+                  startingLineNumber = "474"
+                  endingLineNumber = "474"
                   offsetFromSymbolStart = "70">
                </Location>
             </Locations>
@@ -215,7 +135,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3B6B83FE-3F7D-4256-A151-79C3D4DC0775"
+            uuid = "25FEEF2D-C5AE-442A-ACE9-421D2D819C31"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"

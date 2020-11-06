@@ -76,6 +76,10 @@ class StringConstants{
     
     
     static let SavingNotes = "Saving Notes... "
+    
+    static let CancelAppointment = "Cancel Appointment... "
+
+    
     static let DeletingNotes = "Deleting Notes... "
 
     static let FeedbackNotes = "Submit Feedback... "

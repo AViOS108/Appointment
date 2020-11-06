@@ -117,7 +117,7 @@ class AppoinmentDescriptionTableViewCell: UITableViewCell {
         let strHeaderDescription = NSMutableAttributedString.init()
 
         
-        let weekDay = ["Sun","Mon","Tues","Wed","Thu","Fri","Sat"]
+        let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
         var componentDay = GeneralUtility.dateComponent(date: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", component: .weekday)
         
         if let fontMedium = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)

@@ -57,7 +57,8 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     var dashBoardViewStudentApVModal = DashBoardStudentAppointmentVM()
     var selectedAppointmentModal : OpenHourCoachModalResult?
     
-    
+    var refreshControl = UIRefreshControl()
+
     
     var dataFeedingAppointmentModal :OpenHourCoachModal?
     var dataFeedingAppointmentModalConst :OpenHourCoachModal?
@@ -74,11 +75,11 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
 
         switch userTypeHome {
         case .Student:
-            self.callingViewModal()
+            self.callingViewModal(isbackGroundHit: false)
                          break;
         case .StudentMyAppointment:
             
-            self.studentAppoimnetViewModal()
+            self.studentAppoimnetViewModal(isbackGroundHit: false)
             break;
             
             
@@ -92,6 +93,37 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
        
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: nil, completion: { (_) in
+            
+            switch self.userTypeHome {
+            case .Student:
+                if self.viewHeader.subviews.count > 0
+                {
+                    
+                    (self.viewHeader.subviews[0] as! HorizontalCalender).backToBasic()
+                    (self.viewHeader.subviews[0] as! HorizontalCalender).viewCollection.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+                    
+                    let layout : UICollectionViewFlowLayout =  (self.viewHeader.subviews[0] as! HorizontalCalender).viewCollection.collectionViewLayout as! UICollectionViewFlowLayout
+                    let frame = (self.viewHeader.subviews[0] as! HorizontalCalender).viewCollection.frame
+                    layout.itemSize = CGSize(width: frame.width, height: frame.height)
+                    layout.invalidateLayout()
+                    
+                    
+                }
+                break;
+            case .StudentMyAppointment:
+                break;
+            default:
+                break;
+            }
+        })
+        
+    }
+
     
     override func searchEvent(sender: UIBarButtonItem) {
         
@@ -210,17 +242,52 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     
     
+    @objc func refreshControlAPi(){
+        switch userTypeHome {
+        case .Student:
+            self.callingViewModal(isbackGroundHit: true)
+            break;
+        case .StudentMyAppointment:
+            
+            self.studentAppoimnetViewModal(isbackGroundHit: true)
+            break;
+            
+            
+        default:
+            break;
+        }
+        
+    }
+    
+    
+    
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         
-
-               
-               
         
+        refreshControl.bounds = CGRect.init(x: refreshControl.bounds.origin.x, y: 10, width: refreshControl.bounds.size.width, height: refreshControl.bounds.size.height)
+        refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+        refreshControl.attributedTitle = NSAttributedString(string: "")
+        refreshControl.addTarget(self, action: #selector(refreshControlAPi), for: .valueChanged)
+        
+        if #available(iOS 10.0, *) {
+            tblView.refreshControl?.beginRefreshing()
+        } else {
+            // Fallback on earlier versions
+        }
+        tblView.addSubview(refreshControl)
+        
+        
+        
+        
+        
+        AppUtility.lockOrientation(.all)
         switch userTypeHome {
         case .Student:
             studentBottomLogic()
             GeneralUtility.customeNavigationBar(viewController: self,title:"Schedule");
-
+            
             self.dataFeedingModal = self.dataFeedingModalConst
             self.zeroStateLogic()
             self.reloadTablviewCocahList()
@@ -229,7 +296,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
             
             break;
         case .StudentMyAppointment:
-             GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"My Appointments");
+            GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"My Appointments");
             
             break;
             
@@ -265,14 +332,16 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     }
     
     
-    func callingViewModal()  {
+    func callingViewModal(isbackGroundHit : Bool)  {
         
         let param : Dictionary<String, AnyObject> = ["roles":["external_coach","career_coach"]] as Dictionary<String, AnyObject>
         
         dashBoardViewModal.viewController = self
+        dashBoardViewModal.isbackGroundHit = isbackGroundHit
         dashBoardViewModal.fetchCall(params: param,success: { (dashboardModel) in
             self.dataFeedingModal = dashboardModel
-            
+            self.refreshControl.endRefreshing()
+
             var sectionHeaderI = [sectionHead]()
             let section1 = sectionHead.init(name: "Select all Coaches", id:"career_coach", selectAll: false, seeAll: false)
             sectionHeaderI.append(section1);
@@ -647,7 +716,9 @@ extension HomeViewController{
             
             let appoinmentCancelViewController = AppointmentCancelViewController.init(nibName: "AppointmentCancelViewController", bundle: nil)
             appoinmentCancelViewController.selectedAppointmentModal = selectedAppointmentModal
-            self.navigationController?.pushViewController(appoinmentCancelViewController, animated: false)
+            appoinmentCancelViewController.delegate = self
+            appoinmentCancelViewController.modalPresentationStyle = .overFullScreen
+            self.present(appoinmentCancelViewController, animated: false, completion: nil)
             
             break
             
@@ -663,7 +734,11 @@ extension HomeViewController{
 
 // ALL STUDENT APPOINMENT LOGIC
 
-extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppointmentTableViewCellDelegate{
+extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppointmentTableViewCellDelegate,EditNotesViewControllerDelegate{
+    func refreshApi() {
+                dashBoardViewStudentApVModal.customizeVM();
+    }
+    
     
     // 1 : - Feedback
     // 2 :- View Detail
@@ -671,9 +746,7 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
     
     
     func redirectAppoinment(openMOdal: OpenHourCoachModalResult, isFeedback: Int) {
-        
         selectedAppointmentModal = openMOdal;
-        
         if isFeedback == 1{
             self.redirection(redirectionType: .feedback)
 
@@ -693,6 +766,8 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
     
     func sentDataViewController(dataAppoinmentModal: OpenHourCoachModal) {
         
+        self.refreshControl.endRefreshing()
+        
         self.dataFeedingAppointmentModal = dataAppoinmentModal
         var sectionHeaderI = [sectionHead]()
         let section1 = sectionHead.init(name: "Upcoming Appointments", id:"-09", selectAll: false, seeAll: false)
@@ -706,6 +781,9 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
         
         
     }
+    
+    
+    
     func zeroStateLogicAppointment()  {
         if self.dataFeedingAppointmentModal?.results?.count == 0
         {
@@ -744,8 +822,9 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
     
     
     
-    func studentAppoimnetViewModal()  {
+    func studentAppoimnetViewModal(isbackGroundHit: Bool)  {
         dashBoardViewStudentApVModal.viewController = self
+        dashBoardViewStudentApVModal.isbackGroundHit =  isbackGroundHit
         dashBoardViewStudentApVModal.delegate = self
         let viewcontrollerfirst = ((self.tabBarController?.viewControllers![0])! as! HomeViewController)
         if viewcontrollerfirst.dataFeedingModalConst != nil{

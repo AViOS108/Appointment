@@ -17,7 +17,13 @@ protocol changeModalConfirmationPopUpDelegate {
 }
 
 
+class PaddedTextField: UITextField {
+    
+    override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect.init(x: bounds.size.width-22, y: 6, width: 18, height: 18)
+    }
 
+}
 
 class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
     
@@ -29,7 +35,7 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
     @IBOutlet weak var viewSelectedContainer: UIView!
     @IBOutlet weak var lblHeader: UILabel!
     @IBOutlet weak var viewTextfield: UIView!
-    @IBOutlet weak var txtField: UITextField!
+    @IBOutlet weak var txtField: PaddedTextField!
     @IBOutlet weak var lblNoResultFound: UILabel!
     var delegate: changeModalConfirmationPopUpDelegate!
     var viewController : UIView!
@@ -115,8 +121,8 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         ])
         
         let imageView = UIImageView.init(image: UIImage.init(named: "dropdown"))
+            imageView.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
         imageView.contentMode = .center
-        imageView.frame.size = CGSize.init(width: 20, height: 20)
         txtField.rightView = imageView
         txtField.rightViewMode = .always
 

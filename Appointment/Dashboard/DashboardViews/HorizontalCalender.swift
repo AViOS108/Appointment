@@ -56,12 +56,13 @@ class HorizontalCalender: UIView,UICollectionViewDelegate,UICollectionViewDataSo
        }
        @IBOutlet weak var viewCollection: UICollectionView!
    
-    
+        
     
     func customize()  {
         switch enumHeadType {
         case .student:
-            
+            studentHeader = [StudentHeaderModel]()
+            invalidTimeR()
             let studentHeaaderObject1 = StudentHeaderModel.init(describtion: "Check your coach's available dates and time to request an appointment instantly", title: "Schedule an Appointment", ImageName: "header3")
             
             let studentHeaaderObject2 = StudentHeaderModel.init(describtion: "See notes and next shared by the coach after your appointment. You can also make your own notes!", title: "Notes and Next Steps", ImageName: "header1")
@@ -73,6 +74,7 @@ class HorizontalCalender: UIView,UICollectionViewDelegate,UICollectionViewDataSo
             studentHeader.append(studentHeaaderObject2)
             nslayoutConstraintViewTopHeight.constant = 0
             self.ViewTop.isHidden = true
+            
             self.setTimer()
         case .ER:
         self.pageControl.isHidden = true
@@ -103,6 +105,13 @@ class HorizontalCalender: UIView,UICollectionViewDelegate,UICollectionViewDataSo
             
             self!.pageControl.currentPage = self!.movingIndex
         }
+    }
+    
+    func backToBasic(){
+        
+        movingIndex = 0
+        movFwd = true
+        pageControl.currentPage = 0
     }
     
     func  invalidTimeR()  {

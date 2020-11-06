@@ -82,7 +82,7 @@ class CoachSelectionViewController: SuperViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.view.backgroundColor = ILColor.color(index: 22)
-        
+
         otherApiHit()
         if (calenderModal != nil){
             
@@ -480,7 +480,7 @@ extension CoachSelectionViewController {
     
     
     func convertNextDate(index : Int){
-        let weekDay = ["Sun","Mon","Tues","Wed","Thu","Fri","Sat"]
+        let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
         let monthI   = ["Jan","Feb","Mar","Apr","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
         
         let dateFormatter = DateFormatter()

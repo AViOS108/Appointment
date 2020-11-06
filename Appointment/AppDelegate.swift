@@ -192,7 +192,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
     }
-    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return self.orientationLock
+    }
     
     
     // MARK: UISceneSession Lifecycle
@@ -296,6 +298,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 struct AppUtility {
     // This method will force you to use base on how you configure.
     static func lockOrientation(_ orientation: UIInterfaceOrientationMask) {
+        
+
+        
         
         if let delegate = UIApplication.shared.delegate as? AppDelegate {
             delegate.orientationLock = orientation

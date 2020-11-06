@@ -88,7 +88,7 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
             viewContainer.isHidden = false
             btnEditDelete.setImage(UIImage.init(named: "more_vert"), for: .normal)
             lblNoNotes.isHidden = true
-            let weekDay = ["Sun","Mon","Tues","Wed","Thu","Fri","Sat"]
+            let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
             let componentDay = GeneralUtility.dateComponent(date: self.noteResultModal?.createdAt ?? "", component: .weekday)
             let date = GeneralUtility.currentDateDetailType4(emiDate: self.noteResultModal?.createdAt ?? "");
             let timeText = "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " + date;

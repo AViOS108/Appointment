@@ -6,6 +6,9 @@
 //  Copyright © 2020 Anurag Bhakuni. All rights reserved.
 //
 
+
+
+
 import UIKit
 
 class NextStepCollectionView: UICollectionView,UICollectionViewDataSource,UICollectionViewDelegate {
@@ -113,11 +116,25 @@ extension NextStepCollectionView: NotesCollectionViewlayoutDelegate {
             label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
             
         }
-        
-        
         //    label.attributedText = attributedText
         label.sizeToFit()
-        return 60 + label.frame.height //    return label.frame.height
+        if self.nextModalObj?.count ?? 0 > 0{
+            let label1 = UILabel(frame: CGRect(x: 0, y: 0, width: (viewController.view.frame.width/2 - 48), height: CGFloat.greatestFiniteMagnitude))
+            label1.numberOfLines = 0
+            let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
+            label1.font = fontHeavy
+            if self.nextModalObj?.count ?? 0 > 0{
+                label1.text = "Due Date:sdsdfdsd Mon, 15 jun 2020"
+            }
+            //    label.attributedText = attributedText
+            label1.sizeToFit()
+            return 60 + label1.frame.height + label.frame.height
+        }
+        
+        else{
+            return 60 +  label.frame.height
+        }
+          //    return label.frame.height
         
     }
 }

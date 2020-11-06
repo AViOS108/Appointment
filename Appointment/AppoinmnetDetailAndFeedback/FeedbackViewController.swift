@@ -166,6 +166,8 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
             (success:Bool) in
             
             if success{
+                CommonFunctions().showError(title: "", message: "Successfully Submitted")
+
                 self.delegate.feedbackSucessFullySent();
             }
             
@@ -299,10 +301,13 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-        UILabel.labelUIHandling(label: lblOverallExp, text: "Overall Experience for the sessions", textColor: ILColor.color(index: 34), isBold: false, fontType: fontMedium )
-        UILabel.labelUIHandling(label: lblCoachPrecise, text: "Coach’s precision and helpfulness", textColor: ILColor.color(index: 34), isBold: false, fontType: fontMedium )
+       
         
-        UILabel.labelUIHandling(label: lblHelpFulness, text: "Helpfulness due to coach’s area of expertise", textColor: ILColor.color(index: 34), isBold: false, fontType: fontMedium )
+        self.textWithAstrikMark(lblSpecific: lblOverallExp, text: "Overall Experience for the sessions")
+        self.textWithAstrikMark(lblSpecific: lblCoachPrecise, text: "Coach’s precision and helpfulness")
+        self.textWithAstrikMark(lblSpecific: lblHelpFulness, text: "Helpfulness due to coach’s area of expertise")
+
+        
         
         UILabel.labelUIHandling(label: lblHeader, text: "Fill Feedback for this session", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
         
@@ -350,6 +355,28 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         contentSize = CGSize.init(width: self.viewScroll.contentSize.width, height: self.viewScroll.contentSize.height)
         
     }
+    
+    
+    func textWithAstrikMark(lblSpecific: UILabel,text:String){
+        let strHeader = NSMutableAttributedString.init()
+        if  let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
+        {
+            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: text, _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontMedium]);
+            let strType = NSAttributedString.init(string: " ⃰"
+                , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontMedium]);
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            strHeader.append(strTiTle)
+            strHeader.append(strType)
+            
+            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+            lblSpecific.attributedText = strHeader
+        }
+    }
+    
+    
+    
     
     
     func textViewDidBeginEditing(_ textView: UITextView)

@@ -35,15 +35,18 @@ class ResetPasswordViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         let communityLogoLocal = UserDefaultsDataSource(key: "communityLogoLocal") as? String
         CommonFunctions().loadLogo(communityName: communityNameLabel, imageView: communityLogo, enclosingView: enclosingView,logo: communityLogoLocal,communityLogoName: "VMock Default")
         passwordHintLabel.text = StringConstants.invalidPasswordError
     }
-    
+    override func viewDidDisappear(_ animated: Bool) {
+               AppUtility.lockOrientation(.all)
+         }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+
         GoogleAnalyticsUtility().startScreenTrackingForScreenName("Login & Register: Reset Password Link Request")
     }
     

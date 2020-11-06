@@ -15,16 +15,23 @@ class DashBoardViewModel  {
     
     var viewController : UIViewController!
     var activityIndicator: ActivityIndicatorView?
-    
+    var isbackGroundHit = false;
+
     
     func fetchCall(params: Dictionary<String,AnyObject>,success:@escaping (DashBoardModel) -> Void,failure:@escaping (String,Int) -> Void)
     {
-        activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.coachInfoApiLoader)
+        
+        if !isbackGroundHit{
+              activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.coachInfoApiLoader)
+        }
+        
+      
         
         DashboardService().coachListApi(params: params, { (jsonData) in
-            
+            if !self.isbackGroundHit{
+
             self.activityIndicator?.hide()
-            
+            }
             do{
                 var welcome = try JSONDecoder().decode(DashBoardModel.self, from: jsonData)
                 let welcomeI = welcome.coaches.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
@@ -40,7 +47,9 @@ class DashBoardViewModel  {
             
             
         }) { (error, errorCode) in
+            if !self.isbackGroundHit{
             self.activityIndicator?.hide()
+            }
             CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
         }
         
@@ -48,7 +57,9 @@ class DashBoardViewModel  {
     
     
     func errorHandler(error: String,errorCode: Int, params: Dictionary<String,AnyObject>,headerIncluded: Bool,header: Dictionary<String,String>){
+        if !self.isbackGroundHit{
         self.activityIndicator?.hide()
+        }
         CommonFunctions().showError(title: "Error", message: error)
     }
     
@@ -62,15 +73,18 @@ class DashBoardViewModel  {
         }
         else
         {
+            if !isbackGroundHit{
             activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.FetchingCoachSelection)
-
+            }
         }
         
         let param : Dictionary<String, AnyObject> = ["":""] as Dictionary<String, AnyObject>
         DashboardService().timezone(params: param, { (jsonData) in
             let timeZoneArr = try? JSONDecoder().decode(TimeZoneArr.self, from: jsonData)
+            if !self.isbackGroundHit{
+
             self.activityIndicator?.hide()
-            
+            }
             self.deleteTimeZone()
             for timeZOne in timeZoneArr!{
                 self.storeTimeDetails(timeZone: timeZOne)
@@ -82,8 +96,10 @@ class DashBoardViewModel  {
             
             
         }) { (error, errorCode) in
-            self.activityIndicator?.hide()
+            if !self.isbackGroundHit{
 
+            self.activityIndicator?.hide()
+            }
         }
     }
     

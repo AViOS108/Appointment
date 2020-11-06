@@ -72,6 +72,11 @@ UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregro
             let icon1 = UITabBarItem(title: "Schedule", image: UIImage(named: "Scheedule_light"), selectedImage: UIImage(named: "Schedule"))
             let icon2 = UITabBarItem(title: "My Appointments", image: UIImage(named: "My_Appointment"), selectedImage: UIImage(named: "My_Appoinntment_2"))
             
+            
+            
+            icon1.landscapeImagePhone = UIImage.init(named: "Scheedule_light");
+            icon2.landscapeImagePhone = UIImage.init(named: "My_Appointment");
+            
             item2!.tabBarItem = icon2
             item1!.tabBarItem = icon1
         }

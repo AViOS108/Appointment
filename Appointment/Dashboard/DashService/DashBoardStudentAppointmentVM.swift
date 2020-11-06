@@ -27,6 +27,11 @@ class DashBoardStudentAppointmentVM {
     var delegate : DashBoardStudentAppointmentVMDelegate!
     let dispatchGroup = DispatchGroup()
     
+    var isbackGroundHit = false;
+    
+    
+    
+    
     
     var objOpenHourCoachModal1 : OpenHourCoachModal?
     var objOpenHourCoachModal2 : OpenHourCoachModal?
@@ -52,22 +57,24 @@ class DashBoardStudentAppointmentVM {
     
     func fetchAppoinmentLogic(){
         
-        activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.appointmentInfoApiLoader)
+        
+        if !isbackGroundHit{
+             activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.appointmentInfoApiLoader)
+        }
+        
+       
         
         dispatchGroup.enter()
         fetchAllPointMent(index: 1)
         dispatchGroup.enter()
         fetchAllPointMent(index: 2)
-//        dispatchGroup.enter()
-//        fetchAllPointMent(index: 3)
-//        dispatchGroup.enter()
-//        fetchAllPointMent(index: 4)
+
         
         
         dispatchGroup.notify(queue: .main) {
-            
+            if !self.isbackGroundHit{
             self.activityIndicator?.hide()
-            
+            }
             if let output = self.outputResult()
             {
                 self.delegate.sentDataViewController(dataAppoinmentModal: output)
@@ -89,10 +96,13 @@ class DashBoardStudentAppointmentVM {
     
     func fetchCall(params: Dictionary<String,AnyObject>)
     {
+         if !isbackGroundHit{
         activityIndicator = ActivityIndicatorView.showActivity(view: viewController.navigationController!.view, message: StringConstants.appointmentInfoApiLoader)
-        
+        }
         DashboardService().coachListApi(params: params, { (jsonData) in
+            if !self.isbackGroundHit{
             self.activityIndicator?.hide()
+            }
 
             do{
                 var welcome = try JSONDecoder().decode(DashBoardModel.self, from: jsonData)
@@ -109,8 +119,9 @@ class DashBoardStudentAppointmentVM {
             }
             
         }) { (error, errorCode) in
+            if !self.isbackGroundHit{
             self.activityIndicator?.hide()
-            
+            }
             CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
         }
         

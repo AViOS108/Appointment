@@ -106,7 +106,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                 strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
                 lblDescribtion.attributedText = strHeader
             }
-            let weekDay = ["Sun","Mon","Tues","Wed","Thu","Fri","Sat"]
+            let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
             var componentDay = GeneralUtility.dateComponent(date: self.appointmentModal.startDatetimeUTC!, component: .weekday)
             
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -199,19 +199,22 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                 btnFeedback.isHidden = false
             }
             else{
-                
+                btnFeedback.isHidden = true
+
                 if self.appointmentModal.isPastAppointment{
                     
                 }
                 else{
+                      btnFeedback.isHidden = false
                     UIButton.buttonUIHandling(button: btnFeedback, text: "Cancel", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
 
                 }
                 
                 
-                btnFeedback.isHidden = true
             }
             
+            btnFeedback.isHidden = false
+
             let monthI   = ["Jan","Feb","Mar","Apr","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
             
             shadowWithCorner(viewContainer: self.viewContainer, cornerRadius: 10)

@@ -17,7 +17,7 @@ class AppointmentDetailViewController: SuperViewController,UITableViewDelegate,U
     @IBOutlet weak var tblVIew: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
+        activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
         appoinmentViewModal.selectedAppointmentModal = self.selectedAppointmentModal
         appoinmentViewModal.delegate = self
         appoinmentViewModal.viewModalCustomized();
