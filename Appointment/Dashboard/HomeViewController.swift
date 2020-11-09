@@ -36,7 +36,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     @IBOutlet weak var btnSelectMuliple: UIButton!
     var isAnyCoachSelected = false
     
-    
+    var viewCalender : CalenderViewController!
     @IBAction func btnSelectMultipleTapped(_ sender: Any) {
         self.redirection(redirectionType: .coachSelection)
         
@@ -95,12 +95,19 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
+        if self.viewCalender != nil{
+            self.viewCalender.dismiss(animated: false) {
+                
+            }
+        }
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: nil, completion: { (_) in
             
             switch self.userTypeHome {
             case .Student:
+                
+                
+                
                 if self.viewHeader.subviews.count > 0
                 {
                     
@@ -173,7 +180,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
             break;
         }
         let frame = sender.convert(sender.frame, from:AppDelegate.getDelegate().window)
-        let viewCalender = CalenderViewController.init(nibName: "CalenderViewController", bundle: nil)
+         viewCalender = CalenderViewController.init(nibName: "CalenderViewController", bundle: nil)
         viewCalender.viewControllerI = self
         viewCalender.pointSign = CGPoint.init(x: abs(frame.origin.x) + abs(frame.size.width/2), y: abs(frame.origin.y) + abs(frame.size.height/2) + 10 )
         viewCalender.modalPresentationStyle = .overFullScreen
