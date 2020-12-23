@@ -214,7 +214,7 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
             , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
         
         
-        let strDate = NSAttributedString.init(string: self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "dd MMM yyyy", date: (results?.startDatetime)!)
+        let strDate = NSAttributedString.init(string: self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "dd MMM yyyy", date: (results?.startDatetimeUTC)!)
             , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
         let paraSlot = NSMutableParagraphStyle.init()
         //            para.alignment = .center
@@ -228,9 +228,9 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
         UILabel.labelUIHandling(label: lblStartTimeText, text: "Start Time", textColor:.black , isBold: false , fontType: fontNextMedium,  backgroundColor:.white )
         UILabel.labelUIHandling(label: lblEndTimeText, text: "End Time", textColor:.black , isBold: false , fontType: fontNextMedium,  backgroundColor:.white )
         
-        UILabel.labelUIHandling(label: lblStartTimeValue, text:" " + self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "hh:mm a", date: (results?.startDatetime)!), textColor:.black , isBold: false , fontType: fontDemiBold, isCircular: true,  backgroundColor:.white ,cornerRadius: 2,borderColor:UIColor.black,borderWidth: 1 )
+        UILabel.labelUIHandling(label: lblStartTimeValue, text:" " + self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "hh:mm a", date: (results?.startDatetimeUTC)!), textColor:.black , isBold: false , fontType: fontDemiBold, isCircular: true,  backgroundColor:.white ,cornerRadius: 2,borderColor:UIColor.black,borderWidth: 1 )
         
-        UILabel.labelUIHandling(label: lblEndTimeValue, text:" " + self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "hh:mm a", date: (results?.endDatetime)!), textColor:.black , isBold: false , fontType: fontDemiBold, isCircular: true,  backgroundColor:.white ,cornerRadius: 2,borderColor:UIColor.black,borderWidth: 1 )
+        UILabel.labelUIHandling(label: lblEndTimeValue, text:" " + self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "hh:mm a", date: (results?.endDatetimeUTC)!), textColor:.black , isBold: false , fontType: fontDemiBold, isCircular: true,  backgroundColor:.white ,cornerRadius: 2,borderColor:UIColor.black,borderWidth: 1 )
         self.location()
         
     }
@@ -267,7 +267,7 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
         }
         
         let image1Attachment = NSTextAttachment()
-                 image1Attachment.image = UIImage(named: "linkdin")
+                 image1Attachment.image = UIImage(named: "Zoom")
 image1Attachment.bounds = CGRect.init(x: 0, y: -5, width: 20, height: 20)
                  // wrap the attachment in its own attributed string so we can append it
                  let imageZoom = NSAttributedString(attachment: image1Attachment)

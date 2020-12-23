@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ErSideCalenderCollectionViewCell" customModule="Appointment" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="135" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="135" height="60"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5x-O3-0ct">
+                        <rect key="frame" x="0.0" y="6" width="135" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="233-lx-Dul">
+                        <rect key="frame" x="53.5" y="26" width="28" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="MrO-i9-ftI"/>
+                            <constraint firstAttribute="width" constant="28" id="wsq-6g-Ppw"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CaD-hB-Csb">
+                        <rect key="frame" x="0.0" y="0.0" width="135" height="60"/>
+                        <connections>
+                            <action selector="btnDateSelectedTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="AfR-eg-dRa"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="CaD-hB-Csb" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="2Zq-Xn-4fc"/>
+                <constraint firstAttribute="bottom" secondItem="233-lx-Dul" secondAttribute="bottom" constant="6" id="4SI-pO-Mm2"/>
+                <constraint firstItem="m5x-O3-0ct" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="7Ja-Yy-Ylg"/>
+                <constraint firstAttribute="bottom" secondItem="CaD-hB-Csb" secondAttribute="bottom" id="D2P-cJ-RdM"/>
+                <constraint firstAttribute="trailing" secondItem="CaD-hB-Csb" secondAttribute="trailing" id="KLI-WS-XYd"/>
+                <constraint firstItem="CaD-hB-Csb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="V0x-Os-Jf6"/>
+                <constraint firstItem="233-lx-Dul" firstAttribute="top" secondItem="m5x-O3-0ct" secondAttribute="bottom" constant="6" id="csD-e0-t73"/>
+                <constraint firstAttribute="trailing" secondItem="m5x-O3-0ct" secondAttribute="trailing" id="ii0-Iy-Fzw"/>
+                <constraint firstItem="m5x-O3-0ct" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="k5D-aj-gdf"/>
+                <constraint firstItem="233-lx-Dul" firstAttribute="centerX" secondItem="m5x-O3-0ct" secondAttribute="centerX" id="x1q-eT-sID"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="135" height="66"/>
+            <connections>
+                <outlet property="lblDate" destination="233-lx-Dul" id="tbW-Nq-COQ"/>
+                <outlet property="lblDay" destination="m5x-O3-0ct" id="lDe-1d-hf5"/>
+            </connections>
+            <point key="canvasLocation" x="68.840579710144937" y="31.473214285714285"/>
+        </collectionViewCell>
+    </objects>
+</document>

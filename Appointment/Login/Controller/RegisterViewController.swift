@@ -84,6 +84,7 @@ class RegisterViewController: LoginParentViewController {
     func getCaptcha() {
         self.captchaImageView.backgroundColor = UIColor.white
         captchaImageView.addSubview(activity, withCenterConstraints: CGPoint(x: 0, y: 0))
+        
         activity.startAnimating()
         super.getNewCaptcha(success: {
             self.captchaImageView.downloadedFrom(link: self.captchaImageURL! , success : {

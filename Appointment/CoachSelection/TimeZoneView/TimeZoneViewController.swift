@@ -21,7 +21,7 @@ protocol TimeZoneViewControllerDelegate {
 }
 
 
-class TimeZoneViewController: UIViewController {
+class TimeZoneViewController: SuperViewController {
     var activityIndicator: ActivityIndicatorView?
     var viewControllerI : UIViewController!
     var txtfieldRect: CGRect!
@@ -61,7 +61,8 @@ class TimeZoneViewController: UIViewController {
         tblView.separatorStyle = .none
         self.view.addSubview(tblView)
         
-        
+        self.addInputAccessoryForTextFields(textFields: [textField], dismissable: true, previousNextable: true)
+
         self.tapGesture()
         // Do any additional setup after loading the view.
     }
@@ -71,6 +72,13 @@ class TimeZoneViewController: UIViewController {
 
         tblView.reloadData()
     }
+    
+    @objc override func actnResignKeyboard() {
+
+        textField.resignFirstResponder()
+        
+       }
+    
     
     func tapGesture()  {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))

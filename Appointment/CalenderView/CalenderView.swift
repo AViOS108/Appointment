@@ -28,6 +28,7 @@ protocol CalenderViewDelegate{
 class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout ,UIGestureRecognizerDelegate{
     
     var delegate : CalenderViewDelegate!
+    var pointedArrow = false
 
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var nslayoutConstraintCollectionHeight: NSLayoutConstraint!
@@ -53,7 +54,11 @@ class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,U
         self.tapGesture();
         if let point = self.pointSign
         {
-            self.drawArrowFromPoint()
+            if pointedArrow{
+                self.drawArrowFromPoint()
+
+            }
+            
         }
         // corner radius
         viewContainer.layer.cornerRadius = 10
@@ -283,6 +288,11 @@ extension Date {
         let calendar = Calendar.current
         return  calendar.component(.weekday, from: self)
     }
+    
+    func  get_Date() -> NSInteger {
+           let calendar = Calendar.current
+           return  calendar.component(.day, from: self)
+       }
 }
 
 extension CalenderView:CalenderCollectionViewCellDelegate

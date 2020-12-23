@@ -9,7 +9,7 @@
 import UIKit
 import AFNetworking
 
-
+ 
 protocol CoachListingTableViewCellDelegate {
     func changeModal(modal:Coach,seeMore:Bool )
     func scheduleAppoinment(modal:Coach)

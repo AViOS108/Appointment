@@ -263,16 +263,17 @@ class ERLoginViewController: UIViewController {
                 break;
             case .emailWithPwd:
                 let param = ["email": txtFieldEmail.text,"password": txtFieldPwd.text]
-                
-                
                 activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.loginApiLoader)
                 
                 ErEventService().erLogin(params: param as Dictionary<String, AnyObject>, { (response) in
                     self.activityIndicator?.hide()
 
                     if response[ParamName.PARAMERLOGINID].int != nil{
-                   
                         UserDefaultsDataSource(key: "csrf_token").writeData(response["csrf_token"].string!)
+                        if  let arrayBenchMark = response[ParamName.PARAMERLOGINBENCHMARK].arrayObject {
+                           UserDefaultsDataSource(key: "benchmarksER").writeData(arrayBenchMark)
+                            
+                        }
                         self.loginApi();
                     }
                     else

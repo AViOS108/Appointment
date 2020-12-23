@@ -40,6 +40,9 @@ struct Device {
 }
 
 struct ParamName {
+    
+    
+    static let PARAMMETHODKEY = "_method"
     static let PARAMCSRFTOKEN = "csrf_token"
     static let PARAMRSVP = "rsvp"
     static let PARAMSORTEL = "sort"
@@ -71,40 +74,42 @@ struct ParamName {
     static let PARAMERLOGINID = "loginId"
     static let PARAMERLOGINMARKER = "marker"
     static let PARAMERLOGINPARTICIANT = "participant"
+    static let PARAMERLOGINBENCHMARK = "benchmarks"
+
     }
 
 class GeneralUtility {
     
-     class func customeNavigationBarTextfield(viewController: UIViewController, searchText : String){
-            let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-            backButton.contentMode = .scaleAspectFit
-            //        backButton.backgroundColor = .red
-            backButton.addTarget(viewController, action: #selector(SuperViewController.changeNavigation(sender:)), for: .touchUpInside)
-            backButton.setImage(UIImage.init(named: "delete"), for: .normal)
-            let back =  UIBarButtonItem(customView: backButton)
-            let searchBar:UISearchBar = UISearchBar.init(frame: CGRect.init(x: 0, y: 0, width: 0, height: 10))
-            searchBar.searchBarStyle = UISearchBar.Style.prominent
-            if #available(iOS 13.0, *) {
-                searchBar.searchTextField.clearButtonMode = .never
-                searchBar.searchTextField.backgroundColor = .white
-
-            } else {
-
-            }
-            searchBar.text = searchText
-            searchBar.placeholder = "Search Coaches/Alumni"
-            searchBar.sizeToFit()
-            //        searchBar.isTranslucent = false
-            searchBar.backgroundImage = UIImage()
-            searchBar.delegate = viewController as? UISearchBarDelegate
-            viewController.navigationController?.navigationBar.topItem?.titleView = searchBar  ;
-            viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([back], animated: true)
-        
-         viewController.navigationController?.navigationBar.topItem?.leftBarButtonItem = nil
-        
-    //        let bounds = viewController.navigationController!.navigationBar.bounds
-    //        viewController.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 64)
+    class func customeNavigationBarTextfield(viewController: UIViewController, searchText : String){
+        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        backButton.contentMode = .scaleAspectFit
+        //        backButton.backgroundColor = .red
+        backButton.addTarget(viewController, action: #selector(SuperViewController.changeNavigation(sender:)), for: .touchUpInside)
+        backButton.setImage(UIImage.init(named: "delete"), for: .normal)
+        let back =  UIBarButtonItem(customView: backButton)
+        let searchBar:UISearchBar = UISearchBar.init(frame: CGRect.init(x: 0, y: 0, width: 0, height: 10))
+        searchBar.searchBarStyle = UISearchBar.Style.prominent
+        if #available(iOS 13.0, *) {
+            searchBar.searchTextField.clearButtonMode = .never
+            searchBar.searchTextField.backgroundColor = .white
+            
+        } else {
+            
         }
+        searchBar.text = searchText
+        searchBar.placeholder = "Search Coaches/Alumni"
+        searchBar.sizeToFit()
+        //        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()
+        searchBar.delegate = viewController as? UISearchBarDelegate
+        viewController.navigationController?.navigationBar.topItem?.titleView = searchBar  ;
+        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([back], animated: true)
+        
+        viewController.navigationController?.navigationBar.topItem?.leftBarButtonItem = nil
+        
+        //        let bounds = viewController.navigationController!.navigationBar.bounds
+        //        viewController.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 64)
+    }
     
     
     class func customeNavigationBar(viewController: UIViewController,title:String){
@@ -156,7 +161,81 @@ class GeneralUtility {
         viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
         
         viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut,calender,search], animated: true)
-        //        viewController.navigationController?.navigationBar.topItem?.setLeftBarButtonItems([hamburgerBarButton], animated: true)
+        viewController.navigationController?.navigationBar.topItem?.title = title;
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+    }
+    
+    
+    
+    
+    
+    class func customeNavigationBarERSideMyAppointment(viewController: UIViewController,title:String){
+        
+        //search_white
+        let searchButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+        searchButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        searchButton.addTarget(viewController, action: #selector(SuperViewController.searchEvent(sender:)), for: .touchUpInside)
+        searchButton.setImage(UIImage.init(named: "Searrch_white"), for: .normal)
+        let search =  UIBarButtonItem(customView: searchButton)
+        
+        let logOutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+        logOutButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        logOutButton.addTarget(viewController, action: #selector(SuperViewController.logout(sender:)), for: .touchUpInside)
+        logOutButton.setImage(UIImage.init(named: "logout-xxl"), for: .normal)
+        let logOut =  UIBarButtonItem(customView: logOutButton)
+        
+        let hamburger = UIButton(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+        hamburger.contentMode = .scaleAspectFit
+        hamburger.addTarget(viewController, action: #selector(SuperViewController.humbergerCilcked(sender:)), for: .touchUpInside)
+        
+        hamburger.setImage(UIImage.init(named: "humberger"), for: .normal)
+        hamburger.contentHorizontalAlignment = .left
+        
+        let hamburgerBarButton =  UIBarButtonItem(customView: hamburger)
+        
+        let currWidth = hamburgerBarButton.customView?.widthAnchor.constraint(equalToConstant: 40)
+        currWidth?.isActive = true
+        let currHeight = hamburgerBarButton.customView?.heightAnchor.constraint(equalToConstant: 40)
+        currHeight?.isActive = true
+        viewController.navigationController?.navigationBar.topItem?.setLeftBarButton(hamburgerBarButton, animated: true)
+        viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
+        
+        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut,search], animated: true)
+        
+        viewController.navigationController?.navigationBar.topItem?.title = title;
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        
+    }
+    
+    
+    class func customeNavigationBarMyAppoinment(viewController: UIViewController,title:String){
+        
+        
+        
+        let logOutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+        logOutButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        logOutButton.addTarget(viewController, action: #selector(SuperViewController.logout(sender:)), for: .touchUpInside)
+        logOutButton.setImage(UIImage.init(named: "logout-xxl"), for: .normal)
+        let logOut =  UIBarButtonItem(customView: logOutButton)
+        
+        
+        let hamburger = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+        hamburger.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        hamburger.addTarget(viewController, action: #selector(SuperViewController.humbergerCilcked(sender:)), for: .touchUpInside)
+        hamburger.setImage(UIImage.init(named: "humberger"), for: .normal)
+        let slider =  UIBarButtonItem(customView: hamburger)
+        viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
+        
+        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut], animated: true)
+        viewController.navigationController?.navigationBar.topItem?.setLeftBarButtonItems([slider], animated: true)
         
         viewController.navigationController?.navigationBar.topItem?.title = title;
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
@@ -167,40 +246,6 @@ class GeneralUtility {
         //        viewController.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 64)
         
     }
-    
-    
-    class func customeNavigationBarMyAppoinment(viewController: UIViewController,title:String){
-           
-          
-           
-           let logOutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
-           logOutButton.contentMode = .scaleAspectFit
-           //        searchButton.backgroundColor = .red
-           logOutButton.addTarget(viewController, action: #selector(SuperViewController.logout(sender:)), for: .touchUpInside)
-           logOutButton.setImage(UIImage.init(named: "logout-xxl"), for: .normal)
-           let logOut =  UIBarButtonItem(customView: logOutButton)
-           
-           
-           let hamburger = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
-           hamburger.contentMode = .scaleAspectFit
-           //        searchButton.backgroundColor = .red
-           hamburger.addTarget(viewController, action: #selector(SuperViewController.humbergerCilcked(sender:)), for: .touchUpInside)
-           hamburger.setImage(UIImage.init(named: "humberger"), for: .normal)
-           let slider =  UIBarButtonItem(customView: hamburger)
-           viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
-           
-           viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut], animated: true)
-           viewController.navigationController?.navigationBar.topItem?.setLeftBarButtonItems([slider], animated: true)
-           
-           viewController.navigationController?.navigationBar.topItem?.title = title;
-           let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-           viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
-           viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
-           
-           //        let bounds = viewController.navigationController!.navigationBar.bounds
-           //        viewController.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 64)
-           
-       }
     
     
     
@@ -215,13 +260,13 @@ class GeneralUtility {
         backButton.setImage(UIImage.init(named: "Back"), for: .normal)
         backButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: -30, bottom: 0, right: 0)
         backButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: -40, bottom: 0, right: 0)
-
+        
         backButton.setTitle(title, for: .normal)
         backButton.semanticContentAttribute = .forceLeftToRight
         
         let back =  UIBarButtonItem(customView: backButton)
         viewController.navigationItem.leftBarButtonItem = back
-
+        
         
         let calenderButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
         calenderButton.contentMode = .scaleAspectFit
@@ -316,33 +361,44 @@ class GeneralUtility {
     
     
     public  class func  alertViewLogout(title : String,message : String,viewController : UIViewController,buttons:[String])  {
-           let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-           for string in buttons{
-               alert.addAction(UIAlertAction(title: string, style: .default, handler: { action in
-                   switch action.title{
-                   case "Ok":
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        for string in buttons{
+            alert.addAction(UIAlertAction(title: string, style: .default, handler: { action in
+                switch action.title{
+                case "Ok":
                     LogoutHandler.logout(removeEmail: true);
-                    case "Cancel":
+                case "Cancel":
                     print("")
-                   case .none:
+                case .none:
                     break;
-                   case .some(_):
+                case .some(_):
                     break;
-                   @unknown default:
-                       print("destructive")
-                   }}))
-           }
-           viewController.present(alert, animated: true, completion: nil)
-       }
+                @unknown default:
+                    print("destructive")
+                }}))
+        }
+        viewController.present(alert, animated: true, completion: nil)
+    }
     
     
     
     
     public  class func   todayDate() -> String {
-           let dateFormatter = DateFormatter()
-           dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-           return dateFormatter.string(from: Date())
-       }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.string(from: Date())
+    }
+    
+    public  class func   todayDateDDMMYYYY(date:Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM YYYY"
+        return dateFormatter.string(from: date)
+    }
+    public  class func   todayDateMMYYYY(date:Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM, YYYY"
+        return dateFormatter.string(from: date)
+    }
     
     
     public  class func   isPastDate(date : String) -> Bool {
@@ -360,20 +416,20 @@ class GeneralUtility {
     
     
     public  class func   isPastDateDifferentDateFormater(date : String) -> Bool {
-           let dateFormatter = DateFormatter()
-           dateFormatter.dateFormat = "yyyy-MM-dd"
-           let dateI = dateFormatter.date(from: date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateI = dateFormatter.date(from: date)
         
         let diffInDays = Calendar.current.dateComponents([.day], from: dateI ?? Date(), to: Date()).day
-
+        
         if diffInDays ?? 0 <= 0{
             return false
         }
         
         
         
-           return true
-       }
+        return true
+    }
     
     
     
@@ -382,18 +438,18 @@ class GeneralUtility {
         let partiLogic =  particpant.filter({$0.email == userEmail})
         if partiLogic.count > 0 {
             if partiLogic[0].feedback == nil{
-                 return true
+                return true
             }
         }
-          return false
-      }
+        return false
+    }
     
     public  class func   currentDate(emiDate : String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
-//
-//        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+        //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        //
+        //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
         let date = dateFormatter.date(from: emiDate)
         dateFormatter.dateFormat = "MMM dd, yyyy hh:mm a "
         if let dateF  = date{
@@ -406,9 +462,9 @@ class GeneralUtility {
     public  class func   remaining1Hour(emiDate : String) -> Dictionary<String,Int> {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
-//
-//        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+        //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        //
+        //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
         let date = dateFormatter.date(from: emiDate)
         var dictionaryT : Dictionary<String,Int>;
         var minutes : Int = 1000;
@@ -420,7 +476,7 @@ class GeneralUtility {
             }
             else if minutes < 0{
                 dictionaryT = ["minutes" : 0 ,
-                "ishours" : 0 ];
+                               "ishours" : 0 ];
             }
             else{
                 dictionaryT = ["minutes" : 0 ,
@@ -437,30 +493,30 @@ class GeneralUtility {
     
     
     public  class func   eventEnded(emiDate : String) -> Bool{
-          let dateFormatter = DateFormatter()
-          dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
-//
-//          dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
-          let date = dateFormatter.date(from: emiDate)
-          var dictionaryT : Dictionary<String,Int>;
-          var minutes : Int = 1000;
-          if let eventStartDate = date {
-              minutes =  Calendar.current.dateComponents([.minute], from:Date() , to:eventStartDate ).minute ?? 0;
-             if minutes < 0{
-                  return true
-              }
-              else{
-                  return false
-
-              }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        //
+        //          dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+        let date = dateFormatter.date(from: emiDate)
+        var dictionaryT : Dictionary<String,Int>;
+        var minutes : Int = 1000;
+        if let eventStartDate = date {
+            minutes =  Calendar.current.dateComponents([.minute], from:Date() , to:eventStartDate ).minute ?? 0;
+            if minutes < 0{
+                return true
+            }
+            else{
+                return false
+                
+            }
         }
-         return false
-
-      }
+        return false
+        
+    }
     
     public  class func dateComponent(date: String,component: Calendar.Component)-> DateComponents?{
-
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateI = dateFormatter.date(from: date)
@@ -480,11 +536,11 @@ class GeneralUtility {
     public  class func   currentDateDetail(emiDate : String) -> String {
         let dateFormatter = DateFormatter()
         let dateFormatter1 = DateFormatter()
-
+        
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
-//
-//        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+        //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        //
+        //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
         let date = dateFormatter.date(from: emiDate)
         dateFormatter.dateFormat = "MMM dd, yyyy"
         
@@ -499,9 +555,9 @@ class GeneralUtility {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
-//
-//        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+        //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        //
+        //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
         let date = dateFormatter.date(from: emiDate)
         dateFormatter.dateFormat = "hh:mm a"
         if let dateF  = date{
@@ -512,24 +568,38 @@ class GeneralUtility {
     }
     
     
-      public  class func   currentDateDetailType4(emiDate : String) -> String {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
-    //
-    //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
-            let date = dateFormatter.date(from: emiDate)
-            dateFormatter.dateFormat = "dd MMM yyyy"
-            if let dateF  = date{
-                return dateFormatter.string(from: dateF)
-            }
-            
-            return ""
+    public  class func   currentDateDetailType4(emiDate : String) -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        //
+        //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+        let date = dateFormatter.date(from: emiDate)
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        if let dateF  = date{
+            return dateFormatter.string(from: dateF)
         }
         
+        return ""
+    }
     
     
+    public  class func   currentDateDetailType5(emiDate : String) -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        //
+        //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+        let date = dateFormatter.date(from: emiDate)
+        dateFormatter.dateFormat = "dd MMM, yyyy"
+        if let dateF  = date{
+            return dateFormatter.string(from: dateF)
+        }
+        
+        return ""
+    }
     
     
     public  class func   currentDateDetailType3(emiDate : String) -> String {
@@ -538,11 +608,8 @@ class GeneralUtility {
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let token = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
-
-        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
-
         
-
+        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
         
         var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
         if let date = formatter.date(from: dateString) {
@@ -551,7 +618,7 @@ class GeneralUtility {
             formatter.dateFormat = "hh:mm a"
             return formatter.string(from: date)
         }
-      
+        
         return ""
     }
     
@@ -571,7 +638,47 @@ class GeneralUtility {
             formatter.dateFormat = "hh:mm a"
             let endTime = formatter.string(from: enddate)
             return strTime + " - " + endTime
-                //.lowercased()
+            //.lowercased()
+        }
+        return ""
+    }
+    
+    public  class func   startAndEndDateDetail2(startDate : String,endDate : String) -> String {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //           let token = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
+        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        if let date = formatter.date(from: startDate), let enddate = formatter.date(from: endDate) {
+            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+            formatter.dateFormat = "hh:mm a"
+            let strTime = formatter.string(from: date)
+            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+            formatter.dateFormat = "hh:mm a"
+            let endTime = formatter.string(from: enddate)
+            return strTime + " - " + endTime
+            //.lowercased()
+        }
+        return ""
+    }
+    
+    public  class func   startAndEndDateDetail3(startDate : String,endDate : String) -> String {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //           let token = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
+        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        if let date = formatter.date(from: startDate), let enddate = formatter.date(from: endDate) {
+            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+            formatter.dateFormat = "dd MMM yyyy hh:mm a"
+            let strTime = formatter.string(from: date)
+            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+            formatter.dateFormat = "hh:mm a"
+            let endTime = formatter.string(from: enddate)
+            return strTime + " - " + endTime
+            //.lowercased()
         }
         return ""
     }
@@ -581,43 +688,41 @@ class GeneralUtility {
     
     
     
-    
-    
     public  class func   monthFromGivenDate(emiDate : String) -> String {
-          
-            let dateFormatter = DateFormatter()
-           dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
-//
-//           dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
-           let date = dateFormatter.date(from: emiDate)
-           dateFormatter.dateFormat = "MMM"
-           if let dateF  = date{
-               return dateFormatter.string(from: dateF)
-           }
-           return ""
-       }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        //
+        //           dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+        let date = dateFormatter.date(from: emiDate)
+        dateFormatter.dateFormat = "MMM"
+        if let dateF  = date{
+            return dateFormatter.string(from: dateF)
+        }
+        return ""
+    }
     
     
     
     
     
     public  class func   dateFromGivenDate(emiDate : String) -> String {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
-//
-//            dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
-            let date = dateFormatter.date(from: emiDate)
-            dateFormatter.dateFormat = "dd"
-            
-            if let dateF  = date{
-                return dateFormatter.string(from: dateF)
-            }
-            
-            return ""
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        //
+        //            dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
+        let date = dateFormatter.date(from: emiDate)
+        dateFormatter.dateFormat = "dd"
+        
+        if let dateF  = date{
+            return dateFormatter.string(from: dateF)
         }
+        
+        return ""
+    }
     
     
     
@@ -645,7 +750,7 @@ class GeneralUtility {
     
     
     
-  public  class  func  startNameCharacter(stringName : String) -> String {
+    public  class  func  startNameCharacter(stringName : String) -> String {
         guard stringName != nil else {
             return ""
         }
@@ -666,7 +771,7 @@ class GeneralUtility {
                 
                 if arrayName[0].count > 0 {
                     Intial = String(arrayName[0].first!)
-                               
+                    
                 }
             }
             
@@ -675,15 +780,15 @@ class GeneralUtility {
         }
         else {
             var upper = "\(String(stringName.first!))" ;
-
+            
             return upper.uppercased()
         }
     }
     
     func getCurrentTimeZone() -> String{
-
+        
         return  TimeZone.current.identifier
-
+        
     }
     
     func currentOffset() -> String {

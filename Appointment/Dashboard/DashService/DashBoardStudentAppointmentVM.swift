@@ -225,17 +225,19 @@ class DashBoardStudentAppointmentVM {
             
             self.objOpenHourCoachModal1?.results?.append(contentsOf: (self.objOpenHourCoachModal2?.results)!)
         }
+            
         else
         {
             return nil
         }
+    
         
         appointmentLocal = self.objOpenHourCoachModal1!
         
         
         var appointmentModalResult = [OpenHourCoachModalResult]()
         for var result in appointmentLocal.results!{
-            result.isPastAppointment = GeneralUtility.isPastDate(date: result.endDatetime!)
+            result.isPastAppointment = GeneralUtility.isPastDate(date: result.endDatetimeUTC!)
             result.isFeedbackEnabled = GeneralUtility.isFeedbackEnable(particpant: (result.participants)!)
             let coach = self.dashBoardModal.coaches.filter({"\($0.id)" == result.createdByID})[0]
             result.coach = coach

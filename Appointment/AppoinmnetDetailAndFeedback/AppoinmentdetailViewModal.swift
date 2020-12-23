@@ -118,6 +118,15 @@ class AppoinmentdetailViewModal{
                                        "is_shared" : 0
             ]
         ]
+       
+//        "Locations" : [
+//        "label" : arrCreatedBy
+//
+//        ]
+        
+        
+        
+        
         
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
         Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id: selectedAppointmentModal?.identifier ?? ""), methodType: .get, params: params as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in

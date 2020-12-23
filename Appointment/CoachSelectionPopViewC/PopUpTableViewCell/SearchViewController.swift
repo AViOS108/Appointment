@@ -13,10 +13,20 @@ import SwiftyJSON
 
 protocol SearchViewControllerDelegate {
     func sendSelectedItem(item: SearchTextFieldItem)
-    
     func sendApiResult(item: [SearchTextFieldItem],isApi: Bool)
-
+    
 }
+
+
+extension SearchViewControllerDelegate{
+    func sendApiResult(item: [SearchTextFieldItem],isApi: Bool)
+    {
+        
+    }
+    
+}
+
+
 
 
 class SearchViewController: SuperViewController {
@@ -25,6 +35,8 @@ class SearchViewController: SuperViewController {
     var txtfieldRect: CGRect!
     var maxHeight = 0;
     var isAPiHIt : Bool!
+    
+    var isCreateNew : Bool = false
 
     var delegate : SearchViewControllerDelegate!
     var textField : UITextField!
@@ -33,8 +45,7 @@ class SearchViewController: SuperViewController {
     var arrNameSurvey = [SearchTextFieldItem]()
     var arrNameSurveyConst : [SearchTextFieldItem]!
     let indicator = UIActivityIndicatorView(style: .gray)
-    var indexPath : IndexPath!
-
+    var placeholder : String!
 var showWithoutText = false
     
     override func viewDidLoad() {
@@ -63,17 +74,6 @@ var showWithoutText = false
         
         textField.backgroundColor = ILColor.color(index: 22)
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
-        
-        
-        var placeholder = "Select"
-               if indexPath.row == 4{
-                   placeholder = "Type minimum 2 characters to search"
-               }
-               else
-               {
-                   placeholder = "Select"
-               }
-               
         
         textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [
             .foregroundColor: ILColor.color(index: 32),
@@ -225,9 +225,16 @@ extension SearchViewController: UITextFieldDelegate{
             }
             else{
                 arrNameSurvey = arrNameSurveyConst.filter({$0.title.lowercased().contains(currentText.lowercased())})
+                if isCreateNew {
+                    
+                    let searchItem = SearchTextFieldItem()
+                    searchItem.title = "Create New " + "'\(textField.text ?? "")'"
+                    searchItem.isSelected = true;
+                    searchItem.id  = -1000
+                    arrNameSurvey.insert(searchItem, at: 0)
+                }
                 
             }
-           
             reloadAndSizeTableView()
             
         }

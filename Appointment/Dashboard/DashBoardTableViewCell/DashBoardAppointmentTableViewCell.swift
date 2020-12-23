@@ -137,7 +137,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                 }
                 
                 let image1Attachment = NSTextAttachment()
-                         image1Attachment.image = UIImage(named: "linkdin")
+                         image1Attachment.image = UIImage(named: "Zoom")
                 image1Attachment.bounds = CGRect.init(x: 0, y: -5, width: 20, height: 20)
 
 

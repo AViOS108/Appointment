@@ -9,6 +9,15 @@ import UIKit
 extension UIButton {
   
     
+    func selectedButton(title:String, iconName: String){
+       
+        self.setTitle(title, for: .normal)
+        self.setImage(UIImage(named: iconName), for: .normal)
+       
+    }
+    
+    
+    
     public class func buttonUIHandling(button: UIButton, text: String, backgroundColor: UIColor, textColor: UIColor? = nil, cornerRadius: Int? = nil,shadowColorIndex : Int? = nil,  buttonImage: UIImage? = nil, borderColor: UIColor? = nil, borderWidth: CGFloat? = nil, isTitleLeftAligned: Bool? = nil,isEnabled: Bool? = true, isUnderlined: Bool? = nil,fontType : UIFont? = nil) {
            
            button.setTitle(text, for: .normal)

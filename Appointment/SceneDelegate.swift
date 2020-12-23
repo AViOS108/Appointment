@@ -31,21 +31,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             view.removeFromSuperview()
         }
         let loggedInStatus = (UserDefaultsDataSource(key: "loggedIn").readData() as? Bool) ?? false
+        
+        
         if loggedInStatus {
             //                        let viewcontrollerHome = HomeViewController.init(nibName: "HomeViewController", bundle: nil)
             
-            let viewcontrollerHome = BaseTabBarViewController()
-            let navigationController = UINavigationController.init(rootViewController: viewcontrollerHome)
+            var studentSide = UserDefaultsDataSource(key: "student").readData() as? Bool
             
-            let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
-            let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
+            if studentSide ?? true{
+                
+                let viewcontrollerHome = BaseTabBarViewController()
+                let navigationController = UINavigationController.init(rootViewController: viewcontrollerHome)
+                
+                let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
+                let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
+                
+                let v1 = SlideMenuController(mainViewController: navigationController, leftMenuViewController: navigationControllerS);
+                
+                SlideMenuOptions.contentViewScale = 1.0
+                windowI.backgroundColor = .clear
+                windowI.rootViewController = navigationController
+                windowI.makeKeyAndVisible()
+                
+            }
+            else{
+                let erside = ERSideTabBar()
+                var  erSideTabbar =  (UIStoryboard(name: "ERSideHome", bundle: Bundle.main).instantiateViewController(withIdentifier: "ERSideTabBar") as! ERSideTabBar );
+                windowI.rootViewController = erSideTabbar
+                windowI.makeKeyAndVisible()
+                
+            }
             
-            let v1 = SlideMenuController(mainViewController: navigationController, leftMenuViewController: navigationControllerS);
-            
-            SlideMenuOptions.contentViewScale = 1.0
-            windowI.backgroundColor = .clear
-            windowI.rootViewController = navigationController
-            windowI.makeKeyAndVisible()
         }else{
             let viewUserType = SelectUserTypeViewController.init(nibName: "SelectUserTypeViewController", bundle: nil);
             let navigationControllerS = UINavigationController.init(rootViewController: viewUserType)
@@ -59,20 +75,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-            if let windowScene = scene as? UIWindowScene {
-                
+        if let windowScene = scene as? UIWindowScene {
             
-                    let window = UIWindow(windowScene: windowScene)
-        //             checkLoginState()
-        //            window.rootViewController = checkLoginState()
-        //            self.window = window
-                          let contentView = checkLoginState(windowS: window)
-                          self.window = window
-                
-
-                    
-                    window.makeKeyAndVisible()
-              }    }
+            
+            let window = UIWindow(windowScene: windowScene)
+            //             checkLoginState()
+            //            window.rootViewController = checkLoginState()
+            //            self.window = window
+            let contentView = checkLoginState(windowS: window)
+            self.window = window
+            
+            
+            
+            window.makeKeyAndVisible()
+        }    }
     
     
     
@@ -80,21 +96,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     func updateUserInfo(){
-             let loggedInStatus = (UserDefaultsDataSource(key: "loggedIn").readData() as? Bool) ?? false
-             if loggedInStatus {
-                 let isPremium = SubscriptionType.get()
-                 LoginService().getUserInfo({ response in
-                     if isPremium != SubscriptionType.get() {
-//                         NotificationCenter.default.post(name: Notification.Name("changePremiumStatus"), object: nil)
-                     }
-                     LoginService().getCustomizations({ response in
-//                         NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
-                     },failure: {(error,errorCode) in
-                     })
-                 }, failure: {(error,errorCode) in
-                 })
-             }
-         }
+        let loggedInStatus = (UserDefaultsDataSource(key: "loggedIn").readData() as? Bool) ?? false
+        if loggedInStatus {
+            let isPremium = SubscriptionType.get()
+            LoginService().getUserInfo({ response in
+                if isPremium != SubscriptionType.get() {
+                    //                         NotificationCenter.default.post(name: Notification.Name("changePremiumStatus"), object: nil)
+                }
+                LoginService().getCustomizations({ response in
+                    //                         NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
+                },failure: {(error,errorCode) in
+                })
+            }, failure: {(error,errorCode) in
+            })
+        }
+    }
     
     
     
@@ -112,10 +128,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let appVersion = CommonFunctions.getAppVersion()
         let iosResumeMinimumVersion = UserDefaultsDataSource(key: "iosResumeMinimumVersion").readData() as? String
         if let minVersion = iosResumeMinimumVersion, CommonFunctions.isProvidedVersionGreater(than : appVersion , providedVersion : minVersion) {
-//            NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
-//            return
+            //            NotificationCenter.default.post(name: Notification.Name("checkUpdate"), object: nil)
+            //            return
         }
-        updateUserInfo()
+//        updateUserInfo()
         AppDataSync.shared.beginTimer()
     }
     
@@ -147,6 +163,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        AppDataSync.shared.stopTimer()
+
     }
     
     

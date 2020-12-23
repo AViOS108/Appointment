@@ -22,7 +22,7 @@ class CoachOpenhourTableViewCell: UITableViewCell {
     func customize()  {
         if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13), let fontheavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
         {
-            UILabel.labelUIHandling(label: lblTiming, text: GeneralUtility.currentDateDetailType3(emiDate: objModal.startDatetime!) + " - " + GeneralUtility.currentDateDetailType3(emiDate: objModal.endDatetime!), textColor:ILColor.color(index: 29) , isBold: false , fontType: fontheavy,   backgroundColor:.clear )
+            UILabel.labelUIHandling(label: lblTiming, text: GeneralUtility.currentDateDetailType3(emiDate: objModal.startDatetimeUTC!) + " - " + GeneralUtility.currentDateDetailType3(emiDate: objModal.endDatetimeUTC!), textColor:ILColor.color(index: 29) , isBold: false , fontType: fontheavy,   backgroundColor:.clear )
             
             UILabel.labelUIHandling(label: lblOpenHour, text: "Open Hours", textColor:ILColor.color(index: 29) , isBold: false , fontType: fontMedium,   backgroundColor:.clear )
             

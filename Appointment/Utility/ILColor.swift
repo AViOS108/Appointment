@@ -193,8 +193,40 @@ import UIKit
                           // background appointment color #444444
                           return UIColor.init(red: 68/255, green: 68/255, blue: 68/255, alpha: 1.0)
                       }
+        else if index == 43 {
+            // background appointment color #1f1f1f
+            return UIColor.init(red: 31/255, green: 31/255, blue: 31/255, alpha: 1.0)
+        }
+        else if index == 44 {
+            // background appointment color #1f1f1f
+            return UIColor.init(red: 223/255, green: 223/255, blue: 223/255, alpha: 1.0)
+        }
+        else if index == 45 {
+            // background appointment color #62b2d4
+            return UIColor.init(red: 98/255, green: 178/255, blue: 212/255, alpha: 1.0)
+        }
+        else if index == 46 {
+            // background appointment color #e8e8e8
+            return UIColor.init(red: 232/255, green: 232/255, blue: 232/255, alpha: 1.0)
+        }
+        else if index == 47 {
+                   // background appointment color #a9d0e0
+                   return UIColor.init(red: 169/255, green: 208/255, blue: 224/255, alpha: 1.0)
+               }
+        else if index == 48 {
+            // background appointment color #f7f7f7
+            return UIColor.init(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+        }
+        else if index == 49 {
+            // background appointment color #f0f0f0
+            return UIColor.init(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        }
+        else if index == 50 {
+            // background appointment color #AFAEAE
+            return UIColor.init(red: 175/255, green: 174/255, blue: 174/255, alpha: 1.0)
+        }
         
-        
+    
         return UIColor.clear
     }
 }

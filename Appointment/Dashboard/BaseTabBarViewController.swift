@@ -98,7 +98,7 @@ UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregro
         _ = tabBar.items?.firstIndex(of: item)
     }
     
-    //Delegate methods
+    //Delegate methodsa
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         print("Should select viewController: \(viewController.title ?? "") ?")
         return true

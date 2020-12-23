@@ -164,8 +164,7 @@ class AppoinmentDescriptionTableViewCell: UITableViewCell {
             
             
             let image1Attachment = NSTextAttachment()
-            image1Attachment.image = UIImage(named: "linkdin")
-image1Attachment.image = UIImage(named: "linkdin")
+            image1Attachment.image = UIImage(named: "Zoom")
             // wrap the attachment in its own attributed string so we can append it
           image1Attachment.bounds = CGRect.init(x: 0, y: -5, width: 20, height: 20)
             let imageZoom = NSAttributedString(attachment: image1Attachment)

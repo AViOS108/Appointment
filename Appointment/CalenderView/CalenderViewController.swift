@@ -8,11 +8,13 @@
 
 import UIKit
 
-class CalenderViewController: UIViewController {
+class CalenderViewController: UIViewController,UIGestureRecognizerDelegate {
     
     var pointSign : CGPoint?
     var viewControllerI : UIViewController?
 
+    var pointedArrow = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -32,7 +34,35 @@ class CalenderViewController: UIViewController {
         self.view.backgroundColor =  UIColor.init(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
         //        view.isOpaque = false
-        
+        self.tapGesture()
     }
+    
+    func tapGesture()  {
+        self.view.tag = 19682
+           let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+           tap.delegate = self
+        self.view.isUserInteractionEnabled = true
+           self.view.addGestureRecognizer(tap)
+       }
+    
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+
+        self.dismiss(animated: false) {
+          }
+
+       }
+       
+       func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view?.isDescendant(of: self.view) == true && touch.view?.tag != 19682  {
+               return false
+            }
+            return true
+       }
+    
+    
+    
+    
+    
     
 }

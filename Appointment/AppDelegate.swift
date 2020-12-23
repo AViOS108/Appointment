@@ -141,19 +141,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         {
             clearWindow()
             let loggedInStatus = (UserDefaultsDataSource(key: "loggedIn").readData() as? Bool) ?? false
+            
             if loggedInStatus {
-                let viewcontrollerHome = BaseTabBarViewController()
-                let navigationController = UINavigationController.init(rootViewController: viewcontrollerHome)
                 
-                let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
-                let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
+                var studentSide = UserDefaultsDataSource(key: "student").readData() as? Bool
                 
-                let v1 = SlideMenuController(mainViewController: navigationController, leftMenuViewController: navigationControllerS);
+                if studentSide ?? true{
+                    
+                    let viewcontrollerHome = BaseTabBarViewController()
+                    let navigationController = UINavigationController.init(rootViewController: viewcontrollerHome)
+                    
+                    let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
+                    let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
+                    
+                    let v1 = SlideMenuController(mainViewController: navigationController, leftMenuViewController: navigationControllerS);
+                    
+                    SlideMenuOptions.contentViewScale = 1.0
+                    window?.backgroundColor = .clear
+                    window?.rootViewController = navigationController
+                    window?.makeKeyAndVisible()
+                    
+                    
+                }
+                else{
+                    
+                    let erside = ERSideTabBar()
+                    var storyBoard  = UIStoryboard(name: "Dashboard", bundle: Bundle.main)
+                    var  erSideTabbar =  (UIStoryboard(name: "Dashboard", bundle: Bundle.main).instantiateViewController(withIdentifier: "ERSideTabBar") as! ERSideTabBar );
+                    changeRootVC(erSideTabbar)
+                    
+                    
+                }
                 
-                SlideMenuOptions.contentViewScale = 1.0
-                window?.backgroundColor = .clear
-                window?.rootViewController = navigationController
-                window?.makeKeyAndVisible()
+                
+                
             }else{
                 let viewUserType = SelectUserTypeViewController.init(nibName: "SelectUserTypeViewController", bundle: nil);
                 let navigationControllerS = UINavigationController.init(rootViewController: viewUserType)

@@ -213,6 +213,7 @@ struct Participant: Codable {
     let communityID: Int?
     let communityName: String?
     let miUserID: Int?
+    let participantImage : String = ""
 
     enum CodingKeys: String, CodingKey {
         case id

@@ -28,6 +28,16 @@ class Urls {
     static let liveEnvEvents = "https://api-employer.vmock.com/calendar-management/"
     
     
+    static let devStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+ 
+    static let stagingStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+
+    static let liveStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+
+       
+    
+    
+    
     
     static let testShareEvents = "https://temp3.vmock.com/dashboard/events/my-events"
     static let stagingShareEvents = "https://dashboard-staging.vmock.com/dashboard/events/my-events"
@@ -35,38 +45,45 @@ class Urls {
     
     
     static let testEnvNotes = "https://employerdev.vmock.com/khagesh/api/test-notes/public/"
-
+    
     
     
     
     #if DEVELOPMENT
-        static let runningEnv = testEnv
-        static let runningHost = testHost
-        static let runningEnvJobs = testEnvJobs
-        static let runningEnvEvents = testEnvEvents
-        static let SharingEvents = testShareEvents
-        static let runningEnvNotes = testEnvNotes
+    static let runningEnv = testEnv
+    static let runningHost = testHost
+    static let runningEnvJobs = testEnvJobs
+    static let runningEnvEvents = testEnvEvents
+    static let SharingEvents = testShareEvents
+    static let runningEnvNotes = testEnvNotes
+    
+    static let runningEnvStudentList = devStudentList
 
+    
+    
     #else
     
     static let runningEnv = testEnv
-         static let runningHost = testHost
-         static let runningEnvJobs = testEnvJobs
-         static let runningEnvEvents = testEnvEvents
-         static let SharingEvents = testShareEvents
-        static let runningEnvNotes = testEnvNotes
+    static let runningHost = testHost
+    static let runningEnvJobs = testEnvJobs
+    static let runningEnvEvents = testEnvEvents
+    static let SharingEvents = testShareEvents
+    static let runningEnvNotes = testEnvNotes
+    
+    static let runningEnvStudentList = devStudentList
 
-//        static let runningEnv = liveEnv
-//        static let runningHost = liveHost
-//        static let runningEnvJobs = liveEnvJobs
-//        static let runningEnvEvents = liveEnvEvents
-//        static let SharingEvents = liveShareEvents
+    
+    //        static let runningEnv = liveEnv
+    //        static let runningHost = liveHost
+    //        static let runningEnvJobs = liveEnvJobs
+    //        static let runningEnvEvents = liveEnvEvents
+    //        static let SharingEvents = liveShareEvents
     #endif
     
-//    var type1 = "\(devEnv)ravindra2/dashboard/accounts/public/api/v1/"
-//    var type2 = "\(devEnv)geetika/api-network-feedback/public/v1/"
-//    var type3 = "\(devEnv)geetika/dashboard-api-resume-parser/public/v1/"
-//    var type4 = "\(devEnv)geetika/analytics/public/v1/"
+    //    var type1 = "\(devEnv)ravindra2/dashboard/accounts/public/api/v1/"
+    //    var type2 = "\(devEnv)geetika/api-network-feedback/public/v1/"
+    //    var type3 = "\(devEnv)geetika/dashboard-api-resume-parser/public/v1/"
+    //    var type4 = "\(devEnv)geetika/analytics/public/v1/"
     
     var type1 = "\(runningEnv)accounts/api/v1/"
     var type2 = "\(runningEnv)nf/v1/"
@@ -75,12 +92,13 @@ class Urls {
     var type5 = "\(runningEnv)cf-notes/v1/"
     var type6 = "\(runningEnv)tracking/"
     var type7 = "\(runningEnv)survey/v1/"
+    
+    var type8 = "\(runningEnvStudentList)api/v1/"
 
-  
     
     var typeJob1 = "\(runningEnvJobs)ats/api/v1/"
     var typeJob2 = "\(runningEnvJobs)relationship-management/api/v1/"
-
+    
     
     var privacyPolicy = "https://www.vmock.com/pages/privacy_policy.php"
     var terms = "https://www.vmock.com/pages/terms_and_conditions.php"
@@ -90,12 +108,12 @@ class Urls {
     
     var typeEvent1 = "\(runningEnvEvents)api/v1/"
     var typeEvent2 = "\(runningEnvEvents)api/v2/"
-
+    
     var ErLoginType1 = "\(runningEnvJobs)accounts/api/v2/"
     var ErLoginType2 = "\(runningEnvJobs)accounts/api/v1/"
-
-
-
+    
+    
+    
     
     
     // Login
@@ -111,7 +129,7 @@ class Urls {
     func checkLoginStatus() -> String {
         return "\(type1)registration/status"
     }
-
+    
     func login() -> String{
         return "\(type1)login/common"
     }
@@ -233,166 +251,208 @@ class Urls {
     func shareUrl(idEvent : String) -> String  {
         return "\(Urls.SharingEvents)?id=\(idEvent)"
     }
-     
-  
+    
+    
     
     //MARK: Event List
     
     func coachesList() -> String {
         
-      guard UserDefaultsDataSource(key: "csrf_token").readData() != nil else {
-                 return ""
-             }
+        guard UserDefaultsDataSource(key: "csrf_token").readData() != nil else {
+            return ""
+        }
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
-
+        
         
         if isStudent ?? true
         {
             return "\(type2)feedback/resume/networks"
-
+            
         }
         else
         {
             return "\(typeEvent1)community/events/list?csrf_token=\(csrftoken)"
-
+            
         }
         
     }
     
     
     func timezoneList() -> String {
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true
+        {
             return "\(typeEvent1)students/events/timezones"
+        }
+        else{
+            return "\(typeEvent1)community/events/timezones"
+            
+            
+        }
+        
+        
         
     }
-
+    
     func openHourCCList() -> String {
-            return "\(typeEvent1)students/appointment-slots"
+        return "\(typeEvent1)students/appointment-slots"
         
     }
-
+    
     func openHourECList() -> String {
-            return "\(typeEvent1)students/external-appointment-slots"
+        return "\(typeEvent1)students/external-appointment-slots"
         
     }
     
     func confirmAppointment(id:String) -> String {
-              return "\(typeEvent1)students/appointment-slots/" + id
-          
-      }
+        return "\(typeEvent1)students/appointment-slots/" + id
+        
+    }
     
     
-       func nextStepAppointment(id:String) -> String {
-                 return "\(typeEvent1)students/appointment-slots/"+id+"/next-steps"
-             
-         }
+    func nextStepAppointment(id:String) -> String {
+        return "\(typeEvent1)students/appointment-slots/"+id+"/next-steps"
+        
+    }
     
     func notesAppointment(id:String) -> String {
         return "\(Urls.runningEnvNotes)api/v1/student/notes/list"
-                
-            }
-   
+        
+    }
+    
     
     
     func eventErChalleges(stringEmail:String) -> String {
-           return "\(ErLoginType1)auth/login/challenges?email=\(stringEmail)"
-         
-     }
+        return "\(ErLoginType1)auth/login/challenges?email=\(stringEmail)"
+        
+    }
     
     func eventErLogin(stringEmail:String,strPwd:String) -> String {
-//              return "\(ErLoginType1)auth/login?email=\(stringEmail)&password=\(strPwd)"
-            return "\(ErLoginType1)auth/login"
-
-        }
+        //              return "\(ErLoginType1)auth/login?email=\(stringEmail)&password=\(strPwd)"
+        return "\(ErLoginType1)auth/login"
+        
+    }
     
     func eventErAuth() -> String {
-                return "\(ErLoginType2)auth/login"
-              
-          }
+        return "\(ErLoginType2)auth/login"
+        
+    }
     
     func getNewCaptchEr() -> String {
         return "\(ErLoginType2)captcha/new"
     }
     
     func extendErLogin() -> String {
-           return "\(ErLoginType2)sessions/current/extend"
-       }
+        return "\(ErLoginType2)sessions/current/extend"
+    }
     
     func studentList(id:String) -> String {
         return "\(typeEvent2)community/events/\(id)/participants/student_user/list"
-          }
+    }
     
     
     func checkInToken(id:String) -> String {
-         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-         
-         
-         if isStudent ?? true
-         {
-             return "\(typeEvent1)students/events/\(id)/check-in/token"
-             
-         }
-         else
-         {
-             return "\(typeEvent1)community/events/\(id)/check-in/token"
-             
-         }
-         
-     }
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        
+        
+        if isStudent ?? true
+        {
+            return "\(typeEvent1)students/events/\(id)/check-in/token"
+            
+        }
+        else
+        {
+            return "\(typeEvent1)community/events/\(id)/check-in/token"
+            
+        }
+        
+    }
     
     func checkInTokenERSide() -> String {
-          let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-          if isStudent ?? true
-          {
-              return ""
-              
-          }
-          else
-          {
-              return "\(typeEvent1)community/event-check-in"
-              
-          }
-          
-      }
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true
+        {
+            return ""
+            
+        }
+        else
+        {
+            return "\(typeEvent1)community/event-check-in"
+            
+        }
+        
+    }
     
     func studentFunctionList() -> String {
-    return "\(typeJob1)students/functional-area/list"
+        return "\(typeJob1)students/functional-area/list"
     }
-
+    
     func studentIndustriesList() -> String {
-    return "\(typeJob2)student/industries"
+        return "\(typeJob2)student/industries"
     }
     func globalCompanyList() -> String {
-               return "\(typeJob2)student/global-companies/name"
-           
-       }
+        return "\(typeJob2)student/global-companies/name"
+        
+    }
     
     func saveNotes()-> String{
         
-        return "\(Urls.testEnvNotes)api/v1/student/notes"
+        return "\(Urls.runningEnvNotes)api/v1/student/notes"
         
     }
     
     func deletesNotes(id: String)-> String{
-           
-           return "\(Urls.testEnvNotes)api/v1/student/notes/" + id
-           
-       }
-       
+        
+        return "\(Urls.runningEnvNotes)api/v1/student/notes/" + id
+        
+    }
+    
     
     func cancelAppoinment(id: String)-> String{
-              
-              return "\(typeEvent1)students/appointment-slots/meetings/\(id)/cancel"
-              
-          }
+        
+        return "\(typeEvent1)students/appointment-slots/meetings/\(id)/cancel"
+        
+    }
     
-   
+    
     func feedBack(id: String)-> String{
-             
-             return "\(Urls.testEnvEvents)api/v1/students/appointment-slots/\(id)/feedback"
-             
-         }
+        
+        return "\(typeEvent1)students/appointment-slots/\(id)/feedback"
+        
+    }
     
+    
+    
+    func erSideAppointment() -> String{
+        return "\(typeEvent1)community/appointment-slots/list"
+        
+    }
+    
+    func erSideOPenHourDetail(id: String) -> String{
+        return "\(typeEvent1)community/appointment-slots/" + "\(id)"
+        
+    }
+    func erSideOPenHourGetPurpose() -> String{
+        return "\(typeEvent1)community/appointment-user-purposes"
+        
+    }
+    func erSideOPenHourGetProvider() -> String{
+        return "\(typeEvent1)community/appointment-slots/locations/providers"
+        
+    }
+    
+    func erSideOPenHourTags() -> String{
+        return "\(Urls.runningEnvJobs)students/api/v1/students/list/tags"
+        
+    }
+    
+    
+    func erSideStudentList() -> String{
+        return "\(type8)app-view"
+        
+    }
     
     
     

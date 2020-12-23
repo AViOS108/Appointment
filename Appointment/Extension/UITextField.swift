@@ -6,10 +6,8 @@
 import Foundation
 import UIKit
 
-extension UITextField {
-    
+
   
-}
 class LeftPaddedTextField: UITextField {
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -25,7 +23,7 @@ class LeftPaddedTextField: UITextField {
     }
     
     override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
-        return CGRect(x:bounds.width - 18 , y: 12, width: 14, height: 10)
+        return CGRect(x:bounds.width - 18 , y: bounds.height/2 - 5, width: 14, height: 10)
         
     }
    

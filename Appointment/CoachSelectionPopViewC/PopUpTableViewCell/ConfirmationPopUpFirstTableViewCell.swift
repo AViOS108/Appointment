@@ -57,12 +57,23 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
     
     
     @IBAction func btnFirstIndexTapped(_ sender: UIButton) {
-           var searchViewController = SearchViewController.init(nibName: "SearchViewController", bundle: nil)
-           searchViewController.modalPresentationStyle = .overFullScreen
-           searchViewController.maxHeight = 200;
-           let frameI =
-               sender.superview?.convert(sender.frame, to: nil)
-        searchViewController.indexPath =  indexPath
+        var searchViewController = SearchViewController.init(nibName: "SearchViewController", bundle: nil)
+        searchViewController.modalPresentationStyle = .overFullScreen
+        searchViewController.maxHeight = 200;
+        let frameI =
+            sender.superview?.convert(sender.frame, to: nil)
+        
+        var placeholder = "Select"
+        if indexPath.row == 4{
+            placeholder = "Type minimum 2 characters to search"
+        }
+        else
+        {
+            placeholder = "Select"
+        }
+        
+        searchViewController.placeholder = placeholder;
+        
         var changedFrame = frameI
         
         if frameI!.origin.y > self.viewControllerI.view.frame.height/2{
@@ -80,23 +91,23 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         
         
         
-           searchViewController.arrNameSurvey = self.arrNameSurvey.filter({$0.isSelected == false})
-           searchViewController.txtfieldRect = changedFrame
-           searchViewController.isAPiHIt = isAPiHIt
-           if self.indexPath.row == 0{
-               searchViewController.showWithoutText = true
-           }
-           else{
-               searchViewController.showWithoutText = false
-           }
-           
-           
-           searchViewController.delegate = self
-           
-           viewControllerI.present(searchViewController, animated: false) {
-           }
-           
-       }
+        searchViewController.arrNameSurvey = self.arrNameSurvey.filter({$0.isSelected == false})
+        searchViewController.txtfieldRect = changedFrame
+        searchViewController.isAPiHIt = isAPiHIt
+        if self.indexPath.row == 0{
+            searchViewController.showWithoutText = true
+        }
+        else{
+            searchViewController.showWithoutText = false
+        }
+        
+        
+        searchViewController.delegate = self
+        
+        viewControllerI.present(searchViewController, animated: false) {
+        }
+        
+    }
     
     
     func customization()  {
