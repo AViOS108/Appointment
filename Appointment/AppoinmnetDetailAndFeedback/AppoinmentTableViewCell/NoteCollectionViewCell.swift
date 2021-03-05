@@ -90,7 +90,9 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
             lblNoNotes.isHidden = true
             let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
             let componentDay = GeneralUtility.dateComponent(date: self.noteResultModal?.createdAt ?? "", component: .weekday)
-            let date = GeneralUtility.currentDateDetailType4(emiDate: self.noteResultModal?.createdAt ?? "");
+            let date = GeneralUtility.currentDateDetailType4(emiDate: self.noteResultModal?.createdAt ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy")
+            
+            
             let timeText = "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " + date;
             let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)

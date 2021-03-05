@@ -15,7 +15,6 @@ protocol DashBoardStudentAppointmentVMDelegate {
     
     func sentDataViewController(dataAppoinmentModal : OpenHourCoachModal)
 
-
 }
 
 
@@ -28,9 +27,6 @@ class DashBoardStudentAppointmentVM {
     let dispatchGroup = DispatchGroup()
     
     var isbackGroundHit = false;
-    
-    
-    
     
     
     var objOpenHourCoachModal1 : OpenHourCoachModal?
@@ -69,7 +65,6 @@ class DashBoardStudentAppointmentVM {
         dispatchGroup.enter()
         fetchAllPointMent(index: 2)
 
-        
         
         dispatchGroup.notify(queue: .main) {
             if !self.isbackGroundHit{
@@ -244,11 +239,8 @@ class DashBoardStudentAppointmentVM {
             appointmentModalResult.append(result)
         }
         var apointmentFinalModal = appointmentLocal;
-        
-        
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
         
         appointmentModalResult =   appointmentModalResult.sorted(
             by: { formatter.date(from: $0.startDatetimeUTC ?? "") ?? Date()  > formatter.date(from: $1.startDatetimeUTC ?? "") ?? Date()
@@ -256,15 +248,9 @@ class DashBoardStudentAppointmentVM {
         
         apointmentFinalModal.results?.removeAll()
         apointmentFinalModal.results?.append(contentsOf: appointmentModalResult);
-        
-        return apointmentFinalModal
-        
+         return apointmentFinalModal
         
     }
-    
-    
-    
-    
     
     
 }

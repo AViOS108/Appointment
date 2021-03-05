@@ -81,7 +81,7 @@ class ERSideOpenhourVM {
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let dateStart = dateFormatter.string(from: dateSelected)
             var dateCompStartChange = DateComponents()
-            dateCompStartChange.day = 7 ;
+            dateCompStartChange.day = -1 ;
             let dateEnd = Calendar.current.date(byAdding: dateCompStartChange, to: dateSelected)!
             let dateEndStr = dateFormatter.string(from: dateEnd)
             dateFormatter.dateFormat = "HH:mm:ss"
@@ -92,8 +92,8 @@ class ERSideOpenhourVM {
                 ParamName.PARAMFILTERSEL : [
                     "states" : states,
                     "timezone":"utc",
-                    "from": dateStart + " " + appendDate,
-                    "to": dateEndStr + " " + appendDate
+                    "from": dateEndStr + " " + "23:59:59",
+                    "to": dateStart + " " + "23:59:59"
                 ],
                 ParamName.PARAMINTIMEZONEEL :"utc",
                 ParamName.PARAMCSRFTOKEN : csrftoken,
@@ -148,6 +148,19 @@ class ERSideOpenHourDetailVM {
         }
         
     }
+    
+    
+    func OpenHourDelete(param: Dictionary<String,AnyObject>,id: String,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void )
+    {
+        
+        ERSideAppointmentService().erSideOPenHourDeleteApi(param: param, id: id, { (data) in
+            success(data)
+        }) { (error, errorCode) in
+            failure(error, errorCode)
+        }
+        
+    }
+    
 
 }
 
@@ -219,6 +232,10 @@ class ERSideCreateEditOHVM {
         
     }
     
+    
+    
+    
+    
     func hitApiForTimeZone()
     {
         let dashBoardViewModal = DashBoardViewModel()
@@ -251,6 +268,25 @@ class ERSideOpenEditSecondVM {
         }
         
     }
+    
+    
+    func erSideOPenHourPostPurposeApi(prameter : Dictionary<String,Any>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
+        
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+        
+        Network().makeApiEventGetRequest(true, url: Urls().erSideOPenHourGetPurpose(), methodType: .post, params: prameter as Dictionary<String,AnyObject>, header: headers, completion: { (jsonData) in
+            success(jsonData)
+            
+        }) { (error, errorCode) in
+            failure(error,errorCode)
+            
+        }
+        
+    }
+    
+   
+    
+    
 
 }
 
@@ -274,6 +310,48 @@ class ERSideStudentListViewModal {
         }
         
     }
+    
+    
+   func submitNewUserPurpose(prameter : Dictionary<String,AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void)
+    {
+        
+        ERSideAppointmentService().erSideSubmitNewUserPurposeApi(params: prameter, { (jsonData) in
+            do {
+                success(jsonData)
+                
+            } catch   {
+                print(error)
+            }
+        }) { (error, errorCode) in
+            
+            failure(error, errorCode)
+        }
+        
+    }
+    
+    
+    
+     
+    func submitNewOpenHour(prameter : Dictionary<String,AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void)
+     {
+         
+         ERSideAppointmentService().erSideSubmitNewOpenHour(params: prameter, { (jsonData) in
+             do {
+                 success(jsonData)
+                 
+             } catch   {
+                 print(error)
+             }
+         }) { (error, errorCode) in
+             
+             failure(error, errorCode)
+         }
+         
+     }
+    
+    
+    
+    
     
     
     

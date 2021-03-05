@@ -41,14 +41,19 @@ class NextStepCollectionViewCell: UICollectionViewCell {
             
             let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
             let componentDay = GeneralUtility.dateComponent(date: self.nextModalObj?.createdAt ?? "", component: .weekday)
-            let date = GeneralUtility.currentDateDetailType4(emiDate: self.nextModalObj?.createdAt ?? "");
+            let date =
+                GeneralUtility.currentDateDetailType4(emiDate: self.nextModalObj?.createdAt ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy")
+                
+               
             let timeText = "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " + date;
             let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE10)
             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             UILabel.labelUIHandling(label: lblDate, text: timeText, textColor: ILColor.color(index: 38), isBold: false, fontType: fontMedium)
             
             let componentDueDay = GeneralUtility.dateComponent(date: self.nextModalObj?.dueDatetime ?? "", component: .weekday)
-            let dueDate = GeneralUtility.currentDateDetailType4(emiDate: self.nextModalObj?.dueDatetime ?? "");
+            let dueDate =  GeneralUtility.currentDateDetailType4(emiDate: self.nextModalObj?.dueDatetime ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy")
+           
+         
             
             let duetTimeText = "Due Date:" + "\(weekDay[(componentDueDay?.weekday ?? 1) - 1]), " + dueDate;
             let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE10)

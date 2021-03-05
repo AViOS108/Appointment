@@ -226,7 +226,20 @@ import UIKit
             return UIColor.init(red: 175/255, green: 174/255, blue: 174/255, alpha: 1.0)
         }
         
-    
+        else if index == 51 {
+                   // background appointment color #36987c
+                   return UIColor.init(red: 54/255, green: 152/255, blue: 124/255, alpha: 1.0)
+               }
+        
+    else if index == 52 {
+                     // background appointment color #797979
+                     return UIColor.init(red: 121/255, green: 121/255, blue: 121/255, alpha: 1.0)
+                 }
+        
+        else if index == 53 {
+            // background appointment color #797979
+            return UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1.0)
+        }
         return UIColor.clear
     }
 }

@@ -307,18 +307,51 @@ class Urls {
     }
     
     func confirmAppointment(id:String) -> String {
-        return "\(typeEvent1)students/appointment-slots/" + id
+        
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true
+        {
+            
+            return "\(typeEvent1)students/appointment-slots/" + id
+            
+        }
+        else
+        {
+            return "\(typeEvent1)community/appointment-slots/" + id
+            
+        }
         
     }
     
     
     func nextStepAppointment(id:String) -> String {
-        return "\(typeEvent1)students/appointment-slots/"+id+"/next-steps"
         
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true
+        {
+            return "\(typeEvent1)students/appointment-slots/"+id+"/next-steps"
+
+        }
+        else
+        {
+            return "\(typeEvent1)community/appointment-slots/"+id+"/next-steps"
+
+        }
     }
     
     func notesAppointment(id:String) -> String {
-        return "\(Urls.runningEnvNotes)api/v1/student/notes/list"
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true
+        {
+            return "\(Urls.runningEnvNotes)api/v1/student/notes/list"
+            
+        }
+        else
+        {
+            return "\(Urls.runningEnvNotes)api/v1/community/notes/list"
+        }
         
     }
     
@@ -399,8 +432,16 @@ class Urls {
     
     func saveNotes()-> String{
         
-        return "\(Urls.runningEnvNotes)api/v1/student/notes"
-        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+              if isStudent ?? true
+              {
+                  return "\(Urls.runningEnvNotes)api/v1/student/notes"
+              }
+              else
+              {
+                  return "\(Urls.runningEnvNotes)api/v1/community/notes"
+
+              }
     }
     
     func deletesNotes(id: String)-> String{
@@ -430,10 +471,40 @@ class Urls {
         
     }
     
+    func erSideAppointmentAccept(id: String) -> String{
+           return "\(typeEvent1)community/appointment-slots/requests/" + "\(id)" + "/accept"
+           
+       }
+    
+    func erSideAppointmentDandC(id: String,idIndex: Int) -> String{
+        if idIndex == 1{
+            return "\(typeEvent1)community/appointment-slots/meetings/" + "\(id)" + "/cancel"
+
+        }
+        else{
+            return "\(typeEvent1)community/appointment-slots/requests/" + "\(id)" + "/reject"
+
+        }
+        
+              
+          }
+    
+    func erSideAppointmentCancel(id: String) -> String{
+              return "\(typeEvent1)community/appointment-slots/" + "\(id)" + "cancel"
+              
+          }
+    
     func erSideOPenHourDetail(id: String) -> String{
         return "\(typeEvent1)community/appointment-slots/" + "\(id)"
         
     }
+    
+    
+    func erSideOPenHourDelete(id: String) -> String{
+        return "\(typeEvent1)community/appointment-slots/" + "\(id)"
+        
+    }
+    
     func erSideOPenHourGetPurpose() -> String{
         return "\(typeEvent1)community/appointment-user-purposes"
         
@@ -454,6 +525,18 @@ class Urls {
         
     }
     
+    
+    
+    func createNewOpenHour() -> String{
+           return "\(typeEvent1)community/appointment-slots"
+
+       }
+    
+    
+    func erSideStudentListAppoinment() -> String{
+        return "\(Urls.runningEnvJobs)students/api/v1/students"
+
+    }
     
     
 }

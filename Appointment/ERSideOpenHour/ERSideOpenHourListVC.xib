@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ERSideOpenHourListVC" customModule="Appointment" customModuleProvider="target">
             <connections>
+                <outlet property="btnDuplicate" destination="fda-Sd-cFW" id="5K9-cz-1TQ"/>
                 <outlet property="btnMonthDecrease" destination="5oL-8G-zlP" id="T41-iy-d2j"/>
                 <outlet property="btnMonthIncrease" destination="1LB-nK-66d" id="EUW-m5-1CH"/>
                 <outlet property="btnSelectTimeZOne" destination="nXX-On-B4M" id="lKh-t7-iMI"/>
@@ -19,6 +20,7 @@
                 <outlet property="lblMonth" destination="puZ-Me-vE6" id="i7A-3p-m3X"/>
                 <outlet property="lblTimeZone" destination="MLk-kH-QAM" id="CoC-Ve-bDU"/>
                 <outlet property="lblZeroState" destination="Cl0-Ao-qv3" id="Bsr-RT-gl0"/>
+                <outlet property="nslayoutbtnDuplicateHeight" destination="REJ-8K-DZV" id="daW-g4-4v8"/>
                 <outlet property="tblView" destination="V6r-V8-rnM" id="4Ys-kY-KMy"/>
                 <outlet property="txtTimeZone" destination="jFD-lD-95U" id="RHC-li-RbF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -185,31 +187,46 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="V6r-V8-rnM">
-                    <rect key="frame" x="8" y="195" width="398" height="593"/>
+                    <rect key="frame" x="8" y="195" width="398" height="543"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGB-KO-lD9">
-                    <rect key="frame" x="8" y="796" width="398" height="58"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGB-KO-lD9">
+                    <rect key="frame" x="8" y="746" width="398" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="rMT-sE-IuC"/>
+                    </constraints>
                     <state key="normal" title="Button"/>
                     <connections>
                         <action selector="btnSetOpenHoursTapped:" destination="-1" eventType="touchUpInside" id="GZc-6X-MRd"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fda-Sd-cFW">
+                    <rect key="frame" x="8" y="804" width="398" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="REJ-8K-DZV"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="btnDuplicateTapped:" destination="-1" eventType="touchDragInside" id="19Z-39-vci"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
+                <constraint firstItem="fda-Sd-cFW" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-8" id="0fD-40-ruP"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fda-Sd-cFW" secondAttribute="trailing" constant="8" id="1XC-bD-VZB"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="o2o-bT-9dy" secondAttribute="trailing" id="7bb-Mo-aZq"/>
                 <constraint firstItem="V6r-V8-rnM" firstAttribute="top" secondItem="o2o-bT-9dy" secondAttribute="bottom" constant="3" id="7f5-jD-Sh0"/>
                 <constraint firstItem="o2o-bT-9dy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9G9-fn-sCZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YGB-KO-lD9" secondAttribute="trailing" constant="8" id="ABD-t8-PBK"/>
                 <constraint firstItem="o2o-bT-9dy" firstAttribute="top" secondItem="tWG-1b-07K" secondAttribute="bottom" constant="8" id="BWZ-0V-QbY"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="YGB-KO-lD9" secondAttribute="bottom" constant="8" id="BeI-fY-fOs"/>
                 <constraint firstItem="tWG-1b-07K" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HZp-2G-rOe"/>
-                <constraint firstItem="YGB-KO-lD9" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.065" id="MLb-2N-20A"/>
+                <constraint firstItem="fda-Sd-cFW" firstAttribute="top" secondItem="YGB-KO-lD9" secondAttribute="bottom" constant="8" id="JNp-4E-GS0"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="V6r-V8-rnM" secondAttribute="trailing" constant="8" id="MPC-IR-grV"/>
                 <constraint firstItem="YGB-KO-lD9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="NNx-J5-RQf"/>
-                <constraint firstItem="YGB-KO-lD9" firstAttribute="top" secondItem="V6r-V8-rnM" secondAttribute="bottom" constant="8" id="QAh-Lt-5Fx"/>
+                <constraint firstItem="YGB-KO-lD9" firstAttribute="top" secondItem="V6r-V8-rnM" secondAttribute="bottom" constant="8" id="QHZ-Z7-hPj"/>
+                <constraint firstItem="fda-Sd-cFW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="Sbz-CU-T24"/>
                 <constraint firstItem="tWG-1b-07K" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="XRn-AA-pPz"/>
                 <constraint firstItem="V6r-V8-rnM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="YPC-3W-eiy"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="weB-G8-0Zt" secondAttribute="trailing" constant="8" id="YPv-qp-phR"/>

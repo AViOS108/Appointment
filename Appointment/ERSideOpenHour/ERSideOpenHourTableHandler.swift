@@ -10,7 +10,8 @@ import UIKit
 
 class ERSideOpenHourTableHandler: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    
+    var dateSelected : Date!
+
     var viewControllerI : ERSideOpenHourListVC!
     //    var modalEvent : EventModal?
     var totalCount : Int?
@@ -28,7 +29,6 @@ class ERSideOpenHourTableHandler: UIViewController,UITableViewDelegate,UITableVi
         viewControllerI.tblView.delegate = self
         viewControllerI.tblView.dataSource = self
         viewControllerI.tblView.reloadData()
-        
     }
     
     
@@ -37,9 +37,10 @@ class ERSideOpenHourTableHandler: UIViewController,UITableViewDelegate,UITableVi
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ErSideOpenHourTC", for: indexPath) as! ErSideOpenHourTC
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.viewController = self.viewControllerI
+        cell.delegate = self.viewControllerI
         cell.results = self.dataAppoinmentModal?.results![indexPath.row]
         cell.customize()
-        
         return cell
     }
     
@@ -51,13 +52,13 @@ class ERSideOpenHourTableHandler: UIViewController,UITableViewDelegate,UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        
         let erSideOHDetail = ERSideOHDetailViewController.init(nibName: "ERSideOHDetailViewController", bundle: nil)
         erSideOHDetail.identifier = self.dataAppoinmentModal?.results![indexPath.row].identifier
+        erSideOHDetail.viewControllerType = 1
         erSideOHDetail.viewControllerI = viewControllerI
         erSideOHDetail.modalPresentationStyle = .overFullScreen
-        viewControllerI.present(erSideOHDetail, animated: false, completion: nil)
-        
+        erSideOHDetail.dateSelected = self.dateSelected
+        viewControllerI.navigationController?.pushViewController(erSideOHDetail, animated: false)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){

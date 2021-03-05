@@ -19,6 +19,7 @@ struct ERSideOpenHourDetail: Codable {
     let createdByID, lastChangedAt: String?
     let parentID: JSONNull?
     let endDatetime, slotDuration, welcomeDescription: String?
+    //
     let exceptions: [Exception]?
     let parentType: JSONNull?
     let inTimezone, identifier, title: String?
@@ -102,21 +103,21 @@ struct Exception: Codable {
     let lastChangedAt: String?
     let eventTypeID: Int?
     let isSlotInstance: Bool?
-    let exceptionDescription: JSONNull?
+    let exceptionDescription: String?
     let isRecurringInstance: Bool?
     let identifier: String?
-    let sessions: JSONNull?
+    let sessions: String?
     let idsHistory: [JSONAny]?
     let startDatetimeUTC, timezone: String?
     let createdByType: String?
     let isAllDay: Int?
-    let parentID: JSONNull?
+    let parentID: String?
     let createdAt: String?
-    let recurrence, period: JSONNull?
+    let recurrence, period: String?
     let state: String?
     let type: TypeClass?
     let originalEndDatetimeUTC, endDatetimeUTC, createdByID: String?
-    let deletedAt, parentType: JSONNull?
+    let deletedAt, parentType: String?
     let updatedByType: String?
     let duration, isRecurring: Int?
     let updatedByID, title, originalStartDatetimeUTC: String?
@@ -156,6 +157,89 @@ struct Exception: Codable {
 }
 
 
+
+
+
+
+// MARK: - Welcome
+struct OpenHourSubmissionResult: Codable {
+    let startDatetimeUTC, lastChangedAt, id: String?
+    let bufferBeforeSlot: Int?
+    let isRecurringInstance: Bool?
+    let updatedByID, createdByType, recurrence, inTimezone: String?
+    let title: String?
+    let isRecurring: Int?
+    let deletedAt: JSONNull?
+    let updatedByType: String?
+    let period, sessions: JSONNull?
+    let eventTypeID: Int?
+    let identifier: String?
+    let deadlineTimeOnDay: Int?
+    let isSessionInstance: Bool?
+    let idsHistory: [JSONAny]?
+    let endDatetimeUTC, state: String?
+    let isAllDay: Int?
+    let purposes: [Purpose]?
+    let endDatetime: String?
+    let type: TypeClass?
+    let createdBy: CreatedBy?
+    let maximumMeetingsPerDay, duration: Int?
+    let welcomeDescription: String?
+    let calendars: [JSONAny]?
+    let slotDuration: String?
+    let locations: [Location]?
+    let parentID: JSONNull?
+    let timezone, createdByID: String?
+    let parentType: JSONNull?
+    let deadlineDaysBefore: Int?
+    let startDatetime, createdAt: String?
+    let isSlotInstance: Bool?
+    let openHoursAppointmentApprovalProcess: String?
+
+    enum CodingKeys: String, CodingKey {
+        case startDatetimeUTC = "start_datetime_utc"
+        case lastChangedAt = "last_changed_at"
+        case id
+        case bufferBeforeSlot = "buffer_before_slot"
+        case isRecurringInstance = "is_recurring_instance"
+        case updatedByID = "updated_by_id"
+        case createdByType = "created_by_type"
+        case recurrence
+        case inTimezone = "in_timezone"
+        case title
+        case isRecurring = "is_recurring"
+        case deletedAt = "deleted_at"
+        case updatedByType = "updated_by_type"
+        case period, sessions
+        case eventTypeID = "event_type_id"
+        case identifier
+        case deadlineTimeOnDay = "deadline_time_on_day"
+        case isSessionInstance = "is_session_instance"
+        case idsHistory = "ids_history"
+        case endDatetimeUTC = "end_datetime_utc"
+        case state
+        case isAllDay = "is_all_day"
+        case purposes
+        case endDatetime = "end_datetime"
+        case type
+        case createdBy = "created_by"
+        case maximumMeetingsPerDay = "maximum_meetings_per_day"
+        case duration
+        case welcomeDescription = "description"
+        case calendars
+        case slotDuration = "slot_duration"
+        case locations
+        case parentID = "parent_id"
+        case timezone
+        case createdByID = "created_by_id"
+        case parentType = "parent_type"
+        case deadlineDaysBefore = "deadline_days_before"
+        case startDatetime = "start_datetime"
+        case createdAt = "created_at"
+        case isSlotInstance = "is_slot_instance"
+        case openHoursAppointmentApprovalProcess = "open_hours_appointment_approval_process"
+    }
+}
 
 
 

@@ -8,18 +8,35 @@
 
 import UIKit
 
+
 class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate {
+    
+    
+    @IBOutlet weak var viewHeader: UIView!
+    
+    
+    @IBOutlet weak var lblAppointmentType: UILabel!
+    
+    @IBOutlet weak var txtApointmentType: LeftPaddedTextField!
+    
+    
+    
+    var objStudentDetailModalI : StudentDetailModal?
+    var objStudentDetailModalSelected : StudentDetailModal?
+
+    var objOpenHourModalSubmit : openHourModalSubmit!
+    
     @IBOutlet weak var lblStepHeader: UILabel!
     @IBOutlet weak var btnNext: UIButton!
    
     @IBOutlet weak var viewScroll: UIScrollView!
     
-    @IBOutlet weak var viewSeperator: UIView!
     @IBOutlet weak var viewOuter: UIView!
     
     @IBOutlet weak var viewInner: UIView!
     
     var objERSideOpenHourDetail: ERSideOpenHourDetail?
+    
     var dateSelected : Date!
     var activityIndicator: ActivityIndicatorView?
 
@@ -29,6 +46,9 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     var keyBooradAlreadyShown = false
     var keyBoardHieght : CGFloat = 0.0;
 
+    
+    var totalStudentParticipant = 0;
+    
 
     //ReuestAppro
     @IBOutlet weak var lblReuestAppro: UILabel!
@@ -55,6 +75,11 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     
    
     
+    @IBOutlet weak var nslayoutConstarintViewPrivateContainer: NSLayoutConstraint!
+    
+    var calculatedHeightDeadineView : CGFloat!;
+    var calculatedHeightPrivateView : CGFloat!;
+
     @IBOutlet weak var lblDeadlineInfo: UILabel!
     
     @IBOutlet weak var txtDeadline: LeftPaddedTextField!
@@ -68,7 +93,9 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     @IBOutlet weak var btnPrivateOpenHour: UIButton!
     
     
-   
+    @IBOutlet weak var viewPrivateContainer: UIView!
+    
+    @IBOutlet weak var lblPrivateInfo: UILabel!
     
     @IBOutlet weak var lblPrivateOpenHour: UILabel!
     
@@ -80,10 +107,9 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     
    
     
-    @IBOutlet weak var btnSave: UIButton!
-    
-    @IBAction func btnSaveTapped(_ sender: Any) {
-    }
+    @IBOutlet weak var viewDeadlineContainer: UIView!
+    @IBOutlet weak var nslayoutConstraintDeadlineHeight: NSLayoutConstraint!
+   
     
     var objProviderModalArr : [ProviderModal]!
     
@@ -100,21 +126,107 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
         callViewModal()
         
+
+        
     }
     @objc override func buttonClicked(sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: false)
     }
     
+    
+    func newUserpurpose(isBackGround : Bool){
+           var  activityIndicator = ActivityIndicatorView()
+
+           var items = [String]();
+        var flag = false
+           for userPurposeiTem in self.objOpenHourModalSubmit.userPurposeId{
+               if userPurposeiTem.id == -1000 {
+                flag = true
+                   items.append(userPurposeiTem.title)
+               }
+           }
+        
+        if flag {
+            
+        }
+        else{
+            formingmodal()
+            hitFinalApi()
+            return
+        }
+           
+        let param : Dictionary<String, Any> = [
+               "_method" : "post",
+               "items" : items,
+               "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
+           ]
+           
+           if !isBackGround{
+               activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
+           }
+           ERSideOpenEditSecondVM().erSideOPenHourPostPurposeApi(prameter: param, { (data) in
+            
+             if !isBackGround{
+                 self.activityIndicator?.hide()
+            }
+            
+            do {
+                var objNewUserPurposeModalArr = try
+                    JSONDecoder().decode(NewUserPurposeModalArr.self, from: data)
+                self.redefindUserPurposeModal(objNewUserPurposeModalArr: objNewUserPurposeModalArr)
+                
+                self.formingmodal()
+                self.hitFinalApi()
+                
+                
+            } catch   {
+                print(error)
+
+            }
+               
+           }) { (error, errorCode) in
+            if !isBackGround{
+                            self.activityIndicator?.hide()
+                       }
+           }
+           
+       }
+    
+    func redefindUserPurposeModal(objNewUserPurposeModalArr:NewUserPurposeModalArr )
+    {
+        var userpurpose = [SearchTextFieldItem]() ;
+        
+        for var purpose in self.objOpenHourModalSubmit.userPurposeId{
+            
+            if purpose.id == -1000{
+            
+                var seletcedPurpose = objNewUserPurposeModalArr.filter({
+                    $0.displayName == purpose.title
+                })[0];
+                
+                purpose.id = seletcedPurpose.id
+            }
+            userpurpose.append(purpose)
+        }
+        
+        self.objOpenHourModalSubmit.userPurposeId = userpurpose
+        
+    }
+    
+    
+    
+    
+    
+    
     func callViewModal()  {
         viewInner.isHidden = true
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
         ERSideOpenEditSecondVM().fetchProvider({ (data) in
-            self.activityIndicator?.hide()
             do {
-                self.activityIndicator?.hide()
                 self.objProviderModalArr = try
                     JSONDecoder().decode(ProviderModalArr.self, from: data)
-                self.customization();
+                self.callViewModalStudentList()
+               
             } catch   {
                 print(error)
                 self.activityIndicator?.hide()
@@ -126,15 +238,42 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     }
     
     
+    func callViewModalStudentList()  {
+        
+        let arrayInclude = ["invitation_id","benchmark","tags"]
+        let param = [ "_method" : "post",
+                      "offset" : 0,
+                      "limit" : 20,
+                      "includes" : arrayInclude,
+                      "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
+            ] as [String : AnyObject]
+        
+        ERSideStudentListViewModal().fetchStudentList(prameter:param  , { (data) in
+            self.activityIndicator?.hide()
+            do {
+                self.activityIndicator?.hide()
+                self.objStudentDetailModalI = try
+                    JSONDecoder().decode(StudentDetailModal.self, from: data)
+                
+                self.totalStudentParticipant = self.objStudentDetailModalI?.total ?? 0
+                
+                self.customization();
+            } catch   {
+                print(error)
+                self.activityIndicator?.hide()
+                
+            }
+        }) { (error, errorCode) in
+            self.activityIndicator?.hide()
+        }
+    }
+    
+    
     func customization()  {
-        
-        
-        self.addInputAccessoryForTextFields(textFields: [txtReuestAppro,txtLocationType], dismissable: true, previousNextable: true)
+        self.addInputAccessoryForTextFields(textFields: [txtApointmentType , txtReuestAppro,txtLocationType], dismissable: true, previousNextable: true)
 
         self.addInputAccessoryForTextFields(textFields: [txtDeadline,txtDeadlineTime], dismissable: true, previousNextable: true)
 
-        
-        
         registerForKeyboardNotifications()
 
         nslayoutConstarintDefaultHeight.constant = 0
@@ -142,8 +281,10 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
         self.viewInner.isHidden = false
         self.viewInner.backgroundColor =  .white
         self.viewOuter.backgroundColor =  ILColor.color(index: 22)
-        viewSeperator.backgroundColor = ILColor.color(index: 22)
+        self.viewHeader.backgroundColor =  .white
+        
         customizeHeader()
+        customizeAppointmentTypeView()
         customRequestApproval()
         customLocation()
         customPrivate()
@@ -180,6 +321,12 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
             arrPicker = ["1 day before Appointment","2 day before Appointment","3 day before Appointment","4 day before Appointment"]
             PickerSelectedTag = 193;
         }
+        
+        else  if textField.tag == 194{
+                   arrPicker = ["1 on 1 Appointment","Group Appointment"]
+                   PickerSelectedTag = 194;
+               }
+        
         pickerView.reloadAllComponents()
         activeField = textField
     }
@@ -233,7 +380,7 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-
+        
         if PickerSelectedTag == 191{
             arrPicker = ["Automatic Approval","Manual Approval"]
             txtReuestAppro.text = arrPicker[row]
@@ -247,7 +394,12 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
             arrPicker = ["1 day before Appointment","2 day before Appointment","3 day before Appointment","4 day before Appointment"]
             txtDeadline.text = arrPicker[row]
         }
-    }
+            
+        else if PickerSelectedTag == 194{
+            arrPicker = ["1 on 1 Appointment","Group Appointment"]
+            txtApointmentType.text = arrPicker[row]
+        }
+   }
     override func removeKeyCommand(_ keyCommand: UIKeyCommand) {
           
     }
@@ -328,12 +480,8 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
         }
         else
         {
-            
         }
-        
     }
-    
-    
 }
 
 
@@ -343,6 +491,8 @@ extension ERSideOpenCreateEditSecondVC
 {
     
     func customizeHeader(){
+        
+        viewHeader.isHidden = false;
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             
         {
@@ -359,42 +509,64 @@ extension ERSideOpenCreateEditSecondVC
             strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
             lblStepHeader.attributedText = strHeader
             UIButton.buttonUIHandling(button: btnNext, text: "Save", backgroundColor: .clear, textColor: ILColor.color(index: 23),  fontType: fontHeavy)
-          
-            UIButton.buttonUIHandling(button: btnSave, text: "Next", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3,  fontType: fontHeavy)
-  
-            
         }
-        
     }
-    
     
     @IBAction func btnNextTapped(_ sender: Any) {
         if validatingForm(){
            
         }
-        
-        
     }
-    
-    
     func validatingForm()-> Bool{
-        
         return true
     }
     
 }
 
 
+// MARK: Appointment Type.
+
+extension ERSideOpenCreateEditSecondVC
+{
+    
+    func customizeAppointmentTypeView(){
+        
+        pickerViewSetUp(txtInput: txtApointmentType, tag: 194)
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+        UILabel.labelUIHandling(label: lblAppointmentType, text: "Appointment Type", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy)
+        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
+        txtApointmentType.backgroundColor = ILColor.color(index: 48)
+        self.txtApointmentType.font = fontMedium
+        self.txtApointmentType.layer.borderColor = ILColor.color(index: 27).cgColor
+        self.txtApointmentType.layer.borderWidth = 1;
+        self.txtApointmentType.layer.cornerRadius = 3;
+        self.txtApointmentType.text = "1 on 1 Appointment"
+        self.txtApointmentType.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
+        txtApointmentType.rightViewMode = .always;
+        
+        if objERSideOpenHourDetail != nil{
+            prefilledValueRequestApproval()
+        }
+    }
+    
+   
+    
+}
+
+
+
+
 // MARK: Request Approval.
 
 extension ERSideOpenCreateEditSecondVC{
     
-    
     func customRequestApproval()  {
         pickerViewSetUp(txtInput: txtReuestAppro, tag: 191)
         
-        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
-        UILabel.labelUIHandling(label: lblReuestAppro, text: "Request Approval", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy1)
+       
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+        
+        UILabel.labelUIHandling(label: lblReuestAppro, text: "Request Approval", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy)
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         
         txtReuestAppro.backgroundColor = ILColor.color(index: 48)
@@ -409,6 +581,7 @@ extension ERSideOpenCreateEditSecondVC{
         if objERSideOpenHourDetail != nil{
             prefilledValueRequestApproval()
         }
+        
         
     }
     
@@ -525,7 +698,7 @@ extension ERSideOpenCreateEditSecondVC{
         self.txtDefaultLocation.layer.borderWidth = 1;
         self.txtDefaultLocation.layer.cornerRadius = 3;
         
-        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
+        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
         
         
         if row == 0  {
@@ -556,12 +729,18 @@ extension ERSideOpenCreateEditSecondVC{
     @IBAction func btnEnabledTapped(_ sender: Any) {
         isDeadlineEnabled = !isDeadlineEnabled
         if isDeadlineEnabled{
-            btnDeadlineEnabled.setImage(UIImage.init(named: "Radio_filled"), for: .normal);
+            btnDeadlineEnabled.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
             enableDeadline()
+            
+           
+
         }
         else{
-            btnDeadlineEnabled.setImage(UIImage.init(named: "Radio"), for: .normal);
+            btnDeadlineEnabled.setImage(UIImage.init(named: "check_box"), for: .normal);
             disabledDeadline()
+            
+
+            
         }
     }
     
@@ -596,26 +775,32 @@ extension ERSideOpenCreateEditSecondVC{
     
     func disabledDeadline()  {
         
-        txtDeadline.isUserInteractionEnabled = false
-        txtDeadline.isEnabled = false
-        self.txtDeadline.alpha = 0.6
+//        txtDeadline.isUserInteractionEnabled = false
+//        txtDeadline.isEnabled = false
+//        self.txtDeadline.alpha = 0.6
+//
+//        txtDeadlineTime.isUserInteractionEnabled = false
+//        txtDeadlineTime.isEnabled = false
+//        self.txtDeadlineTime.alpha = 0.6
         
-        txtDeadlineTime.isUserInteractionEnabled = false
-        txtDeadlineTime.isEnabled = false
-        self.txtDeadlineTime.alpha = 0.6
+        nslayoutConstraintDeadlineHeight.constant = 0
+               self.viewDeadlineContainer.isHidden = true
         
     }
     
     func enableDeadline(){
         
+        nslayoutConstraintDeadlineHeight.constant = calculatedHeightDeadineView
+        self.viewDeadlineContainer.isHidden = false
         
-        txtDeadline.isUserInteractionEnabled = true
-        txtDeadline.isEnabled = true
-        self.txtDeadline.alpha = 1
         
-        txtDeadlineTime.isUserInteractionEnabled = true
-        txtDeadlineTime.isEnabled = true
-        self.txtDeadlineTime.alpha = 1
+//        txtDeadline.isUserInteractionEnabled = true
+//        txtDeadline.isEnabled = true
+//        self.txtDeadline.alpha = 1
+//
+//        txtDeadlineTime.isUserInteractionEnabled = true
+//        txtDeadlineTime.isEnabled = true
+//        self.txtDeadlineTime.alpha = 1
         
         
     }
@@ -623,51 +808,78 @@ extension ERSideOpenCreateEditSecondVC{
     
     
     func customDeadline()  {
-        pickerViewSetUp(txtInput: txtDeadline, tag: 193)
+        
+                
+        if objERSideOpenHourDetail != nil{
+            self.nslayoutConstraintDeadlineHeight.priority = UILayoutPriority(rawValue: 1);
+            nslayoutConstraintDeadlineHeight.priority = UILayoutPriority(rawValue: 1000)
+            nslayoutConstraintDeadlineHeight.constant = 0
+           
+            self
+                .viewDeadlineContainer.isHidden = true
+            
+        }
+            
+        else{
+            
+            self.nslayoutConstraintDeadlineHeight.priority = UILayoutPriority(rawValue: 1);
+            
+            pickerViewSetUp(txtInput: txtDeadline, tag: 193)
+            
+            
+            UIButton.buttonUIHandling(button: btnDeadlineEnabled, text: "", backgroundColor: .clear, textColor: .clear, buttonImage: UIImage.init(named: "check_box"))
+            
+            let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+            UILabel.labelUIHandling(label: lblDeadlineEnabled, text: "Add Deadline", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy1)
+            
+            
+            let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+            
+            UILabel.labelUIHandling(label: lblDeadlineInfo, text: "Deadline for candidates to book appointment slot", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
+            
+            UILabel.labelUIHandling(label: lblBefore, text: "Before", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
+            
+            UILabel.labelUIHandling(label: lblDeadlineFooter, text: "Eg: For appointment at 11:00 AM, 18th Dec 2020, candidates will have to book this particular slot by 05:00 PM, 17th Dec 2020", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
+            
+            
+            let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
+            
+            txtDeadline.backgroundColor = ILColor.color(index: 48)
+            self.txtDeadline.font = fontMedium
+            self.txtDeadline.layer.borderColor = ILColor.color(index: 27).cgColor
+            self.txtDeadline.layer.borderWidth = 1;
+            self.txtDeadline.layer.cornerRadius = 3;
+            self.txtDeadline.text = "1 day before Appointment"
+            self.txtDeadline.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
+            txtDeadline.rightViewMode = .always;
+            
+            
+            txtDeadlineTime.backgroundColor = ILColor.color(index: 48)
+            self.txtDeadlineTime.font = fontMedium
+            self.txtDeadlineTime.layer.cornerRadius = 3;
+            self.txtDeadlineTime.layer.borderColor = ILColor.color(index: 27).cgColor
+            self.txtDeadlineTime.layer.borderWidth = 1;
+            
+            let imageView3 = UIImageView.init(image: UIImage.init(named: "Calendar-1"))
+            imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
+            self.txtDeadlineTime.leftView = imageView3
+            txtDeadlineTime.leftViewMode = .always;
+            datePickerTiming(txtInput: txtDeadlineTime)
+            
+            
+            
+            self.viewDeadlineContainer.layoutIfNeeded();
+            
+            nslayoutConstraintDeadlineHeight.priority = UILayoutPriority(rawValue: 1000)
+            
+            calculatedHeightDeadineView =   self.viewDeadlineContainer.frame.size.height
+            
+            self.disabledDeadline()
+            
+        }
+//    var height =   self.viewDeadlineContainer.calculatePreferredHeight()
         
         
-        UIButton.buttonUIHandling(button: btnDeadlineEnabled, text: "", backgroundColor: .clear, textColor: .clear, buttonImage: UIImage.init(named: "Radio"))
-        
-        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
-        UILabel.labelUIHandling(label: lblDeadlineEnabled, text: "Add Deadline", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy1)
-        
-        
-        let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-        
-        UILabel.labelUIHandling(label: lblDeadlineInfo, text: "Deadline for candidates to book appointment slot", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
-        
-        UILabel.labelUIHandling(label: lblBefore, text: "Before", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
-        
-        UILabel.labelUIHandling(label: lblDeadlineFooter, text: "Eg: For appointment at 11:00 AM, 18th Dec 2020, candidates will have to book this particular slot by 05:00 PM, 17th Dec 2020", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
-        
-        
-        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
-        
-        txtDeadline.backgroundColor = ILColor.color(index: 48)
-        self.txtDeadline.font = fontMedium
-        self.txtDeadline.layer.borderColor = ILColor.color(index: 27).cgColor
-        self.txtDeadline.layer.borderWidth = 1;
-        self.txtDeadline.layer.cornerRadius = 3;
-        self.txtDeadline.text = "1 day before Appointment"
-        self.txtDeadline.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
-        txtDeadline.rightViewMode = .always;
-        
-        
-        
-        
-        txtDeadlineTime.backgroundColor = ILColor.color(index: 48)
-        self.txtDeadlineTime.font = fontMedium
-        self.txtDeadlineTime.layer.cornerRadius = 3;
-        self.txtDeadlineTime.layer.borderColor = ILColor.color(index: 27).cgColor
-        self.txtDeadlineTime.layer.borderWidth = 1;
-
-        let imageView3 = UIImageView.init(image: UIImage.init(named: "Calendar-1"))
-        imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
-        self.txtDeadlineTime.leftView = imageView3
-        txtDeadlineTime.leftViewMode = .always;
-        datePickerTiming(txtInput: txtDeadlineTime)
-        
-        self.disabledDeadline()
         
     }
 }
@@ -677,24 +889,27 @@ extension ERSideOpenCreateEditSecondVC{
     
     @IBAction func btnPrivateOpenHourTapped(_ sender: Any) {
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-        
         isPrivateEnabled = !isPrivateEnabled
+      
         
         if isPrivateEnabled{
-              btnDeadlineEnabled.setImage(UIImage.init(named: "Radio_filled"), for: .normal);
+              btnPrivateOpenHour.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+//            btnAddStudent.isHidden = false
+//            UILabel.labelUIHandling(label: lblCountStudent, text: "0", textColor: ILColor.color(index: 23), isBold: false, fontType: fontBook)
             btnAddStudent.isHidden = false
-            UILabel.labelUIHandling(label: lblCountStudent, text: "0", textColor: ILColor.color(index: 23), isBold: false, fontType: fontBook)
+            viewPrivateContainer.isHidden = false
+                   nslayoutConstarintViewPrivateContainer.constant = calculatedHeightPrivateView
             
         }
         else
         {
             btnAddStudent.isHidden = true
-            btnDeadlineEnabled.setImage(UIImage.init(named: "Radio"), for: .normal);
-            UILabel.labelUIHandling(label: lblCountStudent, text: "2", textColor: ILColor.color(index: 23), isBold: false, fontType: fontBook)
-            
+            viewPrivateContainer.isHidden = true
+            nslayoutConstarintViewPrivateContainer.constant = 0
+
+            btnPrivateOpenHour.setImage(UIImage.init(named: "check_box"), for: .normal);
+//            UILabel.labelUIHandling(label: lblCountStudent, text: "\(self.totalStudentParticipant)", textColor: ILColor.color(index: 23), isBold: false, fontType: fontBook)
         }
-    
-    
     }
     
     
@@ -702,12 +917,17 @@ extension ERSideOpenCreateEditSecondVC{
     @IBAction func BtnAddAStudentTapped(_ sender: Any) {
         
         let objERSideStudentListViewController = ERSideStudentListViewController.init(nibName: "ERSideStudentListViewController", bundle: nil)
+        objERSideStudentListViewController.objStudentDetailModal = self.objStudentDetailModalI
+        
+       
+        
+        
+        objERSideStudentListViewController.delegate = self
+        
+        
         self.navigationController?.pushViewController(objERSideStudentListViewController, animated: false)
         
-        
     }
-    
-    
     
     func customPrivate()  {
         
@@ -717,35 +937,323 @@ extension ERSideOpenCreateEditSecondVC{
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         
         
-        UIButton.buttonUIHandling(button: btnPrivateOpenHour, text: "", backgroundColor: .clear, textColor: .clear, buttonImage: UIImage.init(named: "Radio"))
+        UIButton.buttonUIHandling(button: btnPrivateOpenHour, text: "", backgroundColor: .clear, textColor: .clear, buttonImage: UIImage.init(named: "check_box"))
         UILabel.labelUIHandling(label: lblPrivateOpenHour, text: "Private Open Hours", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy)
-        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14),let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
+        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             
         {
             let strHeader = NSMutableAttributedString.init()
-            let nextLine1 = NSAttributedString.init(string: "\n")
-            
             let strTiTle = NSAttributedString.init(string: "Open hours will be visible only to the selected candidates"
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:40),NSAttributedString.Key.font : fontBook]);
-            let strType = NSAttributedString.init(string: "Total candidates visible for this open hour"
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 40),NSAttributedString.Key.font : fontHeavy]);
+//            let strType = NSAttributedString.init(string: ""
+//                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 40),NSAttributedString.Key.font : fontHeavy]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
             para.lineSpacing = 4
             strHeader.append(strTiTle)
-            strHeader.append(nextLine1)
-            strHeader.append(nextLine1)
-
-            strHeader.append(strType)
             strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
             lblPrivateOpenHourHeading.attributedText = strHeader
             UIButton.buttonUIHandling(button: btnNext, text: "Save", backgroundColor: .clear, textColor: ILColor.color(index: 23),  fontType: fontHeavy)
         }
-        UILabel.labelUIHandling(label: lblCountStudent, text: "2", textColor: ILColor.color(index: 23), isBold: false, fontType: fontBook)
-        
+        UILabel.labelUIHandling(label: lblCountStudent, text: "0", textColor: ILColor.color(index: 23), isBold: false, fontType: fontBook)
         UIButton.buttonUIHandling(button: btnAddStudent, text: "Edit", backgroundColor: .clear, textColor: ILColor.color(index: 23),  fontType: fontBook)
-        btnAddStudent.isHidden = true
+//        btnAddStudent.isHidden = true
+        let fontMedium1 = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE10)
+        UILabel.labelUIHandling(label: lblPrivateInfo, text: "Total candidates visible for this open hour", textColor: ILColor.color(index: 40), isBold: false, fontType: fontMedium1)
+        nslayoutConstarintViewPrivateContainer.priority = UILayoutPriority(rawValue: 1000)
+        calculatedHeightPrivateView = viewPrivateContainer.frame.height
+        viewPrivateContainer.isHidden = true
+        nslayoutConstarintViewPrivateContainer.constant = 0
+//        Total candidates visible for this open hour
         
     }
     
+}
+
+
+
+extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate {
+    
+    
+    
+    
+   
+    
+    func selectedStudentPrivateHour(objStudentDetailModalSelected: StudentDetailModal) {
+        
+        self.objStudentDetailModalSelected = objStudentDetailModalSelected
+        self.lblCountStudent.text = "\(objStudentDetailModalSelected.items?.count ?? 0)"
+       
+    }
+    
+    func prepareParticipatModal(){
+        for items in self.objStudentDetailModalSelected!.items!{
+            var participantSelected = ParticipantOH();
+            participantSelected.entity_id = items.id;
+            participantSelected.entity_type = "student_user";
+            participantSelected.is_invited = 0;
+            self.objOpenHourModalSubmit.participant.append(participantSelected)
+        }
+        
+    }
+    
+    
+    func formingmodal()
+    {
+        
+        let arrApprovalProcess = ["Automatic Approval","Manual Approval"]
+        let arrApprovalProcessI = ["auto","manual"]
+
+        let indexApppProcess = arrApprovalProcess.firstIndex(where: {$0 == txtReuestAppro.text})
+        
+        self.objOpenHourModalSubmit.open_hours_appointment_approval_process = arrApprovalProcessI[indexApppProcess ?? 0]
+        
+        
+        let arrLocation = ["Physical Location","Meeting URL","Zoom URL"]
+        let arrLocationI = ["physical_location","webinar_link","zoom_link"]
+
+        let indexLocation = arrLocation.firstIndex(where: {$0 == txtLocationType.text})
+        
+        self.objOpenHourModalSubmit.locationType = arrLocationI[indexLocation ?? 0]
+        self.objOpenHourModalSubmit.locationValue = self.txtDefaultLocation.text
+        
+        if isDeadlineEnabled{
+            let deadline_days_before = ["1 day before Appointment","2 day before Appointment","3 day before Appointment","4 day before Appointment"]
+            let deadline_days_beforeI = [1,2,3,4]
+            let indexLocation = arrLocation.firstIndex(where: {$0 == txtDeadline.text})
+            self.objOpenHourModalSubmit.deadline_days_before = deadline_days_beforeI[indexLocation ?? 0]
+            
+            
+            
+            
+            var timeDeadlineBeforeFormat = GeneralUtility.currentDateDetailType4(emiDate: self.objOpenHourModalSubmit.startTime!, fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "yyyy-MM-dd")
+            
+            let timeDeadlineFormat = DateFormatter()
+            timeDeadlineFormat.dateFormat = "yyyy-MM-dd"
+            let dateStart = timeDeadlineFormat.date(from: timeDeadlineBeforeFormat)
+            var dateCompStartChange = DateComponents()
+            
+            dateCompStartChange.day = (-self.objOpenHourModalSubmit.deadline_days_before!) ;
+            let dateEnd = Calendar.current.date(byAdding: dateCompStartChange, to: dateStart!)!
+            
+            let timeDeadlineFormatEnd = timeDeadlineFormat.string(from: dateEnd)
+            
+            
+            let EndTimeArr =  changeto24HourFormat(txtTime: txtDeadlineTime.text ?? "1:00 PM")
+            
+            let sec =     GeneralUtility.differenceBetweenTwoDateInSec(dateFirst: self.objOpenHourModalSubmit.startTime!, dateSecond:  timeDeadlineFormatEnd + " " +  EndTimeArr + ":00" )
+            
+            
+            self.objOpenHourModalSubmit.deadline_time_on_day = sec
+            
+        }
+        if isPrivateEnabled{
+            prepareParticipatModal();
+        }
+        
+    }
+    
+    
+    
+    func changeto24HourFormat(txtTime : String) -> String{
+        let dateAsString = txtTime
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+
+        let date = dateFormatter.date(from: dateAsString)
+        dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter.string(from: date!)
+    }
+    
+    
+    func validation() -> Bool {
+        
+        if  txtLocationType.text?.isEmpty ?? true{
+            
+            
+            CommonFunctions().showError(title: "Error", message: StringConstants.LOCATIONERROR)
+
+            
+             return false
+        }
+        
+        if txtDefaultLocation.text?.isEmpty ?? true{
+            
+             CommonFunctions().showError(title: "Error", message: StringConstants.LOCATIONERROR)
+            return false
+        }
+        
+        if isDeadlineEnabled{
+            
+            if txtDeadlineTime.text?.isEmpty ?? true{
+                
+                 CommonFunctions().showError(title: "Error", message: StringConstants.DEADLINEERROR)
+                
+                return false
+            }
+            
+        }
+        
+        if isPrivateEnabled {
+            
+            if self.objStudentDetailModalSelected?.items?.count ?? 0 <= 0{
+                
+                CommonFunctions().showError(title: "Error", message: StringConstants.STUDENTERROR)
+                
+                return false
+            }
+            
+        }
+        return true
+        
+        
+    }
+    
+    
+    
+    
+    
+    func dataFeeding() -> Dictionary<String,AnyObject> {
+        
+        
+        var isPRivate = 1
+        
+        if isPrivateEnabled{
+            isPRivate = 1
+        }
+        else{
+            isPRivate = 0
+            
+        }
+        
+        var deadline_days_before = 0
+        
+        var locationType = ["label" : txtLocationType.text,
+                            "value":self.objOpenHourModalSubmit.locationType,
+                            "availability": true
+            
+            ] as [String : Any]
+        
+        var locationValue = ["provider":self.objOpenHourModalSubmit.locationType,
+                             "data":["value":self.objOpenHourModalSubmit.locationValue]
+            ] as [String : Any]
+        
+       var  user_purpose_ids = [Int]()
+        
+        var selectedUserPurposeArr = self.objOpenHourModalSubmit.userPurposeId.filter({$0.isSelected == true})
+        
+        for purpose in selectedUserPurposeArr{
+            user_purpose_ids.append(purpose.id ?? 0)
+        }
+        
+        
+        
+        
+        var params = ["_method" : "post",
+                      "is_private": isPRivate,
+                      "event_type": "open_hours",
+                      "title" :"Open Hours",
+                      "open_hours_appointment_approval_process":self.objOpenHourModalSubmit.open_hours_appointment_approval_process!,
+                      "state" : "confirmed",
+                      "timezone":self.objOpenHourModalSubmit.timeZone,
+                      "location_type" : locationType,
+                      "locations" : [locationValue],
+                      "user_purpose_ids":user_purpose_ids,
+                      "description":"default",
+
+                      "start_datetime":self.objOpenHourModalSubmit.startTime!,
+                      "end_datetime":self.objOpenHourModalSubmit.endTime!,
+                      "slot_duration": "\(self.objOpenHourModalSubmit.slotDuration!)",
+                      "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
+            
+            ] as [String : Any]
+        
+        //                      "participants": participants,
+        
+        if isPrivateEnabled{
+            
+            var participants = Array<Dictionary<String,Any>>()
+            for participant in self.objOpenHourModalSubmit.participant{
+                
+                let dicParticipant = [
+                    "entity_id" : participant.entity_id ?? 0,
+                    "entity_type": participant.entity_type ?? "",
+                    "is_invited":participant.is_invited ?? 0
+                    ] as [String : Any]
+                
+                participants.append(dicParticipant)
+            }
+            let dicParticipantI = [
+                "role" : "admin",
+                "entity_type": "community_user",
+                "rsvp":1,
+                "is_invited": 1
+                ] as [String : Any]
+            participants.append(dicParticipantI)
+        }
+        
+        if isDeadlineEnabled{
+            
+            params["deadline_days_before"]   =  self.objOpenHourModalSubmit.deadline_days_before;
+            params["deadline_time_on_day"]  = self.objOpenHourModalSubmit.deadline_time_on_day;
+        }
+        
+        if self.objOpenHourModalSubmit.maximum_meetings_per_day != -1
+        {
+            params["maximum_meetings_per_day"] = self.objOpenHourModalSubmit.maximum_meetings_per_day
+        }
+        
+        
+        if self.objOpenHourModalSubmit.buffer_before_slot != -1
+        {
+            params["buffer_before_slot"] = self.objOpenHourModalSubmit.buffer_before_slot
+            
+        }
+        if self.objOpenHourModalSubmit.buffer_after_slot != -1
+        {
+            params["buffer_after_slot"] = self.objOpenHourModalSubmit.buffer_after_slot
+            
+        }
+        
+        if self.objOpenHourModalSubmit.recurrence != "-1"{
+            params["recurrence"] = self.objOpenHourModalSubmit.recurrence
+        }
+        
+    return params as Dictionary<String,AnyObject>
+    
+    
+    }
+    
+    func hitFinalApi()  {
+              
+              activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
+              
+              ERSideStudentListViewModal().submitNewOpenHour(prameter: dataFeeding(), { (data) in
+                do {
+                    
+                    GeneralUtility.alertViewPopOutViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"])
+                    
+                    
+                    
+                } catch   {
+                      print(error)
+                      self.activityIndicator?.hide()
+                      
+                  }
+                  
+              }) { (error, errorCode) in
+                  self.activityIndicator?.hide()
+              }
+        
+    }
+    
+    
+    
+    func createNewOpenHourModal()  {
+        if !validation(){
+                   return
+               } 
+         newUserpurpose(isBackGround: false);
+    }
+        
 }

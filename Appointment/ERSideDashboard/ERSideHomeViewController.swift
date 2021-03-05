@@ -38,15 +38,28 @@ class ERSideHomeViewController: SuperViewController {
     
     @IBAction func btnSetOpenHourTaped(_ sender: Any) {
         
-        var objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
-        self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
+        UIView.animate(withDuration: 0.25, animations: {
+                   self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+               })
         
+        let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
+        let navigationController = UINavigationController.init(rootViewController: objERSideOpenHourListVC)
+        self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
     }
     
     @IBOutlet weak var btnNextStep: UIButton!
     
     
     @IBAction func btnNextStepTapped(_ sender: Any) {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+        })
+        
+        let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
+        objERSideOpenHourListVC.objviewTypeOpenHour = .duplicateSetHour
+        objERSideOpenHourListVC.dateSelected = self.dateSelected
+        self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
+        
         
     }
     
@@ -63,13 +76,9 @@ class ERSideHomeViewController: SuperViewController {
     @IBAction func btnFloatingButtonTapped(_ sender: UIButton) {
         
         if viewFloatingOuter.isHidden {
-            
-            
             UIView.animate(withDuration: 0.25, animations: {
-                self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 30)
+                self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 15)
             })
-            
-            
             viewContainer.isHidden = false
             viewFloatingOuter.isHidden = false
             UIView.animate(withDuration:0.9,
@@ -87,7 +96,6 @@ class ERSideHomeViewController: SuperViewController {
                 //Code to run after animating
                 (value: Bool) in
             })
-            
         }
         else{
             UIView.animate(withDuration: 0.25, animations: {
@@ -189,26 +197,17 @@ class ERSideHomeViewController: SuperViewController {
         
     }
     
-    
     var dataAppoinmentModal: ERSideAppointmentModal?
-    
     var erSideHomeVM = ERHomeViewModal();
-    
     @IBOutlet weak var viewCollection: ERSideHeaderCollectionVC!
-    
     @IBOutlet weak var btnMonthDecrease: UIButton!
-    
     @IBOutlet weak var lblMonth: UILabel!
-    
     var dateSelected : Date!
     
     
-    
-    
-    
-    
     override func viewDidLoad() {
-        
+        self.hidesBottomBarWhenPushed = true;
+
         calenderView()
         self.callingViewModal()
         viewOuter.backgroundColor = ILColor.color(index: 44)
@@ -384,14 +383,21 @@ extension ERSideHomeViewController:UIGestureRecognizerDelegate{
         self.viewFloatingOuter.isHidden = true
         
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        UILabel.labelUIHandling(label: lblSetOpen, text: "Set Open Hours", textColor: .white, isBold: false, fontType: fontHeavy)
-        UILabel.labelUIHandling(label: lblNextStep, text: "Next Steps", textColor: .white, isBold: false, fontType: fontHeavy)
+        UILabel.labelUIHandling(label: lblSetOpen, text: " Set Advising Appoinment Hours ", textColor: .white, isBold: false, fontType: fontHeavy)
+        UILabel.labelUIHandling(label: lblNextStep, text: "Duplicate Schedule", textColor: .white, isBold: false, fontType: fontHeavy)
         
-        imgViewSetOpen.image = UIImage.init(named: "Calendar")
-        imgViewNextStep.image = UIImage.init(named: "NextImage")
-        viewContainer.backgroundColor = ILColor.color(index: 25)
-        
-        
+        lblNextStep.textAlignment = .center
+        lblSetOpen.textAlignment = .center
+
+        imgViewSetOpen.image = UIImage.init(named: "appoinmentHour")
+        imgViewSetOpen.contentMode = .scaleAspectFill
+        imgViewNextStep.image = UIImage.init(named: "duplicate")
+        viewContainer.backgroundColor = .clear
+        imgViewNextStep.contentMode = .scaleAspectFill
+
+        lblNextStep.backgroundColor = ILColor.color(index: 25)
+        lblSetOpen.backgroundColor = ILColor.color(index: 25)
+
         self.viewFloatingOuter.tag = 19683
         tapGesture()
         viewFloatingOuter.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)

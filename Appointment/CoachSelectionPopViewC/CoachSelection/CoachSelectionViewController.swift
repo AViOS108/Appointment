@@ -305,6 +305,8 @@ class CoachSelectionViewController: SuperViewController {
         let frame = sender.convert(sender.frame, from:AppDelegate.getDelegate().window)
         
         let viewCalender = CalenderViewController.init(nibName: "CalenderViewController", bundle: nil)
+        viewCalender.index = 1
+
         viewCalender.viewControllerI = self
         viewCalender.pointSign = CGPoint.init(x: abs(frame.origin.x) + abs(frame.size.width/2), y: abs(frame.origin.y) + abs(frame.size.height/2) + 10 )
         viewCalender.modalPresentationStyle = .overFullScreen
@@ -508,7 +510,7 @@ extension CoachSelectionViewController {
 
 
 extension CoachSelectionViewController: CalenderViewDelegate{
-    func dateSelected(calenderModal: CalenderModal) {
+    func dateSelected(calenderModal: CalenderModal,index : Int) {
         self.calenderModal = calenderModal;
         self.convertNextDate(index: self.dateDifferenceLogic())
         self.formingModal()

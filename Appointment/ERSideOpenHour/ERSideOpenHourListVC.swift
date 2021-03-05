@@ -8,14 +8,25 @@
 
 import UIKit
 
-class ERSideOpenHourListVC: SuperViewController {
-    
+class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
+    func deleteDelgateRefresh() {
+        refreshModal()
+    }
     @IBOutlet weak var tblView: UITableView!
+    @IBOutlet weak var btnDuplicate: UIButton!
+    @IBAction func btnDuplicateTapped(_ sender: Any) {
+        let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
+        objERSideOpenHourListVC.objviewTypeOpenHour = .duplicateSetHour
+        objERSideOpenHourListVC.dateSelected = self.dateSelected
+        self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
+        
+    }
     
     @IBOutlet weak var btnSetOpenHours: UIButton!
     
     @IBAction func btnSetOpenHoursTapped(_ sender: Any) {
         let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
+        objERSideOpenHourListVC.objviewTypeOpenHour = .setEditOpenHour
         objERSideOpenHourListVC.dateSelected = self.dateSelected
         self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
         
@@ -55,10 +66,23 @@ class ERSideOpenHourListVC: SuperViewController {
     var dataAppoinmentModal: ERSideAppointmentModal?
 
     
+    @IBOutlet weak var nslayoutbtnDuplicateHeight: NSLayoutConstraint!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         zeroStateLogic()
+        btnSetOpenHours.isHidden = true
+                   btnDuplicate.isHidden = true
+        
+        calenderView()
+        dashBoardViewModal.viewController = self
+        dashBoardViewModal.fetchTimeZoneCall { (timeArr) in
+            self.timeZOneArr = timeArr
+            self.setTimeZoneTextField()
+            self.viewModalCalling()
+            
+        }
         
         // Do any additional setup after loading the view.
     }
@@ -75,13 +99,19 @@ class ERSideOpenHourListVC: SuperViewController {
             self.viewZeroState.backgroundColor = ILColor.color(index: 22)
             
             self.tblView.isHidden = true
-            UILabel.labelUIHandling(label: lblZeroState, text: "No open hours to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)
-            self.imageViewZeroState.image = UIImage.init(named: "nocoach_Alumni")
+            UILabel.labelUIHandling(label: lblZeroState, text: "No open hours to show", textColor:ILColor.color(index: 42) , isBold: false, fontType: fontMedium)
+            self.imageViewZeroState.image = UIImage.init(named: "noOpenHour-1")
+            btnDuplicate.isHidden = true
+            nslayoutbtnDuplicateHeight.constant = 0
+            btnSetOpenHours.isHidden = false
+
         }
         else{
             self.viewZeroState.isHidden = true
             self.tblView.isHidden = false
-            
+            btnSetOpenHours.isHidden = false
+            btnDuplicate.isHidden = false
+
         }
     }
     
@@ -91,32 +121,31 @@ class ERSideOpenHourListVC: SuperViewController {
     override func viewWillAppear(_ animated: Bool) {
         viewOuter.backgroundColor = ILColor.color(index: 46 )
         self.view.backgroundColor = ILColor.color(index: 22)
-        let fontheavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
+        let fontheavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
         
         UIButton.buttonUIHandling(button: btnSetOpenHours, text: "Set new open hour", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3,fontType: fontheavy)
         
-        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours")
+        UIButton.buttonUIHandling(button: btnDuplicate, text: "Duplicate Schedules", backgroundColor: .white, textColor: ILColor.color(index: 23), cornerRadius: 3,borderColor: ILColor.color(index: 23),borderWidth: 1, fontType: fontheavy)
+        
+        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: " Advising Appointment Hour")
 
-        calenderView()
-        dashBoardViewModal.viewController = self
-        dashBoardViewModal.fetchTimeZoneCall { (timeArr) in
-            self.timeZOneArr = timeArr
-            self.setTimeZoneTextField()
-            self.viewModalCalling()
-            
-        }
+       
     }
     
     
+    func refreshModal(){
+        self.viewModalCalling()
+
+    }
+    
     func customizeTableView()
     {
-        
         tblView.register(UINib.init(nibName: "ErSideOpenHourTC", bundle: nil), forCellReuseIdentifier: "ErSideOpenHourTC")
         tblViewHandler = ERSideOpenHourTableHandler();
         tblViewHandler.viewControllerI = self
+        tblViewHandler.dateSelected = self.dateSelected
         tblViewHandler.dataAppoinmentModal = self.dataAppoinmentModal
         tblViewHandler.customization()
-        
     }
     
 }
@@ -152,12 +181,6 @@ extension ERSideOpenHourListVC:ERSideOpenhourVMDelegate{
     }
     
 }
-
-
-
-
-
-
 
 // Collection DateCalender Horizontal
 
@@ -293,13 +316,6 @@ extension ERSideOpenHourListVC: ERSideHeaderCollectionVCDelegate{
 }
 
 
-
-
-
-
-
-
-
 // TIME ZONE
 extension ERSideOpenHourListVC : TimeZoneViewControllerDelegate {
     
@@ -311,9 +327,9 @@ extension ERSideOpenHourListVC : TimeZoneViewControllerDelegate {
     
     
     func setTimeZoneTextField()  {
-           let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE17)
+           let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE12)
            let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
-           UILabel.labelUIHandling(label: lblTimeZone, text: "TimeZone", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+           UILabel.labelUIHandling(label: lblTimeZone, text: "Time Zone", textColor:ILColor.color(index: 42) , isBold: false, fontType: fontMedium)
            for timeZone in timeZOneArr{
                if timeZone.offset == GeneralUtility().currentOffset() && timeZone.identifier == GeneralUtility().getCurrentTimeZone(){
                    selectedTextZone = timeZone.displayName!

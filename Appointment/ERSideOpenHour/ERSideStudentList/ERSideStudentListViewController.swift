@@ -8,9 +8,33 @@
 
 import UIKit
 
-class ERSideStudentListViewController: UIViewController,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,ERFilterViewControllerDelegate {
+
+protocol ERSideStudentListViewControllerDelegate{
     
-   var objERFilterTag : [ERFilterTag]?
+    func selectedStudentPrivateHour(objStudentDetailModalSelected : StudentDetailModal)
+}
+
+
+class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,ERFilterViewControllerDelegate {
+    
+    
+    override   func selectedStudentPrivateHour(sender: UIButton) {
+        if self.objStudentDetailModalSelected != nil && self.objStudentDetailModalSelected?.items?.count ?? 0 > 0{
+            
+            delegate.selectedStudentPrivateHour(objStudentDetailModalSelected: self.objStudentDetailModalSelected!)
+            
+            self.navigationController?.popViewController(animated: true)
+            
+            
+        }
+        else{
+            CommonFunctions().showError(title: "", message: "Please select any student")
+        }
+    }
+    
+    
+    var delegate : ERSideStudentListViewControllerDelegate!
+    var objERFilterTag : [ERFilterTag]?
     @IBOutlet weak var viewSearch: UIView!
     
     @IBOutlet weak var viewSelection: UIView!
@@ -26,7 +50,7 @@ class ERSideStudentListViewController: UIViewController,UISearchBarDelegate,UITa
     
     @IBOutlet weak var btnStudentListNext: UIButton!
     var filterAdded = Dictionary<String,AnyObject>()
-
+    
     var offset = 0 ;
     var activityIndicator: ActivityIndicatorView?
     
@@ -47,17 +71,19 @@ class ERSideStudentListViewController: UIViewController,UISearchBarDelegate,UITa
     
     var objStudentDetailModalSelected : StudentDetailModal?
     var objStudentDetailModal : StudentDetailModal?
+    var objStudentDetailModalConst : StudentDetailModal?
+
     @IBOutlet weak var tblView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tblView.register(UINib.init(nibName: "ERSideStudentListTableViewCell", bundle: nil), forCellReuseIdentifier: "ERSideStudentListTableViewCell")
         
-       txtSearchBar.barTintColor = UIColor.clear
+        txtSearchBar.barTintColor = UIColor.clear
         txtSearchBar.backgroundColor = UIColor.clear
         txtSearchBar.isTranslucent = true
         txtSearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-
+        
         
         self.viewSearch.isHidden = true
         self.tblView.isHidden = true
@@ -66,11 +92,14 @@ class ERSideStudentListViewController: UIViewController,UISearchBarDelegate,UITa
         
         txtSearchBar.placeholder = "Search Student"
         txtSearchBar.backgroundColor = .clear
-        self.objStudentDetailModalSelected = StudentDetailModal.init(total: 0, items: [StudentDetailModalItem]())
- 
-       
         
-        callViewModal()
+        if self.objStudentDetailModalSelected != nil{
+            
+        }
+        else{
+            self.objStudentDetailModalSelected = StudentDetailModal.init(total: 0, items: [StudentDetailModalItem]())
+        }
+         self.customization();
         // Do any additional setup after loading the view.
     }
     
@@ -79,17 +108,15 @@ class ERSideStudentListViewController: UIViewController,UISearchBarDelegate,UITa
     @IBAction func btnStudentListPrevTapped(_ sender: Any) {
         offset = offset - 20;
         self.callViewModal();
-         btnEnableDisable()
+        btnEnableDisable()
         
-       }
-       @IBAction func btnStudentListNextTapped(_ sender: Any) {
-       
+    }
+    @IBAction func btnStudentListNextTapped(_ sender: Any) {
+        
         offset = offset + 20;
         self.callViewModal();
-         btnEnableDisable()
-
-    
-    
+        btnEnableDisable()
+        
     }
     
     
@@ -135,7 +162,6 @@ class ERSideStudentListViewController: UIViewController,UISearchBarDelegate,UITa
     
     func modalRedefine(){
         
-        
         let arrStudentListView = self.objStudentDetailModal!.items!
         let arrStudentSelectedListView = self.objStudentDetailModalSelected!.items!
         
@@ -162,11 +188,25 @@ class ERSideStudentListViewController: UIViewController,UISearchBarDelegate,UITa
         }
         else
         {
-             isAllStudentSelected = false
+            isAllStudentSelected = false
         }
         
         self.allStudentSelectedImage()
+        
+        
+        self.objStudentDetailModalConst = self.objStudentDetailModal
+        
     }
+    
+
+    
+       @objc override func buttonClicked(sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+        
+
+          }
+       
+    
     
     
     
@@ -183,19 +223,19 @@ class ERSideStudentListViewController: UIViewController,UISearchBarDelegate,UITa
         
         self.viewSelection.borderWithWidth(1, color: ILColor.color(index: 48))
         
+        GeneralUtility.customeNavigationBarWithBackAddButton(viewController: self, title: "Open Hours")
+        
+        
         
         
         modalRedefine()
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13),  let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         {
             UILabel.labelUIHandling(label: lblSelectAll, text: "Select all", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)
-            
             var end = offset + 20
             if offset + 20 >= self.objStudentDetailModal?.total ?? 0 {
                 end = self.objStudentDetailModal?.total ?? 0
             }
-            
-            
             let studentNumber = "\(offset + 1 )-\(end) of \(self.objStudentDetailModal?.total ?? 0)"
             
             UILabel.labelUIHandling(label: lblStudentNumber, text: studentNumber, textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)
@@ -243,6 +283,7 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
     func allStudentSelectedImage(){
         if isAllStudentSelected {
             btnSelectAll.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+            
         }
         else{
             btnSelectAll.setImage(UIImage.init(named: "check_box"), for: .normal);
@@ -329,9 +370,38 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
         
         if searchBar.text != ""
         {
+            let arrItems =     self.objStudentDetailModalConst?.items?.filter({
+                     
+                let primaryEmail = $0.email!.primary?.lowercased() ?? ""
+                let secondaryEmail = $0.email!.secondary?.lowercased() ?? ""
+                
+                let firstName = $0.firstName?.lowercased() ?? ""
+                let lastName  = $0.lastName?.lowercased() ?? ""
+
+                
+                return ( (firstName.contains(searchBar.text!.lowercased())) || (lastName.contains(searchBar.text!.lowercased())) || (primaryEmail.contains(searchBar.text!.lowercased()))  || (secondaryEmail.contains(searchBar.text!.lowercased()) || (firstName + lastName).contains(searchBar.text!.lowercased())  || (firstName + " " + lastName).contains(searchBar.text!.lowercased()))
+                
+                
+                
+                )
+                   })
+                   self.objStudentDetailModal?.items = arrItems ;
+                   tblView.reloadData()
+                   searchBar.resignFirstResponder();
             
         }
-        searchBar.resignFirstResponder();
+        
+       
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+           
+            self.objStudentDetailModal = self.objStudentDetailModalConst
+            tblView.reloadData()
+            
+        }
+    
     }
     
     
@@ -378,8 +448,6 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
         return 0;
         
     }
-    
-    
     
 }
 

@@ -85,6 +85,11 @@ class ERSideAppointmentTableViewCell: UITableViewCell {
         }
         
         
+      
+        
+        
+        
+        
     }
     
     

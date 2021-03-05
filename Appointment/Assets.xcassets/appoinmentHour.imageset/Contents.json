@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Next.png",
+      "filename" : "Schedule_n.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Next@2x.png",
+      "filename" : "Schedule_n@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Next@3x.png",
+      "filename" : "Schedule_n@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

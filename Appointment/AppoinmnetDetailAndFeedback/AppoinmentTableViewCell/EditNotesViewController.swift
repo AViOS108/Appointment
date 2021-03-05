@@ -108,7 +108,10 @@ class EditNotesViewController: SuperViewController,UIGestureRecognizerDelegate,U
         UILabel.labelUIHandling(label: lblEditNote, text: "Edit Note", textColor: ILColor.color(index: 39), isBold: false, fontType: fontBold)
         let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
         let componentDay = GeneralUtility.dateComponent(date: self.objNoteModal?.createdAt ?? "", component: .weekday)
-        let date = GeneralUtility.currentDateDetailType4(emiDate: self.objNoteModal?.createdAt ?? "");
+        let date =
+        GeneralUtility.currentDateDetailType4(emiDate: self.objNoteModal?.createdAt ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy")
+            
+          
         let timeText = "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " + date;
         UILabel.labelUIHandling(label: lblDate, text: timeText, textColor: ILColor.color(index: 39), isBold: false, fontType: fontMedium)
         UIButton.buttonUIHandling(button: btnSave, text: "Save", backgroundColor:   ILColor.color(index: 8), textColor: .white, cornerRadius: 2,  fontType: fontMedium)

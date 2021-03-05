@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 13.0, *)
         {
             NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.checkLoginState), name: Notification.Name("logout"), object: nil)
-            
         }
         else{
             
@@ -43,10 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         //        FirebaseApp.configure()
-        
-        
-        
-        
         
         do {
             reachability = try Reachability()

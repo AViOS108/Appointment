@@ -132,5 +132,43 @@ typealias ERFilterTagArr = [ERFilterTag]
 
 
 
+// MARK: - WelcomeElement
+struct NewUserPurposeModal: Codable {
+    let id: Int?
+    let displayName: String?
+    let machineName, createdByID, createdByType: String?
+    let createdBy: NewUserPurposeCreatedBy?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case displayName = "display_name"
+        case machineName = "machine_name"
+        case createdByID = "created_by_id"
+        case createdByType = "created_by_type"
+        case createdBy = "created_by"
+    }
+}
+
+// MARK: - CreatedBy
+struct NewUserPurposeCreatedBy: Codable {
+    let id: Int?
+    let name, email: String?
+    let communityID: Int?
+    let communityName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, email
+        case communityID = "community_id"
+        case communityName = "community_name"
+    }
+}
+
+typealias NewUserPurposeModalArr = [NewUserPurposeModal]
+
+
+
+
+
+
 
 

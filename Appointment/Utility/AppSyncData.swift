@@ -51,14 +51,12 @@ class AppDataSync {
         }
         else
         {
-//            ErEventService().extendErLogin({ (_) in
-//
-//        }) { (_, _) in
-//
-//            }
+            ErEventService().extendErLogin({ (_) in
+
+        }) { (_, _) in
+
+            }
             
-            
-          
             
         }
 

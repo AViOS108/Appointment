@@ -205,15 +205,12 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                     
                 }
                 else{
-                      btnFeedback.isHidden = false
+                      btnFeedback.isHidden = true
                     UIButton.buttonUIHandling(button: btnFeedback, text: "Cancel", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
-
                 }
-                
-                
             }
             
-            btnFeedback.isHidden = false
+//            btnFeedback.isHidden = false
 
             let monthI   = ["Jan","Feb","Mar","Apr","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
             

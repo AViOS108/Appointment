@@ -16,7 +16,15 @@ extension Bundle {
 }
 
 extension UIView {
-   
+    
+   func calculatePreferredHeight(preferredWidth: CGFloat? = nil) -> CGFloat {
+     let width = preferredWidth ?? frame.width
+    let widthConstraint = NSLayoutConstraint.constraints(withVisualFormat: "H:[view(==\(width)@999)]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["view": self])
+     addConstraints(widthConstraint)
+    let height = systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+     removeConstraints(widthConstraint)
+     return height
+   }
    
     
     class func fromNib<T: UIView>() -> T {

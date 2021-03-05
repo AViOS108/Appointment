@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol ERSideMyAppoinmentTableViewCellDelegate {
+    func changeInFollowingWith(results :ERSideAppointmentModalResult, index : Int? )
+}
+
+
+
 class ERSideMyAppoinmentTableViewCell: UITableViewCell {
     
     
@@ -25,6 +31,8 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
     var results: ERSideAppointmentModalResult!
     @IBOutlet weak var viewContainer: UIView!
     
+    
+    var delegate : ERSideMyAppoinmentTableViewCellDelegate!
     
     
     func customize()  {
@@ -150,6 +158,8 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         UIButton.buttonUIHandling(button: btnDecline, text: "Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
         
         
+        
+        
         btnAccept.cornerRadius = 3
         btnViewDetail.cornerRadius = 3
         btnDecline.cornerRadius = 3
@@ -190,6 +200,86 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         
         self.backgroundColor = .clear
         
+        
+        
+        if results?.typeERSide == 2{
+            // upcoming
+            
+            
+            if   GeneralUtility.isPastDate(date: self.results.endDatetime!){
+                btnAccept.isHidden = true
+            }
+            else{
+                btnAccept.isHidden = false
+                
+            }
+            
+            
+            UIButton.buttonUIHandling(button: btnAccept, text: "Cancel", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            
+            btnDecline.isHidden = true
+        }
+        else if results?.typeERSide == 3{
+            // pending
+            
+            UIButton.buttonUIHandling(button: btnAccept, text: "Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            
+            UIButton.buttonUIHandling(button: btnDecline, text: "Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            
+            
+            
+            
+            if   !GeneralUtility.isPastDate(date: self.results.startDatetime!){
+                btnAccept.isHidden = false
+                btnDecline.isHidden = false
+                
+            }
+            else{
+                
+                btnAccept.isHidden = false
+                btnDecline.isHidden = true
+                
+                let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
+                
+                UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:UIColor.clear ,textColor: ILColor.color(index: 52),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
+                
+            }
+            
+            
+            
+            
+        }
+        else{
+            btnDecline.isHidden = true
+            
+            btnAccept.isHidden = false
+            
+            if let isCompleted = results.appointmentIsCompleted{
+                
+                
+                let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+                
+                
+                btnAccept.isUserInteractionEnabled = false
+                btnAccept.isEnabled = false
+                
+                if isCompleted == 0 {
+                    let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+                    
+                    UIButton.buttonUIHandling(button: btnAccept, text: "Not Attended", backgroundColor:UIColor.clear ,textColor: ILColor.color(index: 52),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
+                }
+                else{
+                    UIButton.buttonUIHandling(button: btnAccept, text: "Attended", backgroundColor:.clear ,textColor: ILColor.color(index: 51),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
+                }
+                
+                
+            }
+            else{
+                
+                UIButton.buttonUIHandling(button: btnAccept, text: "Update Status", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            }
+        }
+        
     }
     
     
@@ -226,4 +316,78 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    @IBAction func btnViewDetailTapped(_ sender: Any) {
+        
+        delegate.changeInFollowingWith(results: results, index: 1)
+        
+    }
+    
+    
+    
+    @IBAction func btnAcceptTapped(_ sender: Any) {
+        // 1. Detail
+        // 2. Cancel
+        // 3. Accept
+        // 4. Decline
+        // 5. UpDate Status
+        
+        if results?.typeERSide == 2{
+            
+            if   GeneralUtility.isPastDate(date: self.results.endDatetime!){
+                delegate.changeInFollowingWith(results: results, index: 2)
+            }
+            else{
+                
+            }
+            
+        }
+        else if results?.typeERSide == 3{
+            
+            if   !GeneralUtility.isPastDate(date: self.results.startDatetime!){
+                delegate.changeInFollowingWith(results: results, index: 3)
+                
+                
+            }
+            else{
+                
+            }
+            
+        }
+        else{
+            
+            if let isCompleted = results.appointmentIsCompleted{
+            }
+            else{
+                delegate.changeInFollowingWith(results: results, index: 5)
+
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    @IBAction func btnDeclineTapped(_ sender: Any) {
+        
+        if results?.typeERSide == 2{
+            
+        }
+        else if results?.typeERSide == 3{
+            
+            if   !GeneralUtility.isPastDate(date: self.results.startDatetime!){
+                delegate.changeInFollowingWith(results: results, index: 4)
+            }
+            else{
+                
+            }
+            
+        }
+        else{
+            
+        }
+        
+        
+    }
 }

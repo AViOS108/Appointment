@@ -8,9 +8,57 @@
 
 import UIKit
 
+
+protocol ErSideOpenHourTCDelegate {
+    
+    func deleteDelgateRefresh()
+    
+}
+
+
+
 class ErSideOpenHourTC: UITableViewCell {
     @IBOutlet weak var lblTiming: UILabel!
-    @IBOutlet weak var lblOpenHour: UILabel!
+    
+    @IBOutlet weak var btnCross: UIButton!
+    
+    var delegate :  ErSideOpenHourTCDelegate!;
+    
+    var viewController : UIViewController!;
+    
+    
+    func deleteApi(){
+        
+       var activityIndicator = ActivityIndicatorView.showActivity(view: viewController.view, message: StringConstants.DeletingOpenHour)
+        let param = [
+            "_method" : "delete",
+            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
+            
+            ] as Dictionary<String, AnyObject>
+        
+        ERSideOpenHourDetailVM().OpenHourDelete(param: param, id: (results?.identifier)!
+            , { (data) in
+                activityIndicator.hide()
+
+                CommonFunctions().showError(title: "", message: "successfully deleted !!!")
+                self.delegate.deleteDelgateRefresh()
+        }) { (error, errorCode) in
+            activityIndicator.hide()
+        }
+    }
+    
+    
+    @IBAction func btnCrossTapped(_ sender: Any) {
+        let alert = UIAlertController(title: "", message: "Are you sure you want to delete?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { action in
+        }))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+            self.deleteApi();
+            
+        }))
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
     var results: ERSideAppointmentModalResult?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,10 +72,9 @@ class ErSideOpenHourTC: UITableViewCell {
         {
             UILabel.labelUIHandling(label: lblTiming, text: GeneralUtility.currentDateDetailType3(emiDate: (results?.startDatetimeUTC)!) + " - " + GeneralUtility.currentDateDetailType3(emiDate: (results?.endDatetimeUTC)!), textColor:ILColor.color(index: 29) , isBold: false , fontType: fontheavy,   backgroundColor:.clear )
             
-            UILabel.labelUIHandling(label: lblOpenHour, text: "Open Hours", textColor:ILColor.color(index: 29) , isBold: false , fontType: fontMedium,   backgroundColor:.clear )
             
         }
-        
+        btnCross.setImage(UIImage.init(named: "crossDeletion"), for: .normal)
         viewContainer.backgroundColor = ILColor.color(index: 30)
         viewContainer.dropShadowER()
         

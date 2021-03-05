@@ -36,6 +36,7 @@ struct SectionHeaderER: Codable {
 // MARK: - Result
 struct ERSideAppointmentModalResult: Codable {
     let id: String?
+    var typeERSide : Int?
     let eventTypeID: Int?
     let title, resultDescription, timezone, startDatetimeUTC: String?
     let endDatetimeUTC: String?
@@ -48,11 +49,13 @@ struct ERSideAppointmentModalResult: Codable {
     let appointmentCountsByDate: [AppointmentCountsByDate]?
     var parent: [Parent]?
     let calendars: [JSONAny]?
-    let openHoursAppointmentApprovalProcess, slotDuration, identifier: String?
+    let openHoursAppointmentApprovalProcess,  identifier: String?
     let isRecurringInstance, isSessionInstance, isSlotInstance: Bool?
     let idsHistory: [String]?
     let startDatetime, endDatetime, inTimezone: String?
     let createdBy: CreatedBy?
+    let appointmentIsCompleted: Int?
+
 //
 
     enum CodingKeys: String, CodingKey {
@@ -74,7 +77,12 @@ struct ERSideAppointmentModalResult: Codable {
         case appointmentCountsByDate = "appointment_counts_by_date"
         case parent, calendars,participants
         case openHoursAppointmentApprovalProcess = "open_hours_appointment_approval_process"
-        case slotDuration = "slot_duration"
+//        case slotDuration = "slot_duration"
+//       slotDuration,
+        
+        case appointmentIsCompleted = "appointment_is_completed"
+
+        
         case identifier
         case isRecurringInstance = "is_recurring_instance"
         case isSessionInstance = "is_session_instance"
@@ -103,5 +111,47 @@ struct AppointmentCountsByDate: Codable {
 }
 
 
+
+
+
+import Foundation
+
+// MARK: - WelcomeElement
+struct ERStudentListParticipant: Codable {
+    let id: Int?
+    let firstName, lastName, name, email: String?
+    let secondaryEmail, benchmarkName, tags, graduationDate: String?
+    let graduationLabel, testCategory, sampleTaghjk: String?
+    let alumniJob, preferredJob: JSONNull?
+    let tagsWithDimension, products, invitedDate, signedUpStatus: String?
+    let signedUpDate, hasFilledSurvey, hasOptedOut: String?
+    let hasUploadedResume, signedUpID: Int?
+    let recentResumeScore: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id, firstName, lastName, name, email
+        case secondaryEmail = "secondary_email"
+        case benchmarkName = "benchmark_name"
+        case tags
+        case graduationDate = "Graduation Date"
+        case graduationLabel = "Graduation Label"
+        case testCategory = "Test Category"
+        case sampleTaghjk = "Sample taghjk"
+        case alumniJob = "Alumni Job"
+        case preferredJob = "Preferred Job"
+        case tagsWithDimension = "tags_with_dimension"
+        case products
+        case invitedDate = "invited_date"
+        case signedUpStatus = "signed_up_status"
+        case signedUpDate = "signed_up_date"
+        case hasFilledSurvey = "has_filled_survey"
+        case hasOptedOut = "has_opted_out"
+        case hasUploadedResume = "has_uploaded_resume"
+        case signedUpID = "signed_up_id"
+        case recentResumeScore = "recent_resume_score"
+    }
+}
+
+typealias ERStudentListParticipantArr = [ERStudentListParticipant]
 
 

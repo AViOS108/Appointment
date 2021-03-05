@@ -16,6 +16,17 @@ class ERSideTabBar : UITabBarController {
         ManageSingleton.destroyCustomSingleton()
         AppUtility.lockOrientation(.all)
         delegate = self
+        self.tabBar.barTintColor =  ILColor.color(index: 8);
+        
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 3)], for: .selected)
+        if let fontDate = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13){
+            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 14),NSAttributedString.Key.font: fontDate],
+            
+                                                        for: .normal)
+            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 3),NSAttributedString.Key.font: fontDate], for: .selected)
+            
+        }
+
     }
     
     override func viewDidAppear(_ animated: Bool) {

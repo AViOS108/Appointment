@@ -84,6 +84,9 @@
                                     <constraint firstAttribute="height" constant="30" id="dm1-mw-8K4"/>
                                 </constraints>
                                 <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                <connections>
+                                    <action selector="btnViewDetailTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gv9-L0-gn2"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYz-wT-7Pp">
                                 <rect key="frame" x="109" y="101" width="82" height="30"/>
@@ -92,6 +95,9 @@
                                     <constraint firstAttribute="height" constant="30" id="j2C-ks-bRs"/>
                                 </constraints>
                                 <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                <connections>
+                                    <action selector="btnAcceptTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LV8-mq-Mir"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXq-3h-l20">
                                 <rect key="frame" x="214" y="101" width="82" height="30"/>
@@ -100,6 +106,9 @@
                                     <constraint firstAttribute="height" constant="30" id="Su2-K2-Trj"/>
                                 </constraints>
                                 <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                <connections>
+                                    <action selector="btnDeclineTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="FaI-Sq-fHq"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

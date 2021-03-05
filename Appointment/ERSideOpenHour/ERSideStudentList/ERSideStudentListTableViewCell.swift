@@ -10,9 +10,7 @@ import UIKit
 
 
 protocol ERSideStudentListTableViewCellDelegate {
-    
     func studentSelected(items: StudentDetailModalItem,isSelectedStudent: Bool)
-    
 }
 
 

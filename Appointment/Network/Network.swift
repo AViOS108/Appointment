@@ -25,8 +25,8 @@ class Network {
     private static var alamoFireManagerEventList : SessionManager = {
         
         var configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 15 // seconds
-        configuration.timeoutIntervalForResource = 15
+        configuration.timeoutIntervalForRequest = 120 // seconds
+        configuration.timeoutIntervalForResource = 120
         configuration.httpShouldSetCookies = true
         return Alamofire.SessionManager(configuration: configuration)
     }()
@@ -34,8 +34,8 @@ class Network {
     
     
     init() {
-        configuration.timeoutIntervalForRequest = 15 // seconds
-        configuration.timeoutIntervalForResource = 15
+        configuration.timeoutIntervalForRequest = 120 // seconds
+        configuration.timeoutIntervalForResource = 120
         configuration.httpShouldSetCookies = true
         self.alamoFireManager = Alamofire.SessionManager(configuration: configuration)
     }
@@ -134,6 +134,54 @@ class Network {
         }
     }
     
+    
+    func makeApiStudentList(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
+                 
+              
+                 var requestParams = params
+                 if(!addHeader){
+                  Network.alamoFireManagerEventList.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default).responseData{
+                         response in
+                         switch response.result {
+                         case .success:
+                          completion(response.data!)
+                         case .failure(let error):
+                             failure(self.errorMsgFailure(error._code),error._code)
+                         }
+                     }
+                 }else{
+                      Network.alamoFireManagerEventList.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default,headers: header).responseData {
+                         response in
+                         switch response.result {
+                         case .success:
+                             let responseI = JSON(response.result.value!)
+                             if self.isErrorPresentInSuccessResponse(responseI){
+                                 if let error = self.getErrorInSuccessResponse(responseI){
+                                     if LogoutHandler.shouldLogout(errorCode: error.code){
+                                         LogoutHandler.invalidateCurrentUser()
+                                     }
+                                     failure(error.message,error.code)
+                                 }
+                             }
+                             else {
+                              
+                              completion(response.data!)
+                              
+                          }
+                         case .failure(let error):
+                             if LogoutHandler.shouldLogout(errorCode: error._code){
+                                 LogoutHandler.invalidateCurrentUser()
+                             }
+                             failure(self.errorMsgFailure(error._code),error._code)
+                         }
+                     }
+                 }
+             }
+    
+    
+    
+    
+    
     func makeApiEventRequest(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
               
            
@@ -151,7 +199,7 @@ class Network {
               }else{
                    alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default,headers: header).responseData {
                       response in
-                      switch response.result {
+                       switch response.result {
                       case .success:
                           let responseI = JSON(response.result.value!)
                           if self.isErrorPresentInSuccessResponse(responseI){

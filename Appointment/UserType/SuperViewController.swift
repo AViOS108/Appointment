@@ -33,6 +33,14 @@ class SuperViewController: UIViewController {
 
     }
     
+    
+    
+    @objc func selectedStudentPrivateHour(sender: UIButton) {
+
+    }
+    
+    
+    
     @objc func logout(sender: UIButton) {
 
        }

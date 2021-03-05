@@ -74,6 +74,15 @@ class StringConstants{
     static let FetchingCoachSelection = "Fetching Data... "
 
     
+    static let AcceptOpenHour = "Accepting Request... "
+
+    
+    static let SubmittingDandCOpenHour = "Submitting Request... "
+
+    
+    
+    static let DeletingOpenHour = "Deleting Open Hour... "
+
     
     static let SavingNotes = "Saving Notes... "
     
@@ -82,9 +91,15 @@ class StringConstants{
     
     static let DeletingNotes = "Deleting Notes... "
 
-    static let FeedbackNotes = "Submit Feedback... "
+    static let FeedbackNotes = "Submitting Feedback... "
 
     static let PURPOSEERROR = "Please select atleast one purpose"
+    static let LOCATIONERROR = "Please provide your Location"
+
+    static let DEADLINEERROR = "Please provide your Deadlines"
+
+    static let STUDENTERROR = "Please select any Students"
+
     static let CONFIRMAPPOINTMENT = "Confirming Appointment..."
     static let KUPGRADETOLATESTOS = "This particular functionality needs latest OS, please upgarde your iOS version"
     static let coachInfoApiLoader = "Getting coach details"

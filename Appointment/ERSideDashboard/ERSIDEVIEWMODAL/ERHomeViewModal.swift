@@ -28,6 +28,7 @@ protocol ERHomeViewModalVMDelegate {
 }
 class ERHomeViewModal {
     
+    var participant : Array<Dictionary<String,AnyObject>>?
     let dispatchGroup = DispatchGroup()
     var objERSideAppointmentModal1 : ERSideAppointmentModal?
     var objERSideAppointmentModal2 : ERSideAppointmentModal?
@@ -44,6 +45,7 @@ class ERHomeViewModal {
     func custmoziation()
     {
         activityIndicator = ActivityIndicatorView.showActivity(view: viewController.view, message: StringConstants.FetchingCoachSelection)
+        
         
         switch enumType {
         case .ERSideHome:
@@ -211,14 +213,36 @@ class ERHomeViewModal {
         }
             
         else if index == 2{
+            
+           
+            var filter : Dictionary<String,Any>
             states = ["accepted_by_community_user","auto_accepted"]
-            param = [
-                ParamName.PARAMFILTERSEL : [
+
+            if participant != nil {
+             
+                filter = [
+                    "states" : states,
+                    "timezone":"utc",
+                    "from": GeneralUtility.todayDate() as AnyObject,
+                    "participants" : participant!
+                    
+                ]
+                
+            }
+            else{
+                filter = [
                     "states" : states,
                     "timezone":"utc",
                     "from": GeneralUtility.todayDate() as AnyObject,
                     
-                ],
+                ]
+                
+            }
+            
+           
+            
+            param = [
+                ParamName.PARAMFILTERSEL : filter,
                 ParamName.PARAMINTIMEZONEEL :"utc",
                 ParamName.PARAMCSRFTOKEN : csrftoken,
                 ParamName.PARAMMETHODKEY : "post",
@@ -231,15 +255,33 @@ class ERHomeViewModal {
                 
                 ] as [String : AnyObject]
             
+           
+            
         }
         else if index == 3{
             states = ["requested_by_student_user"]
-            param = [
-                ParamName.PARAMFILTERSEL : [
+            var filter : Dictionary<String,Any>
+            
+            if participant != nil {
+                
+                filter = [
+                    "states" : states,
+                    "timezone":"utc",
+                    "participants" : participant!
+                ]
+                
+            }
+            else{
+                filter = [
                     "states" : states,
                     "timezone":"utc",
                     
-                ],
+                ]
+                
+            }
+            
+            param = [
+                ParamName.PARAMFILTERSEL : filter,
                 ParamName.PARAMINTIMEZONEEL :"utc",
                 ParamName.PARAMCSRFTOKEN : csrftoken,
                 ParamName.PARAMMETHODKEY : "post",
@@ -257,14 +299,33 @@ class ERHomeViewModal {
         else if index == 4{
             
             states = ["accepted_by_community_user","auto_accepted"]
+            var filter : Dictionary<String,Any>
+                       
+                       if participant != nil {
+                           
+                           filter = [
+                               "states" : states,
+                               "timezone":"utc",
+                               "to": GeneralUtility.todayDate() as AnyObject,
+                               "from_to_strict": 1,
+                               "participants" : participant!
+                           ]
+                           
+                       }
+                       else{
+                           filter = [
+                               "states" : states,
+                               "timezone":"utc",
+                               "to": GeneralUtility.todayDate() as AnyObject,
+                               "from_to_strict": 1
+                               
+                           ]
+                           
+                       }
+            
+            
             param = [
-                ParamName.PARAMFILTERSEL : [
-                    "states" : states,
-                    "timezone":"utc",
-                    "to": GeneralUtility.todayDate() as AnyObject,
-                    "from_to_strict": 1
-                    
-                ],
+                ParamName.PARAMFILTERSEL : filter,
                 ParamName.PARAMINTIMEZONEEL :"utc",
                 ParamName.PARAMCSRFTOKEN : csrftoken,
                 ParamName.PARAMMETHODKEY : "post",

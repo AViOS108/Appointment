@@ -20,7 +20,7 @@ struct CalenderModal {
 
 
 protocol CalenderViewDelegate{
-       func dateSelected(calenderModal : CalenderModal)
+    func dateSelected(calenderModal : CalenderModal,index : Int)
        
    }
    
@@ -29,6 +29,7 @@ class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,U
     
     var delegate : CalenderViewDelegate!
     var pointedArrow = false
+    var index : Int?
 
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var nslayoutConstraintCollectionHeight: NSLayoutConstraint!
@@ -323,7 +324,7 @@ extension CalenderView:CalenderCollectionViewCellDelegate
          self.viewCollection.reloadData()
         viewControllerI!.dismiss(animated: false) {
                 }
-        delegate.dateSelected(calenderModal: calenderIndexSelected);
+        delegate.dateSelected(calenderModal: calenderIndexSelected, index: index!);
         
     }
     

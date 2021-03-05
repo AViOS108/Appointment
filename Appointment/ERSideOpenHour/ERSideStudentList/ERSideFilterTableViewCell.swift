@@ -27,21 +27,15 @@ class ERSideFilterTableViewCell: UITableViewCell {
     @IBOutlet weak var lblSelectFilter: UILabel!
     
     @IBAction func btnSelectFilterTapped(_ sender: Any) {
-        
-        
-        var isSelected  = !(objTagValue?.isSelected ?? false)
+        let isSelected  = !(objTagValue?.isSelected ?? false)
         
         if   isSelected {
-            
             btnSelectFilter.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
         }
         else{
             btnSelectFilter.setImage(UIImage.init(named: "check_box"), for: .normal);
         }
-        
         delegateI.tagSelected(tag: objTagValue!, isSelectedStudent: isSelected)
-        
-        
     }
     
     

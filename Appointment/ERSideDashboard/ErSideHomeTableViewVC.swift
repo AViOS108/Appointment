@@ -59,7 +59,15 @@ class ErSideHomeTableViewVC: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return 1
+        
+        if customizationModal(section: section)?.count == 0 {
+            return 1
+        }
+        else{
+            return customizationModal(section: section)?.count ?? 1
+
+        }
+        
     }
     
     

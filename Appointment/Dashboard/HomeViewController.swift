@@ -659,12 +659,14 @@ extension HomeViewController : HomeViewcontrollerRedirection{
 }
 
 extension HomeViewController: CalenderViewDelegate,feedbackViewControllerDelegate{
+   
+    
     func feedbackSucessFullySent() {
         dashBoardViewStudentApVModal.customizeVM();
 
     }
     
-    func dateSelected(calenderModal: CalenderModal) {
+    func dateSelected(calenderModal: CalenderModal, index: Int) {
         self.calenderModal = calenderModal
         self.redirection(redirectionType: .coachSelection)
         

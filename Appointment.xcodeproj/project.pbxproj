@@ -17,11 +17,19 @@
 		1A044060255E51F500339BBE /* ERSideAppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A04405E255E51F500339BBE /* ERSideAppointmentTableViewCell.swift */; };
 		1A044061255E51F500339BBE /* ERSideAppointmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A04405F255E51F500339BBE /* ERSideAppointmentTableViewCell.xib */; };
 		1A044064255EA0BB00339BBE /* ERHomeViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A044063255EA0BB00339BBE /* ERHomeViewModal.swift */; };
+		1A08F7AA25AF0A5800E27035 /* ERCancelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A08F7A825AF0A5800E27035 /* ERCancelViewController.swift */; };
+		1A08F7AB25AF0A5800E27035 /* ERCancelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A08F7A925AF0A5800E27035 /* ERCancelViewController.xib */; };
+		1A08F7AE25AF0F7900E27035 /* ERAppointmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A08F7AC25AF0F7900E27035 /* ERAppointmentDetailViewController.swift */; };
+		1A08F7AF25AF0F7900E27035 /* ERAppointmentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A08F7AD25AF0F7900E27035 /* ERAppointmentDetailViewController.xib */; };
 		1A1053712577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A10536F2577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.swift */; };
 		1A1053722577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A1053702577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.xib */; };
 		1A105374257919E200FD3CF0 /* ERSidePurposeDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A105373257919E200FD3CF0 /* ERSidePurposeDetailModal.swift */; };
+		1A1C6CF525D524F8002A795B /* ERSideDetailEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1C6CF325D524F8002A795B /* ERSideDetailEditTableViewCell.swift */; };
+		1A1C6CF625D524F8002A795B /* ERSideDetailEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A1C6CF425D524F8002A795B /* ERSideDetailEditTableViewCell.xib */; };
 		1A1DD5A724FE3CC90005250C /* TimeZoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A1DD5A524FE3CC90005250C /* TimeZoneViewController.swift */; };
 		1A1DD5A824FE3CC90005250C /* TimeZoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A1DD5A624FE3CC90005250C /* TimeZoneViewController.xib */; };
+		1A21EF1225E4D2C8009EDDCC /* ERStartEndTImeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A21EF1125E4D2C8009EDDCC /* ERStartEndTImeView.swift */; };
+		1A21EF1425E4D2D6009EDDCC /* ERStartEndTImeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A21EF1325E4D2D6009EDDCC /* ERStartEndTImeView.xib */; };
 		1A54700924B59460005F1058 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54700824B59460005F1058 /* AppDelegate.swift */; };
 		1A54700B24B59460005F1058 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54700A24B59460005F1058 /* SceneDelegate.swift */; };
 		1A54700D24B59460005F1058 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54700C24B59460005F1058 /* ViewController.swift */; };
@@ -181,6 +189,11 @@
 		1A6CAFA1251E006A000C9887 /* NextStepCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6CAF9F251E006A000C9887 /* NextStepCollectionViewCell.xib */; };
 		1A6CAFA325222C09000C9887 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6CAFA225222C09000C9887 /* Settings.storyboard */; };
 		1A712B6224FE3E1000D761D2 /* TimeZoneModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A712B6124FE3E1000D761D2 /* TimeZoneModal.swift */; };
+		1A725F6425B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A725F6225B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.swift */; };
+		1A725F6525B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A725F6325B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.xib */; };
+		1A725F6825B06C92007DFF4E /* ERAddNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A725F6625B06C92007DFF4E /* ERAddNotesViewController.swift */; };
+		1A725F6925B06C92007DFF4E /* ERAddNotesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A725F6725B06C92007DFF4E /* ERAddNotesViewController.xib */; };
+		1A725F6B25BADE75007DFF4E /* ERSideAppoinmentDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A725F6A25BADE75007DFF4E /* ERSideAppoinmentDetailModal.swift */; };
 		1A78314924F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A78314324F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib */; };
 		1A78314A24F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A78314424F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.xib */; };
 		1A78314B24F8D37F0054AAF8 /* HorizontalCalender.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A78314524F8D37F0054AAF8 /* HorizontalCalender.xib */; };
@@ -247,6 +260,8 @@
 		1AC5F69824FE5D490052D276 /* TimeZoneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC5F69624FE5D490052D276 /* TimeZoneTableViewCell.swift */; };
 		1AC5F69924FE5D490052D276 /* TimeZoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AC5F69724FE5D490052D276 /* TimeZoneTableViewCell.xib */; };
 		1AD257C6253DABE5004E622A /* FeedBackModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD257C5253DABE5004E622A /* FeedBackModal.swift */; };
+		1AE09EF225EF99C200542493 /* ERSideTimeSlotDuplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE09EF125EF99C200542493 /* ERSideTimeSlotDuplicate.swift */; };
+		1AE09EF625EF99E000542493 /* ERSideTimeSlotDuplicate.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AE09EF525EF99E000542493 /* ERSideTimeSlotDuplicate.xib */; };
 		1AE9E7FF252C881300843D88 /* EditNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE9E7FD252C881300843D88 /* EditNotesViewController.swift */; };
 		1AE9E800252C881300843D88 /* EditNotesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AE9E7FE252C881300843D88 /* EditNotesViewController.xib */; };
 		1AEB677424EBAEB0006F9C05 /* HomeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEB677324EBAEB0006F9C05 /* HomeTableView.swift */; };
@@ -299,11 +314,19 @@
 		1A04405E255E51F500339BBE /* ERSideAppointmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideAppointmentTableViewCell.swift; sourceTree = "<group>"; };
 		1A04405F255E51F500339BBE /* ERSideAppointmentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERSideAppointmentTableViewCell.xib; sourceTree = "<group>"; };
 		1A044063255EA0BB00339BBE /* ERHomeViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERHomeViewModal.swift; sourceTree = "<group>"; };
+		1A08F7A825AF0A5800E27035 /* ERCancelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERCancelViewController.swift; sourceTree = "<group>"; };
+		1A08F7A925AF0A5800E27035 /* ERCancelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERCancelViewController.xib; sourceTree = "<group>"; };
+		1A08F7AC25AF0F7900E27035 /* ERAppointmentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERAppointmentDetailViewController.swift; sourceTree = "<group>"; };
+		1A08F7AD25AF0F7900E27035 /* ERAppointmentDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERAppointmentDetailViewController.xib; sourceTree = "<group>"; };
 		1A10536F2577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideOpenCreateEditSecondVC.swift; sourceTree = "<group>"; };
 		1A1053702577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERSideOpenCreateEditSecondVC.xib; sourceTree = "<group>"; };
 		1A105373257919E200FD3CF0 /* ERSidePurposeDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSidePurposeDetailModal.swift; sourceTree = "<group>"; };
+		1A1C6CF325D524F8002A795B /* ERSideDetailEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideDetailEditTableViewCell.swift; sourceTree = "<group>"; };
+		1A1C6CF425D524F8002A795B /* ERSideDetailEditTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERSideDetailEditTableViewCell.xib; sourceTree = "<group>"; };
 		1A1DD5A524FE3CC90005250C /* TimeZoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneViewController.swift; sourceTree = "<group>"; };
 		1A1DD5A624FE3CC90005250C /* TimeZoneViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeZoneViewController.xib; sourceTree = "<group>"; };
+		1A21EF1125E4D2C8009EDDCC /* ERStartEndTImeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERStartEndTImeView.swift; sourceTree = "<group>"; };
+		1A21EF1325E4D2D6009EDDCC /* ERStartEndTImeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERStartEndTImeView.xib; sourceTree = "<group>"; };
 		1A54700524B59460005F1058 /* Appointment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Appointment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A54700824B59460005F1058 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A54700A24B59460005F1058 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -469,6 +492,11 @@
 		1A6CAF9F251E006A000C9887 /* NextStepCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NextStepCollectionViewCell.xib; sourceTree = "<group>"; };
 		1A6CAFA225222C09000C9887 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1A712B6124FE3E1000D761D2 /* TimeZoneModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeZoneModal.swift; sourceTree = "<group>"; };
+		1A725F6225B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERUpdateStatusAddNextStepViewController.swift; sourceTree = "<group>"; };
+		1A725F6325B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERUpdateStatusAddNextStepViewController.xib; sourceTree = "<group>"; };
+		1A725F6625B06C92007DFF4E /* ERAddNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERAddNotesViewController.swift; sourceTree = "<group>"; };
+		1A725F6725B06C92007DFF4E /* ERAddNotesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERAddNotesViewController.xib; sourceTree = "<group>"; };
+		1A725F6A25BADE75007DFF4E /* ERSideAppoinmentDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideAppoinmentDetailModal.swift; sourceTree = "<group>"; };
 		1A736CD42547FDD6009C7500 /* Appointment.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Appointment.entitlements; sourceTree = "<group>"; };
 		1A78314324F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizontalAppointmentInfoCollectionViewCell.xib; sourceTree = "<group>"; };
 		1A78314424F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizonatlDateCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -536,6 +564,8 @@
 		1AC5F69624FE5D490052D276 /* TimeZoneTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneTableViewCell.swift; sourceTree = "<group>"; };
 		1AC5F69724FE5D490052D276 /* TimeZoneTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeZoneTableViewCell.xib; sourceTree = "<group>"; };
 		1AD257C5253DABE5004E622A /* FeedBackModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackModal.swift; sourceTree = "<group>"; };
+		1AE09EF125EF99C200542493 /* ERSideTimeSlotDuplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideTimeSlotDuplicate.swift; sourceTree = "<group>"; };
+		1AE09EF525EF99E000542493 /* ERSideTimeSlotDuplicate.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERSideTimeSlotDuplicate.xib; sourceTree = "<group>"; };
 		1AE9E7FD252C881300843D88 /* EditNotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotesViewController.swift; sourceTree = "<group>"; };
 		1AE9E7FE252C881300843D88 /* EditNotesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditNotesViewController.xib; sourceTree = "<group>"; };
 		1AEB677324EBAEB0006F9C05 /* HomeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableView.swift; sourceTree = "<group>"; };
@@ -596,8 +626,24 @@
 				1A044063255EA0BB00339BBE /* ERHomeViewModal.swift */,
 				1A89E7EA256143DD00A34C0F /* ERSideAppointmentService.swift */,
 				1A89E7EC256397F800A34C0F /* ERSideAppointmentModal.swift */,
+				1A725F6A25BADE75007DFF4E /* ERSideAppoinmentDetailModal.swift */,
 			);
 			path = ERSIDEVIEWMODAL;
+			sourceTree = "<group>";
+		};
+		1A08F7A725AF0A2900E27035 /* ERAppointmentDetailAllViews */ = {
+			isa = PBXGroup;
+			children = (
+				1A08F7A825AF0A5800E27035 /* ERCancelViewController.swift */,
+				1A08F7A925AF0A5800E27035 /* ERCancelViewController.xib */,
+				1A08F7AC25AF0F7900E27035 /* ERAppointmentDetailViewController.swift */,
+				1A08F7AD25AF0F7900E27035 /* ERAppointmentDetailViewController.xib */,
+				1A725F6225B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.swift */,
+				1A725F6325B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.xib */,
+				1A725F6625B06C92007DFF4E /* ERAddNotesViewController.swift */,
+				1A725F6725B06C92007DFF4E /* ERAddNotesViewController.xib */,
+			);
+			path = ERAppointmentDetailAllViews;
 			sourceTree = "<group>";
 		};
 		1A1DD5A224FE3C9A0005250C /* TimeZoneView */ = {
@@ -617,7 +663,6 @@
 				1A9532D0256E868100EC3D1F /* ERSideOpenHour */,
 				1A8B502C2519F06A00111C77 /* AppoinmnetDetailAndFeedback */,
 				1A61EFE1250616C500257CB5 /* CoachSelectionPopViewC */,
-				1AF8188224F64AF400C52286 /* CoachSelection */,
 				1AEB679C24F553E6006F9C05 /* CoachAluminiView */,
 				1AEB678B24EFD6D0006F9C05 /* CalenderView */,
 				1A54712224B74959005F1058 /* ERLoginFlow */,
@@ -922,6 +967,7 @@
 		1A61EFE1250616C500257CB5 /* CoachSelectionPopViewC */ = {
 			isa = PBXGroup;
 			children = (
+				1AF8188224F64AF400C52286 /* CoachSelection */,
 				1A61EFF0250773B000257CB5 /* PopUpTableViewCell */,
 				1A61EFE2250616F200257CB5 /* CoachConfirmationPopUpFirstViewC.swift */,
 				1A61EFE3250616F200257CB5 /* CoachConfirmationPopUpFirstViewC.xib */,
@@ -950,6 +996,7 @@
 		1A656F98255A5F5F00570C98 /* ERSideDashboard */ = {
 			isa = PBXGroup;
 			children = (
+				1A08F7A725AF0A2900E27035 /* ERAppointmentDetailAllViews */,
 				1A044062255EA09C00339BBE /* ERSIDEVIEWMODAL */,
 				1A656F9F255A60DB00570C98 /* ERSideHome.storyboard */,
 				1A656F99255A5F9700570C98 /* ERSideTabBar.swift */,
@@ -1126,6 +1173,8 @@
 				1AB4599E2577619200E3671C /* ERSideOpenCreateEditVC.xib */,
 				1A10536F2577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.swift */,
 				1A1053702577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.xib */,
+				1A1C6CF325D524F8002A795B /* ERSideDetailEditTableViewCell.swift */,
+				1A1C6CF425D524F8002A795B /* ERSideDetailEditTableViewCell.xib */,
 			);
 			name = ERSideOpenHour;
 			path = Appointment/ERSideOpenHour;
@@ -1139,6 +1188,10 @@
 				1A9532DB256FCB9D00EC3D1F /* ErSideOpenHourTC.xib */,
 				1AB4599B2574EE4400E3671C /* ERSideOpenHourDetail.swift */,
 				1A105373257919E200FD3CF0 /* ERSidePurposeDetailModal.swift */,
+				1A21EF1125E4D2C8009EDDCC /* ERStartEndTImeView.swift */,
+				1A21EF1325E4D2D6009EDDCC /* ERStartEndTImeView.xib */,
+				1AE09EF125EF99C200542493 /* ERSideTimeSlotDuplicate.swift */,
+				1AE09EF525EF99E000542493 /* ERSideTimeSlotDuplicate.xib */,
 			);
 			path = ERSideOpenHourViewModal;
 			sourceTree = "<group>";
@@ -1201,8 +1254,7 @@
 				1AF8188424F64B0D00C52286 /* CoachSelectionViewController.xib */,
 				1A67F082250208EE00CCC00B /* CoachSelectionTableView.swift */,
 			);
-			name = CoachSelection;
-			path = Appointment/CoachSelection;
+			path = CoachSelection;
 			sourceTree = "<group>";
 		};
 		D16A058CB7D518A66C1BC978 /* Pods */ = {
@@ -1340,6 +1392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A61EFEF2507702A00257CB5 /* CoachConfirmationPopUpSecondViewC.xib in Resources */,
+				1A08F7AF25AF0F7900E27035 /* ERAppointmentDetailViewController.xib in Resources */,
 				1AC5F69924FE5D490052D276 /* TimeZoneTableViewCell.xib in Resources */,
 				1A78314A24F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.xib in Resources */,
 				1AEB679B24EFE048006F9C05 /* CalenderViewController.xib in Resources */,
@@ -1356,6 +1409,7 @@
 				1A78315724F8D3D20054AAF8 /* CoachListingTableViewCell.xib in Resources */,
 				1A78315A24F8D3D20054AAF8 /* SliderTableViewCell.xib in Resources */,
 				1A9532D4256F769900EC3D1F /* ERSideOpenHourListVC.xib in Resources */,
+				1A1C6CF625D524F8002A795B /* ERSideDetailEditTableViewCell.xib in Resources */,
 				1A85BE9E2590850A00E72A3A /* ERSideFilterHeaderView.xib in Resources */,
 				1A78316724F8D5250054AAF8 /* CoachImageOverlayCiCollectionViewCell.xib in Resources */,
 				1A54708E24B5D242005F1058 /* Login.storyboard in Resources */,
@@ -1363,6 +1417,7 @@
 				1A6CAF93251DF7BB000C9887 /* AppoinmentDescriptionTableViewCell.xib in Resources */,
 				1A656FA0255A60DB00570C98 /* ERSideHome.storyboard in Resources */,
 				1A54701824B5946D005F1058 /* LaunchScreen.storyboard in Resources */,
+				1AE09EF625EF99E000542493 /* ERSideTimeSlotDuplicate.xib in Resources */,
 				1A85BE9A258CD52600E72A3A /* ERSideFilterTableViewCell.xib in Resources */,
 				1A89E7F32567972A00A34C0F /* ERSideMyAppointmentHeaderCollectionViewCell.xib in Resources */,
 				1AE9E800252C881300843D88 /* EditNotesViewController.xib in Resources */,
@@ -1378,10 +1433,12 @@
 				1A78315624F8D3D20054AAF8 /* HeaderSectionCoach.xib in Resources */,
 				1A78316024F8D4110054AAF8 /* CoachAluminiSelectionTableViewCell.xib in Resources */,
 				1A1DD5A824FE3CC90005250C /* TimeZoneViewController.xib in Resources */,
+				1A08F7AB25AF0A5800E27035 /* ERCancelViewController.xib in Resources */,
 				1A8B503E251B640A00111C77 /* NotesAppointmentTableViewCell.xib in Resources */,
 				1A61EFF4250773DA00257CB5 /* ConfirmationPopUpFirstTableViewCell.xib in Resources */,
 				1A1053722577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.xib in Resources */,
 				1A5470F624B5D2AE005F1058 /* Localizable.strings in Resources */,
+				1A725F6925B06C92007DFF4E /* ERAddNotesViewController.xib in Resources */,
 				1A6CAF97251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.xib in Resources */,
 				1A5470E324B5D2AE005F1058 /* ErrorView.xib in Resources */,
 				1A04405D255E51B700339BBE /* ERSideHomeSectionHeader.xib in Resources */,
@@ -1390,6 +1447,7 @@
 				1A54712824B74959005F1058 /* ERLoginViewController.xib in Resources */,
 				1A656FA6255A78FF00570C98 /* ErSideCalenderCollectionViewCell.xib in Resources */,
 				1A61EFE5250616F300257CB5 /* CoachConfirmationPopUpFirstViewC.xib in Resources */,
+				1A725F6525B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.xib in Resources */,
 				1A54711F24B5E98A005F1058 /* HomeViewController.xib in Resources */,
 				1A85BE9225891F6B00E72A3A /* ERSideStudentListTableViewCell.xib in Resources */,
 				1A78314B24F8D37F0054AAF8 /* HorizontalCalender.xib in Resources */,
@@ -1399,6 +1457,7 @@
 				1A8B5030251A07D000111C77 /* AppointmentDetailViewController.xib in Resources */,
 				1A9532DD256FCB9D00EC3D1F /* ErSideOpenHourTC.xib in Resources */,
 				1AEB679324EFD777006F9C05 /* CalenderView.xib in Resources */,
+				1A21EF1425E4D2D6009EDDCC /* ERStartEndTImeView.xib in Resources */,
 				1A54701524B5946D005F1058 /* Assets.xcassets in Resources */,
 				1A54710524B5DF64005F1058 /* SelectUserTypeViewController.xib in Resources */,
 				1A044061255E51F500339BBE /* ERSideAppointmentTableViewCell.xib in Resources */,
@@ -1572,6 +1631,7 @@
 				1A6CAF9D251DFFEC000C9887 /* NextStepCollectionView.swift in Sources */,
 				1A78315924F8D3D20054AAF8 /* SliderTableViewCell.swift in Sources */,
 				1AEB679124EFD769006F9C05 /* CalenderView.swift in Sources */,
+				1A725F6825B06C92007DFF4E /* ERAddNotesViewController.swift in Sources */,
 				1A61EFEE2507702A00257CB5 /* CoachConfirmationPopUpSecondViewC.swift in Sources */,
 				1A9532CA256B859C00EC3D1F /* ERSideMyAppoinmentTableViewCell.swift in Sources */,
 				1A712B6224FE3E1000D761D2 /* TimeZoneModal.swift in Sources */,
@@ -1622,6 +1682,7 @@
 				1A54711424B5E2E0005F1058 /* NibView.swift in Sources */,
 				1A54707524B5D241005F1058 /* ModifiedRegisterViewController.swift in Sources */,
 				1A54708424B5D242005F1058 /* ForgotPasswordService.swift in Sources */,
+				1A21EF1225E4D2C8009EDDCC /* ERStartEndTImeView.swift in Sources */,
 				1A9532D7256FBD4400EC3D1F /* ERSideOpenhourVM.swift in Sources */,
 				1A8B502F251A07D000111C77 /* AppointmentDetailViewController.swift in Sources */,
 				1A5470A524B5D264005F1058 /* UserInfoService.swift in Sources */,
@@ -1641,6 +1702,7 @@
 				1A5470F524B5D2AE005F1058 /* LogoutHandler.swift in Sources */,
 				1A89E7F22567972A00A34C0F /* ERSideMyAppointmentHeaderCollectionViewCell.swift in Sources */,
 				1A54708A24B5D242005F1058 /* StudentIndustrySurvey.swift in Sources */,
+				1A08F7AE25AF0F7900E27035 /* ERAppointmentDetailViewController.swift in Sources */,
 				1A8B5036251A1E4A00111C77 /* AppoinmentdetailViewModal.swift in Sources */,
 				1A61EFFB250A13E300257CB5 /* ConfirmationPopupFileShareTableViewCell.swift in Sources */,
 				1A0053A52511ED780065C63E /* HomeMyAppointmentTableViewController.swift in Sources */,
@@ -1655,6 +1717,8 @@
 				1AEB678224EBFE95006F9C05 /* DashBoardViewModel.swift in Sources */,
 				1A54700B24B59460005F1058 /* SceneDelegate.swift in Sources */,
 				1A5470DF24B5D2AE005F1058 /* String.swift in Sources */,
+				1A1C6CF525D524F8002A795B /* ERSideDetailEditTableViewCell.swift in Sources */,
+				1AE09EF225EF99C200542493 /* ERSideTimeSlotDuplicate.swift in Sources */,
 				1A5470DD24B5D2AE005F1058 /* ManageSingleton.swift in Sources */,
 				1A85BE9C259084F200E72A3A /* ERSideFilterHeaderView.swift in Sources */,
 				1A0053A725173E130065C63E /* DashBoardStudentAppointmentVM.swift in Sources */,
@@ -1711,6 +1775,7 @@
 				1A5470D424B5D2AE005F1058 /* CTRegionHighlighter.swift in Sources */,
 				1A89E7ED256397F800A34C0F /* ERSideAppointmentModal.swift in Sources */,
 				1A89E7EB256143DD00A34C0F /* ERSideAppointmentService.swift in Sources */,
+				1A725F6425B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.swift in Sources */,
 				1A5470EC24B5D2AE005F1058 /* SubscriptionType.swift in Sources */,
 				1A54711624B5E2E0005F1058 /* UITextField.swift in Sources */,
 				1A54707324B5D241005F1058 /* CommunityListTableViewCell.swift in Sources */,
@@ -1729,6 +1794,7 @@
 				1A656FA5255A78FF00570C98 /* ErSideCalenderCollectionViewCell.swift in Sources */,
 				1AD257C6253DABE5004E622A /* FeedBackModal.swift in Sources */,
 				1AB4599F2577619200E3671C /* ERSideOpenCreateEditVC.swift in Sources */,
+				1A725F6B25BADE75007DFF4E /* ERSideAppoinmentDetailModal.swift in Sources */,
 				1A78314E24F8D37F0054AAF8 /* HorizontalCalender.swift in Sources */,
 				1A54711224B5E2E0005F1058 /* UIView.swift in Sources */,
 				1A1053712577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.swift in Sources */,
@@ -1752,6 +1818,7 @@
 				1A67F081250108AD00CCC00B /* OpenHourCoachModal.swift in Sources */,
 				1A78316224F8D43D0054AAF8 /* CoachImageOverlayView.swift in Sources */,
 				1A5470DE24B5D2AE005F1058 /* RefreshDBController.swift in Sources */,
+				1A08F7AA25AF0A5800E27035 /* ERCancelViewController.swift in Sources */,
 				1A54711A24B5E2E0005F1058 /* UIView+KeyboardInputAccessoryView.swift in Sources */,
 				1A5470E724B5D2AE005F1058 /* UserDefaults.swift in Sources */,
 				1A85BE9125891F6B00E72A3A /* ERSideStudentListTableViewCell.swift in Sources */,

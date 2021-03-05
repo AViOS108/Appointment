@@ -37,9 +37,9 @@ class ERSideMyAppoinmentTableVCViewController: UIViewController,UITableViewDeleg
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ERSideMyAppoinmentTableViewCell", for: indexPath) as! ERSideMyAppoinmentTableViewCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.delegate = (viewControllerI as! ERSideMyAppoinmentTableViewCellDelegate)
         cell.results = self.dataAppoinmentModal?.results![indexPath.row]
         cell.customize()
-        
         return cell
     }
     
@@ -94,6 +94,4 @@ class ERSideMyAppoinmentTableVCViewController: UIViewController,UITableViewDeleg
         }
        
     }
-    
-    
 }

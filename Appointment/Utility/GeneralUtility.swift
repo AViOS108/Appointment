@@ -296,6 +296,33 @@ class GeneralUtility {
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
     }
     
+    
+    class func customeNavigationBarWithBackAddButton(viewController: UIViewController,title:String){
+        let backButton = UIButton(type: .custom)
+        backButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        backButton.addTarget(viewController, action: #selector(SuperViewController.buttonClicked(sender:)), for: .touchUpInside)
+        backButton.setImage(UIImage.init(named: "Back"), for: .normal)
+        backButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: -30, bottom: 0, right: 0)
+        backButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: -40, bottom: 0, right: 0)
+        
+        backButton.setTitle(title, for: .normal)
+        backButton.semanticContentAttribute = .forceLeftToRight
+        
+        let back =  UIBarButtonItem(customView: backButton)
+        viewController.navigationItem.leftBarButtonItem = back
+        
+        let addButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+        addButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        addButton.addTarget(viewController, action: #selector(SuperViewController.selectedStudentPrivateHour(sender:)), for: .touchUpInside)
+        addButton.setImage(UIImage.init(named: "Add"), for: .normal)
+        let addButtonBarButton =  UIBarButtonItem(customView: addButton)
+        viewController.navigationItem.rightBarButtonItems = [addButtonBarButton];
+        viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+    }
+        
+    
     public class func optionalHandling<T>(_param: T!, _returnType: T.Type) -> T {
         if let value = _param {
             return value
@@ -357,6 +384,23 @@ class GeneralUtility {
         
         viewController.present(alert, animated: true, completion: nil)
     }
+    
+    
+    
+  
+       public  class func  alertViewPopOutViewController(title : String,message : String,viewController : UIViewController,buttons:[String])  {
+           let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+           for string in buttons{
+               alert.addAction(UIAlertAction(title: string, style: .default, handler: { action in
+                
+                viewController.navigationController?.popToRootViewController(animated: false)
+                
+                
+               }))
+           }
+           viewController.present(alert, animated: true, completion: nil)
+       }
+    
     
     
     
@@ -430,6 +474,18 @@ class GeneralUtility {
         
         return true
     }
+    
+    
+    
+    public  class func   differenceBetweenTwoDateInSec(dateFirst : String, dateSecond : String) -> Int {
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+           let date1 = dateFormatter.date(from: dateFirst)
+           let date2 = dateFormatter.date(from: dateSecond)
+        return Int((date1?.timeIntervalSince(date2!))!)
+           
+           
+       }
     
     
     
@@ -568,15 +624,15 @@ class GeneralUtility {
     }
     
     
-    public  class func   currentDateDetailType4(emiDate : String) -> String {
+    public  class func   currentDateDetailType4(emiDate : String,fromDateF:String, toDateFormate : String ) -> String {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = fromDateF //"
         //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
         //
         //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
         let date = dateFormatter.date(from: emiDate)
-        dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.dateFormat = toDateFormate //
         if let dateF  = date{
             return dateFormatter.string(from: dateF)
         }
@@ -724,6 +780,25 @@ class GeneralUtility {
         return ""
     }
     
+    
+    
+    
+    public  class func   dateConvertToUTC(emiDate : String,withDateFormat: String,todateFormat:String) -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = withDateFormat
+        
+        let date = dateFormatter.date(from: emiDate)
+        dateFormatter.dateFormat = todateFormat
+        dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        
+        
+        if let dateF  = date{
+            return dateFormatter.string(from: dateF)
+        }
+        
+        return ""
+    }
     
     
     public  class func hexStringToUIColor (hex:String) -> UIColor {
