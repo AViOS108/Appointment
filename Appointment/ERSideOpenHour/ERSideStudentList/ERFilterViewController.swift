@@ -14,7 +14,7 @@ protocol ERFilterViewControllerDelegate {
 }
 
 
-class ERFilterViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class ERFilterViewController: SuperViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var viewFilter: UIView!
     
     var delegate : ERFilterViewControllerDelegate!
@@ -41,19 +41,14 @@ class ERFilterViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet weak var btnCancel: UIButton!
     @IBAction func btnCancelTapped(_ sender: Any) {
         
-        self.dismiss(animated: false) {
-            
-        }
-        
+        self.navigationController?.popViewController(animated: false)
     }
     @IBOutlet weak var btnApply: UIButton!
     @IBAction func btnApplyTapped(_ sender: Any) {
         
-        self.dismiss(animated: false) {
-            
-            self.delegate.passFilter(selectedFilter: self.objERFilterTag)
-            
-        }
+        self.delegate.passFilter(selectedFilter: self.objERFilterTag)
+        self.navigationController?.popViewController(animated: false)
+        
         
     }
     var activityIndicator: ActivityIndicatorView?
@@ -68,19 +63,22 @@ class ERFilterViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let headerNib = UINib.init(nibName: "ERSideFilterHeaderView", bundle: Bundle.main)
         tblView.register(headerNib, forHeaderFooterViewReuseIdentifier: "ERSideFilterHeaderView")
         
+        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Filters")
         tblView.register(UINib.init(nibName: "ERSideFilterTableViewCell", bundle: nil), forCellReuseIdentifier: "ERSideFilterTableViewCell")
         
         if objERFilterTag != nil{
             self.customization();
-
         }
         else{
             callViewModal()
         }
-         
+        
         // Do any additional setup after loading the view.
     }
     
+     override func buttonClicked(sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     
     func callViewModal()  {
@@ -140,7 +138,7 @@ class ERFilterViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         self.objERFilterTag?.insert(objBenchark, at: 0)
         self.tblView.reloadData()
-
+        
     }
     
     
@@ -148,7 +146,7 @@ class ERFilterViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         viewFilter.isHidden = false
-
+        
         btnReset.selectedButton(title: " Reset", iconName: "noun_filter_")
         
         btnCancel.setTitle("Cancel", for: .normal)

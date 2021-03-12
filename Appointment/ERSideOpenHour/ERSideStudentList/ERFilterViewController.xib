@@ -24,10 +24,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ND8-tj-A9I">
-                    <rect key="frame" x="0.0" y="44" width="414" height="60"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="48"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AV-tO-AsD">
-                            <rect key="frame" x="0.0" y="8" width="120" height="44"/>
+                            <rect key="frame" x="0.0" y="8" width="120" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="120" id="Nfy-bN-LSp"/>
                             </constraints>
@@ -36,14 +36,14 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWL-rW-nCT">
-                            <rect key="frame" x="336" y="13" width="30" height="34"/>
+                            <rect key="frame" x="336" y="7" width="30" height="34"/>
                             <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="btnCancelTapped:" destination="-1" eventType="touchUpInside" id="2n1-on-D6h"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkA-Jl-uj1">
-                            <rect key="frame" x="376" y="8" width="30" height="44"/>
+                            <rect key="frame" x="376" y="8" width="30" height="32"/>
                             <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="btnApplyTapped:" destination="-1" eventType="touchUpInside" id="pXL-x3-J1K"/>
@@ -59,14 +59,14 @@
                         <constraint firstAttribute="bottom" secondItem="dkA-Jl-uj1" secondAttribute="bottom" constant="8" id="URb-ml-pon"/>
                         <constraint firstItem="XWL-rW-nCT" firstAttribute="centerY" secondItem="dkA-Jl-uj1" secondAttribute="centerY" id="Zzh-7b-iHu"/>
                         <constraint firstItem="7AV-tO-AsD" firstAttribute="leading" secondItem="ND8-tj-A9I" secondAttribute="leading" id="chn-yY-gGN"/>
-                        <constraint firstAttribute="height" constant="60" id="gs9-jM-vSb"/>
+                        <constraint firstAttribute="height" constant="48" id="gs9-jM-vSb"/>
                         <constraint firstItem="dkA-Jl-uj1" firstAttribute="top" secondItem="ND8-tj-A9I" secondAttribute="top" constant="8" id="pS1-sJ-7nY"/>
                         <constraint firstItem="7AV-tO-AsD" firstAttribute="top" secondItem="ND8-tj-A9I" secondAttribute="top" constant="8" id="qHs-CL-80o"/>
                         <constraint firstItem="dkA-Jl-uj1" firstAttribute="leading" secondItem="XWL-rW-nCT" secondAttribute="trailing" constant="10" id="s10-pv-19b"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0Ou-4a-N5v">
-                    <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                    <rect key="frame" x="20" y="92" width="374" height="770"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="ifv-A4-DLw"/>
@@ -79,8 +79,8 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="0Ou-4a-N5v" secondAttribute="bottom" id="NAY-ES-A27"/>
                 <constraint firstItem="ND8-tj-A9I" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Uid-Z4-b7A"/>
                 <constraint firstItem="ND8-tj-A9I" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cPz-3P-TlE"/>
-                <constraint firstItem="0Ou-4a-N5v" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="hGj-RX-OlB"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0Ou-4a-N5v" secondAttribute="trailing" id="iEE-l6-x7G"/>
+                <constraint firstItem="0Ou-4a-N5v" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="hGj-RX-OlB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0Ou-4a-N5v" secondAttribute="trailing" constant="20" id="iEE-l6-x7G"/>
                 <constraint firstItem="0Ou-4a-N5v" firstAttribute="top" secondItem="ND8-tj-A9I" secondAttribute="bottom" id="its-9U-8ri"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ND8-tj-A9I" secondAttribute="trailing" id="ssP-hI-VRz"/>
             </constraints>

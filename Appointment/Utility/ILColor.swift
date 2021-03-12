@@ -240,6 +240,10 @@ import UIKit
             // background appointment color #797979
             return UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1.0)
         }
+        else if index == 54 {
+            // background appointment color #797979
+            return UIColor.init(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
+        }
         return UIColor.clear
     }
 }

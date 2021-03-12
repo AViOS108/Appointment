@@ -12,7 +12,7 @@ import UIKit
 
 protocol ERSideOpenhourVMDelegate {
 
-    func sentDataToERHomeVC(dataAppoinmentModal : ERSideAppointmentModal?,success: Bool,index: Int )
+    func sentDataToERHomeVC(dataAppoinmentModal : ERSideOPenHourModal?,success: Bool,index: Int )
 }
 
 
@@ -20,8 +20,8 @@ class ERSideOpenhourVM {
     
     
     let dispatchGroup = DispatchGroup()
-    var objERSideAppointmentModal1 : ERSideAppointmentModal?
-    var objERSideAppointmentModal2 : ERSideAppointmentModal?
+    var objERSideOPenHourModal : ERSideOPenHourModal?
+//    var objERSideAppointmentModal2 : ERSideAppointmentModal?
     var dateSelected : Date!
     var viewController : UIViewController!
     var activityIndicator: ActivityIndicatorView?
@@ -53,11 +53,10 @@ class ERSideOpenhourVM {
     
     
     
-    func outputResult() -> ERSideAppointmentModal?  {
+    func outputResult() -> ERSideOPenHourModal?  {
         
-        var appointmentLocal = ERSideAppointmentModal()
         
-        if self.objERSideAppointmentModal1 != nil{
+        if self.objERSideOPenHourModal != nil{
             
             
         }
@@ -67,7 +66,7 @@ class ERSideOpenhourVM {
         }
         
         
-        return self.objERSideAppointmentModal1
+        return self.objERSideOPenHourModal
         
     }
     
@@ -87,15 +86,13 @@ class ERSideOpenhourVM {
             dateFormatter.dateFormat = "HH:mm:ss"
             let appendDate = dateFormatter.string(from: Date())
             var localTimeZoneAbbreviation: String { return TimeZone.current.description }
-            states = ["confirmed"]
             param = [
                 ParamName.PARAMFILTERSEL : [
-                    "states" : states,
-                    "timezone":"utc",
+                    "timezone":localTimeZoneAbbreviation,
                     "from": dateEndStr + " " + "23:59:59",
                     "to": dateStart + " " + "23:59:59"
                 ],
-                ParamName.PARAMINTIMEZONEEL :"utc",
+                ParamName.PARAMINTIMEZONEEL :localTimeZoneAbbreviation,
                 ParamName.PARAMCSRFTOKEN : csrftoken,
                 ParamName.PARAMMETHODKEY : "post"
                 ] as [String : AnyObject]
@@ -109,17 +106,17 @@ class ERSideOpenhourVM {
     func fetchAllPointMent(index : Int)
     {
         
-        ERSideAppointmentService().erSideAppointemntListApi(params: parameter(index: index), { (jsonData) in
+        ERSideAppointmentService().erSideOpenHourListApi(params: parameter(index: index), { (jsonData) in
             do {
                 if index == 1{
-                    self.objERSideAppointmentModal1 = try
-                        JSONDecoder().decode(ERSideAppointmentModal.self, from: jsonData)
+                    self.objERSideOPenHourModal = try
+                        JSONDecoder().decode(ERSideOPenHourModal.self, from: jsonData)
                     self.dispatchGroup.leave()
                 }
                 else if index == 2{
-                    self.objERSideAppointmentModal2 = try
-                        JSONDecoder().decode(ERSideAppointmentModal.self, from: jsonData)
-                    self.dispatchGroup.leave()
+//                    self.objERSideAppointmentModal2 = try
+//                        JSONDecoder().decode(ERSideAppointmentModal.self, from: jsonData)
+//                    self.dispatchGroup.leave()
                 }
             } catch   {
                 print(error)

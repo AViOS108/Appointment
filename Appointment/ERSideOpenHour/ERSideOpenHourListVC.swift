@@ -63,7 +63,7 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
 
     var viewModalERSideOH : ERSideOpenhourVM!
     var tblViewHandler : ERSideOpenHourTableHandler!
-    var dataAppoinmentModal: ERSideAppointmentModal?
+    var dataAppoinmentModal: ERSideOPenHourModal?
 
     
     @IBOutlet weak var nslayoutbtnDuplicateHeight: NSLayoutConstraint!
@@ -155,7 +155,7 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
 // viewModal Call and Modal Feeding
 
 extension ERSideOpenHourListVC:ERSideOpenhourVMDelegate{
-    func sentDataToERHomeVC(dataAppoinmentModal: ERSideAppointmentModal?, success: Bool, index: Int) {
+    func sentDataToERHomeVC(dataAppoinmentModal: ERSideOPenHourModal?, success: Bool, index: Int) {
         
         if success {
             self.dataAppoinmentModal = dataAppoinmentModal

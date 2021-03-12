@@ -196,10 +196,16 @@ class ERHomeViewModal {
             
             
             
-            states = ["accepted_by_community_user","auto_accepted"]
+            states = ["accepted","auto_accepted"]
             param = [
                 ParamName.PARAMFILTERSEL : [
-                    "states" : states,
+                    "states" : ["confirmed"],
+                    "has_request":
+                        ["states":states
+                        ],
+                    "with_request":
+                    ["states":states
+                    ],
                     "timezone":"utc",
                     "from": dateStart + " " + appendDate,
                     "to": dateEndStr + " " + appendDate

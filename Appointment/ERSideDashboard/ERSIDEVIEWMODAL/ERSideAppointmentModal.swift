@@ -155,3 +155,53 @@ struct ERStudentListParticipant: Codable {
 typealias ERStudentListParticipantArr = [ERStudentListParticipant]
 
 
+
+
+
+// MARK: - Welcome
+struct ERSideOPenHourModal: Codable {
+    let total: Int?
+    let results: [ResultERSideOPenHourModal]?
+}
+
+// MARK: - Result
+struct ResultERSideOPenHourModal: Codable {
+    let isRecurringInstance: Bool?
+    let location: String?
+    let id: Int?
+    let timezone, identifier: String?
+    let appointmentConfig: AppointmentConfig?
+    let createdByID: Int?
+    let createdBy: CreatedBy?
+    let locationType, endDatetimeUTC, endDatetime, inTimezone: String?
+    let startDatetimeUTC, startDatetime: String?
+
+    enum CodingKeys: String, CodingKey {
+        case isRecurringInstance = "is_recurring_instance"
+        case location, id, timezone, identifier
+        case appointmentConfig = "appointment_config"
+        case createdByID = "created_by_id"
+        case createdBy = "created_by"
+        case locationType = "location_type"
+        case endDatetimeUTC = "end_datetime_utc"
+        case endDatetime = "end_datetime"
+        case inTimezone = "in_timezone"
+        case startDatetimeUTC = "start_datetime_utc"
+        case startDatetime = "start_datetime"
+    }
+}
+
+// MARK: - AppointmentConfig
+struct AppointmentConfig: Codable {
+    let requestApprovalType, groupSizeLimit: String?
+    let bookingDeadlineDaysBefore, bookingDeadlineTimeonDay : String?
+    enum CodingKeys: String, CodingKey {
+        case requestApprovalType = "request_approval_type"
+        case groupSizeLimit = "group_size_limit"
+        case bookingDeadlineDaysBefore = "booking_deadline_days_before"
+        case bookingDeadlineTimeonDay = "booking_deadline_time_on_day"
+
+    }
+}
+
+

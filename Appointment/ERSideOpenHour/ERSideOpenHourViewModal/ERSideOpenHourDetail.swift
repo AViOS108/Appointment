@@ -14,87 +14,61 @@
 import Foundation
 
 // MARK: - Welcome
+
+import Foundation
+
+// MARK: - Welcome
 struct ERSideOpenHourDetail: Codable {
-    let appointmentCountsByDate: [AppointmentCountsByDate]?
-    let createdByID, lastChangedAt: String?
-    let parentID: JSONNull?
-    let endDatetime, slotDuration, welcomeDescription: String?
-    //
-    let exceptions: [Exception]?
-    let parentType: JSONNull?
-    let inTimezone, identifier, title: String?
+    let id: Int?
+    let startDatetimeUTC, endDatetimeUTC: String?
+    let createdByID: Int?
+    let purposes: [PurposeNewAPI]?
+    let participants: [ParticipantNewAPI]?
+    let timezone, location, locationType: String?
+    let appointmentConfig: AppointmentConfig?
+    let identifier: String?
     let isRecurringInstance: Bool?
-    let sessions: JSONNull?
-    let duration: Int?
-    let deletedAt: JSONNull?
-    let startDatetime: String?
-    let type: TypeClass?
-    let isSessionInstance: Bool?
-    let id: String?
-    let idsHistory: [String]?
-    let updatedByID: String?
     let createdBy: CreatedBy?
-    let endDatetimeUTC: String?
-    let updatedByType: String?
-    let participants: [Participant]?
-    let eventTypeID: Int?
-    let recurrence: JSONNull?
-    let isAllDay, isRecurring: Int?
-    let createdByType: String?
-    let calendars: [JSONAny]?
-    let purposes: [Purpose]?
-    let timezone, createdAt, state: String?
-    let isSlotInstance: Bool?
-    let parent: [JSONAny]?
-    let locations: [Location]?
-    let startDatetimeUTC: String?
-    let period: JSONNull?
-    let openHoursAppointmentApprovalProcess: String?
+    let startDatetime, endDatetime, inTimezone: String?
 
     enum CodingKeys: String, CodingKey {
-        case appointmentCountsByDate = "appointment_counts_by_date"
-        case createdByID = "created_by_id"
-        case lastChangedAt = "last_changed_at"
-        case parentID = "parent_id"
-        case endDatetime = "end_datetime"
-        case slotDuration = "slot_duration"
-        case welcomeDescription = "description"
-        case exceptions
-        case parentType = "parent_type"
-        case inTimezone = "in_timezone"
-        case identifier, title
-        case isRecurringInstance = "is_recurring_instance"
-        case sessions, duration
-        case deletedAt = "deleted_at"
-        case startDatetime = "start_datetime"
-        case type
-        case isSessionInstance = "is_session_instance"
         case id
-        case idsHistory = "ids_history"
-        case updatedByID = "updated_by_id"
-        case createdBy = "created_by"
-        case endDatetimeUTC = "end_datetime_utc"
-        case updatedByType = "updated_by_type"
-        case participants
-        case eventTypeID = "event_type_id"
-        case recurrence
-        case isAllDay = "is_all_day"
-        case isRecurring = "is_recurring"
-        case createdByType = "created_by_type"
-        case calendars, purposes, timezone
-        case createdAt = "created_at"
-        case state
-        case isSlotInstance = "is_slot_instance"
-        case parent, locations
         case startDatetimeUTC = "start_datetime_utc"
-        case period
-        case openHoursAppointmentApprovalProcess = "open_hours_appointment_approval_process"
+        case endDatetimeUTC = "end_datetime_utc"
+        case createdByID = "created_by_id"
+        case purposes, participants, timezone, location
+        case locationType = "location_type"
+        case appointmentConfig = "appointment_config"
+        case identifier
+        case isRecurringInstance = "is_recurring_instance"
+        case createdBy = "created_by"
+        case startDatetime = "start_datetime"
+        case endDatetime = "end_datetime"
+        case inTimezone = "in_timezone"
     }
 }
 
 
 
 
+// MARK: - Participant
+struct ParticipantNewAPI: Codable {
+    let id, studentID: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case studentID = "student_id"
+    }
+}
+
+// MARK: - Purpose
+struct PurposeNewAPI: Codable {
+    let purposeText: String?
+
+    enum CodingKeys: String, CodingKey {
+        case purposeText = "purpose_text"
+    }
+}
 
 
 // MARK: - Exception

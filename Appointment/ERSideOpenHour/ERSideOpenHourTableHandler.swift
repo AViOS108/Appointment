@@ -18,7 +18,7 @@ class ERSideOpenHourTableHandler: UIViewController,UITableViewDelegate,UITableVi
     //    var callbackVC: ((_ indePath : BtnInterestedGoing) -> Void)?
     var nocoach = false,noAlumini = false
     
-    var dataAppoinmentModal: ERSideAppointmentModal?
+    var dataAppoinmentModal: ERSideOPenHourModal?
     
     
     func customization()  {

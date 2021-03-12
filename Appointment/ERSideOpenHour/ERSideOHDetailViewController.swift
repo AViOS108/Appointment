@@ -102,7 +102,7 @@ class ERSideOHDetailViewController: SuperViewController {
         if (objERSideOpenHourDetail?.purposes) != nil{
             var index = 0
             for objPurpose in (objERSideOpenHourDetail?.purposes)!{
-                purpose = objPurpose.userPurpose?.displayName ?? ""
+                purpose = objPurpose.purposeText ?? ""
                 index = index + 1;
                 if objERSideOpenHourDetail?.purposes?.count ?? 0 > index{
                     purpose = purpose + ","
@@ -123,7 +123,8 @@ class ERSideOHDetailViewController: SuperViewController {
         
         var AppoinmentDurationModal = ERSideOHDetailModal();
         AppoinmentDurationModal.headLinetext = "Appointment Duration"
-        AppoinmentDurationModal.valueText = "\(objERSideOpenHourDetail?.duration ?? 0)";
+        AppoinmentDurationModal.valueText = "\(GeneralUtility.differenceBetweenTwoDateInSec(dateFirst: (objERSideOpenHourDetail?.endDatetimeUTC)!, dateSecond: (objERSideOpenHourDetail?.startDatetimeUTC)!)/60) min"
+        
         AppoinmentDurationModal.index = 3;
         self.objModalArray.append(AppoinmentDurationModal)
         
@@ -138,20 +139,81 @@ class ERSideOHDetailViewController: SuperViewController {
         
         var AppointmentTypeModal = ERSideOHDetailModal();
         AppointmentTypeModal.headLinetext = "Appointment Type"
-        AppointmentTypeModal.valueText = ""
+        
+        var appointmentType = ""
+        
+        
+        if let groupSise = objERSideOpenHourDetail?.appointmentConfig?.groupSizeLimit
+        {
+            if Int(groupSise) == 1{
+                appointmentType = "1 on 1 Appointment"
+            }
+            else{
+                appointmentType =  "Group Appointment"
+            }
+        }
+        AppointmentTypeModal.valueText = appointmentType
         AppointmentTypeModal.index = 5;
         self.objModalArray.append(AppointmentTypeModal)
         
+        var requestType = ""
+        
+        
+        if let requestApprovalType = objERSideOpenHourDetail?.appointmentConfig?.requestApprovalType
+        {
+            if requestApprovalType == "manual"{
+                appointmentType = "Manual Approval"
+            }
+            else{
+                appointmentType =  "Automatic Approval"
+            }
+        }
+        
         var RequestApprovalModal = ERSideOHDetailModal();
         RequestApprovalModal.headLinetext = "Request Approval"
-        RequestApprovalModal.valueText = "objERSideOpenHourDetail."
+        RequestApprovalModal.valueText = requestType
         RequestApprovalModal.index = 6;
         self.objModalArray.append(RequestApprovalModal)
         
         
+        var bookingDeadlineDays = ""
+
+        if let bookingDeadlineDaysBefore = objERSideOpenHourDetail?.appointmentConfig?.bookingDeadlineDaysBefore
+        {
+            if bookingDeadlineDaysBefore == "1"{
+                bookingDeadlineDays = "1 day before Appointment "
+            }
+            else if bookingDeadlineDaysBefore == "2"{
+                bookingDeadlineDays = "2 day before Appointment "
+
+            }
+            else if bookingDeadlineDaysBefore == "3"{
+                bookingDeadlineDays = "3 day before Appointment "
+
+            }
+            else{
+                bookingDeadlineDays = "4 day before Appointment "
+            }
+        }
+        
+        bookingDeadlineDays.append(" before ")
+        
+        if let bookingDeadlineTimeonDay = objERSideOpenHourDetail?.appointmentConfig?.bookingDeadlineTimeonDay
+        {
+            let timeDay = (Int(bookingDeadlineTimeonDay))
+            let hour = (timeDay!/3600)
+            if  hour <= 12{
+                let mintue = (timeDay! % 3600)/60
+                bookingDeadlineDays.append(" \(hour) : " + String(format: "%02d", mintue)  + "AM")
+            }else{
+                let mintue = (timeDay! % 3600)/60
+                bookingDeadlineDays.append(" \(hour - 12) : " + String(format: "%02d", mintue)  + "PM")
+            }
+        }
+                
         var AppointmentDeadlineModal = ERSideOHDetailModal();
         AppointmentDeadlineModal.headLinetext = "Appointment Deadline"
-        AppointmentDeadlineModal.valueText = "objERSideOpenHourDetail."
+        AppointmentDeadlineModal.valueText = bookingDeadlineDays
         AppointmentDeadlineModal.index = 7;
         self.objModalArray.append(AppointmentDeadlineModal)
         
@@ -160,25 +222,25 @@ class ERSideOHDetailViewController: SuperViewController {
         var strLocation = "Not available", strLocationValue = ""
         var imageName = "false"
         
-        if let str = self.objERSideOpenHourDetail?.locations{
-            if str.count > 0 {
-                strLocationValue = (str[0].data?.value) ?? "Not available"
-                if str[0].provider == "zoom_link"{
-                    imageName = "Zoom"
-                    strLocation = " Zoom"
-                }
-                else  if str[0].provider == "physical_location"{
-                    imageName = "custom_location"
-                    strLocation = " Physical Location"
-                    
-                }
-                else{
-                    imageName = "In_person_meeting"
-                    strLocation = " Meeting Url"
-                }
-            }
-            
-        }
+//        if let str = self.objERSideOpenHourDetail?.locations{
+//            if str.count > 0 {
+//                strLocationValue = (str[0].data?.value) ?? "Not available"
+//                if str[0].provider == "zoom_link"{
+//                    imageName = "Zoom"
+//                    strLocation = " Zoom"
+//                }
+//                else  if str[0].provider == "physical_location"{
+//                    imageName = "custom_location"
+//                    strLocation = " Physical Location"
+//
+//                }
+//                else{
+//                    imageName = "In_person_meeting"
+//                    strLocation = " Meeting Url"
+//                }
+//            }
+//
+//        }
         
         var LocationModal = ERSideOHDetailModal();
         LocationModal.headLinetext = "Location"
@@ -196,14 +258,14 @@ class ERSideOHDetailViewController: SuperViewController {
         self.objModalArray.append(LocationModalValue)
         
         var participants = "NA"
-        if (objERSideOpenHourDetail?.participants) != nil{
-            if objERSideOpenHourDetail?.participants!.count ?? 0 > 0 {
-                participants = objERSideOpenHourDetail?.participants![0].name ?? ""
-            }
-            if objERSideOpenHourDetail?.participants!.count ?? 0 > 1 {
-                participants = participants + ", + \((objERSideOpenHourDetail?.participants!.count ?? 0) - 1 )"
-            }
-        }
+//        if (objERSideOpenHourDetail?.participants) != nil{
+//            if objERSideOpenHourDetail?.participants!.count ?? 0 > 0 {
+//                participants = objERSideOpenHourDetail?.participants![0].name ?? ""
+//            }
+//            if objERSideOpenHourDetail?.participants!.count ?? 0 > 1 {
+//                participants = participants + ", + \((objERSideOpenHourDetail?.participants!.count ?? 0) - 1 )"
+//            }
+//        }
         
         var privateModal = ERSideOHDetailModal();
         privateModal.headLinetext = "Private open hours \n Total Students visible for this open hours"

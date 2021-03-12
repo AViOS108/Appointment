@@ -215,9 +215,6 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     
     
     
-    
-    
-    
     func callViewModal()  {
         viewInner.isHidden = true
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
@@ -918,10 +915,7 @@ extension ERSideOpenCreateEditSecondVC{
         
         let objERSideStudentListViewController = ERSideStudentListViewController.init(nibName: "ERSideStudentListViewController", bundle: nil)
         objERSideStudentListViewController.objStudentDetailModal = self.objStudentDetailModalI
-        
-       
-        
-        
+        objERSideStudentListViewController.objStudentDetailModalSelected = self.objStudentDetailModalSelected
         objERSideStudentListViewController.delegate = self
         
         
@@ -974,10 +968,6 @@ extension ERSideOpenCreateEditSecondVC{
 
 extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate {
     
-    
-    
-    
-   
     
     func selectedStudentPrivateHour(objStudentDetailModalSelected: StudentDetailModal) {
         

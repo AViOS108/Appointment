@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ERSideStudentListViewController" customModule="Appointment" customModuleProvider="target">
             <connections>
+                <outlet property="btnAddStudent" destination="Zib-jJ-qkc" id="tE9-q1-mOS"/>
                 <outlet property="btnFilter" destination="fOm-iF-BsH" id="zPl-R0-0dO"/>
                 <outlet property="btnSelectAll" destination="oTC-ZZ-L2W" id="oHI-ZQ-vAb"/>
                 <outlet property="btnStudentListNext" destination="Ma2-LU-3qs" id="mR2-fo-zUp"/>
@@ -63,6 +64,7 @@
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dMR-qM-ie6">
                     <rect key="frame" x="8" y="144" width="398" height="710"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-40"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="2SV-dv-AHt"/>
                         <outlet property="delegate" destination="-1" id="2xL-6l-DZe"/>
@@ -130,6 +132,13 @@
                         <constraint firstItem="680-8F-JhY" firstAttribute="leading" secondItem="oTC-ZZ-L2W" secondAttribute="trailing" constant="4" id="ofk-1L-iCA"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zib-jJ-qkc">
+                    <rect key="frame" x="20" y="806" width="374" height="48"/>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="btnAddStudentTapped:" destination="-1" eventType="touchUpInside" id="Td5-GQ-HvK"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
@@ -137,11 +146,15 @@
                 <constraint firstItem="Atf-n3-AsX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="DQ1-Bt-dE2"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Atf-n3-AsX" secondAttribute="trailing" id="Lot-57-ibc"/>
                 <constraint firstItem="dMR-qM-ie6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="V4Q-Ji-v64"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zib-jJ-qkc" secondAttribute="trailing" constant="20" id="evK-k5-WEe"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Zib-jJ-qkc" secondAttribute="bottom" constant="8" id="fGy-7O-5SW"/>
                 <constraint firstItem="7ez-0q-Y9V" firstAttribute="top" secondItem="Atf-n3-AsX" secondAttribute="bottom" id="faZ-t0-YSp"/>
                 <constraint firstItem="7ez-0q-Y9V" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="klk-Ta-oBY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7ez-0q-Y9V" secondAttribute="trailing" constant="10" id="nLD-NQ-xpI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="dMR-qM-ie6" secondAttribute="trailing" constant="8" id="nUQ-uq-142"/>
                 <constraint firstItem="dMR-qM-ie6" firstAttribute="top" secondItem="7ez-0q-Y9V" secondAttribute="bottom" id="pHy-r8-f6g"/>
+                <constraint firstItem="Zib-jJ-qkc" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.053482" id="ufP-yC-EuW"/>
+                <constraint firstItem="Zib-jJ-qkc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="wF5-UL-GyF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="dMR-qM-ie6" secondAttribute="bottom" constant="8" id="xLK-38-Gqz"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

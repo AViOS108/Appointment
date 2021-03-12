@@ -17,6 +17,7 @@ protocol ERSideStudentListTableViewCellDelegate {
 class ERSideStudentListTableViewCell: UITableViewCell {
     
     
+    @IBOutlet weak var viewSeperator: UIView!
     var delegateI : ERSideStudentListTableViewCellDelegate!
     
     @IBOutlet weak var viewContainer: UIView!
@@ -60,6 +61,7 @@ class ERSideStudentListTableViewCell: UITableViewCell {
     
     func customization()  {
         
+        viewSeperator.backgroundColor = ILColor.color(index: 54)
         lblNameInitial.layoutIfNeeded()
         let radius =  (lblNameInitial.frame.height)/2
         lblNameInitial.textAlignment = .center

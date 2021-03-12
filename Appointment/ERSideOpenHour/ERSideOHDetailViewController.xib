@@ -34,26 +34,26 @@
                     <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JAf-kn-qJI">
-                            <rect key="frame" x="0.0" y="8" width="1024" height="60"/>
+                            <rect key="frame" x="0.0" y="8" width="1024" height="44"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKn-NI-29U">
-                                    <rect key="frame" x="8" y="8" width="806" height="44"/>
+                                    <rect key="frame" x="18" y="8" width="856" height="28"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gi0-aa-QEn">
-                                    <rect key="frame" x="930" y="8" width="80" height="44"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gi0-aa-QEn">
+                                    <rect key="frame" x="950" y="8" width="60" height="28"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="80" id="o4o-eV-txE"/>
+                                        <constraint firstAttribute="width" constant="60" id="o4o-eV-txE"/>
                                     </constraints>
                                     <state key="normal" title="Button"/>
                                     <connections>
                                         <action selector="btnDeleteTapped:" destination="-1" eventType="touchUpInside" id="qZK-ba-4iF"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOc-eh-zBZ">
-                                    <rect key="frame" x="822" y="8" width="80" height="44"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOc-eh-zBZ">
+                                    <rect key="frame" x="882" y="8" width="60" height="28"/>
                                     <state key="normal" title="Button"/>
                                     <connections>
                                         <action selector="btnEditTapped:" destination="-1" eventType="touchUpInside" id="yh2-Mb-hbA"/>
@@ -63,9 +63,9 @@
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstItem="uOc-eh-zBZ" firstAttribute="top" secondItem="JAf-kn-qJI" secondAttribute="top" constant="8" id="9ak-5I-ckO"/>
-                                <constraint firstItem="Gi0-aa-QEn" firstAttribute="leading" secondItem="uOc-eh-zBZ" secondAttribute="trailing" constant="28" id="D5f-zu-fB0"/>
+                                <constraint firstItem="Gi0-aa-QEn" firstAttribute="leading" secondItem="uOc-eh-zBZ" secondAttribute="trailing" constant="8" id="D5f-zu-fB0"/>
                                 <constraint firstItem="iKn-NI-29U" firstAttribute="top" secondItem="JAf-kn-qJI" secondAttribute="top" constant="8" id="Db2-rN-pRZ"/>
-                                <constraint firstItem="iKn-NI-29U" firstAttribute="leading" secondItem="JAf-kn-qJI" secondAttribute="leading" constant="8" id="Ght-72-5MQ"/>
+                                <constraint firstItem="iKn-NI-29U" firstAttribute="leading" secondItem="JAf-kn-qJI" secondAttribute="leading" constant="18" id="Ght-72-5MQ"/>
                                 <constraint firstItem="uOc-eh-zBZ" firstAttribute="leading" secondItem="iKn-NI-29U" secondAttribute="trailing" constant="8" id="Lj5-Xr-GuP"/>
                                 <constraint firstAttribute="bottom" secondItem="iKn-NI-29U" secondAttribute="bottom" constant="8" id="TSq-aE-OJ0"/>
                                 <constraint firstAttribute="bottom" secondItem="uOc-eh-zBZ" secondAttribute="bottom" constant="8" id="V41-z4-jN9"/>
@@ -73,14 +73,14 @@
                                 <constraint firstAttribute="trailing" secondItem="Gi0-aa-QEn" secondAttribute="trailing" constant="14" id="hkZ-OY-Aou"/>
                                 <constraint firstItem="Gi0-aa-QEn" firstAttribute="top" secondItem="JAf-kn-qJI" secondAttribute="top" constant="8" id="kI6-Iw-ZVh"/>
                                 <constraint firstItem="Gi0-aa-QEn" firstAttribute="width" secondItem="uOc-eh-zBZ" secondAttribute="width" id="oe1-jJ-mBJ"/>
-                                <constraint firstAttribute="height" constant="60" id="t07-Be-lBn"/>
+                                <constraint firstAttribute="height" constant="44" id="t07-Be-lBn"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zMr-EB-O9b">
-                            <rect key="frame" x="10" y="78" width="1004" height="1150"/>
+                            <rect key="frame" x="10" y="62" width="1004" height="1166"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kth-VJ-MGH">
-                                    <rect key="frame" x="0.0" y="8" width="1004" height="1142"/>
+                                    <rect key="frame" x="0.0" y="8" width="1004" height="1158"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <connections>
                                         <outlet property="dataSource" destination="-1" id="v6w-Es-cWm"/>

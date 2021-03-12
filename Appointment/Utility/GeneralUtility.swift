@@ -297,27 +297,23 @@ class GeneralUtility {
     }
     
     
-    class func customeNavigationBarWithBackAddButton(viewController: UIViewController,title:String){
+    class func customeNavigationBarWithBackAndSelectedStudent(viewController: UIViewController,title:String,numberStudent:String){
         let backButton = UIButton(type: .custom)
         backButton.contentMode = .scaleAspectFit
         //        searchButton.backgroundColor = .red
         backButton.addTarget(viewController, action: #selector(SuperViewController.buttonClicked(sender:)), for: .touchUpInside)
-        backButton.setImage(UIImage.init(named: "Back"), for: .normal)
-        backButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: -30, bottom: 0, right: 0)
-        backButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: -40, bottom: 0, right: 0)
-        
-        backButton.setTitle(title, for: .normal)
-        backButton.semanticContentAttribute = .forceLeftToRight
+        backButton.setImage(UIImage.init(named: "noun_Cross"), for: .normal)
+
+        backButton.setTitle("  " + title, for: .normal)
+           backButton.sizeToFit()
         
         let back =  UIBarButtonItem(customView: backButton)
         viewController.navigationItem.leftBarButtonItem = back
-        
-        let addButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
-        addButton.contentMode = .scaleAspectFit
-        //        searchButton.backgroundColor = .red
-        addButton.addTarget(viewController, action: #selector(SuperViewController.selectedStudentPrivateHour(sender:)), for: .touchUpInside)
-        addButton.setImage(UIImage.init(named: "Add"), for: .normal)
-        let addButtonBarButton =  UIBarButtonItem(customView: addButton)
+        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
+        let lblStudentCount = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+        UILabel.labelUIHandling(label: lblStudentCount, text: " Selected : \(numberStudent)", textColor: .white, isBold: false, fontType: fontMedium)
+        lblStudentCount.contentMode = .scaleAspectFit
+        let addButtonBarButton =  UIBarButtonItem(customView: lblStudentCount)
         viewController.navigationItem.rightBarButtonItems = [addButtonBarButton];
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
     }

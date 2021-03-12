@@ -15,16 +15,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNO-xf-eQw">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
+                    <rect key="frame" x="0.0" y="8" width="414" height="43"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AB0-Zh-lbf">
-                            <rect key="frame" x="8" y="10" width="360" height="39"/>
+                            <rect key="frame" x="8" y="10" width="360" height="23"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ReG-O1-xxT">
-                            <rect key="frame" x="376" y="12.5" width="30" height="34"/>
+                            <rect key="frame" x="376" y="4.5" width="30" height="34"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="34" id="9hH-J4-RKN"/>
                                 <constraint firstAttribute="width" constant="30" id="kCE-RP-AvW"/>
@@ -47,9 +47,9 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="iNO-xf-eQw" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="5zs-sg-0ub"/>
+                <constraint firstItem="iNO-xf-eQw" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="-8" id="5zs-sg-0ub"/>
                 <constraint firstItem="iNO-xf-eQw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ZLe-7L-Z5d"/>
-                <constraint firstItem="iNO-xf-eQw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gaS-7s-S3a"/>
+                <constraint firstItem="iNO-xf-eQw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="gaS-7s-S3a"/>
                 <constraint firstItem="iNO-xf-eQw" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="isj-Fl-rq9"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

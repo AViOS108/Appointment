@@ -467,9 +467,14 @@ class Urls {
     
     
     func erSideAppointment() -> String{
-        return "\(typeEvent1)community/appointment-slots/list"
+        return "\(typeEvent2)community/appointment/list"
         
     }
+    
+    func erSideOPenHourList() -> String{
+           return "\(typeEvent2)community/open-hour/list"
+           
+       }
     
     func erSideAppointmentAccept(id: String) -> String{
            return "\(typeEvent1)community/appointment-slots/requests/" + "\(id)" + "/accept"
@@ -495,7 +500,7 @@ class Urls {
           }
     
     func erSideOPenHourDetail(id: String) -> String{
-        return "\(typeEvent1)community/appointment-slots/" + "\(id)"
+        return "\(typeEvent2)community/open-hour/" + "\(id)"
         
     }
     

@@ -26,6 +26,7 @@ class ERSideFilterTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblSelectFilter: UILabel!
     
+    @IBOutlet weak var viewContainer: UIView!
     @IBAction func btnSelectFilterTapped(_ sender: Any) {
         let isSelected  = !(objTagValue?.isSelected ?? false)
         

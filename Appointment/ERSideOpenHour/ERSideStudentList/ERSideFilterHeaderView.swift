@@ -47,10 +47,10 @@ class ERSideFilterHeaderView: UITableViewHeaderFooterView {
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
 
         if objERFilterTag.isExpand  {
-            btnExpand.setImage(UIImage.init(named: "dropdown"), for: .normal);
+            btnExpand.setImage(UIImage.init(named: "Drop-down_arrow"), for: .normal);
         }
         else{
-            btnExpand.setImage(UIImage.init(named: "dropdown"), for: .normal);
+            btnExpand.setImage(UIImage.init(named: "Drop-down_arrow"), for: .normal);
         }
     }
     

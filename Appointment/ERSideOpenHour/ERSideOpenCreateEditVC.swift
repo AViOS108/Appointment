@@ -165,6 +165,9 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
 
     // TIMEZONE
     
+    
+    @IBOutlet weak var btnTimeZone: UIButton!
+    
     @IBOutlet weak var lblTimeZone: UILabel!
     @IBOutlet weak var txtTimeZone: LeftPaddedTextField!
     var   timeZoneViewController : TimeZoneViewController!
@@ -174,6 +177,8 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     @IBOutlet weak var lblSlot: UILabel!
     @IBOutlet weak var txtSlotDuration: LeftPaddedTextField!
     
+    @IBOutlet weak var viewSlotDuration: UIView!
+    @IBOutlet weak var nslayoutAppointmentViewHeight: NSLayoutConstraint!
     //MaximumAppo
     @IBOutlet weak var lblMaximumAppo: UILabel!
 
@@ -271,7 +276,9 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         self.navigationController?.popViewController(animated: false)
        }
        
-    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
     
     func callViewModal()
     {
@@ -320,6 +327,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         case .duplicateSetHour:
             self.timeSlotDuplicate()
             changeForDuplicate()
+            
             break
         default:
             break
@@ -335,17 +343,24 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     
     func changeForDuplicate() {
         
+        self.viewSlotDuration.isHidden = true
+        nslayoutAppointmentViewHeight.constant = 0
+        
         if txtDateSelected.text!.isEmpty  && txtDateDuplicateto.text!.isEmpty {
             
-            self.txtSlotDuration.isUserInteractionEnabled = false
-            self.txtSlotDuration.isEnabled = false
-            self.txtSlotDuration.alpha = 0.6
+            self.txtPurpose.isUserInteractionEnabled = false
+            self.txtPurpose.isEnabled = false
+            self.txtPurpose.alpha = 0.6
             
             self.txtTimeZone.isUserInteractionEnabled = false
             self.txtTimeZone.isEnabled = false
             self.txtTimeZone.alpha = 0.6
             
-            
+            btnPurpose.isUserInteractionEnabled = false
+             btnPurpose.isEnabled = false
+            btnTimeZone.isUserInteractionEnabled = false
+             btnTimeZone.isEnabled = false
+
             lblPurpose.alpha = 0.6
             lblTimeZone.alpha = 0.6;
             lblTimingFrom.alpha = 0.6
@@ -353,13 +368,18 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         }
         else{
             
-            self.txtSlotDuration.isUserInteractionEnabled = true
-            self.txtSlotDuration.isEnabled = true
-            self.txtSlotDuration.alpha = 1
+            self.txtPurpose.isUserInteractionEnabled = true
+            self.txtPurpose.isEnabled = true
+            self.txtPurpose.alpha = 1
             
             self.txtTimeZone.isUserInteractionEnabled = true
             self.txtTimeZone.isEnabled = true
             self.txtTimeZone.alpha = 1
+            
+            btnPurpose.isUserInteractionEnabled = true
+            btnPurpose.isEnabled = true
+            btnTimeZone.isUserInteractionEnabled = true
+            btnTimeZone.isEnabled = true
             
             
             lblPurpose.alpha = 1
@@ -1081,10 +1101,10 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
         
         for purpose in (self.objERSideOpenHourDetail?.purposes)!{
             
-            let selectedId = searchArrayPurpose.filter({$0.id == purpose.userPurposeID})[0]
+            let selectedId = searchArrayPurpose.filter({$0.title == purpose.purposeText})[0]
             selectedId.isSelected = true
-            let index = self.searchArrayPurpose.firstIndex(where: {$0.id == purpose.userPurposeID}) ?? 0
-            self.searchArrayPurpose.removeAll(where: {$0.id == purpose.userPurposeID})
+            let index = self.searchArrayPurpose.firstIndex(where: {$0.title == purpose.purposeText}) ?? 0
+            self.searchArrayPurpose.removeAll(where: {$0.title == purpose.purposeText})
             self.searchArrayPurpose.insert(selectedId, at: index)
         }
         
@@ -1471,18 +1491,18 @@ extension ERSideOpenCreateEditVC{
         self.txtSlotDuration.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
         txtSlotDuration.rightViewMode = .always;
         
-        if self.objERSideOpenHourDetail != nil{
-            let slotDurationValue = Int(self.objERSideOpenHourDetail?.slotDuration ?? "0")!/30
-            self.txtSlotDuration.isUserInteractionEnabled = false
-            self.txtSlotDuration.isEnabled = false
-            self.txtSlotDuration.text =  "\(slotDurationValue) mins"
-            self.txtSlotDuration.alpha = 0.6
-        }
-        else{
-            self.txtSlotDuration.isUserInteractionEnabled = true
-            self.txtSlotDuration.isEnabled = true
-            self.txtSlotDuration.alpha = 1
-        }
+//        if self.objERSideOpenHourDetail != nil{
+//            let slotDurationValue = Int(self.objERSideOpenHourDetail?.slotDuration ?? "0")!/30
+//            self.txtSlotDuration.isUserInteractionEnabled = false
+//            self.txtSlotDuration.isEnabled = false
+//            self.txtSlotDuration.text =  "\(slotDurationValue) mins"
+//            self.txtSlotDuration.alpha = 0.6
+//        }
+//        else{
+//            self.txtSlotDuration.isUserInteractionEnabled = true
+//            self.txtSlotDuration.isEnabled = true
+//            self.txtSlotDuration.alpha = 1
+//        }
         
     }
     

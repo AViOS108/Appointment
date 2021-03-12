@@ -19,17 +19,7 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
     
     
     override   func selectedStudentPrivateHour(sender: UIButton) {
-        if self.objStudentDetailModalSelected != nil && self.objStudentDetailModalSelected?.items?.count ?? 0 > 0{
-            
-            delegate.selectedStudentPrivateHour(objStudentDetailModalSelected: self.objStudentDetailModalSelected!)
-            
-            self.navigationController?.popViewController(animated: true)
-            
-            
-        }
-        else{
-            CommonFunctions().showError(title: "", message: "Please select any student")
-        }
+      
     }
     
     
@@ -61,23 +51,46 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
     @IBAction func btnFilterTapped(_ sender: Any) {
         
         let objERFilterViewController = ERFilterViewController.init(nibName: "ERFilterViewController", bundle: nil)
-        objERFilterViewController.modalPresentationStyle = .overFullScreen
+//        objERFilterViewController.modalPresentationStyle = .overFullScreen
         objERFilterViewController.objERFilterTag = self.objERFilterTag
         objERFilterViewController.delegate = self
-        self.present(objERFilterViewController, animated: false) {
-            
-        }
+        self.navigationController?.pushViewController(objERFilterViewController, animated: false)
+//        self.present(objERFilterViewController, animated: false) {
+//
+//        }
     }
     
     var objStudentDetailModalSelected : StudentDetailModal?
     var objStudentDetailModal : StudentDetailModal?
-    var objStudentDetailModalConst : StudentDetailModal?
-
+    var objStudentDetailModalCopy : StudentDetailModal?
+var isSearchEnabled = false
     @IBOutlet weak var tblView: UITableView!
+    
+    @IBOutlet weak var btnAddStudent: UIButton!
+    
+    @IBAction func btnAddStudentTapped(_ sender: Any) {
+        
+        if self.objStudentDetailModalSelected != nil && self.objStudentDetailModalSelected?.items?.count ?? 0 > 0{
+            
+            delegate.selectedStudentPrivateHour(objStudentDetailModalSelected: self.objStudentDetailModalSelected!)
+            
+            self.navigationController?.popViewController(animated: true)
+            
+            
+        }
+        else{
+            CommonFunctions().showError(title: "", message: "Please select any student")
+        }
+        
+        
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tblView.register(UINib.init(nibName: "ERSideStudentListTableViewCell", bundle: nil), forCellReuseIdentifier: "ERSideStudentListTableViewCell")
+        btnAddStudent.isHidden = true
         
         txtSearchBar.barTintColor = UIColor.clear
         txtSearchBar.backgroundColor = UIColor.clear
@@ -182,19 +195,10 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
                 return false
             }
         })
-        
-        if objStudentDetailModal?.items!.filter({$0.isSelected == true}).count == 20 {
-            isAllStudentSelected = true
-        }
-        else
-        {
-            isAllStudentSelected = false
-        }
-        
+       
         self.allStudentSelectedImage()
         
-        
-        self.objStudentDetailModalConst = self.objStudentDetailModal
+        self.objStudentDetailModalCopy = self.objStudentDetailModal
         
     }
     
@@ -223,10 +227,12 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
         
         self.viewSelection.borderWithWidth(1, color: ILColor.color(index: 48))
         
-        GeneralUtility.customeNavigationBarWithBackAddButton(viewController: self, title: "Open Hours")
+        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+       
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16)
+        UIButton.buttonUIHandling(button: btnAddStudent, text: "Add", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3, fontType: fontHeavy)
         
-        
-        
+        btnAddStudent.isHidden = false
         
         modalRedefine()
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13),  let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
@@ -273,14 +279,27 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
 extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegate{
     
     @IBAction func btnSelectAllTapped(_ sender: Any) {
-           
-            isAllStudentSelected  = !isAllStudentSelected;
-            self.allStudentSelectedImage()
-           changeStudentSelectedModal(isSelected: isAllStudentSelected)
-       }
+        
+        isAllStudentSelected  = !isAllStudentSelected;
+        changeStudentSelectedModal(isSelected: isAllStudentSelected)
+        if isAllStudentSelected {
+            btnSelectAll.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+            
+        }
+        else{
+            btnSelectAll.setImage(UIImage.init(named: "check_box"), for: .normal);
+        }
+    }
        
     
     func allStudentSelectedImage(){
+        if objStudentDetailModal?.items!.filter({$0.isSelected == true}).count == objStudentDetailModalCopy?.items?.count {
+            isAllStudentSelected = true
+        }
+        else
+        {
+            isAllStudentSelected = false
+        }
         if isAllStudentSelected {
             btnSelectAll.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
             
@@ -325,13 +344,52 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
                    index = index + 1;
                }
            }
+        
+        if isSearchEnabled {
+                   makeCopyModalInSync()
+               }
+        
+         GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+        
+        
            self.tblView.reloadData()
            
        }
     
     
+    func makeCopyModalInSync(){
+        
+        
+        let arrStudentListView = self.objStudentDetailModal!.items!
+        
+        _ =    arrStudentListView.filter({
+            let item = $0;
+            let arrFiltered =  objStudentDetailModalCopy!.items!.filter({
+                $0.id == item.id
+            })
+            if arrFiltered.count > 0{
+                
+                var selectedId = objStudentDetailModalCopy?.items!.filter({$0.id == item.id})[0]
+                selectedId!.isSelected = item.isSelected
+                
+                let index = self.objStudentDetailModalCopy?.items!.firstIndex(where: {$0.id == item.id}) ?? 0
+                
+                self.objStudentDetailModalCopy?.items!.removeAll(where: {$0.id == item.id})
+                self.objStudentDetailModalCopy?.items!.insert(selectedId!, at: index)
+                return true
+            }
+            else{
+                return false
+            }
+        })
+        
+        
+    }
+    
+    
+    
     func studentSelected(items: StudentDetailModalItem,isSelectedStudent: Bool) {
-      
+        
         if isSelectedStudent{
             objStudentDetailModalSelected?.total = self.objStudentDetailModal?.total
             objStudentDetailModalSelected?.items?.append(items)
@@ -353,15 +411,14 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
             
         }
         
-        if objStudentDetailModal?.items!.filter({$0.isSelected == true}).count == 20 {
-                   isAllStudentSelected = true
-               }
-               else
-               {
-                    isAllStudentSelected = false
-               }
-               
-               self.allStudentSelectedImage()
+        
+        
+        self.allStudentSelectedImage()
+        
+        if isSearchEnabled {
+            makeCopyModalInSync()
+        }
+        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
         self.tblView.reloadData()
     }
     
@@ -370,38 +427,53 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
         
         if searchBar.text != ""
         {
-            let arrItems =     self.objStudentDetailModalConst?.items?.filter({
-                     
+            if isSearchEnabled {
+                
+            }
+            else{
+                self.objStudentDetailModalCopy = self.objStudentDetailModal
+            }
+            
+            isSearchEnabled = true
+            
+            
+            let arrItems =     self.objStudentDetailModalCopy?.items?.filter({
+                
                 let primaryEmail = $0.email!.primary?.lowercased() ?? ""
                 let secondaryEmail = $0.email!.secondary?.lowercased() ?? ""
                 
                 let firstName = $0.firstName?.lowercased() ?? ""
                 let lastName  = $0.lastName?.lowercased() ?? ""
-
+                
                 
                 return ( (firstName.contains(searchBar.text!.lowercased())) || (lastName.contains(searchBar.text!.lowercased())) || (primaryEmail.contains(searchBar.text!.lowercased()))  || (secondaryEmail.contains(searchBar.text!.lowercased()) || (firstName + lastName).contains(searchBar.text!.lowercased())  || (firstName + " " + lastName).contains(searchBar.text!.lowercased()))
-                
-                
-                
+                    
+                    
+                    
                 )
-                   })
-                   self.objStudentDetailModal?.items = arrItems ;
-                   tblView.reloadData()
-                   searchBar.resignFirstResponder();
+            })
+            self.objStudentDetailModal?.items = arrItems ;
+            tblView.reloadData()
+            searchBar.resignFirstResponder();
             
         }
         
-       
+        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
-           
-            self.objStudentDetailModal = self.objStudentDetailModalConst
+            
+            isSearchEnabled = false
+            
+            self.objStudentDetailModal = self.objStudentDetailModalCopy
+            
+            self.allStudentSelectedImage()
+            
             tblView.reloadData()
             
         }
-    
+        
     }
     
     

@@ -59,7 +59,7 @@ class ErSideOpenHourTC: UITableViewCell {
         viewController.present(alert, animated: true, completion: nil)
     }
     
-    var results: ERSideAppointmentModalResult?
+    var results: ResultERSideOPenHourModal?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
