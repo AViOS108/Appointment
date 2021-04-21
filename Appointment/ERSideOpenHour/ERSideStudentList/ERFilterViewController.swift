@@ -256,12 +256,7 @@ extension ERFilterViewController: ERSideFilterTableViewCellDelegate{
         
         
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
-        
-        
-    }
-    
+  
     
     func numberOfSections(in tableView: UITableView) -> Int{
         

@@ -35,7 +35,7 @@ struct SectionHeaderER: Codable {
 
 // MARK: - Result
 struct ERSideAppointmentModalResult: Codable {
-    let id: String?
+    let id: Int?
     var typeERSide : Int?
     let eventTypeID: Int?
     let title, resultDescription, timezone, startDatetimeUTC: String?
@@ -43,7 +43,7 @@ struct ERSideAppointmentModalResult: Codable {
     let duration: Int?
     let state, createdAt, lastChangedAt, createdByID: String?
     let createdByType, updatedByID, updatedByType: String?
-    let type: TypeClass?
+    let type: String?
     let locations: [Location]?
     let participants: [Participant]?
     let appointmentCountsByDate: [AppointmentCountsByDate]?
@@ -193,15 +193,61 @@ struct ResultERSideOPenHourModal: Codable {
 
 // MARK: - AppointmentConfig
 struct AppointmentConfig: Codable {
-    let requestApprovalType, groupSizeLimit: String?
-    let bookingDeadlineDaysBefore, bookingDeadlineTimeonDay : String?
+    var requestApprovalType:String?
+    var groupSizeLimit: String?
+    var bookingDeadlineDaysBefore, bookingDeadlineTimeonDay : String?
     enum CodingKeys: String, CodingKey {
         case requestApprovalType = "request_approval_type"
         case groupSizeLimit = "group_size_limit"
         case bookingDeadlineDaysBefore = "booking_deadline_days_before"
         case bookingDeadlineTimeonDay = "booking_deadline_time_on_day"
-
     }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        do {
+                 self.requestApprovalType = try container.decode(String.self, forKey: .requestApprovalType)
+             } catch  {
+                 self.requestApprovalType = ""
+             }
+        
+        do {
+            self.groupSizeLimit = try container.decode(String.self, forKey: .groupSizeLimit)
+        } catch  {
+            do {
+               self.groupSizeLimit = try String( container.decode(Int.self, forKey: .groupSizeLimit))
+            } catch  {
+                self.groupSizeLimit = ""
+            }
+        }
+        
+        do {
+              self.bookingDeadlineDaysBefore = try container.decode(String.self, forKey: .bookingDeadlineDaysBefore)
+        } catch  {
+            self.bookingDeadlineDaysBefore = ""
+        }
+        do {
+               self.bookingDeadlineTimeonDay = try container.decode(String.self, forKey: .bookingDeadlineTimeonDay)
+        } catch  {
+            self.bookingDeadlineTimeonDay = ""
+
+        }
+       
+    }
+    
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = try encoder.container(keyedBy: CodingKeys.self)
+//        try container.encode( self.requestApprovalType, forKey: .requestApprovalType)
+//        try container.encode(self.bookingDeadlineDaysBefore, forKey: .bookingDeadlineDaysBefore)
+//        try container.encode(self.bookingDeadlineTimeonDay, forKey: .bookingDeadlineTimeonDay)
+//        do {
+//            try container.encode( self.groupSizeLimit, forKey: .groupSizeLimit)
+//        } catch  {
+//            try container.encode(self.groupSizeLimit, forKey: .groupSizeLimit)
+//        }
+    }
+    
 }
 
 

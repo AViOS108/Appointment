@@ -69,7 +69,7 @@ class AppointmentDetailViewController: SuperViewController,UITableViewDelegate,U
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "NotesAppointmentTableViewCell", for: indexPath) as! NotesAppointmentTableViewCell
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            cell.appoinmentDetailAllModalObj = self.appoinmentDetailAllModalObj
+//            cell.appoinmentDetailAllModalObj = self.appoinmentDetailAllModalObj
             cell.viewController = self
             cell.delegate = self
             cell.customization()
@@ -80,7 +80,7 @@ class AppointmentDetailViewController: SuperViewController,UITableViewDelegate,U
         else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "NextStepAppointmentTableViewCell", for: indexPath) as! NextStepAppointmentTableViewCell
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            cell.nextModalObj = self.appoinmentDetailAllModalObj?.nextModalObj
+//            cell.nextModalObj = self.appoinmentDetailAllModalObj?.nextModalObj
             cell.viewController = self
             cell.customization()
             cell.layoutIfNeeded()
@@ -134,7 +134,11 @@ extension AppointmentDetailViewController : AppoinmentdetailViewModalDeletgate{
 
 
 extension AppointmentDetailViewController : NotesAppointmentTableViewCellDelegate,NoteCollectionViewCellDelegate,EditNotesViewControllerDelegate{
+    func addNotes() {
+        
+    }
     
+   
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            
@@ -146,7 +150,7 @@ extension AppointmentDetailViewController : NotesAppointmentTableViewCellDelegat
        }
     
     
-    func editDeleteFunctionality(objModel : NotesResult?, isMyNotes: Bool?,isDeleted:Bool) {
+    func editDeleteFunctionality(objModel : NotesModalNewResult?, isMyNotes: Bool?,isDeleted:Bool) {
         if isDeleted{
             let objAppointment = AppoinmentdetailViewModal()
             activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.DeletingNotes)
@@ -160,11 +164,11 @@ extension AppointmentDetailViewController : NotesAppointmentTableViewCellDelegat
                     self.refreshApi()
                 }
             }
-            objAppointment.deleteNotes(objnoteModal: objModel)
+//            objAppointment.deleteNotes(objnoteModal: objModel)
         }
         else{
             let objEditViewController = EditNotesViewController.init(nibName: "EditNotesViewController", bundle: nil)
-            objEditViewController.objNoteModal = objModel
+//            objEditViewController.objNoteModal = objModel
             objEditViewController.delegate = self
             objEditViewController.identifier = appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.identifier
             objEditViewController.modalPresentationStyle = .overFullScreen
@@ -175,22 +179,7 @@ extension AppointmentDetailViewController : NotesAppointmentTableViewCellDelegat
     
    
     
-    func changeNumberOfNotes(isMyCoach: Bool) {
-        var appointmentAllMOdal = self.appoinmentDetailAllModalObj;
-        if isMyCoach{
-            let isexpanble = appointmentAllMOdal?.noteModalObj?.isExpandableNotes
-            appointmentAllMOdal?.noteModalObj?.isExpandableNotes = !(isexpanble ?? true)
-        }
-        else{
-            let isexpanble = appointmentAllMOdal?.coachNoteModalObj?.isExpandableNotes
-            appointmentAllMOdal?.coachNoteModalObj?.isExpandableNotes = !(isexpanble ?? true)
-        }
-        
-        self.appoinmentDetailAllModalObj = appointmentAllMOdal
-        
-        self.tblVIew.reloadData()
-        
-    }
+   
     
     func refreshApi(){
         

@@ -8,32 +8,28 @@
 
 import UIKit
 
+enum nextStepViewType {
+    case studentType
+    case erType
+}
+
 class NextStepAppointmentTableViewCell: UITableViewCell {
-    
+    var objNextStepViewType : nextStepViewType!
+
+    @IBAction func btnAddNextStepTapped(_ sender: Any) {
+    }
+    @IBOutlet weak var btnAddNextStep: UIButton!
     @IBOutlet weak var nextStepCollectionView: NextStepCollectionView!
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var lblNextStepHeader: UILabel!
     var viewController : UIViewController!
-    var nextModalObj : [NextStepModal]?
+    var nextModalObj : [NextStepModalNew]?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-    func shadowWithCorner(viewContainer : UIView,cornerRadius: CGFloat)
-         {
-             // corner radius
-             viewContainer.layer.cornerRadius = cornerRadius
-             // border
-             viewContainer.layer.borderWidth = 1.0
-             viewContainer.layer.borderColor = ILColor.color(index: 27).cgColor
-             // shadow
-             viewContainer.layer.shadowColor = ILColor.color(index: 27).cgColor
-             viewContainer.layer.shadowOffset = CGSize(width: 3, height: 3)
-             viewContainer.layer.shadowOpacity = 0.7
-             viewContainer.layer.shadowRadius = 4.0
-         }
-     
+   
     
     func customization()  {
         self.backgroundColor = .clear
@@ -44,9 +40,13 @@ class NextStepAppointmentTableViewCell: UITableViewCell {
         nextStepCollectionView.register(UINib.init(nibName: "NextStepCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NextStepCollectionViewCell")
         nextStepCollectionView.viewController = viewController
         nextStepCollectionView.nextModalObj = self.nextModalObj
+        nextStepCollectionView.objNextStepViewType = self.objNextStepViewType
         nextStepCollectionView.customize()
-        self.viewContainer.backgroundColor = .white
-       self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 3)
+        self.viewContainer.backgroundColor = .clear
+        
+        UIButton.buttonUIHandling(button: btnAddNextStep, text: "Add Next Steps", backgroundColor: .clear, textColor: ILColor.color(index: 23))
+
+//       self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 3)
     }
     
     

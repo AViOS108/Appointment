@@ -60,10 +60,14 @@ class CalenderViewController: UIViewController,UIGestureRecognizerDelegate {
             }
             return true
        }
-    
-    
-    
-    
-    
-    
-}
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+              
+              super.viewWillTransition(to: size, with: coordinator)
+             self.dismiss(animated: false) {
+                       
+                   }
+           coordinator.animate(alongsideTransition: nil, completion: { (_) in
+              })
+              
+          }
+    }

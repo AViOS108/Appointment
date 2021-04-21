@@ -15,11 +15,23 @@ protocol  DeleteParticularStartTimeViewDelegate {
 }
 
 
+enum timeDifference : Int {
+    case fifteenmin
+    case thiryMin
+    case fortyfiveMin
+    case sixty
+    case customMin
+
+}
+
+
 class ERStartEndTImeView: UIView {
     
     @IBOutlet weak var viewContainer: UIView!
     
     var delegate : DeleteParticularStartTimeViewDelegate!
+    
+    var objtimeDifference : timeDifference!
     
     var viewconTroller : UIViewController!
     @IBOutlet weak var txtStartTime: UITextField!
@@ -30,7 +42,8 @@ class ERStartEndTImeView: UIView {
     
     var dicstartTime :Dictionary<String,String>!
     
-    
+    var isBothTimeField : Bool = false
+    var isTimeValid = false
     
     @IBAction func btnDeleteTapped(_ sender: UIButton) {
         delegate.deleteViewWith(tag: sender.tag)
@@ -72,8 +85,8 @@ class ERStartEndTImeView: UIView {
         txtEndTime.leftViewMode = .always;
         
        
-        self.txtStartTime.text =  "HH:MM"
-        self.txtEndTime .text =  "HH:MM"
+        self.txtStartTime.placeholder =  "HH:MM"
+        self.txtEndTime .placeholder =  "HH:MM"
         datePickerTiming(txtInput: txtStartTime, tag: 998)
         datePickerTiming(txtInput: txtEndTime, tag: 999)
 
@@ -118,17 +131,94 @@ class ERStartEndTImeView: UIView {
             let dateFormatter = DateFormatter.init();
             dateFormatter.dateFormat = "hh:mm a"
             txtStartTime.text = dateFormatter.string(from: sender.date);
-//            delegate.addValueToDicModal(tag: sender.tag,data: dateFormatter.string(from: sender.date))
+            
+            
+            switch objtimeDifference {
+            case .fifteenmin:
+                txtEndTime.text =  GeneralUtility.timeAddedInParticularComponent(date:  txtStartTime.text!, component: .minute, addingValue: 15)
+
+                isBothTimeField = true
+                break
+            case .thiryMin:
+              txtEndTime.text =   GeneralUtility.timeAddedInParticularComponent(date:  txtStartTime.text!, component: .minute, addingValue: 30)
+              isBothTimeField = true
+
+                break
+            case .fortyfiveMin:
+             txtEndTime.text =     GeneralUtility.timeAddedInParticularComponent(date:  txtStartTime.text!, component: .minute, addingValue: 45)
+             isBothTimeField = true
+
+                break
+            case .sixty:
+             txtEndTime.text =     GeneralUtility.timeAddedInParticularComponent(date:  txtStartTime.text!, component: .minute, addingValue: 60)
+             isBothTimeField = true
+
+                break
+            case .customMin:
+                if txtEndTime.text!.isEmpty{
+                    
+                }
+                else{
+                     isBothTimeField = true
+                   
+                }
+                
+                break
+            default:
+                break
+            }
+            
+            
             
         }
         else{
             let dateFormatter = DateFormatter.init();
             dateFormatter.dateFormat = "hh:mm a"
             txtEndTime.text = dateFormatter.string(from: sender.date);
-//            delegate.addValueToDicModal(tag: sender.tag,data: dateFormatter.string(from: sender.date))
+            switch objtimeDifference {
+            case .fifteenmin:
+                txtStartTime.text =  GeneralUtility.timeAddedInParticularComponent(date:  txtEndTime.text!, component: .minute, addingValue: -15)
+                
+                isBothTimeField = true
+
+                break
+            case .thiryMin:
+                txtStartTime.text =   GeneralUtility.timeAddedInParticularComponent(date:  txtEndTime.text!, component: .minute, addingValue: -30)
+                isBothTimeField = true
+
+                break
+            case .fortyfiveMin:
+                txtStartTime.text =     GeneralUtility.timeAddedInParticularComponent(date:  txtEndTime.text!, component: .minute, addingValue: -45)
+                isBothTimeField = true
+
+                break
+            case .sixty:
+                txtStartTime.text =     GeneralUtility.timeAddedInParticularComponent(date:  txtEndTime.text!, component: .minute, addingValue: -60)
+                isBothTimeField = true
+
+                break
+            case .customMin:
+                if txtStartTime.text!.isEmpty{
+                    
+                }
+                else{
+                     isBothTimeField = true
+                }
+                break
+            default:
+                break
+            }
+            
         }
         
-        
+        if isBothTimeField{
+            if GeneralUtility.differenceBetweenTwoDateInSec(dateFirst: txtStartTime.text!, dateSecond: txtEndTime.text!, dateformatter: "hh:mm a")  < 0 {
+                                   isTimeValid = true
+                               }
+                               else {
+                                    isTimeValid = false
+                               }
+        }
         
     }
         

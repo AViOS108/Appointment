@@ -11,8 +11,10 @@ import UIKit
 
 
 enum viewTypeOpenHour {
-    case setEditOpenHour
+    case setOpenHour
     case duplicateSetHour
+    case editOpenHour
+//    case
 }
 
 
@@ -25,16 +27,16 @@ struct timeSlotDuplicateModal {
 
 struct openHourModalSubmit {
     var userPurposeId : [SearchTextFieldItem]!
-    var startTime,endTime : String?
+    var slotArr : Array<Dictionary<String,String>>!
     var timeZone = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
-    var slotDuration : Int?
-    var maximum_meetings_per_day : Int?
+//    var slotDuration : Int?
+   // var maximum_meetings_per_day : Int?
     var buffer_after_slot,buffer_before_slot : Int?
     var recurrence : String?
     var open_hours_appointment_approval_process : String?
     var locationType : String?
     var locationValue : String?
-    var deadline_days_before :  Int?
+    var deadline_days_before :  String?
     var deadline_time_on_day :  Int?
     var participant = [ParticipantOH]()
 }
@@ -53,7 +55,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     @IBOutlet weak var btnAdd: UIButton!
     
     @IBAction func btnAddTapped(_ sender: Any) {
-        configureStartEndView()
+        configureStartEndView(isnewlyAdded: true)
     }
     
     var objviewTypeOpenHour : viewTypeOpenHour!
@@ -68,6 +70,8 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     @IBOutlet weak var txtDateSelected: UITextField!
     
     @IBOutlet weak var btmDateSelected: UIButton!
+    
+    
     
     @IBAction func btmDateSelectedTapped(_ sender: UIButton) {
         let frame = sender.convert(sender.frame, from:AppDelegate.getDelegate().window)
@@ -87,19 +91,37 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         
         let dateInRequiredFormate =     GeneralUtility.currentDateDetailType4(emiDate: calenderModal.StrDate!, fromDateF: "yyyy-MM-dd", toDateFormate: "dd/MM/yyyy")
         
-        if index == 1{
-            txtDateSelected.text = dateInRequiredFormate
-            changeForDuplicate()
-        }
-        else if index == 2{
-            txtEndsOnDate.text = dateInRequiredFormate
-            changeForDuplicate()
-
+        switch self.objviewTypeOpenHour {
+        case .setOpenHour:
+            if index == 1{
+                txtDateSelected.text = dateInRequiredFormate
+            }
+            else if index == 2{
+                txtEndsOnDate.text = dateInRequiredFormate
+            }
+            break;
+        case .duplicateSetHour:
             
+            if index == 1{
+                txtDateSelected.text = dateInRequiredFormate
+                changeForDuplicate()
+            }
+            else if index == 2{
+                txtEndsOnDate.text = dateInRequiredFormate
+                changeForDuplicate()
+            }
+            else{
+                txtDateDuplicateto.text = dateInRequiredFormate
+            }
+            
+            break;
+        case .editOpenHour:
+            
+            break;
+        default:
+            break;
         }
-        else{
-            txtDateDuplicateto.text = dateInRequiredFormate
-        }
+        
     }
     
     @IBOutlet weak var viewOuter: UIView!
@@ -159,9 +181,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     //Timing
     
     @IBOutlet weak var lblTimingFrom: UILabel!
-//    @IBOutlet weak var txtTimingFrom: UITextField!
     @IBOutlet weak var lblTimingTo: UILabel!
-//    @IBOutlet weak var txtTimingTo: UITextField!
 
     // TIMEZONE
     
@@ -250,7 +270,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
       let pickerView = UIPickerView()
     
     
-    var objERSideOpenHourDetail: ERSideOpenHourDetail?
+    var objERSideOpenHourPrefilledDetail: ERSideOpenHourDetail?
 
     // NSLAYOUTCONSTRAINT
     
@@ -267,6 +287,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         self.viewInner.isHidden = true
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM YYYY"
+        
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
         
         // Do any additional setup after loading the view.
@@ -304,31 +325,31 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         customizSlotDuration()
         customizeReccurrence()
         
-        if objERSideOpenHourDetail != nil{
-            nslayoutConstraintRecurrence.constant = 0
-            nslayoutConstraintTimeZone.constant = 0
-             viewRecurrence.isHidden = true
-            viewMaxAppo.isHidden = true
-            viewTimezone.isHidden = true
-            lblRecurrenceLable.isHidden = true
-            btnRecurrenceEnable.isHidden = true;
-        }
-        else{
-            viewMonthRepeat.isHidden = true
-            nslayoutRepeatMonthViewHeight.constant = 0
-        }
+        
+        viewMonthRepeat.isHidden = true
+        nslayoutRepeatMonthViewHeight.constant = 0
+        
+        
         
         switch objviewTypeOpenHour {
-        case .setEditOpenHour:
-
-            self.configureStartEndView()
-
+        case .setOpenHour:
+            
+            self.configureStartEndView(isnewlyAdded: true)
+            
             break
         case .duplicateSetHour:
             self.timeSlotDuplicate()
             changeForDuplicate()
             
             break
+        case .editOpenHour :
+            self.configureStartEndView(isnewlyAdded: true)
+            self.setPrefilledPurposeValue()
+            nslayoutConstraintRecurrence.constant = 0
+            viewRecurrence.isHidden = true
+            lblRecurrenceLable.isHidden = true
+            btnRecurrenceEnable.isHidden = true;
+            btnAdd.isHidden = true
         default:
             break
         }
@@ -347,49 +368,36 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         nslayoutAppointmentViewHeight.constant = 0
         
         if txtDateSelected.text!.isEmpty  && txtDateDuplicateto.text!.isEmpty {
-            
             self.txtPurpose.isUserInteractionEnabled = false
             self.txtPurpose.isEnabled = false
             self.txtPurpose.alpha = 0.6
-            
             self.txtTimeZone.isUserInteractionEnabled = false
             self.txtTimeZone.isEnabled = false
             self.txtTimeZone.alpha = 0.6
-            
             btnPurpose.isUserInteractionEnabled = false
-             btnPurpose.isEnabled = false
+            btnPurpose.isEnabled = false
             btnTimeZone.isUserInteractionEnabled = false
-             btnTimeZone.isEnabled = false
-
+            btnTimeZone.isEnabled = false
             lblPurpose.alpha = 0.6
             lblTimeZone.alpha = 0.6;
             lblTimingFrom.alpha = 0.6
-            
         }
         else{
-            
             self.txtPurpose.isUserInteractionEnabled = true
             self.txtPurpose.isEnabled = true
             self.txtPurpose.alpha = 1
-            
             self.txtTimeZone.isUserInteractionEnabled = true
             self.txtTimeZone.isEnabled = true
             self.txtTimeZone.alpha = 1
-            
             btnPurpose.isUserInteractionEnabled = true
             btnPurpose.isEnabled = true
             btnTimeZone.isUserInteractionEnabled = true
             btnTimeZone.isEnabled = true
-            
-            
             lblPurpose.alpha = 1
             lblTimeZone.alpha = 1;
             lblTimingFrom.alpha = 1
-            
-            
+
         }
-        
-        
     }
     
     
@@ -400,9 +408,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     
     func commonCustomization(){
         
-//        self.addInputAccessoryForTextFields(textFields: [txtTimingFrom,txtTimingTo], dismissable: true, previousNextable: true)
-        
-        
+    
         self.addInputAccessoryForTextFields(textFields: [txtSlotDuration,txtRepeatCount,txtCategoryTime], dismissable: true, previousNextable: true)
         
         self.addInputAccessoryForTextFields(textFields: [txtRepeatMonth], dismissable: true, previousNextable: true)
@@ -412,9 +418,6 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         
         self.addInputAccessoryForTextFields(textFields: [txtOccurenceCount], dismissable: true, previousNextable: true)
         
-        
-//            btnIncrease.setImage(UIImage.init(named: "Add"), for: .normal)
-//            btnDecrease.setImage(UIImage.init(named: "Minus"), for: .normal)
         registerForKeyboardNotifications()
     }
     
@@ -609,14 +612,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         if PickerSelectedTag == 191{
             arrPicker = ["15 mins","30 mins","45 mins","60 mins","custom"]
             txtSlotDuration.text = arrPicker[row]
-        }
-        else if PickerSelectedTag == 192{
-//            arrPicker = ["0 mins","5 mins","10 mins","15 mins","30 mins","45 mins","60 mins"]
-//            txtBreakBufferBefore.text = arrPicker[row]
-        }
-        else if PickerSelectedTag == 193{
-//            arrPicker = ["0 mins","5 mins","10 mins","15 mins","30 mins","45 mins","60 mins"]
-//            txtBreakBufferAfter.text = arrPicker[row]
+            configureStartEndView(isnewlyAdded: false)
         }
             
         else if PickerSelectedTag == 194{
@@ -662,7 +658,7 @@ extension ERSideOpenCreateEditVC
         
         
         switch objviewTypeOpenHour {
-        case .setEditOpenHour :
+        case .setOpenHour :
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
             {
                 let strHeader = NSMutableAttributedString.init()
@@ -686,16 +682,23 @@ extension ERSideOpenCreateEditVC
             imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
             self.txtDateSelected.leftView = imageView3
             txtDateSelected.leftViewMode = .always;
+            nslayoutHeightDuplicateToView.priority =  UILayoutPriority(rawValue: 1000);
             nslayoutHeightDuplicateToView.constant = 0;
             self.viewDuplicate2.isHidden = true
             let fontDateRe = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13)
             self.txtDateSelected.layer.borderColor = ILColor.color(index: 27).cgColor
-                  self.txtDateSelected.layer.borderWidth = 1;
-
+            self.txtDateSelected.layer.borderWidth = 1;
+            
             txtDateSelected.attributedPlaceholder = NSAttributedString(string: "DD/MM/YYYY", attributes: [
                 .foregroundColor: ILColor.color(index: 40),
                 .font: fontDateRe
             ])
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dateConverted = dateFormatter.string(from: self.dateSelected)
+            
+            let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:dateConverted , fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd/MM/yyyy")
+            txtDateSelected.text = dateSelectedValue
             break
         case .duplicateSetHour:
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15),  let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE15)
@@ -710,7 +713,7 @@ extension ERSideOpenCreateEditVC
                     , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
                 
                 let strInfo = NSAttributedString.init(string: "( Choose the date whose advising appointment slots you wish to duplicate )"
-                    , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontBook]);
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 40),NSAttributedString.Key.font : fontBook]);
                 
                 let para = NSMutableParagraphStyle.init()
                 //            para.alignment = .center
@@ -731,8 +734,8 @@ extension ERSideOpenCreateEditVC
             imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
             self.txtDateSelected.leftView = imageView3
             self.txtDateSelected.layer.borderColor = ILColor.color(index: 27).cgColor
-                  self.txtDateSelected.layer.borderWidth = 1;
-
+            self.txtDateSelected.layer.borderWidth = 1;
+            
             txtDateSelected.leftViewMode = .always;
             
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15),  let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE15)
@@ -747,7 +750,7 @@ extension ERSideOpenCreateEditVC
                     , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
                 
                 let strInfo = NSAttributedString.init(string: "( Choose the date onto which you wish to copy the same appointment slots )"
-                    , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontBook]);
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 40),NSAttributedString.Key.font : fontBook]);
                 
                 let para = NSMutableParagraphStyle.init()
                 //            para.alignment = .center
@@ -770,8 +773,8 @@ extension ERSideOpenCreateEditVC
             self.txtDateDuplicateto.leftView = imageView4
             txtDateDuplicateto.leftViewMode = .always;
             self.txtDateDuplicateto.layer.borderColor = ILColor.color(index: 27).cgColor
-                  self.txtDateDuplicateto.layer.borderWidth = 1;
-              
+            self.txtDateDuplicateto.layer.borderWidth = 1;
+            
             let fontDateRe = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13)
             txtDateDuplicateto.attributedPlaceholder = NSAttributedString(string: "DD/MM/YYYY", attributes: [
                 .foregroundColor: ILColor.color(index: 40),
@@ -784,6 +787,61 @@ extension ERSideOpenCreateEditVC
             
             
             break
+        case .editOpenHour :
+            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+            {
+                let strHeader = NSMutableAttributedString.init()
+                let strTiTle = NSAttributedString.init(string: "Date"
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
+                let strType = NSAttributedString.init(string: "  ⃰"
+                    , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
+                let para = NSMutableParagraphStyle.init()
+                //            para.alignment = .center
+                strHeader.append(strTiTle)
+                strHeader.append(strType)
+                
+                strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+                lblDate.attributedText = strHeader
+            }
+            let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
+            txtDateSelected.backgroundColor = ILColor.color(index: 48)
+            self.txtDateSelected.font = fontMedium
+            self.txtDateSelected.layer.cornerRadius = 3;
+            let imageView3 = UIImageView.init(image: UIImage.init(named: "Calendar-1"))
+            imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
+            self.txtDateSelected.leftView = imageView3
+            txtDateSelected.leftViewMode = .always;
+            nslayoutHeightDuplicateToView.priority =  UILayoutPriority(rawValue: 1000);
+            nslayoutHeightDuplicateToView.constant = 0;
+            self.viewDuplicate2.isHidden = true
+            let fontDateRe = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13)
+            self.txtDateSelected.layer.borderColor = ILColor.color(index: 27).cgColor
+            self.txtDateSelected.layer.borderWidth = 1;
+            
+            txtDateSelected.attributedPlaceholder = NSAttributedString(string: "DD/MM/YYYY", attributes: [
+                .foregroundColor: ILColor.color(index: 40),
+                .font: fontDateRe
+            ])
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dateConverted = dateFormatter.string(from: self.dateSelected)
+            
+            let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:dateConverted , fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd/MM/yyyy")
+            txtDateSelected.text = dateSelectedValue
+            
+            txtDateSelected.isUserInteractionEnabled = false
+            txtDateSelected.isEnabled = false
+            btmDateSelected.isUserInteractionEnabled = false
+            btmDateSelected.isEnabled = false
+            
+            txtDateSelected.alpha = 0.6
+            btmDateSelected.alpha = 0.6
+
+            break
+            
+            
+            
+            
         default:
             break
         }
@@ -794,9 +852,14 @@ extension ERSideOpenCreateEditVC
     
     @IBAction func btnNextTapped(_ sender: Any) {
         if validatingForm(){
+            
+            
          self.objOpenHourModalSubmit =  formingModal()
             let objERSideOpenCreateEditSecondVC = ERSideOpenCreateEditSecondVC.init(nibName: "ERSideOpenCreateEditSecondVC", bundle: nil)
-            objERSideOpenCreateEditSecondVC.objERSideOpenHourDetail = self.objERSideOpenHourDetail
+            objERSideOpenCreateEditSecondVC.objERSideOpenHourPrefilledDetail = self.objERSideOpenHourPrefilledDetail
+            
+            objERSideOpenCreateEditSecondVC.objviewTypeOpenHour = self.objviewTypeOpenHour
+            
             objERSideOpenCreateEditSecondVC.objOpenHourModalSubmit = self.objOpenHourModalSubmit
             
             objERSideOpenCreateEditSecondVC.dateSelected = self.dateSelected
@@ -821,48 +884,45 @@ extension ERSideOpenCreateEditVC
     
     
     
+    func logicForSlotDurationTiming() -> Array<Dictionary<String,String>>{
+        
+        
+        var arrSlot = Array<Dictionary<String,String>>()
+        
+        let subViews = self.viewContainerStartEnd.subviews as! [ERStartEndTImeView]
+        
+        for view : ERStartEndTImeView in subViews{
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let dateI = dateFormatter.string(from: self.dateSelected)
+            
+            let startime =  GeneralUtility.dateConvertToUTC(emiDate: view.txtStartTime.text!, withDateFormat: "hh:mm a", todateFormat: "HH:mm")
+            let endTime = GeneralUtility.dateConvertToUTC(emiDate: view.txtEndTime.text!, withDateFormat: "hh:mm a", todateFormat: "HH:mm")
+            
+            let completeStartdate = dateI + " " + startime + ":00"
+            let completeendDate = dateI + " " + endTime + ":00"
+
+            let dicTime = ["start_datetime" : completeStartdate,
+                       "end_datetime" : completeendDate
+            ]
+            
+            arrSlot.append(dicTime);
+            
+        }
+        
+        return arrSlot
+    }
+    
+    
+    
     func formingModal() -> openHourModalSubmit {
         
         
         var objOpenHourModalSubmit = openHourModalSubmit()
         objOpenHourModalSubmit.userPurposeId = self.searchArrayPurpose;
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateI = dateFormatter.string(from: self.dateSelected)
-//        let StartTimeArr =  changeto24HourFormat(txtTime: txtTimingFrom.text ?? "11:00 AM")
-//        let EndTimeArr =  changeto24HourFormat(txtTime: txtTimingTo.text ?? "1:00 PM")
-        
-//        objOpenHourModalSubmit.startTime = dateI + " " +  StartTimeArr + ":00"
-//        objOpenHourModalSubmit.endTime = dateI + " " +  EndTimeArr + ":00"
-//
-        let arrPickerSlotDuration = ["15 mins","30 mins","45 mins","60 mins"]
-        let arrPickerSlot = [15,30,45,60];
-        let indexSelectedSlot = arrPickerSlotDuration.firstIndex(where: {$0 == txtSlotDuration.text})
-        objOpenHourModalSubmit.slotDuration = arrPickerSlot[indexSelectedSlot ?? 0] * 60
-//        objOpenHourModalSubmit.maximum_meetings_per_day = Int(txtMaximumAppo.text ?? "-1")
-        
-        let arrPickerBuffer = ["0 mins","5 mins","10 mins","15 mins","30 mins","45 mins","60 mins"];
-        let arrPickerBufferI = [0,5,10,15,30,45,60];
-//        let indexSelectedAfter = arrPickerBuffer.firstIndex(where: {$0 == txtBreakBufferAfter.text})
-//        let indexSelectedBefore = arrPickerBuffer.firstIndex(where: {$0 == txtBreakBufferBefore.text})
-        
-//        if indexSelectedAfter != nil{
-//            objOpenHourModalSubmit.buffer_after_slot = arrPickerBufferI[indexSelectedAfter ?? 0] * 60 ;
-//        }
-//        else{
-//            objOpenHourModalSubmit.buffer_after_slot = -1 ;
-//        }
-//
-//        if indexSelectedBefore != nil{
-//            objOpenHourModalSubmit.buffer_before_slot = arrPickerBufferI[indexSelectedBefore ?? 0] * 60 ;
-//        }
-//        else{
-//            objOpenHourModalSubmit.buffer_before_slot = -1 ;
-//
-//        }
+        objOpenHourModalSubmit.slotArr = self.logicForSlotDurationTiming()
         if isRecurrenceEnable{
-            
             var recurrenceText = ""
             let freq = ["DAILY","WEEKLY","MONTHLY","YEARLY"]
             let  arrPickerFreq = ["day","Week","Month","Year"]
@@ -956,36 +1016,53 @@ extension ERSideOpenCreateEditVC
     
     func validatingForm()-> Bool{
 
+        
         if self.searchArrayPurpose.filter({$0.isSelected}) .count <= 0{
         
             CommonFunctions().showError(title: "Error", message: StringConstants.PURPOSEERROR)
             return false
         }
         
-//        if txtMaximumAppo.text!.isEmpty {
-//
-//        }
-//        else{
-//            if (Int(self.txtMaximumAppo.text!)! > 15){
-//
-//                CommonFunctions().showError(title: "Error", message: "Maximum Appoinments per day can't be more than 15")
-//
-//                return false
-//            }
-//            if (Int(self.txtMaximumAppo.text!)! < 1){
-//
-//                CommonFunctions().showError(title: "Error", message: "Maximum Appoinments per day should be atleast 1")
-//
-//                return false
-//            }
-//
-//        }
+        var isAllTimeSlotFilled = true;
+        var isAlltimeValid = true
+        let subViews = self.viewContainerStartEnd.subviews as! [ERStartEndTImeView]
+        for view in arrERStartEndTImeView{
+            
+            if view.isBothTimeField {
+                
+            }
+            else{
+                isAllTimeSlotFilled = false
+                break;
+            }
+            
+        }
         
+        for view in arrERStartEndTImeView{
+            
+            if view.isTimeValid {
+                
+            }
+            else{
+                isAlltimeValid = false
+                break;
+            }
+            
+        }
         
+        if !isAllTimeSlotFilled{
+            CommonFunctions().showError(title: "Error", message: StringConstants.ERTIMESLOTERROR)
+                       return false
+            
+        }
+        if !isAlltimeValid{
+                   CommonFunctions().showError(title: "Error", message: StringConstants.ERTIMESLOTERROR)
+                              return false
+                   
+               }
+
         
         if txtRepeatCount.text!.isEmpty {
-            
-            
             
         }
         else{
@@ -1003,16 +1080,8 @@ extension ERSideOpenCreateEditVC
                 
                 return false
             }
-            
-            
         }
-        
-        
         if txtOccurenceCount.text!.isEmpty {
-            
-            
-            
-            
         }
         else
         {
@@ -1031,11 +1100,6 @@ extension ERSideOpenCreateEditVC
             }
             
         }
-        
-        
-        
-        
-        
         return true
     }
     
@@ -1049,14 +1113,40 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
     
     func customizePurpose()  {
         
-        
-        
+        var indexID = 0
         for purpose in dataPurposeModal!{
             let searchItem = SearchTextFieldItem()
             searchItem.title = purpose.displayName!
-            searchItem.id  = purpose.id
+            searchItem.id  = indexID
             searchArrayPurpose.append(searchItem)
+            indexID = indexID + 1;
         }
+        
+        
+        switch self.objviewTypeOpenHour {
+        case .editOpenHour:
+            for purpose in (self.objERSideOpenHourPrefilledDetail?.purposes)!{
+                
+                var purposeNew = self.searchArrayPurpose.filter({$0.title == purpose.purposeText });
+                
+                if purposeNew.count > 0{
+                    
+                }
+                else{
+                    let searchItem = SearchTextFieldItem()
+                    searchItem.title = purpose.purposeText!
+                    searchItem.id  = indexID
+                    searchArrayPurpose.append(searchItem)
+                    indexID = indexID + 1;
+                }
+            }
+            break
+        default:
+            break
+        }
+        
+        
+        
         self.setDynamicView()
         
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
@@ -1086,33 +1176,29 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
         
         self.txtPurpose.rightView = imageView
         txtPurpose.rightViewMode = .always;
-        if self.objERSideOpenHourDetail != nil
-        {
-            self.setPrefilledPurposeValue()
-        }
+        
+        
     }
     
     func setPrefilledPurposeValue()  {
         
         // self.txtPurpose =
         
-        
-        
-        
-        for purpose in (self.objERSideOpenHourDetail?.purposes)!{
+        for purpose in (self.objERSideOpenHourPrefilledDetail?.purposes)!{
             
-            let selectedId = searchArrayPurpose.filter({$0.title == purpose.purposeText})[0]
-            selectedId.isSelected = true
-            let index = self.searchArrayPurpose.firstIndex(where: {$0.title == purpose.purposeText}) ?? 0
-            self.searchArrayPurpose.removeAll(where: {$0.title == purpose.purposeText})
-            self.searchArrayPurpose.insert(selectedId, at: index)
+            let selectedId = searchArrayPurpose.filter({$0.title == purpose.purposeText})
+            if selectedId.count > 0{
+                selectedId[0].isSelected = true
+                let index = self.searchArrayPurpose.firstIndex(where: {$0.title == purpose.purposeText}) ?? 0
+                self.searchArrayPurpose.removeAll(where: {$0.title == purpose.purposeText})
+                self.searchArrayPurpose.insert(selectedId[0], at: index)
+            }
+            
+            
+            
         }
         
         setDynamicView()
-        
-        
-        
-        
         
     }
     
@@ -1239,19 +1325,17 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
     
     @objc func deleteButtonTapped(_ sender: UIButton){
         
-        if sender.tag == -1000{
-            
-            let index = self.searchArrayPurpose.firstIndex(where: {$0.id == sender.tag}) ?? 0
-            self.searchArrayPurpose.remove(at: index)
-            
-        }
-        else{
+//        if sender.tag == -1000{
+//            let index = self.searchArrayPurpose.firstIndex(where: {$0.id == sender.tag}) ?? 0
+//            self.searchArrayPurpose.remove(at: index)
+//        }
+//        else{
             let selectedId = searchArrayPurpose.filter({$0.id == sender.tag})[0]
             selectedId.isSelected = false
             let index = self.searchArrayPurpose.firstIndex(where: {$0.id == sender.tag}) ?? 0
             self.searchArrayPurpose.removeAll(where: {$0.id == sender.tag})
             self.searchArrayPurpose.insert(selectedId, at: index)
-        }
+//        }
         
         
         setDynamicView()
@@ -1259,8 +1343,18 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
     
     func sendSelectedItem(item: SearchTextFieldItem) {
         
+        let searchPurposeSelected =  self.searchArrayPurpose.filter({$0.isSelected == true});
+        
+        for selectedSearchItem in searchPurposeSelected {
+            
+            if selectedSearchItem.title == item.title{
+                return
+            }
+            
+        }
         if item.id == -1000{
             let selectedItem = item
+            item.id = searchArrayPurpose.count + 1 ;
             selectedItem.title = item.title.slice(from:"'",to:"'") ?? " "
             self.searchArrayPurpose.insert(selectedItem, at: 0)
         }
@@ -1314,7 +1408,7 @@ extension ERSideOpenCreateEditVC{
             
             
             break;
-        case .setEditOpenHour:
+        case .setOpenHour,.editOpenHour:
             
             let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
             
@@ -1490,19 +1584,7 @@ extension ERSideOpenCreateEditVC{
         
         self.txtSlotDuration.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
         txtSlotDuration.rightViewMode = .always;
-        
-//        if self.objERSideOpenHourDetail != nil{
-//            let slotDurationValue = Int(self.objERSideOpenHourDetail?.slotDuration ?? "0")!/30
-//            self.txtSlotDuration.isUserInteractionEnabled = false
-//            self.txtSlotDuration.isEnabled = false
-//            self.txtSlotDuration.text =  "\(slotDurationValue) mins"
-//            self.txtSlotDuration.alpha = 0.6
-//        }
-//        else{
-//            self.txtSlotDuration.isUserInteractionEnabled = true
-//            self.txtSlotDuration.isEnabled = true
-//            self.txtSlotDuration.alpha = 1
-//        }
+
         
     }
     
@@ -1701,7 +1783,7 @@ extension ERSideOpenCreateEditVC{
             lblRecurrenceLable.isHidden = true
             
             break
-        case .setEditOpenHour:
+        case .setOpenHour:
             
             let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
             
@@ -1788,8 +1870,22 @@ extension ERSideOpenCreateEditVC{
             viewRecurrence.isHidden = true
             nslayoutConstraintRecurrence.constant = 0
             
+            break
+        case .editOpenHour:
+            
+            viewRecurrence.isHidden = true
+                      nslayoutConstraintRecurrence.constant = 0
+            
+            btnRecurrenceEnable.isUserInteractionEnabled = false
+            btnRecurrenceEnable.isEnabled = false
+            lblRecurrenceLable.alpha = 0.6
+            btnRecurrenceEnable.alpha = 0.6
+
+            
             
             break
+            
+            
         default:
             break
         }
@@ -1840,12 +1936,6 @@ extension ERSideOpenCreateEditVC:DeleteParticularStartTimeViewDelegate,RefreshSe
          viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[viewPrevious(==34)]-(4)-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevious":viewPrevious!]))
     }
 
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1920,14 +2010,10 @@ extension ERSideOpenCreateEditVC:DeleteParticularStartTimeViewDelegate,RefreshSe
         
     }
         
-    func  configureStartEndView(){
-        
-        let dicStartEndTime = [ "StartTime" : "HH:MM",
-                                "EndTime" : "HH:MM"
-        ]
-        
-        //        arrDataStartEndTimeView.append(dicStartEndTime)
-        
+    func  configureStartEndView(isnewlyAdded : Bool){
+
+        let  arrPickerI = ["15 mins","30 mins","45 mins","60 mins","custom"]
+
         if arrERStartEndTImeView.count != 0{
             for view  in  self.viewContainerStartEnd.subviews{
                 view.removeFromSuperview()
@@ -1938,7 +2024,8 @@ extension ERSideOpenCreateEditVC:DeleteParticularStartTimeViewDelegate,RefreshSe
             for viewAlreadyAdded in self.arrERStartEndTImeView{
                 viewAlreadyAdded.translatesAutoresizingMaskIntoConstraints = false
                 self.viewContainerStartEnd.addSubview(viewAlreadyAdded)
-                
+                let indexSelected = arrPickerI.firstIndex(where: {$0 == txtSlotDuration.text})
+                viewAlreadyAdded.objtimeDifference =  timeDifference(rawValue: Int(indexSelected ?? 0))
                 if index == 1{
                     
                     viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :viewAlreadyAdded ]))
@@ -1956,42 +2043,53 @@ extension ERSideOpenCreateEditVC:DeleteParticularStartTimeViewDelegate,RefreshSe
                 viewPrevious = viewAlreadyAdded
             }
             
-            let startEndTime = ERStartEndTImeView().loadView() as! ERStartEndTImeView
-            startEndTime.viewconTroller = self
-            startEndTime.delegate = self
-            
-            startEndTime.translatesAutoresizingMaskIntoConstraints = false
-            startEndTime.tag = index
-            startEndTime.btnDelete.tag = index
-            
-            startEndTime.customization()
-            self.viewContainerStartEnd.addSubview(startEndTime)
-            viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :startEndTime ]))
-            viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[viewPrevious]-(4)-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevious":viewPrevious!,"view" :startEndTime ]))
-            self.addInputAccessoryForTextFields(textFields: [startEndTime.txtStartTime,startEndTime.txtEndTime], dismissable: true, previousNextable: true)
-            arrERStartEndTImeView.append(startEndTime)
-            
+            if isnewlyAdded {
+                let startEndTime = ERStartEndTImeView().loadView() as! ERStartEndTImeView
+                           startEndTime.viewconTroller = self
+                           startEndTime.delegate = self
+                           let indexSelected = arrPickerI.firstIndex(where: {$0 == txtSlotDuration.text})
+                                      startEndTime.objtimeDifference =  timeDifference(rawValue: Int(indexSelected ?? 0))
+                           startEndTime.translatesAutoresizingMaskIntoConstraints = false
+                           startEndTime.tag = index
+                           startEndTime.btnDelete.tag = index
+                           
+                           startEndTime.customization()
+                           self.viewContainerStartEnd.addSubview(startEndTime)
+                           viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :startEndTime ]))
+                           viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[viewPrevious]-(4)-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevious":viewPrevious!,"view" :startEndTime ]))
+                           self.addInputAccessoryForTextFields(textFields: [startEndTime.txtStartTime,startEndTime.txtEndTime], dismissable: true, previousNextable: true)
+                           arrERStartEndTImeView.append(startEndTime)
+            }
+            else
+            {
+                viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[viewPrevious]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevious":viewPrevious!]))
+                
+            }
         }
         else{
-            let startEndTime = ERStartEndTImeView().loadView() as! ERStartEndTImeView
             
-            startEndTime.tag = 1
-            startEndTime.btnDelete.tag = 1
-            
-            startEndTime.delegate = self
-            
-            startEndTime.viewconTroller = self
-            startEndTime.customization()
-            
-            startEndTime.translatesAutoresizingMaskIntoConstraints = false
-            self.viewContainerStartEnd.addSubview(startEndTime)
-            viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :startEndTime ]))
-            viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :startEndTime ]))
-            arrERStartEndTImeView.append(startEndTime)
-            
-            self.addInputAccessoryForTextFields(textFields: [startEndTime.txtStartTime,startEndTime.txtEndTime], dismissable: true, previousNextable: true)
-            
-            
+            if isnewlyAdded {
+                let startEndTime = ERStartEndTImeView().loadView() as! ERStartEndTImeView
+                startEndTime.tag = 1
+                startEndTime.btnDelete.tag = 1
+                startEndTime.delegate = self
+                startEndTime.viewconTroller = self
+                startEndTime.customization()
+                let indexSelected = arrPickerI.firstIndex(where: {$0 == txtSlotDuration.text})
+                startEndTime.objtimeDifference =  timeDifference(rawValue: Int(indexSelected ?? 0))
+                startEndTime.translatesAutoresizingMaskIntoConstraints = false
+                self.viewContainerStartEnd.addSubview(startEndTime)
+                viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :startEndTime ]))
+                viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :startEndTime ]))
+                self.addInputAccessoryForTextFields(textFields: [startEndTime.txtStartTime,startEndTime.txtEndTime], dismissable: true, previousNextable: true)
+                if self.objERSideOpenHourPrefilledDetail != nil{
+                    startEndTime.txtStartTime.text = (GeneralUtility.currentDateDetailType3(emiDate: self.objERSideOpenHourPrefilledDetail?.startDatetimeUTC ?? "12:00 PM "))
+                    startEndTime.txtEndTime.text = (GeneralUtility.currentDateDetailType3(emiDate: self.objERSideOpenHourPrefilledDetail?.endDatetimeUTC ?? "12:00 PM "))
+                    startEndTime.isTimeValid = true
+                    startEndTime.isBothTimeField = true
+                }
+                arrERStartEndTImeView.append(startEndTime)
+            }
         }
         viewContainerStartEnd.layoutIfNeeded()
         
@@ -2022,3 +2120,25 @@ extension ERSideOpenCreateEditVC : ERSideCreateEditOHVMDelegate{
     }
     
 }
+
+// MARK: ROTATION HANDLING
+
+extension ERSideOpenCreateEditVC {
+    
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+           
+           super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: nil, completion: { (_) in
+            self.viewSelectedContainer.layoutIfNeeded()
+            self.setDynamicView()
+            
+           })
+           
+       }
+    
+}
+
+
+

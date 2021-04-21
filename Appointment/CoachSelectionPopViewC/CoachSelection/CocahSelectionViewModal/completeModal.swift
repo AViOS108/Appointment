@@ -155,13 +155,14 @@ class CoachSelectionViewModal {
                 }
                 
                 
-            } catch let error_ as NSError {
+            } catch let _ as NSError {
                 self.activityIndicator?.hide()
                 CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
             }
             
            
         }) { (error, errorCode) in
+            
             self.activityIndicator?.hide()
             CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
         }

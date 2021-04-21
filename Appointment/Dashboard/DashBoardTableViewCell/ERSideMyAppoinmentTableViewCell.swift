@@ -9,61 +9,94 @@
 import UIKit
 
 protocol ERSideMyAppoinmentTableViewCellDelegate {
-    func changeInFollowingWith(results :ERSideAppointmentModalResult, index : Int? )
+    func changeInFollowingWith(results :ERSideAppointmentModalNewResult, index : Int? )
 }
 
 
 
 class ERSideMyAppoinmentTableViewCell: UITableViewCell {
+  
+    @IBOutlet weak var btnViewResume: UIButton!
     
+    
+    
+    
+    
+    @IBOutlet weak var btnUpdateStatus: UIButton!
+    
+    @IBAction func btnUpdateStatusTapped(_ sender: Any) {
+        delegate.changeInFollowingWith(results: results, index: 5)
+
+    }
+
+    @IBOutlet weak var nslayoutAcceptDeclineViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var nslayoutCandiateFeedbackView: NSLayoutConstraint!
+    @IBOutlet weak var nslayoutUpdateStatusViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var nslayoutCustomerRatingViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var viewUpdateStatus: UIView!
+    @IBOutlet weak var viewFeedback: UIView!
+    @IBOutlet weak var viewAcceptDecline: UIView!
+    @IBOutlet weak var viewCustomerRating: UIView!
+    
+    
+    @IBOutlet weak var lblFeedback: UILabel!
+    @IBOutlet var btnCoachPreciseGrp: [UIButton]!
+    @IBAction func btnCoachPreTapped(_ sender: UIButton) {
+//        coach_expertise = sender.tag
+        self.btnCoachPreciseGrp.forEach { (btn) in
+            
+            if btn.tag <= sender.tag{
+                btn.setImage(UIImage.init(named: "noun_Star_select"), for: .normal)
+            }
+            else{
+                btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+            }
+            
+        }
+        
+    }
+    
+    
+    @IBOutlet weak var nslayputCollectionViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var viewCollection: UICollectionView!
     
     @IBOutlet weak var viewDateContainer: UIView!
-    @IBOutlet weak var lblImageView: UILabel!
-    @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblDescribtion: UILabel!
     @IBOutlet weak var lblMonth: UILabel!
     @IBOutlet weak var lblDate: UILabel!
-    @IBOutlet weak var btnViewDetail: UIButton!
     @IBOutlet weak var btnAccept: UIButton!
     @IBOutlet weak var btnDecline: UIButton!
     
-    var results: ERSideAppointmentModalResult!
+    var results: ERSideAppointmentModalNewResult!
     @IBOutlet weak var viewContainer: UIView!
+    
+    var colectionViewHandler = ERStudentOverlayView()
     
     
     var delegate : ERSideMyAppoinmentTableViewCellDelegate!
+    
+    func collectionViewDataFeed()  {
+        colectionViewHandler.viewcontrollerI = self
+        colectionViewHandler.viewCollection = self.viewCollection
+        colectionViewHandler.customize();
+        
+    }
+    
     
     
     func customize()  {
         self.viewContainer.isHidden = false
         let strHeader = NSMutableAttributedString.init()
         let strHeaderDesc = NSMutableAttributedString.init()
-        
-        let radius =  (Int)(lblImageView.frame.height)/2
-        if let urlImage = URL.init(string: self.results.participants![0].participantImage ) {
-            self.imgView
-                .setImageWith(urlImage, placeholderImage: UIImage.init(named: "Placeeholderimage"))
-            self.imgView?.cornerRadius = CGFloat(radius)
-            imgView?.clipsToBounds = true
-            //                self.imgView.layer.borderColor = UIColor.black.cgColor
-            //                self.imgView.layer.borderWidth = 1
-            self.imgView?.layer.masksToBounds = true;
-        }
-        else{
-            self.imgView.image = UIImage.init(named: "Placeeholderimage");
-            //            self.imgView.contentMode = .scaleAspectFit;
-        }
-        
-        
-        
+        collectionViewDataFeed();
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             
         {
-            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.participants![0].name, _returnType: String.self)
+            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.requests![0].studentDetails?.name, _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
             let nextLine1 = NSAttributedString.init(string: "\n")
-            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.participants![0].benchmarkName, _returnType: String.self)
+            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.requests![0].studentDetails?.benchmarkName, _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
@@ -80,93 +113,54 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             
         {
-            
-            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +
-                
+            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: " " +  "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +
                 GeneralUtility.startAndEndDateDetail2(startDate: self.results.startDatetimeUTC ?? "", endDate: self.results.endDatetimeUTC ?? "")
-                
                 , _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
             let nextLine1 = NSAttributedString.init(string: "\n")
-            
             var strLocation = "Not available"
-            var zoomLink = false
-            
-            if let str = self.results?.locations{
-                if str.count > 0 {
-                    strLocation = (str[0].data?.value) ?? "Not available"
-                    
-                    if str[0].provider == "zoom_link"{
-                        zoomLink = true
-                        strLocation = " Zoom"
-                    }
-                }
-                
-            }
             
             let image1Attachment = NSTextAttachment()
-            image1Attachment.image = UIImage(named: "Zoom")
-            image1Attachment.bounds = CGRect.init(x: 0, y: -5, width: 20, height: 20)
+            image1Attachment.image = UIImage(named: "locationAppo")
+            image1Attachment.bounds = CGRect.init(x: 0, y: 0, width: 10, height: 14)
+            
+            let image1Attachment2 = NSTextAttachment()
+                       image1Attachment2.image = UIImage(named: "calenderAppoList")
+                       image1Attachment2.bounds = CGRect.init(x: 0, y: 0, width: 10, height: 10)
+            
+            
             
             
             // wrap the attachment in its own attributed string so we can append it
-            let imageZoom = NSAttributedString(attachment: image1Attachment)
+            let imageLocation = NSAttributedString(attachment: image1Attachment)
+            let imageCalender = NSAttributedString(attachment: image1Attachment2)
+
             
-            
-            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: strLocation, _returnType: String.self)
+            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: " " + (self.results.location ?? ""), _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
             para.lineSpacing = 4
+            strHeaderDesc.append(imageCalender)
             strHeaderDesc.append(strTiTle)
             strHeaderDesc.append(nextLine1)
-            if zoomLink{
-                strHeaderDesc.append(imageZoom)
-                
-            }
+            strHeaderDesc.append(imageLocation)
             strHeaderDesc.append(strType)
             strHeaderDesc.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeaderDesc.length))
             lblDescribtion.attributedText = strHeaderDesc
         }
         
+        let stringImg = GeneralUtility.startNameCharacter(stringName: self.results.requests![0].studentDetails?.name ?? " ")
+      
         
-        if
-            GeneralUtility.optionalHandling(_param: self.results.participants![0].participantImage.isBlank, _returnType: Bool.self)
-        {
-            
-            self.imageView?.isHidden = true
-            self.lblImageView.isHidden = false
-            let stringImg = GeneralUtility.startNameCharacter(stringName: self.results.participants![0].name ?? " ")
-            if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
-            {
-                
-                UILabel.labelUIHandling(label: lblImageView, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
-                lblImageView.textAlignment = .center
-                lblImageView.layer.borderColor = UIColor.black.cgColor
-            }
-        }
-        else
-        {
-            self.lblImageView.isHidden = true
-            self.imageView?.isHidden = false
-        }
         
         let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
-        UIButton.buttonUIHandling(button: btnViewDetail, text: "View Details", backgroundColor:ILColor.color(index: 23) ,textColor: ILColor.color(index: 3),fontType:fontHeavy2)
-        
+      
         UIButton.buttonUIHandling(button: btnAccept, text: "Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
         UIButton.buttonUIHandling(button: btnDecline, text: "Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
         
-        
-        
-        
         btnAccept.cornerRadius = 3
-        btnViewDetail.cornerRadius = 3
         btnDecline.cornerRadius = 3
-        
-        
-        
-        
         
         let monthI   = ["Jan","Feb","Mar","Apr","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
         
@@ -194,92 +188,141 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
             UILabel.labelUIHandling(label: lblMonth, text: "\(monthI[monthCom-1])", textColor:ILColor.color(index: 3) , isBold: false, fontType: fontMedium,backgroundColor: ILColor.color(index: 33))
             lblMonth.textAlignment = .center
             
-            
         }
-        
-        
         self.backgroundColor = .clear
         
-        
+        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
+
         
         if results?.typeERSide == 2{
             // upcoming
+            nslayoutCandiateFeedbackView.constant = 0
+            nslayoutUpdateStatusViewHeight.constant = 0
+            viewFeedback.isHidden = true
+            viewUpdateStatus.isHidden = true
             
+            nslayoutAcceptDeclineViewHeight.constant = 46
+            viewAcceptDecline.isHidden = false
             
-            if   GeneralUtility.isPastDate(date: self.results.endDatetime!){
-                btnAccept.isHidden = true
-            }
-            else{
-                btnAccept.isHidden = false
-                
-            }
+            UIButton.buttonUIHandling(button: btnViewResume, text: "View Resume", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "locationAppo"),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
             
-            
-            UIButton.buttonUIHandling(button: btnAccept, text: "Cancel", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
-            
+            UIButton.buttonUIHandling(button: btnAccept, text: "Cancel Appointment", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
             btnDecline.isHidden = true
         }
         else if results?.typeERSide == 3{
             // pending
             
-            UIButton.buttonUIHandling(button: btnAccept, text: "Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            nslayoutCandiateFeedbackView.constant = 0
+            nslayoutUpdateStatusViewHeight.constant = 0
+            viewFeedback.isHidden = true
+            viewUpdateStatus.isHidden = true
             
-            UIButton.buttonUIHandling(button: btnDecline, text: "Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            nslayoutAcceptDeclineViewHeight.constant = 46
+            viewAcceptDecline.isHidden = false
+
             
+            btnAccept.isHidden = false
+            btnDecline.isHidden = false
+            btnViewResume.isHidden = false
+            UIButton.buttonUIHandling(button: btnViewResume, text: "View Resume", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "locationAppo"),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
             
+            UIButton.buttonUIHandling(button: btnAccept, text: "Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
+            UIButton.buttonUIHandling(button: btnDecline, text: "Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
             
             
             if   !GeneralUtility.isPastDate(date: self.results.startDatetime!){
-                btnAccept.isHidden = false
-                btnDecline.isHidden = false
-                
+                //                btnAccept.isHidden = false
+                //                btnDecline.isHidden = false
+                //
             }
             else{
                 
-                btnAccept.isHidden = false
-                btnDecline.isHidden = true
+                //                btnAccept.isHidden = false
+                //                btnDecline.isHidden = true
                 
-                let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
-                
-                UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:UIColor.clear ,textColor: ILColor.color(index: 52),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
+//                let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
+//
+//                UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:UIColor.clear ,textColor: ILColor.color(index: 52),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
                 
             }
-            
-            
-            
             
         }
         else{
-            btnDecline.isHidden = true
             
-            btnAccept.isHidden = false
+            nslayoutCandiateFeedbackView.constant = 69
+            nslayoutUpdateStatusViewHeight.constant = 45
+            viewFeedback.isHidden = false
+            viewUpdateStatus.isHidden = false
+            nslayoutAcceptDeclineViewHeight.constant = 0
+            viewAcceptDecline.isHidden = true
             
-            if let isCompleted = results.appointmentIsCompleted{
-                
-                
-                let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-                
-                
-                btnAccept.isUserInteractionEnabled = false
-                btnAccept.isEnabled = false
-                
-                if isCompleted == 0 {
-                    let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
-                    
-                    UIButton.buttonUIHandling(button: btnAccept, text: "Not Attended", backgroundColor:UIColor.clear ,textColor: ILColor.color(index: 52),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
-                }
-                else{
-                    UIButton.buttonUIHandling(button: btnAccept, text: "Attended", backgroundColor:.clear ,textColor: ILColor.color(index: 51),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
-                }
-                
-                
+            self.btnCoachPreciseGrp.forEach { (btn) in
+                btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
             }
-            else{
+            
+            let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16)
+            
+            UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Update Attendance Status", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            
+            if  let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
                 
-                UIButton.buttonUIHandling(button: btnAccept, text: "Update Status", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            {
+                let strHeaderFeedback = NSMutableAttributedString.init()
+
+                
+                let strTiTle = NSAttributedString.init(string: "Candidate’s Feedback"
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:42),NSAttributedString.Key.font : fontMedium]);
+                let nextLine1 = NSAttributedString.init(string: "\n")
+                let strType = NSAttributedString.init(string: "Not added"
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
+                let para = NSMutableParagraphStyle.init()
+                //            para.alignment = .center
+                para.lineSpacing = 4
+                strHeaderFeedback.append(strTiTle)
+                strHeaderFeedback.append(nextLine1)
+                strHeaderFeedback.append(strType)
+                strHeaderFeedback.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeaderFeedback.length))
+                lblFeedback.attributedText = strHeaderFeedback
+                
+                nslayoutCustomerRatingViewHeight.constant = 0
+                nslayoutCandiateFeedbackView.constant = 60
+
+                viewCustomerRating.isHidden = true
             }
+            
+            
+            
+            
+            
+            
+            //            if let isCompleted = results.appointmentIsCompleted{
+            //
+            //
+            //                let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+            //
+            //
+            //                btnAccept.isUserInteractionEnabled = false
+            //                btnAccept.isEnabled = false
+            //
+            //                if isCompleted == 0 {
+            //                    let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+            //
+            //                    UIButton.buttonUIHandling(button: btnAccept, text: "Not Attended", backgroundColor:UIColor.clear ,textColor: ILColor.color(index: 52),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
+            //                }
+            //                else{
+            //                    UIButton.buttonUIHandling(button: btnAccept, text: "Attended", backgroundColor:.clear ,textColor: ILColor.color(index: 51),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
+            //                }
+            //
+            //
+            //            }
+            //            else{
+            //
+            //                UIButton.buttonUIHandling(button: btnAccept, text: "Update Status", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            //            }
         }
-        
+        btnDecline.isUserInteractionEnabled = true
+        btnAccept.isUserInteractionEnabled = true
+        btnViewResume.isUserInteractionEnabled = true
     }
     
     
@@ -316,13 +359,11 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    
-    @IBAction func btnViewDetailTapped(_ sender: Any) {
-        
-        delegate.changeInFollowingWith(results: results, index: 1)
+   
+    @IBAction func btnViewResumeTappd(_ sender: Any) {
+         delegate.changeInFollowingWith(results: results, index: 6)
         
     }
-    
     
     
     @IBAction func btnAcceptTapped(_ sender: Any) {
@@ -331,7 +372,8 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         // 3. Accept
         // 4. Decline
         // 5. UpDate Status
-        
+        // 6. view Resume
+
         if results?.typeERSide == 2{
             
             if   GeneralUtility.isPastDate(date: self.results.endDatetime!){
@@ -356,12 +398,12 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         }
         else{
             
-            if let isCompleted = results.appointmentIsCompleted{
-            }
-            else{
-                delegate.changeInFollowingWith(results: results, index: 5)
-
-            }
+            //            if let isCompleted = results.appointmentIsCompleted{
+            //            }
+            //            else{
+            //                delegate.changeInFollowingWith(results: results, index: 5)
+            //
+            //            }
             
             
             
@@ -370,14 +412,15 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
     }
     
     @IBAction func btnDeclineTapped(_ sender: Any) {
-        
+        delegate.changeInFollowingWith(results: results, index: 4)
+
         if results?.typeERSide == 2{
             
         }
         else if results?.typeERSide == 3{
             
             if   !GeneralUtility.isPastDate(date: self.results.startDatetime!){
-                delegate.changeInFollowingWith(results: results, index: 4)
+//                delegate.changeInFollowingWith(results: results, index: 4)
             }
             else{
                 
@@ -387,7 +430,5 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         else{
             
         }
-        
-        
     }
 }

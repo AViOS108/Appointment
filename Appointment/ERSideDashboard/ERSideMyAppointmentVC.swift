@@ -15,26 +15,28 @@ enum indexSelectedEnum {
     case Accept
     case Decline
     case UpDateStatus
+    case viewResume
 }
 
 
 class ERSideMyAppointmentVC: SuperViewController,UISearchBarDelegate,ERFilterViewControllerDelegate,
 ERSideMyAppoinmentTableViewCellDelegate{
+   
+    
+   
     
     
-    
-    
-    var participant : Array<Dictionary<String,AnyObject>>?
 
     var indexSelected : indexSelectedEnum!;
     
     var objERFilterTag : [ERFilterTag]?
-    var filterAdded = Dictionary<String,AnyObject>()
+    var filterAdded = Dictionary<String,Any>()
     @IBOutlet weak var txtSearchBar: UISearchBar!
     @IBOutlet weak var btnFilter: UIButton!
     
-    var selectedResult : ERSideAppointmentModalResult!
-   
+    var selectedResult : ERSideAppointmentModalNewResult!
+    
+    
     @IBOutlet weak var viewContainorCV: UIView!
     
     @IBOutlet weak var viewCollection: ERSideMyAppointmentCollectionView!
@@ -45,15 +47,9 @@ ERSideMyAppoinmentTableViewCellDelegate{
     var viewModalPending : ERHomeViewModal!;
     var viewModalPast : ERHomeViewModal!;
     
-    var dataModalupcomming : ERSideAppointmentModal?
-    var dataModalPending : ERSideAppointmentModal?
-    var dataModalPast : ERSideAppointmentModal?
-    
-    
-    var dataModalupcommingConst : ERSideAppointmentModal?
-    var dataModalPendingConst : ERSideAppointmentModal?
-    var dataModalPastConst : ERSideAppointmentModal?
-    
+    var dataModalupcomming : ERSideAppointmentModalNew?
+    var dataModalPending : ERSideAppointmentModalNew?
+    var dataModalPast : ERSideAppointmentModalNew?
     
     var tablViewHandler = ERSideMyAppoinmentTableVCViewController()
     var refreshControl = UIRefreshControl()
@@ -61,9 +57,6 @@ ERSideMyAppoinmentTableViewCellDelegate{
 
        
     @IBOutlet weak var lblNoAppointmentFound: UILabel!
-    
-       
-    
     
     
     override func viewDidLoad() {
@@ -78,8 +71,14 @@ ERSideMyAppoinmentTableViewCellDelegate{
         txtSearchBar.backgroundColor = .clear
         
     }
+    override func viewWillDisappear(_ animated: Bool) {
+                self.hidesBottomBarWhenPushed = true;
+
+    }
     
     override func viewDidAppear(_ animated: Bool) {
+        self.hidesBottomBarWhenPushed = false;
+
         viewCollection.backgroundColor = ILColor.color(index: 23)
         viewCollection.delegateI = self
         viewCollection.customize()
@@ -103,13 +102,8 @@ ERSideMyAppoinmentTableViewCellDelegate{
         
     }
     
-    
-    
-    
-         @objc func refreshControlAPi(){
-            
+    @objc func refreshControlAPi(){
             callViewModal()
-            
              
          }
     
@@ -128,8 +122,11 @@ ERSideMyAppoinmentTableViewCellDelegate{
     func viewModalUpcomingCalling()  {
         viewModalupcomming = ERHomeViewModal()
         viewModalupcomming.viewController = self
-        if self.participant != nil{
-            viewModalupcomming.participant = self.participant
+        if dataModalupcomming != nil{
+            viewModalupcomming.skip = dataModalupcomming?.results?.count ?? 0
+        }
+        if !self.filterAdded.isEmpty{
+            viewModalupcomming.filterAdded = self.filterAdded
         }
         viewModalupcomming.enumType = .ERSideUpcoming
         viewModalupcomming.delegate = self
@@ -140,8 +137,11 @@ ERSideMyAppoinmentTableViewCellDelegate{
     func viewModalPastCalling()  {
         viewModalPast = ERHomeViewModal()
         viewModalPast.viewController = self
-        if self.participant != nil{
-            viewModalPast.participant = self.participant
+        if dataModalPast != nil{
+            viewModalPast.skip = dataModalPast?.results?.count ?? 0
+        }
+        if !self.filterAdded.isEmpty{
+            viewModalPast.filterAdded = self.filterAdded
         }
         viewModalPast.enumType = .ERSidePast
         viewModalPast.delegate = self
@@ -151,8 +151,11 @@ ERSideMyAppoinmentTableViewCellDelegate{
     func viewModalPendingCalling()  {
         viewModalPending = ERHomeViewModal()
         viewModalPending.viewController = self
-        if self.participant != nil{
-            viewModalPending.participant = self.participant
+        if dataModalPending != nil{
+                   viewModalPending.skip = dataModalPending?.results?.count ?? 0
+               }
+        if !self.filterAdded.isEmpty{
+            viewModalPending.filterAdded = self.filterAdded
         }
         viewModalPending.enumType = .ERSidePending
         viewModalPending.delegate = self
@@ -163,6 +166,7 @@ ERSideMyAppoinmentTableViewCellDelegate{
     func customizationTVHandler(index : Int)  {
         
         tablViewHandler.viewControllerI = self
+        tablViewHandler.delegate = self
         tblView.register(UINib.init(nibName: "ERSideMyAppoinmentTableViewCell", bundle: nil), forCellReuseIdentifier: "ERSideMyAppoinmentTableViewCell")
         if index == 2{
             tablViewHandler.dataAppoinmentModal = self.dataModalupcomming;
@@ -170,11 +174,11 @@ ERSideMyAppoinmentTableViewCellDelegate{
         }
         else if index == 3{
             tablViewHandler.dataAppoinmentModal = self.dataModalPending;
-                       tablViewHandler.customization()
+            tablViewHandler.customization()
         }
         else{
             tablViewHandler.dataAppoinmentModal = self.dataModalPast;
-                       tablViewHandler.customization()
+            tablViewHandler.customization()
         }
         
     }
@@ -194,9 +198,10 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
     func detailCustomize(){
         
         let objERAppointmentDetailViewController = ERAppointmentDetailViewController.init(nibName: "ERAppointmentDetailViewController", bundle: nil)
-        objERAppointmentDetailViewController.selectedResult =  self.selectedResult;        self.navigationController?.pushViewController(objERAppointmentDetailViewController, animated: false)
+        objERAppointmentDetailViewController.selectedResult =  self.selectedResult;
+        objERAppointmentDetailViewController.index = selected
         
-        
+        self.navigationController?.pushViewController(objERAppointmentDetailViewController, animated: false)
         
     }
     
@@ -208,7 +213,7 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
             ] as Dictionary<String,AnyObject>
         
         var activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.AcceptOpenHour)
-        ERSideAppointmentService().erSideAppointemntAccept(params: params, id: selectedResult.identifier ?? "", { (jsonData) in
+        ERSideAppointmentService().erSideAppointemntAccept(params: params, id: String(describing: selectedResult.id ?? 0) , { (jsonData) in
             activityIndicator.hide()
             
             GeneralUtility.alertView(title: "", message: "Accepted".localized(), viewController: self, buttons: ["Ok"]);
@@ -228,9 +233,7 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
         objERCancelViewController.results = self.selectedResult
         objERCancelViewController.viewType = .decline
         objERCancelViewController.delegate = self
-        self.present(objERCancelViewController, animated: false) {
-            
-        }
+        self.navigationController?.pushViewController(objERCancelViewController, animated: false)
         
     }
     
@@ -241,17 +244,28 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
         objERCancelViewController.results = self.selectedResult
         objERCancelViewController.viewType = .cancel
         objERCancelViewController.delegate = self
-        self.present(objERCancelViewController, animated: false) {
-            
-        }
+        self.navigationController?.pushViewController(objERCancelViewController, animated: false)
+        
         
     }
     func UpDateStatusCustomize(){
+        let objERUpdateAppoinmentViewController = ERUpdateAppoinmentViewController.init(nibName: "ERUpdateAppoinmentViewController", bundle: nil)
+        objERUpdateAppoinmentViewController.results = self.selectedResult
+        objERUpdateAppoinmentViewController.delegate = self
+        self.navigationController?.pushViewController(objERUpdateAppoinmentViewController, animated: false)
+    }
+    
+    func viewResume()  {
+        
+        let objERSideResumeListViewController = ERSideResumeListViewController.init(nibName: "ERSideResumeListViewController", bundle: nil)
+        objERSideResumeListViewController.modalPresentationStyle = .overFullScreen
+        objERSideResumeListViewController.results = self.selectedResult
+        self.navigationController?.pushViewController(objERSideResumeListViewController, animated: false)
         
     }
    
     
-    func changeInFollowingWith(results: ERSideAppointmentModalResult, index: Int?) {
+    func changeInFollowingWith(results: ERSideAppointmentModalNewResult, index: Int?) {
         
         selectedResult = results
         
@@ -273,7 +287,9 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
         }
         else if index == 5{
             indexSelected = .UpDateStatus
-            
+        }
+        else if index == 6 {
+            indexSelected = .viewResume
         }
         
         switch indexSelected {
@@ -292,6 +308,10 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
         case .UpDateStatus:
             self.UpDateStatusCustomize()
             break;
+        case .viewResume:
+            self.viewResume()
+            break;
+            
         default:
             break;
         }
@@ -318,13 +338,10 @@ extension ERSideMyAppointmentVC {
             if searchBar.text != ""
             {
                 if selected == 2{
-                   self.dataModalupcomming = self.dataModalupcommingConst
                 }
                 else if selected == 3{
-                    self.dataModalPending =  self.dataModalPendingConst
                 }
                 else{
-                    self.dataModalPast = self.dataModalPastConst
                 }
             }
         }
@@ -337,38 +354,32 @@ extension ERSideMyAppointmentVC {
             
             if searchText == "" {
                 if selected == 2{
-                   self.dataModalupcomming = self.dataModalupcommingConst
                 }
                 else if selected == 3{
-                    self.dataModalPending =  self.dataModalPendingConst
                 }
                 else{
-                    self.dataModalPast = self.dataModalPastConst
                 }
                 tblView.reloadData()
                 searchBar.resignFirstResponder();
-
             }
 
-            
         }
-        
         
     }
     
-    
-    
-    
+    func resetFilterAndSearchtext(){
+        txtSearchBar.text = ""
+        filterAdded = Dictionary<String,AnyObject>()
+        
+    }
     
     
     func makeFilterModal(){
         
         var benchMark = Array<Int>()
-        var tag =  Dictionary<String,AnyObject>()
+        var tag =  Dictionary<String,Array<String>>()
         for objERFlter in self.objERFilterTag!{
-            
             if objERFlter.id == -999{
-                
                 let selectedBenchMarkArr =  objERFlter.objTagValue?.filter({ $0.isSelected == true
                 })
                 if (selectedBenchMarkArr?.count ?? 0) > 0{
@@ -376,7 +387,6 @@ extension ERSideMyAppointmentVC {
                         benchMark.append(selectedBench.eRFilterid!)
                     }
                 }
-                
             }
             else{
                 let selectedTagArr =    objERFlter.objTagValue?.filter({$0.isSelected == true})
@@ -386,38 +396,30 @@ extension ERSideMyAppointmentVC {
                         tagSelected.append(selectedTag.tagValueText!)
                     }
                    
-                    tag[objERFlter.category!] = tagSelected as AnyObject;
+                    tag[objERFlter.category!] = tagSelected
                 }
             }
         }
         if benchMark.count > 0 {
-            filterAdded["benchmark"] = benchMark as AnyObject
+            filterAdded["benchmark"] = benchMark as Any
         }
         if !tag.isEmpty {
-            filterAdded["tag"] = tag as AnyObject
+            filterAdded["tag"] = tag as Any
+        }
+        if txtSearchBar.text?.isEmpty ?? true{
+            
+        }
+        else{
+            filterAdded["name_email"] = txtSearchBar.text as AnyObject?
         }
         
-        if benchMark.count == 0 && tag.isEmpty{
+        if benchMark.count == 0 && tag.isEmpty && (txtSearchBar.text?.isEmpty ?? true) {
             filterAdded = Dictionary<String,AnyObject>()
         }
         
     }
     
-    
-    
-    func participantModalMaking(particpantArr : ERStudentListParticipantArr){
-        participant = Array<Dictionary<String,AnyObject>>()
-        for participantI in particpantArr {
-            let dicparticipantI = [
-                "entity_type" : "student_user",
-                "entity_id" : "\(participantI.id!)"
-                 ] as [String : AnyObject]
-            
-            participant?.append(dicparticipantI)
-        }
-       callViewModal()
-        
-    }
+   
     
     func callViewModal(){
         if selected == 2{
@@ -431,46 +433,10 @@ extension ERSideMyAppointmentVC {
         }
     }
     
-    func hitStudentListParticipant(){
-        
-        let   activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
-        
-        
-        var param = filterAdded
-        param["_method"] = "post" as AnyObject
-        param["limit"] = 1000 as AnyObject
-        param["offset"] = 0 as AnyObject
-        param["csrf_token"] = UserDefaultsDataSource(key: "csrf_token").readData() as AnyObject
-        
-        ERSideAppointmentService().erSideStudentList(params: param, { (jsonData) in
-            activityIndicator.hide()
-            do {
-                var objERStudentListParticipant = try
-                    JSONDecoder().decode(ERStudentListParticipantArr.self, from: jsonData)
-                
-                self.participantModalMaking(particpantArr: objERStudentListParticipant)
-                
-            }   catch   {
-                activityIndicator.hide()
-                print(error)
-            }
-            
-        }) { (error, errorCode) in
-            activityIndicator.hide()
-
-        }
-        
-    }
-    
     func resetDataModal(){
         
         dataModalPending = nil
-        dataModalPastConst = nil
-        
         dataModalPast = nil
-        dataModalPastConst = nil
-        
-        dataModalupcommingConst = nil
         dataModalupcomming = nil
     }
     
@@ -479,7 +445,7 @@ extension ERSideMyAppointmentVC {
         resetDataModal()
         self.objERFilterTag = selectedFilter;
         makeFilterModal()
-        hitStudentListParticipant()
+        callViewModal()
     }
     
     
@@ -489,26 +455,23 @@ extension ERSideMyAppointmentVC {
         objERFilterViewController.modalPresentationStyle = .overFullScreen
         objERFilterViewController.objERFilterTag = self.objERFilterTag
         objERFilterViewController.delegate = self
-        self.present(objERFilterViewController, animated: false) {
-            
-        }
+        self.navigationController?.pushViewController(objERFilterViewController, animated: false)
+      
     }
     
 }
 
 
 
-
-
-
-
-extension ERSideMyAppointmentVC:ERHomeViewModalVMDelegate,ERSideMyAppointmentCollectionViewDelegate{
-    
-    
+extension ERSideMyAppointmentVC:ERHomeViewModalVMDelegate,ERSideMyAppointmentCollectionViewDelegate,ERSideMyAppoinmentTableVCViewControllerDelegate,ERUpdateAppoinmentViewControllerDelegate{
+    func refreshData(index: Int) {
+                    callViewModal()
+    }
     
     func selectedHeaderCV(id: Int) {
         
-        
+        filterAdded = Dictionary<String,AnyObject>()
+        objERFilterTag =  nil
         if id == 1{
             selected = 2
             if self.dataModalupcomming != nil{
@@ -582,10 +545,10 @@ extension ERSideMyAppointmentVC:ERHomeViewModalVMDelegate,ERSideMyAppointmentCol
     }
     
     
-    func changeModal(dataAppoinmentModal : ERSideAppointmentModal,index: Int) -> ERSideAppointmentModal{
+    func changeModal(dataAppoinmentModal : ERSideAppointmentModalNew,index: Int) -> ERSideAppointmentModalNew{
         
         var objdataAppoinmentModal = dataAppoinmentModal
-        var results = [ERSideAppointmentModalResult]()
+        var results = [ERSideAppointmentModalNewResult]()
 
         for var resultDataAppoinmentModal in objdataAppoinmentModal.results!{
             
@@ -604,9 +567,8 @@ extension ERSideMyAppointmentVC:ERHomeViewModalVMDelegate,ERSideMyAppointmentCol
     
     
     
-    func sentDataToERHomeVC(dataAppoinmentModal: ERSideAppointmentModal?, success: Bool, index: Int) {
+    func sentDataToERHomeVC(dataAppoinmentModal: ERSideAppointmentModalNew?, success: Bool, index: Int) {
         self.refreshControl.endRefreshing()
-        
         if dataAppoinmentModal?.total ?? 0 <= 0{
             self.tblView.isHidden = true
             lblNoAppointmentFound.isHidden = false
@@ -620,46 +582,53 @@ extension ERSideMyAppointmentVC:ERHomeViewModalVMDelegate,ERSideMyAppointmentCol
             var dataAppoinmentModal = dataAppoinmentModal;
             dataAppoinmentModal =    self.changeModal(dataAppoinmentModal: dataAppoinmentModal!, index: index)
             if index == 2{
-                self.dataModalupcomming = dataAppoinmentModal
-                self.dataModalupcommingConst = dataAppoinmentModal
-                
-                if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
-                       {
-                           UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No upcoming meetings to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+               
+                if self.dataModalupcomming != nil{
+                    self.dataModalupcomming?.results?.append(contentsOf: (dataAppoinmentModal?.results)!);
                 }
-                
-                
+                else{
+                    self.dataModalupcomming = dataAppoinmentModal
+                    self.dataModalupcomming?.indexType = index
+                    
+                    if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
+                           {
+                               UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No upcoming meetings to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+                    }
+                }
             }
             else if index == 3{
-                self.dataModalPending = dataAppoinmentModal
-                self.dataModalPendingConst = dataAppoinmentModal
-                if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
-                {
-                    UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No pending request to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+                if self.dataModalPending != nil{
+                    self.dataModalPending?.results?.append(contentsOf: (dataAppoinmentModal?.results)!);
                 }
-                
-                
+                else{
+                    self.dataModalPending = dataAppoinmentModal
+                    self.dataModalPending?.indexType = index
+
+                    if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
+                    {
+                        UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No pending request to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+                    }
+                    
+                }
                 
             }
             else{
-                self.dataModalPast = dataAppoinmentModal
-                self.dataModalPastConst = dataAppoinmentModal
-                if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
-                {
-                    UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No past meetings to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+                if self.dataModalPast != nil{
+                    self.dataModalPast?.results?.append(contentsOf: (dataAppoinmentModal?.results)!);
                 }
-               
-                
-                
+                else{
+                    self.dataModalPast?.indexType = index
+                    self.dataModalPast = dataAppoinmentModal
+                    if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
+                    {
+                        UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No past meetings to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+                    }
+                }
             }
-            
             self.customizationTVHandler(index: index)
         }
         else{
             CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
         }
-        
     }
-    
-    
 }

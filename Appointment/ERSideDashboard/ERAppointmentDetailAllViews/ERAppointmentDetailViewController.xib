@@ -10,8 +10,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ERAppointmentDetailViewController" customModule="Appointment" customModuleProvider="target">
             <connections>
+                <outlet property="btnCancelAppoinment" destination="VeT-9e-Pls" id="caJ-hJ-PVf"/>
+                <outlet property="btnFinalAppoinment" destination="H6n-UY-l7J" id="kbv-VE-2Yj"/>
                 <outlet property="tblVIew" destination="wfz-EK-0kB" id="1ee-Z1-I7J"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewButtonContainer" destination="648-zU-L1c" id="xNe-Ed-pov"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -19,20 +22,65 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wfz-EK-0kB">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wfz-EK-0kB">
+                    <rect key="frame" x="0.0" y="44" width="414" height="683"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="648-zU-L1c">
+                    <rect key="frame" x="0.0" y="727" width="414" height="127"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="2Ne-nj-b86">
+                            <rect key="frame" x="8" y="8" width="398" height="111"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6n-UY-l7J">
+                                    <rect key="frame" x="0.0" y="0.0" width="398" height="50"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="Yuz-wK-jfq"/>
+                                    </constraints>
+                                    <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="btnFinalAppoinmentTapped:" destination="-1" eventType="touchUpInside" id="8Xp-Tw-s5z"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VeT-9e-Pls">
+                                    <rect key="frame" x="0.0" y="61" width="398" height="50"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="tNv-xN-q4Z"/>
+                                    </constraints>
+                                    <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="btnCancelAppoinmentTapped:" destination="-1" eventType="touchUpInside" id="Wz3-GR-cpn"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="VeT-9e-Pls" firstAttribute="width" secondItem="H6n-UY-l7J" secondAttribute="width" id="LCq-TY-sqO"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="2Ne-nj-b86" firstAttribute="top" secondItem="648-zU-L1c" secondAttribute="top" constant="8" id="L5b-Ow-GqZ"/>
+                        <constraint firstItem="2Ne-nj-b86" firstAttribute="leading" secondItem="648-zU-L1c" secondAttribute="leading" constant="8" id="fuk-XS-nUA"/>
+                        <constraint firstAttribute="bottom" secondItem="2Ne-nj-b86" secondAttribute="bottom" constant="8" id="fw1-bi-5nW"/>
+                        <constraint firstAttribute="trailing" secondItem="2Ne-nj-b86" secondAttribute="trailing" constant="8" id="sjf-i1-mGE"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="wfz-EK-0kB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="4Pt-8g-No3"/>
                 <constraint firstItem="wfz-EK-0kB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7wF-jP-rAL"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="wfz-EK-0kB" secondAttribute="bottom" id="n9B-EJ-q3O"/>
+                <constraint firstItem="648-zU-L1c" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-8" id="I6n-im-KvZ"/>
+                <constraint firstItem="648-zU-L1c" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="b3V-hh-qlr"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="wfz-EK-0kB" secondAttribute="trailing" id="rwz-fI-oQM"/>
+                <constraint firstItem="648-zU-L1c" firstAttribute="top" secondItem="wfz-EK-0kB" secondAttribute="bottom" id="tHv-TQ-JRG"/>
+                <constraint firstItem="648-zU-L1c" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="uPw-2b-04v"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="139" y="108"/>
+            <point key="canvasLocation" x="137.68115942028987" y="107.8125"/>
         </view>
     </objects>
 </document>

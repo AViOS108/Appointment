@@ -132,7 +132,7 @@ class LoginService{
             }else{
                 if response["threshold_score_to_request_feedback"].exists()
                 {
-                    UserDefaultsDataSource(key: "thresholdScore").writeData(response["threshold_score_to_request_feedback"].int! + 1)
+                    UserDefaultsDataSource(key: "thresholdScore").writeData(response["threshold_score_to_request_feedback"].int ?? 0 + 1)
                 }else{
                     UserDefaultsDataSource(key: "thresholdScore").writeData(0)
                 }

@@ -29,7 +29,7 @@ class ERSideAppointmentTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblDot: UILabel!
    
-    var objERSideAppointmentModalResult: ERSideAppointmentModalResult?
+    var objERSideAppointmentModalResult: ERSideAppointmentModalNewResult?
 
     
     override func awakeFromNib() {
@@ -61,7 +61,7 @@ class ERSideAppointmentTableViewCell: UITableViewCell {
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
             {
                 
-                let stringImg = GeneralUtility.startNameCharacter(stringName: (self.objERSideAppointmentModalResult?.participants![0].name) ?? " ")
+                let stringImg = GeneralUtility.startNameCharacter(stringName: (self.objERSideAppointmentModalResult?.requests![0].studentDetails?.name) ?? " ")
                 UILabel.labelUIHandling(label: lblNameInitial, text: stringImg, textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
                 lblNameInitial.layer.borderColor = UIColor.black.cgColor
                 lblNameInitial.layer.borderWidth = 1;
@@ -69,7 +69,7 @@ class ERSideAppointmentTableViewCell: UITableViewCell {
                 lblNameInitial.clipsToBounds = true
                 lblNameInitial.layer.masksToBounds = true
                 
-                UILabel.labelUIHandling(label: lblName, text: self.objERSideAppointmentModalResult?.participants![0].name ?? " ", textColor:ILColor.color(index: 43) , isBold: false, fontType: fontMedium)
+                UILabel.labelUIHandling(label: lblName, text: self.objERSideAppointmentModalResult?.requests![0].studentDetails?.name ?? " ", textColor:ILColor.color(index: 43) , isBold: false, fontType: fontMedium)
 
             }
             

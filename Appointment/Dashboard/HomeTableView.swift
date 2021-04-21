@@ -179,10 +179,7 @@ class HomeTableView: UIViewController, UITableViewDelegate,UITableViewDataSource
         viewControllerI.redirection(redirectionType: .coachSelection)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
-        
-        
-    }
+   
     
     
     func numberOfSections(in tableView: UITableView) -> Int{

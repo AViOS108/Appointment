@@ -202,6 +202,220 @@ struct NextStepModal: Codable {
 typealias NextStepArr = [NextStepModal]
 
 
+/////////////// NEW Appoinment Detail Modal
+
+
+struct AppoinmentDetailModalNew: Codable {
+    let id: Int?
+    let startDatetimeUTC, endDatetimeUTC, timezone, location: String?
+    let locationType, state: String?
+    let coachID: Int?
+    let cancellationReason: String?
+    var requests: [Request]?
+    let nextsteps: [Nextstep]?
+    let appointmentConfig: AppointmentConfig?
+    let title, type: String?
+    let coachDetails: CoachDetails?
+    let startDatetime, endDatetime, inTimezone: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case startDatetimeUTC = "start_datetime_utc"
+        case endDatetimeUTC = "end_datetime_utc"
+        case timezone, location
+        case locationType = "location_type"
+        case state
+        case coachID = "coach_id"
+        case cancellationReason = "cancellation_reason"
+        case requests, nextsteps
+        case appointmentConfig = "appointment_config"
+        case title, type
+        case coachDetails = "coach_details"
+        case startDatetime = "start_datetime"
+        case endDatetime = "end_datetime"
+        case inTimezone = "in_timezone"
+    }
+}
+
+
+// MARK: - Nextstep
+struct Nextstep: Codable {
+    let id, appointmentID: Int?
+    let data, dueDatetime: String?
+    let isCompleted, coachID: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case appointmentID = "appointment_id"
+        case data
+        case dueDatetime = "due_datetime"
+        case isCompleted = "is_completed"
+        case coachID = "coach_id"
+    }
+}
+/////////////// NEW NWXT STEP
+
+// MARK: - WelcomeElement
+struct NextStepModalNew: Codable {
+    let id, appointmentID: Int?
+    let data, dueDatetime: String?
+    let isCompleted, coachID: Int?
+    let createdAt: String?
+    let students: [Student]?
+    let createdBy: CreatedBy?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case appointmentID = "appointment_id"
+        case data
+        case dueDatetime = "due_datetime"
+        case isCompleted = "is_completed"
+        case coachID = "coach_id"
+        case students
+        case createdAt = "created_at"
+        case createdBy = "created_by"
+    }
+}
+
+
+// MARK: - Student
+struct Student: Codable {
+    let id: Int?
+    let firstName, lastName, name, email: String?
+    let benchmarkID: Int?
+    let benchmarkName: String?
+    let communityID: Int?
+    let communityName: String?
+    let miUserID: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case name, email
+        case benchmarkID = "benchmark_id"
+        case benchmarkName = "benchmark_name"
+        case communityID = "community_id"
+        case communityName = "community_name"
+        case miUserID = "mi_user_id"
+    }
+}
+
+typealias NextStepModalNewArr = [NextStepModalNew]
+
+
+//////////////// NEW NOTES Modal
+
+
+import Foundation
+
+// MARK: - Welcome
+struct NotesModalNew: Codable {
+    let total: Int?
+    let results: [NotesModalNewResult]?
+
+}
+
+// MARK: - Result
+struct NotesModalNewResult: Codable {
+    let id: Int?
+    let data: String?
+    let createdBy: CreatedBy?
+    let canUpdate: Bool?
+    let createdAt, updatedAt: String?
+    let entities: [Entity]?
+
+    
+    enum CodingKeys: String, CodingKey {
+           case id, data
+           case createdBy = "created_by"
+           case canUpdate = "can_update"
+           case createdAt = "created_at"
+           case updatedAt = "updated_at"
+           case entities
+       }
+   
+}
+
+// MARK: - Entity
+struct Entity: Codable {
+    let info: NotesModalNewInfo?
+    let id: Int?
+    let entityID, entityType, canViewNote: String?
+
+    enum CodingKeys: String, CodingKey {
+        case info, id
+        case entityID = "entity_id"
+        case entityType = "entity_type"
+        case canViewNote = "can_view_note"
+    }
+}
+
+// MARK: - Info
+struct NotesModalNewInfo: Codable {
+let id: Int?
+let machineName, displayName, firstName, lastName: String?
+let name, email: String?
+let benchmarkID: Int?
+let benchmarkName: String?
+let communityID: Int?
+let communityName: String?
+let miUserID: Int?
+let startDatetimeUTC, endDatetimeUTC, timezone, location: String?
+let locationType, state: String?
+let coachID: Int?
+let cancellationReason: String?
+let requests: [Request]?
+let appointmentConfig: AppointmentConfig?
+let title, type, startDatetime, endDatetime: String?
+let inTimezone: String?
+let coachDetails: CoachDetails?
+let profilePicURL: String?
+let isDeleted: Int?
+
+enum CodingKeys: String, CodingKey {
+    case id
+    case machineName = "machine_name"
+    case displayName = "display_name"
+    case firstName = "first_name"
+    case lastName = "last_name"
+    case name, email
+    case benchmarkID = "benchmark_id"
+    case benchmarkName = "benchmark_name"
+    case communityID = "community_id"
+    case communityName = "community_name"
+    case miUserID = "mi_user_id"
+    case startDatetimeUTC = "start_datetime_utc"
+    case endDatetimeUTC = "end_datetime_utc"
+    case timezone, location
+    case locationType = "location_type"
+    case state
+    case coachID = "coach_id"
+    case cancellationReason = "cancellation_reason"
+    case requests
+    case appointmentConfig = "appointment_config"
+    case title, type
+    case startDatetime = "start_datetime"
+    case endDatetime = "end_datetime"
+    case inTimezone = "in_timezone"
+    case coachDetails = "coach_details"
+    case profilePicURL = "profile_pic_url"
+    case isDeleted = "is_deleted"
+}
+
+}
+
+
+
+
+struct ApooinmentDetailAllNewModal {
+    var nextModalObj : [NextStepModalNew]?
+    var noteModalObj :   NotesModalNew?
+    var coachNoteModalObj :   NotesModalNew?
+    var appoinmentDetailModalObj : AppoinmentDetailModalNew?
+    var status : Int = 0
+}
+
 
 struct ApooinmentDetailAllModal {
     var nextModalObj : [NextStepModal]?

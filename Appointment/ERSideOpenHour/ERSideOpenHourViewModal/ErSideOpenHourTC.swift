@@ -27,36 +27,22 @@ class ErSideOpenHourTC: UITableViewCell {
     var viewController : UIViewController!;
     
     
-    func deleteApi(){
-        
-       var activityIndicator = ActivityIndicatorView.showActivity(view: viewController.view, message: StringConstants.DeletingOpenHour)
-        let param = [
-            "_method" : "delete",
-            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
-            
-            ] as Dictionary<String, AnyObject>
-        
-        ERSideOpenHourDetailVM().OpenHourDelete(param: param, id: (results?.identifier)!
-            , { (data) in
-                activityIndicator.hide()
-
-                CommonFunctions().showError(title: "", message: "successfully deleted !!!")
-                self.delegate.deleteDelgateRefresh()
-        }) { (error, errorCode) in
-            activityIndicator.hide()
-        }
-    }
+    
     
     
     @IBAction func btnCrossTapped(_ sender: Any) {
-        let alert = UIAlertController(title: "", message: "Are you sure you want to delete?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { action in
-        }))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-            self.deleteApi();
-            
-        }))
-        viewController.present(alert, animated: true, completion: nil)
+        
+        let erSideOHDetail = ERSideOHDetailViewController.init(nibName: "ERSideOHDetailViewController", bundle: nil)
+        erSideOHDetail.identifier = results?.identifier
+        erSideOHDetail.viewControllerType = 0
+        erSideOHDetail.delegate = viewController as! ErSideOpenHourTCDelegate
+        erSideOHDetail.viewControllerI = viewController
+        erSideOHDetail.modalPresentationStyle = .overFullScreen
+//        erSideOHDetail.dateSelected = self.dateSelected
+        viewController.navigationController?.pushViewController(erSideOHDetail, animated: false)
+        
+        
+     
     }
     
     var results: ResultERSideOPenHourModal?

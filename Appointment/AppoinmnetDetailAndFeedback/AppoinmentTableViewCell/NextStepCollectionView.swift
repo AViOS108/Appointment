@@ -12,9 +12,10 @@
 import UIKit
 
 class NextStepCollectionView: UICollectionView,UICollectionViewDataSource,UICollectionViewDelegate {
+    var objNextStepViewType : nextStepViewType!
 
     var viewController : UIViewController!
-    var nextModalObj : [NextStepModal]?
+    var nextModalObj : [NextStepModalNew]?
     var isNoNextStep = false
 
     
@@ -71,6 +72,7 @@ class NextStepCollectionView: UICollectionView,UICollectionViewDataSource,UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NextStepCollectionViewCell", for: indexPath as IndexPath) as! NextStepCollectionViewCell
+        cell.objNextStepViewType = self.objNextStepViewType
         if isNoNextStep{
             cell.customization(isNextStep: isNoNextStep)
         }
@@ -87,16 +89,11 @@ class NextStepCollectionView: UICollectionView,UICollectionViewDataSource,UIColl
         
     }
    
-    
-
-    
-    
-   
-}
+    }
 extension NextStepCollectionView: NotesCollectionViewlayoutDelegate {
     
     func widthCell()->CGFloat{
-        return  viewController.view.frame.width - 48
+        return  viewController.view.frame.width - 32
     }
     
     func collectionView(
@@ -108,33 +105,26 @@ extension NextStepCollectionView: NotesCollectionViewlayoutDelegate {
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
         label.font = fontBook
         
-        if self.nextModalObj?.count ?? 0 > 0{
-            label.text = self.nextModalObj?[indexPath.row].data
-        }
-        else
-        {
+        
+        let cell : NextStepCollectionViewCell = NextStepCollectionViewCell()
+       
+        if isNoNextStep{
             label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
-            
+        }
+        else{
+               cell.objNextStepViewType = self.objNextStepViewType
+                  cell.nextModalObj = self.nextModalObj?[indexPath.row]
+                  if self.nextModalObj?.count ?? 0 > 0{
+                      label.attributedText = cell.coachSideDescription();
+                  }
+                  else
+                  {
+                      label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
+
+                  }
         }
         //    label.attributedText = attributedText
         label.sizeToFit()
-        if self.nextModalObj?.count ?? 0 > 0{
-            let label1 = UILabel(frame: CGRect(x: 0, y: 0, width: (viewController.view.frame.width/2 - 48), height: CGFloat.greatestFiniteMagnitude))
-            label1.numberOfLines = 0
-            let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
-            label1.font = fontHeavy
-            if self.nextModalObj?.count ?? 0 > 0{
-                label1.text = "Due Date:sdsdfdsd Mon, 15 jun 2020"
-            }
-            //    label.attributedText = attributedText
-            label1.sizeToFit()
-            return 60 + label1.frame.height + label.frame.height
-        }
-        
-        else{
-            return 60 +  label.frame.height
-        }
-          //    return label.frame.height
-        
+        return 55 +  label.frame.height
     }
 }

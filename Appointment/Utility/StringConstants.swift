@@ -104,6 +104,11 @@ class StringConstants{
     static let KUPGRADETOLATESTOS = "This particular functionality needs latest OS, please upgarde your iOS version"
     static let coachInfoApiLoader = "Getting coach details"
     static let appointmentInfoApiLoader = "Getting Appointment details"
+    static let ERTIMESLOTERROR = "Please specify the time for the slot. Ensure that the End time is greater than start time"
+
+    static let GROUPLIMITERROR = "Please provide group limit"
+    static let GROUPLIMITRANGEERROR = "Please enter valid group size limit (between 1 to 15)"
+
 
     
 }

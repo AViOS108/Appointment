@@ -14,7 +14,8 @@ import UIKit
 class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollectionViewDelegate {
 
     var viewController : UIViewController!
-    var noteModalObj :   NotesModal?
+    var noteModalObj :   NotesModalNew?
+    var objNoteViewType : noteViewType!
 
     var mynotes : Bool?
     
@@ -35,29 +36,23 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
     
     func customize()
     {
-
          self.layoutIfNeeded()
         self.collectionViewLayout = NotesCollectionViewlayout()
         self.dataSource = self
         self.delegate = self
-        
         if noteModalObj?.results?.count == 0{
             isNotes = true
         }
         else{
             isNotes = false
         }
-        
         if let layout = self.collectionViewLayout as? NotesCollectionViewlayout {
             layout.cache = []
             layout.contentHeight = 0
             layout.contentWidth = 0
             layout.delegate = self
         }
-        
         self.reloadData()
-       
-    
     }
     
     
@@ -65,19 +60,10 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
         if isNotes{
             return 1
         }
-        
-        if noteModalObj?.isExpandableNotes ?? true{
+        else{
             return noteModalObj?.results?.count ?? 0
         }
-        else{
-            
-            return 1
-            
-        }
-        
-        
-        
-     }
+}
      
       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -85,7 +71,7 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NoteCollectionViewCell", for: indexPath as IndexPath) as! NoteCollectionViewCell
         
         cell.delegate = viewController as! NoteCollectionViewCellDelegate
-
+        cell.objNoteViewType = self.objNoteViewType
         cell.mynotes = self.mynotes;
         if isNotes{
              cell.customization(noNotes: isNotes)
@@ -102,19 +88,14 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
-   
     
-
-    
-    
-   
 }
 
 
 extension NoteCollectionView: NotesCollectionViewlayoutDelegate {
     
     func widthCell()->CGFloat{
-      return  viewController.view.frame.width - 48
+      return  viewController.view.frame.width - 32
     }
     
    func collectionView(
@@ -125,21 +106,28 @@ extension NoteCollectionView: NotesCollectionViewlayoutDelegate {
     label.numberOfLines = 0
     let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
     label.font = fontBook
-    
-    if self.noteModalObj?.results?.count ?? 0 > 0{
-        label.text = self.noteModalObj?.results?[indexPath.row].data
-
-    }
-    else
-    {
+    let cell : NoteCollectionViewCell = NoteCollectionViewCell()
+    cell.objNoteViewType = self.objNoteViewType
+    if isNotes{
         label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
 
     }
-    
+    else{
+        cell.noteResultModal = self.noteModalObj?.results?[indexPath.row];
+        if self.noteModalObj?.results?.count ?? 0 > 0{
+            label.attributedText = cell.coachSideDescription();
+        }
+        else
+        {
+            label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
+        }
+    }
     //    label.attributedText = attributedText
     label.sizeToFit()
-    return label.frame.height + 80 //(Please change it if u have changed the constraint of uicolllection cell)
+    return label.frame.height + 50 //(Please change it if u have changed the constraint of uicolllection cell)
     //    return label.frame.height
     
     }
+    
+    
 }

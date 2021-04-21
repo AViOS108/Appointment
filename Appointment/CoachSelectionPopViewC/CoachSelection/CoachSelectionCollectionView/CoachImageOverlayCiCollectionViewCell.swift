@@ -64,7 +64,7 @@ class CoachImageOverlayCiCollectionViewCell: UICollectionViewCell {
             self.viewImage?.isHidden = true
             self.lblInitial.isHidden = false
             
-            var stringImg = GeneralUtility.startNameCharacter(stringName: self.coachModal?.name ?? " ")
+            let stringImg = GeneralUtility.startNameCharacter(stringName: self.coachModal?.name ?? " ")
             if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
             {
                 UILabel.labelUIHandling(label: lblInitial, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )

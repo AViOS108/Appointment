@@ -56,14 +56,14 @@ class NotesCollectionViewlayout: UICollectionViewLayout {
         // 2
         let totalRows = collectionView.numberOfItems(inSection: 0)
         
-        var xOffset: [CGFloat] = .init(repeating: 0, count: totalRows)
+        let xOffset: [CGFloat] = .init(repeating: 8, count: totalRows)
         contentWidth = delegate!.widthCell()
         var yOffset: [CGFloat] = .init(repeating: 0, count: totalRows)
         // 3
         for item in 0..<totalRows {
             let indexPath = IndexPath(item: item, section: 0)
             // 4
-            var height = delegate?.collectionView(collectionView, width: delegate!.widthCell(), heightForCellAtIndexpath: indexPath)
+            let height = delegate?.collectionView(collectionView, width: delegate!.widthCell(), heightForCellAtIndexpath: indexPath)
 //             height = 300
 
             

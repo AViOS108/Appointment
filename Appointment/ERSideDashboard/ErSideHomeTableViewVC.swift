@@ -17,7 +17,7 @@ class ErSideHomeTableViewVC: UIViewController,UITableViewDelegate,UITableViewDat
     //    var callbackVC: ((_ indePath : BtnInterestedGoing) -> Void)?
     var nocoach = false,noAlumini = false
     
-    var dataAppoinmentModal: ERSideAppointmentModal?
+    var dataAppoinmentModal: ERSideAppointmentModalNew?
 
     
     func customization()  {
@@ -78,7 +78,7 @@ class ErSideHomeTableViewVC: UIViewController,UITableViewDelegate,UITableViewDat
     
     
     
-    func customizationModal(section : Int) -> [ERSideAppointmentModalResult]?{
+    func customizationModal(section : Int) -> [ERSideAppointmentModalNewResult]?{
         
         return   self.dataAppoinmentModal?.results?.filter({
             let dateFormatter = DateFormatter()
@@ -131,10 +131,6 @@ class ErSideHomeTableViewVC: UIViewController,UITableViewDelegate,UITableViewDat
 //        viewControllerI.redirection(redirectionType: .coachSelection)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
-        
-        
-    }
     
     
     func numberOfSections(in tableView: UITableView) -> Int{

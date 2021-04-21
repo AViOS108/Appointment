@@ -11,23 +11,20 @@ import UIKit
 
 protocol NoteCollectionViewCellDelegate {
     
-    func editDeleteFunctionality(objModel : NotesResult?,isMyNotes: Bool?,isDeleted:Bool )
+    func editDeleteFunctionality(objModel : NotesModalNewResult?,isMyNotes: Bool?,isDeleted:Bool )
     
 }
 
 
 class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
-    @IBOutlet weak var viewEditContainer: UIView!
-    
-    @IBOutlet weak var viewSeprator: UIView!
-    @IBOutlet weak var viewEdit: UIView!
+  
     var mynotes : Bool?
 
     var delegate : NoteCollectionViewCellDelegate!
     
     @IBOutlet weak var btnDelete: UIButton!
-    
-    @IBOutlet weak var btnEditDelete: UIButton!
+    var objNoteViewType : noteViewType!
+
    
     @IBAction func btnDeleteTappped(_ sender: Any) {
         
@@ -41,89 +38,73 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         
         
         
-        self.viewEditContainer.isHidden = true
         delegate.editDeleteFunctionality(objModel: noteResultModal, isMyNotes: mynotes, isDeleted: true)
         
         
     }
     
     @IBAction func btnEditTapped(_ sender: Any) {
-         self.viewEditContainer.isHidden = true
         delegate.editDeleteFunctionality(objModel: noteResultModal, isMyNotes: mynotes, isDeleted: false)
 
         
     }
     
-    
-    
-    
     @IBOutlet weak var lblNoNotes: UILabel!
     
-    @IBAction func btnEditDeleteTapped(_ sender: Any) {
-        self.viewEditContainer.isHidden = false
-    }
     @IBOutlet weak var viewContainer: UIView!
     
     @IBOutlet weak var btnEdit: UIButton!
     @IBOutlet weak var lblNotesTime: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
     
-    var noteResultModal: NotesResult?
+    var noteResultModal: NotesModalNewResult?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
+    
+    func shadowWithCorner(viewContainer : UIView,cornerRadius: CGFloat)
+       {
+           // corner radius
+           viewContainer.layer.cornerRadius = cornerRadius
+           // border
+           viewContainer.layer.borderWidth = 1.0
+           viewContainer.layer.borderColor = ILColor.color(index: 27).cgColor
+          
+       }
+    
+    
     func customization(noNotes: Bool) {
         
+        self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 2)
+
         if noNotes{
             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             UILabel.labelUIHandling(label: lblNoNotes, text: "No Notes Found !!!", textColor: ILColor.color(index: 39), isBold: false, fontType: fontBook)
             viewContainer.isHidden = true
-            viewEditContainer.isHidden = true
             lblNoNotes.isHidden = false
 
         }
         else{
+            
             viewContainer.isHidden = false
-            btnEditDelete.setImage(UIImage.init(named: "more_vert"), for: .normal)
             lblNoNotes.isHidden = true
-            let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-            let componentDay = GeneralUtility.dateComponent(date: self.noteResultModal?.createdAt ?? "", component: .weekday)
-            let date = GeneralUtility.currentDateDetailType4(emiDate: self.noteResultModal?.createdAt ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy")
+            
+            if self.objNoteViewType == .erType {
+                coachdateAndButtonLogic()
+                lblDescription.attributedText =   coachSideDescription()
+            }
+            else{
+                
+            }
             
             
-            let timeText = "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " + date;
-            let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
-            let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-            UILabel.labelUIHandling(label: lblNotesTime, text: timeText, textColor: ILColor.color(index: 38), isBold: false, fontType: fontMedium)
-            UILabel.labelUIHandling(label: lblDescription, text: noteResultModal?.data ?? "", textColor: ILColor.color(index: 39), isBold: false, fontType: fontBook)
-            
-            self.viewEditContainer.tag = 19682
-            tapGesture()
-            self.viewEditContainer.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.4)
-            self.viewEditContainer.isHidden = true
-            
-            btnEdit.isUserInteractionEnabled = true
-            btnEdit.isEnabled = true
-            
-            self.viewEdit.layer.zPosition = 10;
-                        UIButton.buttonUIHandling(button: btnEdit, text: "Edit", backgroundColor: .clear, textColor: ILColor.color(index:36),fontType: fontBook)
-            
-            btnDelete.isUserInteractionEnabled = true
-            btnDelete.isEnabled = true
-            
-            UIButton.buttonUIHandling(button: btnDelete, text: "Delete", backgroundColor: .clear, textColor: ILColor.color(index:36),fontType: fontBook)
-            viewSeprator.backgroundColor = ILColor.color(index: 27)
-            self.viewEdit.dropShadowER()
             
         }
         
         if !(mynotes ?? true){
          
-            self.btnEditDelete.isEnabled = false
-            self.btnEditDelete.isUserInteractionEnabled = false
-            
             
         }
         
@@ -131,26 +112,98 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         
     }
     
+    func sharedWIthLogic() -> String{
+        
+        var totalCount = 0;
+        var name = ""
+        for sharedwith in (self.noteResultModal?.entities)!{
+            
+            if sharedwith.canViewNote != "0"{
+                if let displayName = sharedwith.info?.displayName{
+                    if name.isEmpty{
+                      name = displayName
+                    }
+                    else{
+                        if totalCount <= 2{
+                            name.append(",")
+                            name.append(displayName)
+                        }
+                    }
+                    
+                }
+                totalCount = totalCount + 1;
+            }
+        }
+        
+        if totalCount > 2 {
+            return name + " & + " + "\(totalCount - 2)" + " more";
+        }
+        else{
+            return name
+        }
+        
+        
+    }
     
-   
-      
-      func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-          if touch.view?.isDescendant(of: self) == true  && touch.view?.tag != 19682  {
-              return false
-          }
-          return true
-      }
-      
-      func tapGesture()  {
-          let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-          tap.delegate = self
-          self.viewEditContainer.isUserInteractionEnabled = true
-         self.viewEditContainer.addGestureRecognizer(tap)
-      }
-      
-      @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        self.viewEditContainer.isHidden = true
-      }
+    func coachdateAndButtonLogic(){
+        let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+        let componentDay = GeneralUtility.dateComponent(date: self.noteResultModal?.createdAt ?? "", component: .weekday)
+        let date = GeneralUtility.currentDateDetailType4(emiDate: self.noteResultModal?.createdAt ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy")
+        
+        
+        let timeText = "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " + date;
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
+        UILabel.labelUIHandling(label: lblNotesTime, text: timeText, textColor: ILColor.color(index: 38), isBold: false, fontType: fontHeavy)
+        btnEdit.isUserInteractionEnabled = true
+        btnEdit.isEnabled = true
+        
+        btnEdit.setImage(UIImage.init(named: "noun_edit_648236"), for: .normal)
+        btnDelete.setImage(UIImage.init(named: "noun_edit_648236"), for: .normal)
+        
+        btnDelete.isUserInteractionEnabled = true
+        btnDelete.isEnabled = true
+    }
+    
+    
+    func coachSideDescription() -> NSAttributedString{
+        let strHeader = NSMutableAttributedString.init()
+        if  let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE12), let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
+            
+        {
+            let strSharedWith = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Shared with : ", _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:39),NSAttributedString.Key.font : fontMedium]);
+            let nextLine1 = NSAttributedString.init(string: "\n")
+            
+            let strSharedInfo = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: sharedWIthLogic(), _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 23),NSAttributedString.Key.font : fontMedium]);
+           
+         
+            
+            let data = Data((self.noteResultModal?.data?.utf8)!)
+            
+            var strDescription : NSAttributedString!
+            if let dataAttrubute = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                strDescription = dataAttrubute
+            }
+            
+            
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            para.lineSpacing = 2
+            strHeader.append(strSharedWith)
+            strHeader.append(nextLine1)
+            strHeader.append(strSharedInfo)
+            strHeader.append(nextLine1)
+            strHeader.append(strDescription)
+
+            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+            
+        }
+        return strHeader
+    }
+    
+    
+    
     
     
 }

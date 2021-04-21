@@ -11,16 +11,10 @@ import UIKit
 
 protocol CoachImageOverlayLayoutDelegate: AnyObject {
     func collectionViewReload(width: Int)
-    
-    
 }
 
 class CoachImageOverlayLayout: UICollectionViewLayout {
-
-    
     weak var delegate: CoachImageOverlayLayoutDelegate?
-
-    
     private let numberOfColumns = 4
 
     // 3

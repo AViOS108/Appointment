@@ -60,6 +60,9 @@ struct ParamName {
     static let PARAMERLOGINTOKENC = "token"
     static let PARAMERLOGINTOKENSC = "tokens"
 
+    static let PARAMERAPPOINTMENTID = "appointment_ids"
+
+    
     
     static let PARAMERLOGINCAPTCHACHALLENGE = "CaptchaChallenge"
     static let PARAMERLOGINCAPTCHACHALLENGEID = "id"
@@ -483,6 +486,17 @@ class GeneralUtility {
            
        }
     
+    public  class func   differenceBetweenTwoDateInSec(dateFirst : String, dateSecond : String,dateformatter : String) -> Int {
+              let dateFormatter = DateFormatter()
+              dateFormatter.dateFormat = dateformatter
+              let date1 = dateFormatter.date(from: dateFirst)
+              let date2 = dateFormatter.date(from: dateSecond)
+           return Int((date1?.timeIntervalSince(date2!))!)
+              
+              
+          }
+    
+    
     
     
     public  class func   isFeedbackEnable(particpant : [Participant]) -> Bool {
@@ -581,7 +595,19 @@ class GeneralUtility {
         }
     }
     
-    
+    public  class func timeAddedInParticularComponent(date: String,component: Calendar.Component,addingValue : Int)-> String?{
+           
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = "hh:mm a"
+           let dateI = dateFormatter.date(from: date)
+        if dateI != nil{
+               let tomorrow = Calendar.current.date(byAdding: component, value: addingValue, to: dateI!)
+            return dateFormatter.string(from: tomorrow!)
+           }
+           else{
+               return nil
+           }
+       }
     
     
     

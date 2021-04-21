@@ -218,13 +218,14 @@ extension SearchViewController: UITextFieldDelegate{
         self.textField.text = currentText
 
         
-        if arrNameSurvey.count > 0{
+//        if arrNameSurvey.count > 0{
             
             if currentText.isEmpty{
                 arrNameSurvey = arrNameSurveyConst
             }
             else{
                 arrNameSurvey = arrNameSurveyConst.filter({$0.title.lowercased().contains(currentText.lowercased())})
+                
                 if isCreateNew {
                     
                     let searchItem = SearchTextFieldItem()
@@ -237,11 +238,11 @@ extension SearchViewController: UITextFieldDelegate{
             }
             reloadAndSizeTableView()
             
-        }
-        else{
-             arrNameSurvey = arrNameSurveyConst
-             reloadAndSizeTableView()
-        }
+//        }
+//        else{
+//             arrNameSurvey = arrNameSurveyConst
+//             reloadAndSizeTableView()
+//        }
         
         if isAPiHIt{
             

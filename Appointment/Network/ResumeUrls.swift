@@ -35,9 +35,13 @@ class Urls {
     static let liveStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
 
        
+    static let devRoleList = "https://employerdev.vmock.com/khagesh/api/test-community-user-management/public/"
     
-    
-    
+       static let stagingRoleList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+
+       static let liveRoleList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+
+
     
     static let testShareEvents = "https://temp3.vmock.com/dashboard/events/my-events"
     static let stagingShareEvents = "https://dashboard-staging.vmock.com/dashboard/events/my-events"
@@ -59,7 +63,8 @@ class Urls {
     
     static let runningEnvStudentList = devStudentList
 
-    
+    static let runningEnvRoleList = devRoleList
+
     
     #else
     
@@ -71,6 +76,7 @@ class Urls {
     static let runningEnvNotes = testEnvNotes
     
     static let runningEnvStudentList = devStudentList
+    static let runningEnvRoleList = devRoleList
 
     
     //        static let runningEnv = liveEnv
@@ -95,7 +101,8 @@ class Urls {
     
     var type8 = "\(runningEnvStudentList)api/v1/"
 
-    
+    var type9 = "\(runningEnvRoleList)api/v1/"
+
     var typeJob1 = "\(runningEnvJobs)ats/api/v1/"
     var typeJob2 = "\(runningEnvJobs)relationship-management/api/v1/"
     
@@ -313,12 +320,12 @@ class Urls {
         if isStudent ?? true
         {
             
-            return "\(typeEvent1)students/appointment-slots/" + id
+            return "\(typeEvent1)students/appointments/" + id
             
         }
         else
         {
-            return "\(typeEvent1)community/appointment-slots/" + id
+            return "\(typeEvent2)community/appointments/" + id
             
         }
         
@@ -330,12 +337,12 @@ class Urls {
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         if isStudent ?? true
         {
-            return "\(typeEvent1)students/appointment-slots/"+id+"/next-steps"
+            return "\(typeEvent1)students/appointment-next-steps"
 
         }
         else
         {
-            return "\(typeEvent1)community/appointment-slots/"+id+"/next-steps"
+            return "\(typeEvent2)community/appointment-next-steps"
 
         }
     }
@@ -345,12 +352,12 @@ class Urls {
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         if isStudent ?? true
         {
-            return "\(Urls.runningEnvNotes)api/v1/student/notes/list"
+            return "\(typeEvent2)api/v1/student/notes/list"
             
         }
         else
         {
-            return "\(Urls.runningEnvNotes)api/v1/community/notes/list"
+            return "\(Urls.runningEnvNotes)api/v1/community/notes/list?filters[attachable_entities][0][entity_id]=\(id)&filters[attachable_entities][0][entity_type]=appointment"
         }
         
     }
@@ -467,7 +474,7 @@ class Urls {
     
     
     func erSideAppointment() -> String{
-        return "\(typeEvent2)community/appointment/list"
+        return "\(typeEvent2)community/appointments/list"
         
     }
     
@@ -505,22 +512,22 @@ class Urls {
     }
     
     
-    func erSideOPenHourDelete(id: String) -> String{
-        return "\(typeEvent1)community/appointment-slots/" + "\(id)"
+    func erSideOPenHourDelete(id: String,isDeleteAllcoocurence : String) -> String{
+        return "\(typeEvent2)community/open-hour/" + "\(id)?delete_all_occurences=\(isDeleteAllcoocurence)"
         
     }
     
     func erSideOPenHourGetPurpose() -> String{
-        return "\(typeEvent1)community/appointment-user-purposes"
+        return "\(typeEvent2)community/open-hour/purposes"
         
     }
     func erSideOPenHourGetProvider() -> String{
-        return "\(typeEvent1)community/appointment-slots/locations/providers"
+        return "\(typeEvent2)community/open-hour/locations/providers"
         
     }
     
     func erSideOPenHourTags() -> String{
-        return "\(Urls.runningEnvJobs)students/api/v1/students/list/tags"
+        return "\(Urls.runningEnvJobs)students/api/v1/users/roles"
         
     }
     
@@ -529,11 +536,18 @@ class Urls {
         return "\(type8)app-view"
         
     }
+    func erSideRolelist() -> String{
+           return "\(type9)users/roles"
+           
+       }
     
-    
+    func erSideSpecificUserlist() -> String{
+              return "\(type9)users/list"
+              
+          }
     
     func createNewOpenHour() -> String{
-           return "\(typeEvent1)community/appointment-slots"
+           return "\(typeEvent2)community/open-hour"
 
        }
     
@@ -543,5 +557,11 @@ class Urls {
 
     }
     
+    func erSideResumeListAppoinment() -> String{
+           return "\(type8)app-view"
+       }
     
+    func erSideUpdateAttendence(studentId: Int) -> String{
+              return "\(typeEvent2)community/appointments/requests/\(studentId)/mark-attendance"
+          }
 }

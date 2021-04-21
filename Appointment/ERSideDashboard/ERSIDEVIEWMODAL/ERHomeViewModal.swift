@@ -22,16 +22,16 @@ enum ERSideViewModalType {
 
 protocol ERHomeViewModalVMDelegate {
     
-    func sentDataToERHomeVC(dataAppoinmentModal : ERSideAppointmentModal?,success: Bool,index: Int )
+    func sentDataToERHomeVC(dataAppoinmentModal : ERSideAppointmentModalNew?,success: Bool,index: Int )
 
 
 }
 class ERHomeViewModal {
     
-    var participant : Array<Dictionary<String,AnyObject>>?
+    var filterAdded = Dictionary<String,Any>()
     let dispatchGroup = DispatchGroup()
-    var objERSideAppointmentModal1 : ERSideAppointmentModal?
-    var objERSideAppointmentModal2 : ERSideAppointmentModal?
+    
+    var objERSideAppointmentNewModal : ERSideAppointmentModalNew?
     var dateSelected : Date!
     var viewController : UIViewController!
     
@@ -87,37 +87,37 @@ class ERHomeViewModal {
     }
     
     
-    func outputResultERSideMYAPPO(index : Int) -> ERSideAppointmentModal?  {
+    func outputResultERSideMYAPPO(index : Int) -> ERSideAppointmentModalNew?  {
         
         
         if index == 2
         {
-            return self.objERSideAppointmentModal1
+            return self.objERSideAppointmentNewModal
         }
         else if index == 3
         {
-            return self.objERSideAppointmentModal1
+            return self.objERSideAppointmentNewModal
         }
         else if index == 4{
-            var objSectionHeaderERMyAppoArr = [SectionHeaderERMyAppo]()
-            var arrHeader = ["Pending Next Steps","Completed Next Steps","Not Attended Appointments"]
-            
-            for (index, title) in arrHeader.enumerated() {
-                var objSectionHeaderERMyAppo = SectionHeaderERMyAppo();
-                objSectionHeaderERMyAppo.title = title
-                objSectionHeaderERMyAppo.index = index
-                objSectionHeaderERMyAppo.isExpand = false
-                objSectionHeaderERMyAppoArr.append(objSectionHeaderERMyAppo)
-                
-            }
-            
-            self.objERSideAppointmentModal1?.sectionHeaderERMyAppo?.append(contentsOf: objSectionHeaderERMyAppoArr)
-            return   self.objERSideAppointmentModal1
+//            var objSectionHeaderERMyAppoArr = [SectionHeaderERMyAppo]()
+//            var arrHeader = ["Pending Next Steps","Completed Next Steps","Not Attended Appointments"]
+//
+//            for (index, title) in arrHeader.enumerated() {
+//                var objSectionHeaderERMyAppo = SectionHeaderERMyAppo();
+//                objSectionHeaderERMyAppo.title = title
+//                objSectionHeaderERMyAppo.index = index
+//                objSectionHeaderERMyAppo.isExpand = false
+//                objSectionHeaderERMyAppoArr.append(objSectionHeaderERMyAppo)
+//
+//            }
+//
+//            self.objERSideAppointmentNewModal?.sectionHeaderERMyAppo?.append(contentsOf: objSectionHeaderERMyAppoArr)
+            return   self.objERSideAppointmentNewModal
             
         }
         
         
-        return self.objERSideAppointmentModal1
+        return self.objERSideAppointmentNewModal
         
         
     }
@@ -125,30 +125,21 @@ class ERHomeViewModal {
     
     
     
-    func outputResult() -> ERSideAppointmentModal?  {
-        
-        var appointmentLocal = ERSideAppointmentModal()
-        
-        if self.objERSideAppointmentModal1 != nil{
-            
-            
+    func outputResult() -> ERSideAppointmentModalNew?  {
+        var appointmentLocal = ERSideAppointmentModalNew()
+        if self.objERSideAppointmentNewModal != nil{
         }
         else
         {
             return nil
         }
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateS = dateFormatter.string(from: dateSelected)
-        
         let dateD = dateFormatter.date(from: dateS)
-        
-        
         var objSectionHeaderERArr = [SectionHeaderER]()
         var index = 0
         while (index < 7){
-            
             var objSectionHeaderER = SectionHeaderER()
             var dateCompStartChange = DateComponents()
             dateCompStartChange.day = index ;
@@ -157,45 +148,32 @@ class ERHomeViewModal {
             objSectionHeaderERArr.append(objSectionHeaderER)
             index = index + 1
         }
-        appointmentLocal = self.objERSideAppointmentModal1!
+        appointmentLocal = self.objERSideAppointmentNewModal!
         appointmentLocal.sectionHeaderER = objSectionHeaderERArr
         return appointmentLocal
-        
     }
     
     
     
     
     func parameter(index : Int) -> Dictionary<String,AnyObject> {
-        
-        
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
-        
-        
         var states = [String]();
-        
         var param = Dictionary<String,AnyObject>() ;
-        
         if index == 1{
-            
+            //ERHOMEPAGE PARAMETER
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let dateStart = dateFormatter.string(from: dateSelected)
             var dateCompStartChange = DateComponents()
             dateCompStartChange.day = 7 ;
             let dateEnd = Calendar.current.date(byAdding: dateCompStartChange, to: dateSelected)!
-            
             let dateEndStr = dateFormatter.string(from: dateEnd)
-            
             
             dateFormatter.dateFormat = "HH:mm:ss"
             let appendDate = dateFormatter.string(from: Date())
             
-            
             var localTimeZoneAbbreviation: String { return TimeZone.current.description }
-            
-            
-            
             states = ["accepted","auto_accepted"]
             param = [
                 ParamName.PARAMFILTERSEL : [
@@ -220,35 +198,229 @@ class ERHomeViewModal {
             
         else if index == 2{
             
-           
-            var filter : Dictionary<String,Any>
-            states = ["accepted_by_community_user","auto_accepted"]
-
-            if participant != nil {
-             
-                filter = [
-                    "states" : states,
-                    "timezone":"utc",
-                    "from": GeneralUtility.todayDate() as AnyObject,
-                    "participants" : participant!
-                    
-                ]
+            //MY APPOINMENT UPCOMING PARAMETER
+            var has_Request = Dictionary<String,Any>()
+            
+            if filterAdded.isEmpty{
                 
             }
-            else{
-                filter = [
-                    "states" : states,
-                    "timezone":"utc",
-                    "from": GeneralUtility.todayDate() as AnyObject,
+            else {
+                if let benchmark = filterAdded["benchmark"]  {
+                     has_Request = ["benchmarks" : benchmark]
+                }
+                if let tags : Dictionary<String,Any> = filterAdded["tag"] as? Dictionary<String, Any> {
+                    var tages = Array<Dictionary<String,Any>>()
+                    for (index, entry) in tags {
+                        var dictionaryCat = Dictionary<String,Any>()
+                        dictionaryCat["category"] = index;
+                        dictionaryCat["values"] = entry;
+                        tages.append(dictionaryCat)
+                    }
                     
-                ]
+                    if has_Request.isEmpty{
+                        has_Request =  ["tags" : tages]
+                    }
+                    else
+                    {
+                        var has_RequestCopy = has_Request
+                        has_RequestCopy["tags"] = tages;
+                        has_Request = has_RequestCopy
+                    }
+                }
                 
+                if let nameEmail = filterAdded["name_email"]{
+                    if has_Request.isEmpty{
+                        has_Request =  ["name_email" : nameEmail]
+                    }
+                    else
+                    {
+                        var has_RequestCopy = has_Request
+                        has_RequestCopy["name_email"] = nameEmail;
+                        has_Request = has_RequestCopy
+                    }
+                }
+            }
+            states = ["accepted","auto_accepted"]
+
+            if has_Request.isEmpty{
+                has_Request =  ["states" : states]
+            }
+            else
+            {
+                var has_RequestCopy = has_Request
+                has_RequestCopy["states"] = states;
+                has_Request = has_RequestCopy
             }
             
-           
             
             param = [
-                ParamName.PARAMFILTERSEL : filter,
+                ParamName.PARAMFILTERSEL : [
+                    "states" : ["confirmed"],
+                    "has_request":
+                        has_Request,
+                    "with_request":
+                        ["states":states
+                    ],
+                    "timezone":"utc",
+                    "from": GeneralUtility.todayDate() as AnyObject,
+                ],
+                ParamName.PARAMINTIMEZONEEL :"utc",
+                ParamName.PARAMCSRFTOKEN : csrftoken,
+                ParamName.PARAMMETHODKEY : "post",
+                ParamName.PARAMFILTERSTAKEEL: 10,
+                ParamName.PARAMFILTERSSKIPEL: skip,
+                ParamName.PARAMSORTEL :[
+                    ParamName.PARAMFIELDEL : "created_at",
+                    ParamName.PARAMORDEREL : "desc"
+                ]
+                ] as [String : AnyObject]
+            
+        }
+        else if index == 3{
+            //MY APPOINMENT PENDING PARAMETER
+            
+            var has_Request = Dictionary<String,Any>()
+            
+            if filterAdded.isEmpty{
+                
+            }
+            else {
+                if let benchmark = filterAdded["benchmark"]  {
+                    has_Request = ["benchmarks" : benchmark]
+                }
+                if let tags : Dictionary<String,Any> = filterAdded["tag"] as? Dictionary<String, Any> {
+                    var tages = Array<Dictionary<String,Any>>()
+                    for (index, entry) in tags{
+                        var dictionaryCat = Dictionary<String,Any>()
+                        dictionaryCat["category"] = index;
+                        dictionaryCat["values"] = entry;
+                        tages.append(dictionaryCat)
+                    }
+                    
+                    if has_Request.isEmpty{
+                        has_Request =  ["tags" : tages]
+                    }
+                    else
+                    {
+                        var has_RequestCopy = has_Request
+                        has_RequestCopy["tags"] = tages;
+                        has_Request = has_RequestCopy
+                    }
+                }
+                
+                if let nameEmail = filterAdded["name_email"]{
+                    if has_Request.isEmpty{
+                        has_Request =  ["name_email" : nameEmail]
+                    }
+                    else
+                    {
+                        var has_RequestCopy = has_Request
+                        has_RequestCopy["name_email"] = nameEmail;
+                        has_Request = has_RequestCopy
+                    }
+                }
+            }
+            states = ["accepted","pending","auto_accepted"]
+            
+            if has_Request.isEmpty{
+                has_Request =  ["states" : states]
+            }
+            else
+            {
+                var has_RequestCopy = has_Request
+                has_RequestCopy["states"] = states;
+                has_Request = has_RequestCopy
+            }
+            
+            param = [
+                ParamName.PARAMFILTERSEL : [
+                    "states" : ["pending"],
+                    "has_request":
+                        has_Request,
+                    "with_request":
+                        ["states":["accepted","pending","auto_accepted","rejected"]
+                    ],
+                    "timezone":"utc",
+                ],
+                ParamName.PARAMINTIMEZONEEL :"utc",
+                ParamName.PARAMCSRFTOKEN : csrftoken,
+                ParamName.PARAMMETHODKEY : "post",
+                ParamName.PARAMFILTERSTAKEEL: 50,
+                ParamName.PARAMFILTERSSKIPEL: skip,
+                ParamName.PARAMSORTEL :[
+                    ParamName.PARAMFIELDEL : "created_at",
+                    ParamName.PARAMORDEREL : "desc"
+                ]
+                ] as [String : AnyObject]
+        }
+        else if index == 4{
+            //MY APPOINMENT PAST PARAMETER
+            var has_Request = Dictionary<String,Any>()
+            
+            if filterAdded.isEmpty{
+                
+            }
+            else {
+                if let benchmark = filterAdded["benchmark"]  {
+                    has_Request = ["benchmarks" : benchmark]
+                }
+                if let tags : Dictionary<String,Any> = filterAdded["tag"] as? Dictionary<String, Any> {
+                    var tages = Array<Dictionary<String,Any>>()
+                    for (index, entry) in tags {
+                        var dictionaryCat = Dictionary<String,Any>()
+                        dictionaryCat["category"] = index;
+                        dictionaryCat["values"] = entry;
+                        tages.append(dictionaryCat)
+                    }
+                    
+                    if has_Request.isEmpty{
+                        has_Request =  ["tags" : tages]
+                    }
+                    else
+                    {
+                        var has_RequestCopy = has_Request
+                        has_RequestCopy["tags"] = tages;
+                        has_Request = has_RequestCopy
+                    }
+                }
+                
+                if let nameEmail = filterAdded["name_email"]{
+                    if has_Request.isEmpty{
+                        has_Request =  ["name_email" : nameEmail]
+                    }
+                    else
+                    {
+                        var has_RequestCopy = has_Request
+                        has_RequestCopy["name_email"] = nameEmail;
+                        has_Request = has_RequestCopy
+                    }
+                }
+            }
+            states = ["accepted","auto_accepted"]
+
+            if has_Request.isEmpty{
+                has_Request =  ["states" : states]
+            }
+            else
+            {
+                var has_RequestCopy = has_Request
+                has_RequestCopy["states"] = states;
+                has_Request = has_RequestCopy
+            }
+            
+            
+            param = [
+                ParamName.PARAMFILTERSEL : [
+                    "states" : ["confirmed"],
+                    "has_request":
+                        has_Request,
+                    "with_request":
+                        ["states":states
+                    ],
+                    "timezone":"utc",
+                    "to": "2021-03-30 11:26:34",
+                    
+                ],
                 ParamName.PARAMINTIMEZONEEL :"utc",
                 ParamName.PARAMCSRFTOKEN : csrftoken,
                 ParamName.PARAMMETHODKEY : "post",
@@ -256,96 +428,10 @@ class ERHomeViewModal {
                 ParamName.PARAMFILTERSSKIPEL: skip,
                 ParamName.PARAMSORTEL :[
                     ParamName.PARAMFIELDEL : "start_datetime_utc",
-                    ParamName.PARAMORDEREL : "asc"
-                ]
-                
-                ] as [String : AnyObject]
-            
-           
-            
-        }
-        else if index == 3{
-            states = ["requested_by_student_user"]
-            var filter : Dictionary<String,Any>
-            
-            if participant != nil {
-                
-                filter = [
-                    "states" : states,
-                    "timezone":"utc",
-                    "participants" : participant!
-                ]
-                
-            }
-            else{
-                filter = [
-                    "states" : states,
-                    "timezone":"utc",
-                    
-                ]
-                
-            }
-            
-            param = [
-                ParamName.PARAMFILTERSEL : filter,
-                ParamName.PARAMINTIMEZONEEL :"utc",
-                ParamName.PARAMCSRFTOKEN : csrftoken,
-                ParamName.PARAMMETHODKEY : "post",
-                ParamName.PARAMFILTERSTAKEEL: 50,
-                ParamName.PARAMFILTERSSKIPEL: skip,
-                ParamName.PARAMSORTEL :[
-                    ParamName.PARAMFIELDEL : "created_at",
                     ParamName.PARAMORDEREL : "desc"
                 ]
-                
                 ] as [String : AnyObject]
-            
-            
         }
-        else if index == 4{
-            
-            states = ["accepted_by_community_user","auto_accepted"]
-            var filter : Dictionary<String,Any>
-                       
-                       if participant != nil {
-                           
-                           filter = [
-                               "states" : states,
-                               "timezone":"utc",
-                               "to": GeneralUtility.todayDate() as AnyObject,
-                               "from_to_strict": 1,
-                               "participants" : participant!
-                           ]
-                           
-                       }
-                       else{
-                           filter = [
-                               "states" : states,
-                               "timezone":"utc",
-                               "to": GeneralUtility.todayDate() as AnyObject,
-                               "from_to_strict": 1
-                               
-                           ]
-                           
-                       }
-            
-            
-            param = [
-                ParamName.PARAMFILTERSEL : filter,
-                ParamName.PARAMINTIMEZONEEL :"utc",
-                ParamName.PARAMCSRFTOKEN : csrftoken,
-                ParamName.PARAMMETHODKEY : "post",
-                ParamName.PARAMFILTERSTAKEEL: 50,
-                ParamName.PARAMFILTERSSKIPEL: skip,
-                ParamName.PARAMSORTEL :[
-                    ParamName.PARAMFIELDEL : "created_at",
-                    ParamName.PARAMORDEREL : "desc"
-                ]
-                
-                ] as [String : AnyObject]
-            
-        }
-        
         return param
     }
     
@@ -357,15 +443,11 @@ class ERHomeViewModal {
         ERSideAppointmentService().erSideAppointemntListApi(params: parameter(index: index), { (jsonData) in
             do {
                 if index == 1{
-                    self.objERSideAppointmentModal1 = try
-                        JSONDecoder().decode(ERSideAppointmentModal.self, from: jsonData)
+                    self.objERSideAppointmentNewModal = try
+                        JSONDecoder().decode(ERSideAppointmentModalNew.self, from: jsonData)
                     self.dispatchGroup.leave()
                 }
-                else if index == 2{
-                    self.objERSideAppointmentModal2 = try
-                        JSONDecoder().decode(ERSideAppointmentModal.self, from: jsonData)
-                    self.dispatchGroup.leave()
-                }
+               
             } catch   {
                 print(error)
                 self.dispatchGroup.leave()
@@ -394,9 +476,9 @@ extension ERHomeViewModal{
                 self.delegate.sentDataToERHomeVC(dataAppoinmentModal: outputR, success: true, index: index)
             }
             else{
-                
+
                 self.delegate.sentDataToERHomeVC(dataAppoinmentModal: nil, success: false, index: index)
-                
+
             }
             
         }
@@ -415,44 +497,11 @@ extension ERHomeViewModal{
         
         ERSideAppointmentService().erSideAppointemntListApi(params: parameter(index: index), { (jsonData) in
             do {
-                 
-                
-                let objERSideAppointmentModalLocal = try
-                        JSONDecoder().decode(ERSideAppointmentModal.self, from: jsonData)
-                if objERSideAppointmentModalLocal.total ?? 0 <= self.skip + 50{
-                    if  self.objERSideAppointmentModal1 != nil {
-                        
-                        self.objERSideAppointmentModal1?.results?.append(contentsOf: objERSideAppointmentModalLocal.results!);
-                    }
-                    else
-                    {
-                        self.objERSideAppointmentModal1  = objERSideAppointmentModalLocal;
-                        
-                    }
-                     self.dispatchGroup.leave()
-                    
-                }
-                else
-                {
-                    self.skip = self.skip + 50
-                    self.fetchERSideMYAPPO(index: index)
-                    if  self.objERSideAppointmentModal1 != nil {
-                        
-                        self.objERSideAppointmentModal1?.results?.append(contentsOf: objERSideAppointmentModalLocal.results!);
-                    }
-                    else
-                    {
-                        self.objERSideAppointmentModal1  = objERSideAppointmentModalLocal;
-                        
-                    }
-                    
-                    
-                }
-                
-                
-               
-               
-            } catch   {
+                self.objERSideAppointmentNewModal = try
+                    JSONDecoder().decode(ERSideAppointmentModalNew.self, from: jsonData)
+                self.dispatchGroup.leave()
+            
+        } catch   {
                 print(error)
                 self.dispatchGroup.leave()
             }

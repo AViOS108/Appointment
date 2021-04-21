@@ -70,6 +70,7 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     
     @IBOutlet var btnCoachPreciseGrp: [UIButton]!
     
+    
     @IBOutlet var viewSeperators: [UIView]!
     
     var contentSize : CGSize!
@@ -329,9 +330,6 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         viewSeperators.forEach { (viewSep) in
             viewSep.backgroundColor = ILColor.color(index: 22)
         }
-        
-        
-        
         var index = 1
         self.btnOverallExpGrp.forEach { (btn) in
             btn.tag = index

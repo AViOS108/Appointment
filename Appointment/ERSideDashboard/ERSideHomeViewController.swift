@@ -197,7 +197,7 @@ class ERSideHomeViewController: SuperViewController {
         
     }
     
-    var dataAppoinmentModal: ERSideAppointmentModal?
+    var dataAppoinmentModal: ERSideAppointmentModalNew?
     var erSideHomeVM = ERHomeViewModal();
     @IBOutlet weak var viewCollection: ERSideHeaderCollectionVC!
     @IBOutlet weak var btnMonthDecrease: UIButton!
@@ -206,7 +206,6 @@ class ERSideHomeViewController: SuperViewController {
     
     
     override func viewDidLoad() {
-        self.hidesBottomBarWhenPushed = true;
 
         calenderView()
         self.callingViewModal()
@@ -328,8 +327,15 @@ class ERSideHomeViewController: SuperViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        self.hidesBottomBarWhenPushed = false;
+
         GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"Schedule");
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+                self.hidesBottomBarWhenPushed = true;
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -359,7 +365,7 @@ extension ERSideHomeViewController : ERHomeViewModalVMDelegate,ERSideHeaderColle
         
     }
     
-    func sentDataToERHomeVC(dataAppoinmentModal: ERSideAppointmentModal?, success: Bool,index:Int) {
+    func sentDataToERHomeVC(dataAppoinmentModal: ERSideAppointmentModalNew?, success: Bool,index:Int) {
         
         if success {
             self.dataAppoinmentModal = dataAppoinmentModal

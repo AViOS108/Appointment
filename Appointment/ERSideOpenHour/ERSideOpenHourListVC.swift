@@ -26,10 +26,9 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
     
     @IBAction func btnSetOpenHoursTapped(_ sender: Any) {
         let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
-        objERSideOpenHourListVC.objviewTypeOpenHour = .setEditOpenHour
+        objERSideOpenHourListVC.objviewTypeOpenHour = .setOpenHour
         objERSideOpenHourListVC.dateSelected = self.dateSelected
         self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
-        
     }
     
     //Zero State

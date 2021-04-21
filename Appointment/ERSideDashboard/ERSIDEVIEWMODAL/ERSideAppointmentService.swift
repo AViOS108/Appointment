@@ -90,11 +90,11 @@ class ERSideAppointmentService {
         
     }
     
-    func erSideOPenHourDeleteApi(param: Dictionary<String,AnyObject>,id : String, _ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
+    func erSideOPenHourDeleteApi(param: Dictionary<String,AnyObject>,deleteAll : String,id : String, _ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
           
           let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
           
-        Network().makeApiEventRequest(true, url: Urls().erSideOPenHourDelete( id: id), methodType: .post, params: param, header: headers, completion: { (jsonData) in
+        Network().makeApiEventRequest(true, url: Urls().erSideOPenHourDelete( id: id, isDeleteAllcoocurence: deleteAll), methodType: .post, params: param, header: headers, completion: { (jsonData) in
               success(jsonData)
               
           }) { (error, errorCode) in
@@ -198,5 +198,54 @@ class ERSideAppointmentService {
                failure(error,errorCode)
            }
        }
+    
+    
+    func erSideResumeList(params: Dictionary<String, AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+              
+              let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+              
+              Network().makeApiStudentList(true, url: Urls().erSideResumeListAppoinment(), methodType: .post, params: params, header: headers, completion: { (data) in
+                  success(data)
+              }) { (error, errorCode) in
+                  failure(error,errorCode)
+              }
+          }
+    
+    func erUpdateAttendence(params: Dictionary<String, AnyObject>,studentId : Int ,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+                
+                let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+                
+        Network().makeApiStudentList(true, url: Urls().erSideUpdateAttendence(studentId: studentId), methodType: .post, params: params, header: headers, completion: { (data) in
+                    success(data)
+                }) { (error, errorCode) in
+                    failure(error,errorCode)
+                }
+            }
+    
+    func erSideRoleList(_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
+          
+          let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+          
+          Network().makeApiEventGetRequest(true, url: Urls().erSideRolelist(), methodType: .get, params: ["":"" as AnyObject], header: headers, completion: { (jsonData) in
+              success(jsonData)
+              
+          }) { (error, errorCode) in
+              failure(error,errorCode)
+              
+          }
+          
+      }
+    
+    
+    func erSideSpecifcList(params: Dictionary<String, AnyObject> ,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+        
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+        
+        Network().makeApiStudentList(true, url: Urls().erSideSpecificUserlist(), methodType: .post, params: params, header: headers, completion: { (data) in
+            success(data)
+        }) { (error, errorCode) in
+            failure(error,errorCode)
+        }
+    }
     
 }

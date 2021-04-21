@@ -9,10 +9,8 @@
 import UIKit
 
 enum viewTypeCancelDecline{
-    
     case cancel
     case decline
-    
 }
 
 
@@ -24,15 +22,19 @@ protocol ERCancelViewControllerDelegate {
 
 
 class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UITextViewDelegate {
-
+  
+    
+    @IBOutlet weak var lblInitialName: UILabel!
+    
+    @IBOutlet weak var lblDescribtion: UILabel!
+    @IBOutlet weak var lblCoachName: UILabel!
     var viewType : viewTypeCancelDecline!
     var delegate : ERCancelViewControllerDelegate!
     @IBOutlet weak var viewInner: UIView!
     @IBOutlet weak var viewContainer: UIView!
-    @IBOutlet weak var lblHeader: UILabel!
-    var results: ERSideAppointmentModalResult!
+    var results: ERSideAppointmentModalNewResult!
+    var seletectedIndex : Int = 0
 
-    @IBOutlet weak var viewSeprator: UIView!
     
     @IBOutlet weak var lblComment: UILabel!
     
@@ -41,7 +43,8 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     @IBOutlet weak var txtView: UITextView!
     
     @IBOutlet weak var btnSubmit: UIButton!
-    
+    var colectionViewHandler = ERStudentOverlayView()
+
     @IBAction func btnSubmitTapped(_ sender: Any) {
         callApi()
     }
@@ -70,7 +73,7 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
             ] as Dictionary<String,AnyObject>
         
         
-        ERSideAppointmentService().erSideAppointemntDandC(params: params, id: results.identifier ?? "", idIndex: apiHitINdex, { (jsonData) in
+        ERSideAppointmentService().erSideAppointemntDandC(params: params, id: String(describing: results.id ?? 0), idIndex: apiHitINdex, { (jsonData) in
             
             activityIndicator.hide()
             
@@ -98,46 +101,94 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     
     func customize() {
         
+        let stringImg = GeneralUtility.startNameCharacter(stringName: self.results.requests![seletectedIndex].studentDetails?.name ?? "")
+        
+        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+        {
+            UILabel.labelUIHandling(label: lblInitialName, text: stringImg, textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+            lblInitialName.layer.borderColor = UIColor.red.cgColor
+            lblInitialName.layer.borderWidth = 1;
+            lblInitialName.layer.cornerRadius = lblInitialName.frame.size.height/2
+            lblInitialName.clipsToBounds = true
+            lblInitialName.layer.masksToBounds = true
+            lblInitialName.textAlignment = .center
+        }
+        let strHeader = NSMutableAttributedString.init()
+
+        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+            
+        {
+            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.requests![seletectedIndex].studentDetails?.name, _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
+            let nextLine1 = NSAttributedString.init(string: "\n")
+            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.requests![seletectedIndex].studentDetails?.benchmarkName, _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            para.lineSpacing = 4
+            strHeader.append(strTiTle)
+            strHeader.append(nextLine1)
+            strHeader.append(strType)
+            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+            lblCoachName.attributedText = strHeader
+        }
+        let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+        var componentDay = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .weekday)
+        let strHeaderDesc = NSMutableAttributedString.init()
+
+        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+            
+        {
+            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: " " +  "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +
+                GeneralUtility.startAndEndDateDetail2(startDate: self.results.startDatetimeUTC ?? "", endDate: self.results.endDatetimeUTC ?? "")
+                , _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
+            let nextLine1 = NSAttributedString.init(string: "\n")
+            var strLocation = "Not available"
+            
+            let image1Attachment = NSTextAttachment()
+            image1Attachment.image = UIImage(named: "locationAppo")
+            image1Attachment.bounds = CGRect.init(x: 0, y: 0, width: 10, height: 14)
+            
+            let image1Attachment2 = NSTextAttachment()
+            image1Attachment2.image = UIImage(named: "calenderAppoList")
+            image1Attachment2.bounds = CGRect.init(x: 0, y: 0, width: 10, height: 10)
+            
+            
+            
+            
+            // wrap the attachment in its own attributed string so we can append it
+            let imageLocation = NSAttributedString(attachment: image1Attachment)
+            let imageCalender = NSAttributedString(attachment: image1Attachment2)
+            
+            
+            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: " " + (self.results.location ?? ""), _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            para.lineSpacing = 4
+            strHeaderDesc.append(imageCalender)
+            strHeaderDesc.append(strTiTle)
+            strHeaderDesc.append(nextLine1)
+            strHeaderDesc.append(imageLocation)
+            strHeaderDesc.append(strType)
+            strHeaderDesc.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeaderDesc.length))
+            lblDescribtion.attributedText = strHeaderDesc
+        }
+        
+        
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         
         switch viewType {
         case .cancel:
-            
-            let strHeader = NSMutableAttributedString.init()
-            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Cancel Request", _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
-            let nextLine1 = NSAttributedString.init(string: "\n")
-            
-            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.participants![0].name, _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontMedium]);
-            let para = NSMutableParagraphStyle.init()
-            //        para.alignment = .center
-            para.lineSpacing = 1
-            strHeader.append(strTiTle)
-            strHeader.append(nextLine1)
-            strHeader.append(strType)
-            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-            lblHeader.attributedText = strHeader
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"Cancel Appointment");
+
             break;
             
         case .decline:
-            
-            let strHeader = NSMutableAttributedString.init()
-            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Decline Request", _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
-            let nextLine1 = NSAttributedString.init(string: "\n")
-            
-            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.participants![0].name, _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontMedium]);
-            let para = NSMutableParagraphStyle.init()
-            //        para.alignment = .center
-            para.lineSpacing = 1
-            strHeader.append(strTiTle)
-            strHeader.append(nextLine1)
-            strHeader.append(strType)
-            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-            lblHeader.attributedText = strHeader
+           GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"Decline Request ");
+
             
             
             break
@@ -171,12 +222,10 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     override func viewDidAppear(_ animated: Bool) {
         self.view.tag = 19682
         self.viewInner.tag = 19683
-        tapGesture()
-        viewInner.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
+        viewInner.backgroundColor = ILColor.color(index: 22)
         viewContainer.backgroundColor = .white
         viewContainer.cornerRadius = 3;
-        self.viewSeprator.backgroundColor = ILColor.color(index: 22)
-        
+
         self.customize()
         if  let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE17)
         {
@@ -185,25 +234,10 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         
     }
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view?.isDescendant(of: self.view) == true  && touch.view?.tag != 19682 && touch.view?.tag != 19683 {
-            self.view.resignFirstResponder()
-            
-            return false
-        }
-        return true
-    }
-    
-    func tapGesture()  {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        tap.delegate = self
-        self.viewInner.isUserInteractionEnabled = true
-        self.viewInner.addGestureRecognizer(tap)
-    }
-    
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        self.dismiss(animated: false) {
-        }
-    }
+  @objc override func buttonClicked(sender: UIBarButtonItem) {
+         self.navigationController?.popViewController(animated: true)
+         
+
+           }
     
 }

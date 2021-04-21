@@ -39,7 +39,7 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
     @IBOutlet weak var btnStudentListPrev: UIButton!
     
     @IBOutlet weak var btnStudentListNext: UIButton!
-    var filterAdded = Dictionary<String,AnyObject>()
+    var filterAdded = Dictionary<String,Any>()
     
     var offset = 0 ;
     var activityIndicator: ActivityIndicatorView?
@@ -498,10 +498,7 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
         
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
-        
-        
-    }
+    
     
     
     func numberOfSections(in tableView: UITableView) -> Int{

@@ -55,16 +55,15 @@ class ERSideOpenHourTableHandler: UIViewController,UITableViewDelegate,UITableVi
         let erSideOHDetail = ERSideOHDetailViewController.init(nibName: "ERSideOHDetailViewController", bundle: nil)
         erSideOHDetail.identifier = self.dataAppoinmentModal?.results![indexPath.row].identifier
         erSideOHDetail.viewControllerType = 1
+        erSideOHDetail.delegate = viewControllerI
+
         erSideOHDetail.viewControllerI = viewControllerI
         erSideOHDetail.modalPresentationStyle = .overFullScreen
         erSideOHDetail.dateSelected = self.dateSelected
         viewControllerI.navigationController?.pushViewController(erSideOHDetail, animated: false)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
-        
-        
-    }
+    
     
     
     func numberOfSections(in tableView: UITableView) -> Int{

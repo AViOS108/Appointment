@@ -140,8 +140,7 @@ class HomeMyAppointmentTableViewController: UITableViewController {
     }
         
         
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
-        }
+    
         
         
     override func numberOfSections(in tableView: UITableView) -> Int{

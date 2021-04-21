@@ -273,10 +273,7 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
         
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
-        
-        
-    }
+   
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -418,10 +415,6 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
            strDescription.append(descriptionText)
         }
         
-       
-       
-        
-        
         var firstName = ""
         if let fn = UserDefaults.standard.object(forKey: "firstName"){
             firstName = fn as! String
@@ -440,13 +433,14 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
         }
         
        
-        
         let strtitle = "Meeting:" + " " + finalName + " with" + " " + results.createdBy.name!
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
 
+          var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+
         var params = [
             "title" : strtitle,
-            "in_timezone" : "Asia/Kolkata",
+            "in_timezone" : localTimeZoneAbbreviation,
             "user_purpose_ids": userPurposeId,
             ParamName.PARAMCSRFTOKEN : csrftoken
 

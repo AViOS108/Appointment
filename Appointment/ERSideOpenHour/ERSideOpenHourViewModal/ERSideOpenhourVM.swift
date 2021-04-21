@@ -147,10 +147,10 @@ class ERSideOpenHourDetailVM {
     }
     
     
-    func OpenHourDelete(param: Dictionary<String,AnyObject>,id: String,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void )
+    func OpenHourDelete(param: Dictionary<String,AnyObject>,deleteAll : String, id: String,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void )
     {
         
-        ERSideAppointmentService().erSideOPenHourDeleteApi(param: param, id: id, { (data) in
+        ERSideAppointmentService().erSideOPenHourDeleteApi(param: param, deleteAll: deleteAll, id: id, { (data) in
             success(data)
         }) { (error, errorCode) in
             failure(error, errorCode)
@@ -194,7 +194,7 @@ class ERSideCreateEditOHVM {
             
             self.activityIndicator?.hide()
             
-            if self.purposeArr != nil && self.timeZOneArr != nil{
+            if self.purposeArr != nil && self.timeZOneArr.count > 0 {
 
                 self.delegate.sentDataToERSideCreateEditOHVC(dataPurposeModal: self.purposeArr, timeZOneArr: self.timeZOneArr, success: true)
             }

@@ -20,43 +20,63 @@ struct ERSideOHDetailModal{
 
 
 
-
-
 class ERSideOHDetailViewController: SuperViewController {
     var dateSelected : Date!
     @IBOutlet weak var nslayoutConstarintWidth: NSLayoutConstraint!
     var viewControllerType : Int = 0;
     @IBOutlet weak var nslayoutConstraintHeighBottomView: NSLayoutConstraint!
     @IBOutlet weak var viewHeader: UIView!
+    var delegate : ErSideOpenHourTCDelegate!
     @IBOutlet weak var viewTableContainer: UIView!
     @IBOutlet weak var viewFooter: UIView!
     @IBOutlet weak var tblview: UITableView!
     @IBOutlet weak var lblDetailHeader: UILabel!
     @IBOutlet weak var btnDeleteFooter: UIButton!
+    
+    
+    func deleteApi(){
+        
+       var activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.DeletingOpenHour)
+        let param = [
+            "_method" : "delete",
+            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
+            
+            ] as Dictionary<String, AnyObject>
+        
+        ERSideOpenHourDetailVM().OpenHourDelete(param: param, deleteAll: "0", id: (self.identifier)!
+            , { (data) in
+                activityIndicator.hide()
+             CommonFunctions().showError(title: "", message: "successfully deleted !!!")
+                self.delegate.deleteDelgateRefresh();
+                self.navigationController?.popViewController(animated: false)
+        }) { (error, errorCode) in
+            activityIndicator.hide()
+        }
+    }
+    
+    
     @IBAction func btnDeleteFooterTapped(_ sender: Any) {
+        self.deleteApi()
     }
     @IBOutlet weak var btnCancelFooter: UIButton!
     @IBAction func btnCancelFooterTapped(_ sender: Any) {
+        self.navigationController?.popViewController(animated: false);
     }
     var objModalArray = Array<ERSideOHDetailModal>()
     
     @IBOutlet weak var btnDelete: UIButton!
     @IBAction func btnDeleteTapped(_ sender: Any) {
-        activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.DeletingOpenHour)
-        let param = [
-            "_method" : "delete",
-            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
-
-        ] as Dictionary<String, AnyObject>
         
-        ERSideOpenHourDetailVM().OpenHourDelete(param: param, id: (self.identifier)!
-            , { (data) in
-                CommonFunctions().showError(title: "", message: "successfully deleted !!!")
-                self.dismiss(animated: false) {
-                }
-                
-        }) { (error, errorCode) in
-        }
+                let alert = UIAlertController(title: "", message: "Are you sure you want to delete?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { action in
+                }))
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    self.deleteApi();
+        
+                }))
+                self.present(alert, animated: true, completion: nil)
+        
+        
     }
     @IBOutlet weak var btnEdit: UIButton!
     @IBAction func btnEditTapped(_ sender: Any) {
@@ -64,7 +84,8 @@ class ERSideOHDetailViewController: SuperViewController {
         self.dismiss(animated: false) {
             let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
             objERSideOpenHourListVC.dateSelected = self.dateSelected
-            objERSideOpenHourListVC.objERSideOpenHourDetail = self.objERSideOpenHourDetail
+            objERSideOpenHourListVC.objviewTypeOpenHour = .editOpenHour
+            objERSideOpenHourListVC.objERSideOpenHourPrefilledDetail = self.objERSideOpenHourDetail
             self.viewControllerI.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
         }
     }
@@ -162,10 +183,10 @@ class ERSideOHDetailViewController: SuperViewController {
         if let requestApprovalType = objERSideOpenHourDetail?.appointmentConfig?.requestApprovalType
         {
             if requestApprovalType == "manual"{
-                appointmentType = "Manual Approval"
+                requestType = "Manual Approval"
             }
             else{
-                appointmentType =  "Automatic Approval"
+                requestType =  "Automatic Approval"
             }
         }
         
@@ -196,7 +217,7 @@ class ERSideOHDetailViewController: SuperViewController {
             }
         }
         
-        bookingDeadlineDays.append(" before ")
+        bookingDeadlineDays.append(" ( before ")
         
         if let bookingDeadlineTimeonDay = objERSideOpenHourDetail?.appointmentConfig?.bookingDeadlineTimeonDay
         {
@@ -204,43 +225,35 @@ class ERSideOHDetailViewController: SuperViewController {
             let hour = (timeDay!/3600)
             if  hour <= 12{
                 let mintue = (timeDay! % 3600)/60
-                bookingDeadlineDays.append(" \(hour) : " + String(format: "%02d", mintue)  + "AM")
+                bookingDeadlineDays.append(String(format: "%02d", hour) + ":" + String(format: "%02d", mintue)  + " AM )")
             }else{
                 let mintue = (timeDay! % 3600)/60
-                bookingDeadlineDays.append(" \(hour - 12) : " + String(format: "%02d", mintue)  + "PM")
+                bookingDeadlineDays.append(String(format: "%02d", hour - 12) + ":" + String(format: "%02d", mintue)  + " PM )")
             }
+            
+            var AppointmentDeadlineModal = ERSideOHDetailModal();
+            AppointmentDeadlineModal.headLinetext = "Appointment Deadline"
+            AppointmentDeadlineModal.valueText = bookingDeadlineDays
+            AppointmentDeadlineModal.index = 7;
+            self.objModalArray.append(AppointmentDeadlineModal)
+            
         }
-                
-        var AppointmentDeadlineModal = ERSideOHDetailModal();
-        AppointmentDeadlineModal.headLinetext = "Appointment Deadline"
-        AppointmentDeadlineModal.valueText = bookingDeadlineDays
-        AppointmentDeadlineModal.index = 7;
-        self.objModalArray.append(AppointmentDeadlineModal)
-        
-        
-        
-        var strLocation = "Not available", strLocationValue = ""
+             
+        var strLocation = "Not available"
         var imageName = "false"
         
-//        if let str = self.objERSideOpenHourDetail?.locations{
-//            if str.count > 0 {
-//                strLocationValue = (str[0].data?.value) ?? "Not available"
-//                if str[0].provider == "zoom_link"{
-//                    imageName = "Zoom"
-//                    strLocation = " Zoom"
-//                }
-//                else  if str[0].provider == "physical_location"{
-//                    imageName = "custom_location"
-//                    strLocation = " Physical Location"
-//
-//                }
-//                else{
-//                    imageName = "In_person_meeting"
-//                    strLocation = " Meeting Url"
-//                }
-//            }
-//
-//        }
+        if objERSideOpenHourDetail?.locationType == "physical_location"{
+                    imageName = "custom_location"
+                    strLocation = " Physical Location"
+
+                }
+                else{
+                    imageName = "In_person_meeting"
+                    strLocation = " Meeting Url"
+                }
+            
+
+        
         
         var LocationModal = ERSideOHDetailModal();
         LocationModal.headLinetext = "Location"
@@ -253,7 +266,7 @@ class ERSideOHDetailViewController: SuperViewController {
         
         var LocationModalValue = ERSideOHDetailModal();
         LocationModalValue.headLinetext = "Selected Location"
-        LocationModalValue.valueText = strLocationValue
+        LocationModalValue.valueText = objERSideOpenHourDetail?.location
         LocationModalValue.index = 9;
         self.objModalArray.append(LocationModalValue)
         
@@ -374,10 +387,7 @@ extension ERSideOHDetailViewController: UITableViewDelegate,UITableViewDataSourc
     }
     
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
-        
-        
-    }
+   
     
     
     func numberOfSections(in tableView: UITableView) -> Int{
