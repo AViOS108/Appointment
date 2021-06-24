@@ -25,8 +25,13 @@ struct OpenHourCoachModal: Codable {
 
 
 
+
+
 // MARK: - Result
 struct OpenHourCoachModalResult: Codable {
+    
+  
+    
     let id: String?
     var isPastAppointment : Bool = false
     var isFeedbackEnabled : Bool = false

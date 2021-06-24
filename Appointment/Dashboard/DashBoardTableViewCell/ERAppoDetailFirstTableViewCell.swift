@@ -23,6 +23,7 @@ class ERAppoDetailFirstTableViewCell: UITableViewCell {
 
         viewCollection.register(UINib.init(nibName: "ERSideAppoDetailTypeFirstCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ERSideAppoDetailTypeFirstCollectionViewCell")
         viewCollection.viewController = self.viewController
+        viewCollection.delegateI = self.viewController as! ERSideFIrstTypeCollectionViewDelegate
         viewCollection.appoinmentDetailAllModalObj = self.appoinmentDetailAllModalObj
         viewCollection.customize()
     }

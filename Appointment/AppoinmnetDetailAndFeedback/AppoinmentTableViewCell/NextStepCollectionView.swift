@@ -17,6 +17,7 @@ class NextStepCollectionView: UICollectionView,UICollectionViewDataSource,UIColl
     var viewController : UIViewController!
     var nextModalObj : [NextStepModalNew]?
     var isNoNextStep = false
+    var delegateI : NextStepAppointmentTableViewCelldelegate!
 
     
     override func layoutSubviews() {
@@ -43,19 +44,16 @@ class NextStepCollectionView: UICollectionView,UICollectionViewDataSource,UIColl
         if nextModalObj?.count == 0{
             isNoNextStep = true
         }
-        
-        
-        
+        else{
+            isNoNextStep = false
+        }
         if let layout = self.collectionViewLayout as? NotesCollectionViewlayout {
             layout.cache = []
             layout.contentHeight = 0
             layout.contentWidth = 0
             layout.delegate = self
         }
-        
         self.reloadData()
-        
-        
     }
     
     
@@ -73,6 +71,7 @@ class NextStepCollectionView: UICollectionView,UICollectionViewDataSource,UIColl
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NextStepCollectionViewCell", for: indexPath as IndexPath) as! NextStepCollectionViewCell
         cell.objNextStepViewType = self.objNextStepViewType
+        cell.delegateI = self.delegateI
         if isNoNextStep{
             cell.customization(isNextStep: isNoNextStep)
         }
@@ -93,7 +92,7 @@ class NextStepCollectionView: UICollectionView,UICollectionViewDataSource,UIColl
 extension NextStepCollectionView: NotesCollectionViewlayoutDelegate {
     
     func widthCell()->CGFloat{
-        return  viewController.view.frame.width - 32
+        return  viewController.view.frame.width - 16
     }
     
     func collectionView(

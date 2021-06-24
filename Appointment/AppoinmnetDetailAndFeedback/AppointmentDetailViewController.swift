@@ -134,12 +134,10 @@ extension AppointmentDetailViewController : AppoinmentdetailViewModalDeletgate{
 
 
 extension AppointmentDetailViewController : NotesAppointmentTableViewCellDelegate,NoteCollectionViewCellDelegate,EditNotesViewControllerDelegate{
-    func addNotes() {
+    func addEditNotes(isEdit: Bool) {
         
     }
-    
-   
-    
+  
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            
            super.viewWillTransition(to: size, with: coordinator)

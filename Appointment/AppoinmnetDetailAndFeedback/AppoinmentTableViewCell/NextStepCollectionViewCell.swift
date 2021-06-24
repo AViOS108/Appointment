@@ -14,10 +14,12 @@ class NextStepCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var viewContainer: UIView!
     var nextModalObj : NextStepModalNew?
     var objNextStepViewType : nextStepViewType!
+    var delegateI : NextStepAppointmentTableViewCelldelegate!
 
     @IBOutlet weak var lblDate: UILabel!
     
     @IBAction func btnCompletionStatusTapped(_ sender: Any) {
+        delegateI.markCompleteStatus(id: "\(self.nextModalObj?.id ?? 0)")
     }
     @IBOutlet weak var btnCompletionStatus: UIButton!
     
@@ -29,18 +31,23 @@ class NextStepCollectionViewCell: UICollectionViewCell {
     }
     
     func shadowWithCorner(viewContainer : UIView,cornerRadius: CGFloat)
-          {
-              // corner radius
-              viewContainer.layer.cornerRadius = cornerRadius
-              // border
-              viewContainer.layer.borderWidth = 1.0
-              viewContainer.layer.borderColor = ILColor.color(index: 27).cgColor
-             
-          }
+    {
+        // corner radius
+        viewContainer.layer.cornerRadius = cornerRadius
+        // border
+        viewContainer.layer.borderWidth = 1.0
+        viewContainer.layer.borderColor = ILColor.color(index: 27).cgColor
+        // shadow
+        viewContainer.layer.shadowColor = ILColor.color(index: 27).cgColor
+        viewContainer.layer.shadowOffset = CGSize(width: 3, height: 3)
+        viewContainer.layer.shadowOpacity = 0.7
+        viewContainer.layer.shadowRadius = 4.0
+        viewContainer.backgroundColor = .white
+    }
     
     func customization(isNextStep: Bool)  {
         
-        self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 2)
+        self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 10)
         
         if isNextStep {
             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -80,7 +87,17 @@ class NextStepCollectionViewCell: UICollectionViewCell {
         UILabel.labelUIHandling(label: lblDate, text: dueDateComp, textColor: ILColor.color(index: 38), isBold: false, fontType: fontMedium)
           let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
         
-        UIButton.buttonUIHandling(button: btnCompletionStatus, text: "Mark as complete", backgroundColor: .clear, textColor: ILColor.color(index: 23),  buttonImage: UIImage.init(named: "noun_Star_select"), fontType: fontHeavy)
+        if self.nextModalObj?.isCompleted == 1{
+            UIButton.buttonUIHandling(button: btnCompletionStatus, text: " Completed", backgroundColor: .clear, textColor: ILColor.color(index: 58),  buttonImage: UIImage.init(named: "completedNextStep"), fontType: fontHeavy)
+            btnCompletionStatus.isUserInteractionEnabled = false
+        }
+        else{
+            btnCompletionStatus.isUserInteractionEnabled = true
+            UIButton.buttonUIHandling(button: btnCompletionStatus, text: " Mark as complete", backgroundColor: .clear, textColor: ILColor.color(index: 23),  buttonImage: UIImage.init(named: "tick-marknextstep"), fontType: fontHeavy)
+
+        }
+        
+      
         
     }
     

@@ -14,6 +14,8 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
     @IBAction func btnFinalAppoinmentTapped(_ sender: Any) {
     }
     @IBAction func btnCancelAppoinmentTapped(_ sender: Any) {
+        
+        
     }
     @IBOutlet weak var btnCancelAppoinment: UIButton!
     var activityIndicator: ActivityIndicatorView?
@@ -29,6 +31,9 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
         appoinmentViewModal.selectedResult = self.selectedResult
         appoinmentViewModal.delegate = self
+       
+        
+        appoinmentViewModal.detailType = index
         appoinmentViewModal.viewModalCustomized();
         // Do any additional setup after loading the view.
     }
@@ -36,7 +41,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
     override func viewWillAppear(_ animated: Bool) {
         
         let fontheavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
-
+        
         if index == 2{
             btnFinalAppoinment.isHidden = true
             UIButton.buttonUIHandling(button: btnCancelAppoinment, text: "Cancel Appointment", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3, fontType: fontheavy)
@@ -44,6 +49,13 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
         }
         else if index == 3{
             
+            if selectedResult.requests?.count ?? 0 > 0{
+                
+            }
+            else{
+                btnFinalAppoinment.isHidden = true
+
+            }
             UIButton.buttonUIHandling(button: btnFinalAppoinment, text: "Finalise Appointment", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3, fontType: fontheavy)
             
             UIButton.buttonUIHandling(button: btnCancelAppoinment, text: "Cancel Appointment", backgroundColor: .white, textColor: ILColor.color(index: 23), cornerRadius: 3,  borderColor: ILColor.color(index: 23), borderWidth: 3,  fontType: fontheavy)
@@ -67,15 +79,10 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
         
         tblVIew.register(UINib.init(nibName: "ERAppoDetailSecondTableViewCell", bundle: nil), forCellReuseIdentifier: "ERAppoDetailSecondTableViewCell")
         tblVIew.register(UINib.init(nibName: "ERAppoDetailThirdTableViewCell", bundle: nil), forCellReuseIdentifier: "ERAppoDetailThirdTableViewCell")
-
-        
-        
         tblVIew.delegate = self
         tblVIew.dataSource = self
         tblVIew.reloadData()
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"My Appointments");
-
-        
     }
     
     override func buttonClicked(sender: UIBarButtonItem) {
@@ -152,6 +159,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 cell.nextModalObj = self.appoinmentDetailAllModalObj?.nextModalObj
                 cell.viewController = self
+                cell.delegate = self
                 cell.customization()
                 cell.layoutIfNeeded()
                 return cell
@@ -161,6 +169,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                 // pending
                 let cell = tableView.dequeueReusableCell(withIdentifier: "NextStepAppointmentTableViewCell", for: indexPath) as! NextStepAppointmentTableViewCell
                 cell.objNextStepViewType = .erType
+                cell.delegate = self
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 cell.nextModalObj = self.appoinmentDetailAllModalObj?.nextModalObj
                 cell.viewController = self
@@ -187,6 +196,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
             cell.objNextStepViewType = .erType
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.nextModalObj = self.appoinmentDetailAllModalObj?.nextModalObj
+            cell.delegate = self
             cell.viewController = self
             cell.customization()
             cell.layoutIfNeeded()
@@ -198,10 +208,10 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let _ = appoinmentDetailAllModalObj{
             if index == 2{
-                return 4 // upcoming
+                return 3 // upcoming
             }
             else if index == 3{
-                return 4 // pending
+                return 2 // pending
             }
             else{
                 return 5 // past
@@ -210,10 +220,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
         else{
             return 0
         }
-        
-        
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -222,11 +229,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         
-        
     }
-    
-    
-    
 }
 
 
@@ -236,7 +239,7 @@ extension ERAppointmentDetailViewController : ERSideAppoinmentDetailModalDeletga
         if isSucess{
             self.appoinmentDetailAllModalObj = appoinmentDetailModalObj;
             self.appoinmentDetailAllModalObj?.status = index
-
+            
             self.tblVIew.reloadData()
         }
         else{
@@ -244,61 +247,181 @@ extension ERAppointmentDetailViewController : ERSideAppoinmentDetailModalDeletga
             
         }
     }
-    
-    
 }
 
 
-extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDelegate,NoteCollectionViewCellDelegate,EditNotesViewControllerDelegate{
-    func addNotes() {
-        let objERAddNotesViewController = ERAddNotesViewController.init(nibName: "ERAddNotesViewController", bundle: nil)
+extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDelegate,NoteCollectionViewCellDelegate,EditNotesViewControllerDelegate,ERAddNotesViewControllerDelegate,NextStepAppointmentTableViewCelldelegate,ERUpdateStatusAddNextStepViewControllerDelegate,ERSideFIrstTypeCollectionViewDelegate,ERCancelViewControllerDelegate{
+  
+    
+    func markCompleteStatus(id: String) {
+        let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+
+        let params = [
+            "_method" : "patch",
+            "is_completed" :"1",
+            "csrf_token" : csrftoken
+        ] as Dictionary<String,AnyObject>
         
-        self.navigationController?.pushViewController(objERAddNotesViewController, animated: false)
+        let activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.NEXTSTEPCOMPLETION)
+        
+        ERSideAppointmentService().erSideAppointemntNextComplete(params: params, id: id , { (jsonData) in
+            activityIndicator.hide()
+           
+            GeneralUtility.alertView(title: "", message: "Completed".localized(), viewController: self, buttons: ["Ok"]);
+            self.refreshTableView()
+            
+        }) { (error, errorCode) in
+            activityIndicator.hide()
+            
+        }
+    }
+    
+    func acceptDeclineApi(isAccept: Bool) {
+        if isAccept{
+            acceptCustomize()
+        }
+        else{
+            declineCustomize()
+        }
+    }
+    
+    func acceptApi(){
+        let params = [
+            "_method" : "post",
+            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String,
+            "appointment_id": selectedResult.id ?? "0"
+        ] as Dictionary<String,AnyObject>
+        
+        let activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.AcceptOpenHour)
+        ERSideAppointmentService().erSideAppointemntAccept(params: params, id: String(describing: selectedResult.requests?[0].id ?? 0) , { (jsonData) in
+            activityIndicator.hide()
+           
+            GeneralUtility.alertView(title: "", message: "Accepted".localized(), viewController: self, buttons: ["Ok"]);
+            self.refreshTableView()
+            
+        }) { (error, errorCode) in
+            activityIndicator.hide()
+            
+        }
+        
+    }
+    
+    func acceptCustomize(){
+        
+        
+        GeneralUtility.alertViewWithClousre(title: "", message: "Are you sure to accept this Appoinment", viewController: self, buttons: ["Cancel","Ok"]) {
+            self.acceptApi()
+        }
+        
+    }
+    func declineCustomize(){
+        let objERCancelViewController = ERCancelViewController.init(nibName: "ERCancelViewController", bundle: nil)
+        objERCancelViewController.modalPresentationStyle = .overFullScreen
+        objERCancelViewController.results = self.selectedResult
+        objERCancelViewController.viewType = .decline
+        objERCancelViewController.delegate = self
+        self.navigationController?.pushViewController(objERCancelViewController, animated: false)
+        
+    }
+    
+    
+    
+    
+    
+    func addNextStep() {
+        let objERUpdateStatusAddNextStepViewController = ERUpdateStatusAddNextStepViewController.init(nibName: "ERUpdateStatusAddNextStepViewController", bundle: nil)
+        objERUpdateStatusAddNextStepViewController.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj
+        objERUpdateStatusAddNextStepViewController.delegate = self
+        
+        self.navigationController?.pushViewController(objERUpdateStatusAddNextStepViewController, animated: false)
+    }
+    
+    
+    func refreshTableView() {
+        activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
+        appoinmentViewModal.selectedResult = self.selectedResult
+        appoinmentViewModal.delegate = self
+        appoinmentViewModal.viewModalCustomized();
+    }
+    
+    func addEditNotes(isEdit: Bool) {
+        if isEdit {
+            let objERAddNotesViewController = ERAddNotesViewController.init(nibName: "ERAddNotesViewController", bundle: nil)
+            objERAddNotesViewController.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj;
+            objERAddNotesViewController.delegate = self
+            objERAddNotesViewController.viewType = .editNotes
+            self.navigationController?.pushViewController(objERAddNotesViewController, animated: false)
+        }
+        else{
+            let objERAddNotesViewController = ERAddNotesViewController.init(nibName: "ERAddNotesViewController", bundle: nil)
+            objERAddNotesViewController.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj;
+            objERAddNotesViewController.delegate = self
+            objERAddNotesViewController.viewType = .AddNew
+            self.navigationController?.pushViewController(objERAddNotesViewController, animated: false)
+            
+        }
+        
     }
     
     
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-           
-           super.viewWillTransition(to: size, with: coordinator)
-           coordinator.animate(alongsideTransition: nil, completion: { (_) in
+        
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: nil, completion: { (_) in
             self.tblVIew.reloadData()
-           })
-           
-       }
+        })
+        
+    }
+    
+    
+    
+    func deleteNotesLOgic(objModel : NotesModalNewResult?){
+        
+        GeneralUtility.alertViewWithClousre(title: "", message: "Are you sure, you want to delete this note?", viewController: self, buttons: ["cancel","Ok"]) {
+            self.hitDeleteApi(objModel: objModel)
+        }
+       
+    }
+    
+    func hitDeleteApi(objModel : NotesModalNewResult?)  {
+        
+        let objAppointment = AppoinmentdetailViewModal()
+        activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.DeletingNotes)
+        objAppointment.callbackVC = {
+            (success:Bool) in
+            self.activityIndicator?.hide()
+            if success{
+                
+                CommonFunctions().showError(title: "", message: "Successfully Deleted")
+                
+                self.refreshApi()
+            }
+        }
+        objAppointment.deleteNotes(objnoteModal: objModel)
+    }
+    
     
     
     func editDeleteFunctionality(objModel : NotesModalNewResult?, isMyNotes: Bool?,isDeleted:Bool) {
         if isDeleted{
-            let objAppointment = AppoinmentdetailViewModal()
-            activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.DeletingNotes)
-            objAppointment.callbackVC = {
-                (success:Bool) in
-                self.activityIndicator?.hide()
-                if success{
-                    
-                    CommonFunctions().showError(title: "", message: "Successfully Deleted")
-                    
-                    self.refreshApi()
-                }
-            }
-//            objAppointment.deleteNotes(objnoteModal: objModel)
+            deleteNotesLOgic(objModel: objModel)
         }
         else{
-            let objEditViewController = EditNotesViewController.init(nibName: "EditNotesViewController", bundle: nil)
-//            objEditViewController.objNoteModal = objModel
-//            objEditViewController.delegate = self
-//            objEditViewController.identifier = appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.identifier
-//            objEditViewController.modalPresentationStyle = .overFullScreen
-            self.present(objEditViewController, animated: false, completion: nil)
+            let objERAddNotesViewController = ERAddNotesViewController.init(nibName: "ERAddNotesViewController", bundle: nil)
+            objERAddNotesViewController.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj;
+            objERAddNotesViewController.delegate = self
+            objERAddNotesViewController.noteModelResult = objModel
+            objERAddNotesViewController.viewType = .editNotes
+            self.navigationController?.pushViewController(objERAddNotesViewController, animated: false)
         }
         
     }
-     
+    
     func refreshApi(){
         
         activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
-
+        
         appoinmentViewModal.viewModalCustomized();
     }
 }

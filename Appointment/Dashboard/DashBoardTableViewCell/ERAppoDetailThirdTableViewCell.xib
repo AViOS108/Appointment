@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -80,7 +81,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="oPH-Wu-XIR" firstAttribute="leading" secondItem="XxW-ey-cBa" secondAttribute="trailing" constant="8" id="4lq-q6-dxJ"/>
                                     <constraint firstAttribute="bottom" secondItem="XxW-ey-cBa" secondAttribute="bottom" id="5zf-pP-ZUw"/>
@@ -124,6 +125,7 @@
             <connections>
                 <outlet property="lblCandidateText" destination="r5h-H9-Hmb" id="7Id-vM-mPM"/>
                 <outlet property="nslayoutViewRatingHeight" destination="pUi-bm-p1f" id="Hzp-4y-5NT"/>
+                <outlet property="viewContainer" destination="qNx-eT-DEu" id="Brk-4r-S9j"/>
                 <outlet property="viewRating" destination="zXW-tz-h4r" id="FUS-US-Bvu"/>
                 <outletCollection property="btnCoachPreciseGrp" destination="Zaa-0y-B9p" collectionClass="NSMutableArray" id="wAz-ZK-8Oz"/>
                 <outletCollection property="btnCoachPreciseGrp" destination="vSO-Ni-Npi" collectionClass="NSMutableArray" id="XKJ-8x-LrF"/>
@@ -134,4 +136,9 @@
             <point key="canvasLocation" x="137.68115942028987" y="114.50892857142857"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

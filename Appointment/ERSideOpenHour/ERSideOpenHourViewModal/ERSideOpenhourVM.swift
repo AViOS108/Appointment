@@ -73,6 +73,7 @@ class ERSideOpenhourVM {
     
     func parameter(index : Int) -> Dictionary<String,AnyObject> {
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+       
         var states = [String]();
         var param = Dictionary<String,AnyObject>() ;
         if index == 1{
@@ -164,51 +165,211 @@ class ERSideOpenHourDetailVM {
 
 protocol ERSideCreateEditOHVMDelegate {
 
-    func sentDataToERSideCreateEditOHVC(dataPurposeModal : ERSidePurposeDetailModalArr?,timeZOneArr:[TimeZoneSel]?, success: Bool )
+    func sentDataToERSideCreateEditOHVC(dataModalAll : ERSideCreateEditOHVMAllModal?, success: Bool )
 }
 
 
+struct ERSideCreateEditOHVMAllModal {
+    var purposeArr : ERSidePurposeDetailModalArr?
+    var timeZOneArr = [TimeZoneSel]()
+    var objERSideOPenHourModal : ERSideOPenHourModal?
+    var  purposeNewArr : ERSidePurposeDetailNewModalArr?
+    
+    
+    
+}
 
 class ERSideCreateEditOHVM {
+    var objviewTypeOpenHour : viewTypeOpenHour!
+
+    var objERSideCreateEditOHVMAllModal : ERSideCreateEditOHVMAllModal?
     
     let dispatchGroup = DispatchGroup()
     var delegate : ERSideCreateEditOHVMDelegate!
     var viewController : UIViewController!
-    
+    var  purposeNewArr : ERSidePurposeDetailNewModalArr?
+
     var purposeArr : ERSidePurposeDetailModalArr!
     var timeZOneArr = [TimeZoneSel]()
+    var objERSideOPenHourModal : ERSideOPenHourModal?
+    var dateSelected : Date!
 
-    
     var activityIndicator: ActivityIndicatorView?
     
     func customizeCreateEditOPenHour()  {
+        
         activityIndicator = ActivityIndicatorView.showActivity(view: viewController.view, message: StringConstants.FetchingCoachSelection)
         
-        dispatchGroup.enter()
-        hitApiForPurpose()
         
-        dispatchGroup.enter()
-        hitApiForTimeZone()
+        switch self.objviewTypeOpenHour {
+        case .duplicateSetHour:
+            
+            dispatchGroup.enter()
+            fetchDuplicatePurpose()
+            dispatchGroup.enter()
+            hitApiForTimeZone()
+            dispatchGroup.enter()
+            fetchAllPointMentForDuplicate()
+            break
+            
+        case .editOpenHour :
+            dispatchGroup.enter()
+            hitApiForPurpose()
+            dispatchGroup.enter()
+            hitApiForTimeZone()
+            break
+            
+        case .setOpenHour :
+            dispatchGroup.enter()
+            hitApiForPurpose()
+            dispatchGroup.enter()
+            hitApiForTimeZone()
+            break
+            
+        default: break
+            
+        }
+        
+        
         
         dispatchGroup.notify(queue: .main) {
             
             self.activityIndicator?.hide()
             
-            if self.purposeArr != nil && self.timeZOneArr.count > 0 {
-
-                self.delegate.sentDataToERSideCreateEditOHVC(dataPurposeModal: self.purposeArr, timeZOneArr: self.timeZOneArr, success: true)
+            switch self.objviewTypeOpenHour {
+            case .duplicateSetHour:
+                if self.purposeNewArr != nil && self.timeZOneArr.count > 0 && self.objERSideOPenHourModal != nil {
+                    
+                    self.objERSideCreateEditOHVMAllModal = ERSideCreateEditOHVMAllModal()
+                    self.objERSideCreateEditOHVMAllModal?.timeZOneArr = self.timeZOneArr
+                    self.objERSideCreateEditOHVMAllModal?.purposeNewArr = self.purposeNewArr
+                    self.objERSideCreateEditOHVMAllModal?.objERSideOPenHourModal = self.objERSideOPenHourModal
+                    
+                    self.delegate.sentDataToERSideCreateEditOHVC(dataModalAll: self.objERSideCreateEditOHVMAllModal , success: true)
+                }
+                else{
+                    self.delegate.sentDataToERSideCreateEditOHVC(dataModalAll:nil , success: false)
+                }
+                
+                
+                break
+                
+            case .editOpenHour :
+                
+                if self.purposeArr != nil && self.timeZOneArr.count > 0 {
+                    self.objERSideCreateEditOHVMAllModal = ERSideCreateEditOHVMAllModal()
+                    self.objERSideCreateEditOHVMAllModal?.timeZOneArr = self.timeZOneArr
+                    self.objERSideCreateEditOHVMAllModal?.purposeArr = self.purposeArr
+                    self.delegate.sentDataToERSideCreateEditOHVC(dataModalAll:self.objERSideCreateEditOHVMAllModal , success: true)
+                }
+                else{
+                    self.delegate.sentDataToERSideCreateEditOHVC(dataModalAll:nil , success: false)
+                }
+                break
+                
+            case .setOpenHour :
+                if self.purposeArr != nil && self.timeZOneArr.count > 0 {
+                    self.objERSideCreateEditOHVMAllModal = ERSideCreateEditOHVMAllModal()
+                    self.objERSideCreateEditOHVMAllModal?.timeZOneArr = self.timeZOneArr
+                    self.objERSideCreateEditOHVMAllModal?.purposeArr = self.purposeArr
+                    
+                    self.delegate.sentDataToERSideCreateEditOHVC(dataModalAll:self.objERSideCreateEditOHVMAllModal , success: true)
+                }
+                else{
+                    self.delegate.sentDataToERSideCreateEditOHVC(dataModalAll:nil , success: false)
+                }
+                
+                break
+                
+            default: break
+                
             }
-            else{
-                self.delegate.sentDataToERSideCreateEditOHVC(dataPurposeModal: nil, timeZOneArr:nil, success: false)
-
-
-            }
-            
-            
         }
         
     }
     
+    
+    func fetchDuplicatePurpose()
+       {
+        let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+        var localTimeZoneAbbreviation: String { return TimeZone.current.description }
+      
+        let dateFormatter = DateFormatter()
+                 dateFormatter.dateFormat = "yyyy-MM-dd"
+                 let dateStart = dateFormatter.string(from: dateSelected)
+                 var dateCompStartChange = DateComponents()
+                 dateCompStartChange.day = -1 ;
+                 let dateEnd = Calendar.current.date(byAdding: dateCompStartChange, to: dateSelected)!
+        
+        
+        let params  =  [
+            ParamName.PARAMFILTERSEL : [
+                "timezone":localTimeZoneAbbreviation,
+                "from": dateStart + " " + "00:00:00",
+                "to": dateStart + " " + "23:59:59"
+            ],
+            ParamName.PARAMINTIMEZONEEL :localTimeZoneAbbreviation,
+            ParamName.PARAMCSRFTOKEN : csrftoken,
+            ParamName.PARAMMETHODKEY : "post" ] as [String : AnyObject]
+        
+        
+        ERSideAppointmentService().erSideDuplicatePurpose(params: params, { (jsonData) in
+            do {
+                    self.purposeNewArr = try
+                        JSONDecoder().decode(ERSidePurposeDetailNewModalArr.self, from: jsonData)
+                    self.dispatchGroup.leave()
+               
+            } catch   {
+                print(error)
+                self.dispatchGroup.leave()
+            }
+        }) { (error, errorCode) in
+            self.dispatchGroup.leave()
+        }
+        
+    }
+    
+    
+    
+       func fetchAllPointMentForDuplicate()
+       {
+        let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+        var localTimeZoneAbbreviation: String { return TimeZone.current.description }
+      
+        let dateFormatter = DateFormatter()
+                 dateFormatter.dateFormat = "yyyy-MM-dd"
+                 let dateStart = dateFormatter.string(from: dateSelected)
+                 var dateCompStartChange = DateComponents()
+                 dateCompStartChange.day = -1 ;
+                 let dateEnd = Calendar.current.date(byAdding: dateCompStartChange, to: dateSelected)!
+                 let dateEndStr = dateFormatter.string(from: dateEnd)
+        
+        
+        let params  =  [
+            ParamName.PARAMFILTERSEL : [
+                "timezone":localTimeZoneAbbreviation,
+                "from": dateEndStr  + " " + "23:59:59",
+                "to": dateStart + " " + "23:59:59"
+            ],
+            ParamName.PARAMCSRFTOKEN : csrftoken,
+            ParamName.PARAMMETHODKEY : "post" ] as [String : AnyObject]
+        
+        ERSideAppointmentService().erSideOpenHourListApi(params: params, { (jsonData) in
+            do {
+                    self.objERSideOPenHourModal = try
+                        JSONDecoder().decode(ERSideOPenHourModal.self, from: jsonData)
+                    self.dispatchGroup.leave()
+               
+            } catch   {
+                print(error)
+                self.dispatchGroup.leave()
+            }
+        }) { (error, errorCode) in
+            self.dispatchGroup.leave()
+        }
+        
+    }
+  
     
     func hitApiForPurpose()
     {
@@ -267,19 +428,7 @@ class ERSideOpenEditSecondVM {
     }
     
     
-    func erSideOPenHourPostPurposeApi(prameter : Dictionary<String,Any>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
-        
-        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
-        
-        Network().makeApiEventGetRequest(true, url: Urls().erSideOPenHourGetPurpose(), methodType: .post, params: prameter as Dictionary<String,AnyObject>, header: headers, completion: { (jsonData) in
-            success(jsonData)
-            
-        }) { (error, errorCode) in
-            failure(error,errorCode)
-            
-        }
-        
-    }
+   
     
    
     
@@ -289,6 +438,10 @@ class ERSideOpenEditSecondVM {
 
 
 class ERSideStudentListViewModal {
+    
+    
+    
+    
     
     
     func fetchStudentList(prameter : Dictionary<String,AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void)
@@ -346,7 +499,22 @@ class ERSideStudentListViewModal {
          
      }
     
-    
+    func submitEditedOpenHour(prameter : Dictionary<String,AnyObject>,id : String, _ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void)
+        {
+            
+            ERSideAppointmentService().erSideSubmitEditedOpenHour(params: prameter, id: id, { (jsonData) in
+                do {
+                    success(jsonData)
+                    
+                } catch   {
+                    print(error)
+                }
+            }) { (error, errorCode) in
+                
+                failure(error, errorCode)
+            }
+            
+        }
     
     
     
@@ -368,6 +536,125 @@ class ERSideStudentListViewModal {
     
     
 }
+
+
+struct ERSideADHOCAPISecondModal {
+    
+    var purposeArr : ERSidePurposeDetailModalArr!
+    var objStudentDetailModal: StudentDetailModal!
+    var objProviderModalArr : ProviderModalArr!
+
+}
+
+protocol ERSideADHOCAPISecondVCDelegate {
+ 
+    func sendDataERSideADHOCAPISecondVC( objERSideADHOCAPISecondModal : ERSideADHOCAPISecondModal,isSuccess: Bool)
+    
+}
+
+class ERSideADHOCAPISecondVC{
+    let dispatchGroup = DispatchGroup()
+     var activityIndicator: ActivityIndicatorView?
+    var delegate : ERSideADHOCAPISecondVCDelegate!
+
+    var objProviderModalArr : ProviderModalArr!
+    var purposeArr : ERSidePurposeDetailModalArr!
+    var objStudentDetailModal: StudentDetailModal!
+    var objERSideADHOCAPISecondModal : ERSideADHOCAPISecondModal!
+    var viewController : UIViewController!
+    func customAPI(){
+        activityIndicator = ActivityIndicatorView.showActivity(view: viewController.view, message: StringConstants.FetchingCoachSelection)
+        dispatchGroup.enter()
+        hitApiForPurpose()
+        dispatchGroup.enter()
+        fetchStudentList()
+        dispatchGroup.enter()
+        hitLocationProvider()
+        dispatchGroup.notify(queue: .main) {
+            self.activityIndicator?.hide()
+            if self.purposeArr != nil && self.objStudentDetailModal != nil && self.objProviderModalArr != nil{
+                
+                self.objERSideADHOCAPISecondModal = ERSideADHOCAPISecondModal()
+                self.objERSideADHOCAPISecondModal.purposeArr = self.purposeArr;
+                self.objERSideADHOCAPISecondModal.objStudentDetailModal = self.objStudentDetailModal
+                self.objERSideADHOCAPISecondModal.objProviderModalArr = self.objProviderModalArr
+                
+                
+                self.delegate.sendDataERSideADHOCAPISecondVC(objERSideADHOCAPISecondModal: self.objERSideADHOCAPISecondModal, isSuccess: true)
+            }
+            else{
+                self.delegate.sendDataERSideADHOCAPISecondVC(objERSideADHOCAPISecondModal: self.objERSideADHOCAPISecondModal, isSuccess: false)
+            }
+            
+        }
+    }
+    
+    func hitLocationProvider()  {
+           ERSideOpenEditSecondVM().fetchProvider({ (data) in
+               do {
+                   self.objProviderModalArr = try
+                       JSONDecoder().decode(ProviderModalArr.self, from: data)
+                  
+               } catch   {
+                   print(error)
+                  
+               }
+              self.dispatchGroup.leave()
+           }) { (error, errorCode) in
+              self.dispatchGroup.leave()
+           }
+       }
+    
+    
+    func hitApiForPurpose()
+    {
+        ERSideAppointmentService().erSideOPenHourGetPurposeApi( { (data) in
+            do {
+                self.purposeArr = try JSONDecoder().decode(ERSidePurposeDetailModalArr.self, from: data);
+                
+                
+            } catch   {
+                print(error)
+            }
+            self.dispatchGroup.leave()
+        }) { (error, errorCode) in
+            self.dispatchGroup.leave()
+        }
+        
+    }
+    
+    
+    func fetchStudentList()
+    {
+        
+        let includes = ["invitation_id","benchmark","tags"]
+        let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+        let  param = [
+            ParamName.PARAMCSRFTOKEN : csrftoken,
+            ParamName.PARAMMETHODKEY : "post",
+            "includes"  : includes
+            ] as [String : AnyObject]
+        
+        ERSideAppointmentService().erSideStudentListApi(params: param, { (jsonData) in
+            do {
+                self.objStudentDetailModal = try
+                    JSONDecoder().decode(StudentDetailModal.self, from: jsonData)
+
+            } catch   {
+                print(error)
+            }
+            self.dispatchGroup.leave()
+        }) { (error, errorCode) in
+            
+            self.dispatchGroup.leave()
+        }
+        
+    }
+    
+    
+    
+}
+
 
 
 

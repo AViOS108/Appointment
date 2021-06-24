@@ -22,7 +22,16 @@ class ERSideAppointmentService {
           }
       }
     
-    
+    func erSideAppointemntNextComplete(params: Dictionary<String, AnyObject>,id : String,  _ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+          
+          let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+          
+        Network().makeApiEventRequest(true, url: Urls().erSideAppointmentNScomplete(id: id), methodType: .post, params: params, header: headers, completion: { (data) in
+              success(data)
+          }) { (error, errorCode) in
+              failure(error,errorCode)
+          }
+      }
     
     func erSideAppointemntDandC(params: Dictionary<String, AnyObject>,id : String,idIndex:Int ,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
              
@@ -75,6 +84,20 @@ class ERSideAppointmentService {
            }
        }
     
+    
+  
+    
+    
+    func erSideDuplicatePurpose(params: Dictionary<String, AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+             
+             let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+             
+             Network().makeApiEventRequest(true, url: Urls().erSideDuplicatePurpose(), methodType: .post, params: params, header: headers, completion: { (data) in
+                 success(data)
+             }) { (error, errorCode) in
+                 failure(error,errorCode)
+             }
+         }
     
     func erSideOPenHourApi(id: String,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
         
@@ -187,6 +210,16 @@ class ERSideAppointmentService {
         }
     }
     
+    func erSideSubmitEditedOpenHour(params: Dictionary<String, AnyObject>,id : String,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+           
+           let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+           
+        Network().makeApiEventRequest(true, url: Urls().editedOpenHour(id: id), methodType: .post, params: params, header: headers, completion: { (data) in
+               success(data)
+           }) { (error, errorCode) in
+               failure(error,errorCode)
+           }
+       }
     
     func erSideStudentList(params: Dictionary<String, AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
            
@@ -204,7 +237,7 @@ class ERSideAppointmentService {
               
               let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
               
-              Network().makeApiStudentList(true, url: Urls().erSideResumeListAppoinment(), methodType: .post, params: params, header: headers, completion: { (data) in
+              Network().makeApiStudentList(true, url: Urls().erSideStudentList(), methodType: .post, params: params, header: headers, completion: { (data) in
                   success(data)
               }) { (error, errorCode) in
                   failure(error,errorCode)
@@ -237,6 +270,42 @@ class ERSideAppointmentService {
       }
     
     
+    func erSideResumeView(resumeId: Int,  _ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
+        
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+        
+        let paramsResumeIDs = ["resume_ids" : [resumeId]
+        ] as Dictionary<String, AnyObject>
+        
+        Network().makeApiEventGetRequest(true, url: Urls().erSideResumeView(resumeId: resumeId), methodType: .get, params: paramsResumeIDs , header: headers, completion: { (jsonData) in
+            success(jsonData)
+            
+        }) { (error, errorCode) in
+            failure(error,errorCode)
+            
+        }
+        
+    }
+    
+    func erSideDownloadResume(resumeId: Int,  _ success :@escaping (Dictionary<String,Any>) -> Void,failure :@escaping (String,Int) -> Void ){
+        
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+        
+        let paramsResumeIDs = ["resume_ids" : [resumeId]
+        ] as Dictionary<String, AnyObject>
+        
+        Network().makeApiDownloadFile(false, url: "", methodType: .get, params: paramsResumeIDs, header: headers) { (data) in
+            success(data)
+            
+        } failure: { (error, errorCode) in
+            
+        }
+        
+        
+    }
+    
+    
+    
     func erSideSpecifcList(params: Dictionary<String, AnyObject> ,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
         
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
@@ -247,5 +316,75 @@ class ERSideAppointmentService {
             failure(error,errorCode)
         }
     }
+    
+    func erSideSubmitNotes(params: Dictionary<String, AnyObject> ,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ,noteModelResult : NotesModalNewResult?) {
+        
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+        var url = ""
+        if noteModelResult != nil{
+            url = Urls().erSideEditNotes(id: String( noteModelResult?.id ?? 0))
+        }
+        else{
+            url = Urls().erSideSubmitNotes()
+        }
+        Network().makeApiStudentList(true, url: url, methodType: .post, params: params, header: headers, completion: { (data) in
+            success(data)
+        }) { (error, errorCode) in
+            failure(error,errorCode)
+        }
+    }
+    
+    
+    func erSideStandardResponse(_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
+          
+          let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+          
+          Network().makeApiEventGetRequest(true, url: Urls().erSideStandardRepone(), methodType: .get, params: ["":"" as AnyObject], header: headers, completion: { (jsonData) in
+              success(jsonData)
+              
+          }) { (error, errorCode) in
+              failure(error,errorCode)
+              
+          }
+          
+      }
+    
+    func erSideSubmitNextStep(params: Dictionary<String, AnyObject> ,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+           
+           let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+           
+           Network().makeApiStudentList(true, url: Urls().erSideSubmitNext(), methodType: .post, params: params, header: headers, completion: { (data) in
+               success(data)
+           }) { (error, errorCode) in
+               failure(error,errorCode)
+           }
+       }
+    
+    
+    
+    func erSideSubmitAdhocAppoiment(params: Dictionary<String, AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+                
+                let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+                
+                Network().makeApiEventRequest(true, url: Urls().submitAdhocAppointment(), methodType: .post, params: params, header: headers, completion: { (data) in
+                    success(data)
+                }) { (error, errorCode) in
+                    failure(error,errorCode)
+                }
+            }
+    
+    
+//    
+//    func erSideStudentListApi(params: Dictionary<String, AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+//
+//              let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+//
+//              Network().makeApiEventRequest(true, url: Urls().erSideStudentList(), methodType: .post, params: params, header: headers, completion: { (data) in
+//                  success(data)
+//              }) { (error, errorCode) in
+//                  failure(error,errorCode)
+//              }
+//          }
+    
     
 }

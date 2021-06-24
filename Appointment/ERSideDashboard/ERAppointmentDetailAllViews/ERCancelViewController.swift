@@ -46,10 +46,22 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     var colectionViewHandler = ERStudentOverlayView()
 
     @IBAction func btnSubmitTapped(_ sender: Any) {
-        callApi()
+        if validation(){
+             callApi()
+        }
+       
     }
     
     
+    func validation() -> Bool {
+        
+        if txtView.text.isEmpty{
+            CommonFunctions().showError(title: "Error", message: StringConstants.ERRCOMMENTCANCELDECLINEAPPO)
+            return false
+        }
+        
+        return true
+    }
     
     func callApi()   {
         
@@ -62,25 +74,19 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         default:
             break
         }
-        var activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.SubmittingDandCOpenHour)
-
-        
+        let activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.SubmittingDandCOpenHour)
         let params = [
-            "_method" : "patch",
+            "_method" : "post",
             "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String,
-            "appointment_cancellation_reason" :txtView.text ?? ""
-            
+            "cancellation_reason" :txtView.text ?? "",
             ] as Dictionary<String,AnyObject>
         
         
         ERSideAppointmentService().erSideAppointemntDandC(params: params, id: String(describing: results.id ?? 0), idIndex: apiHitINdex, { (jsonData) in
-            
             activityIndicator.hide()
-            
-            self.dismiss(animated: false) {
-                  self.delegate.refreshTableView()
-            }
-            
+            self.delegate.refreshTableView()
+            GeneralUtility.alertViewPopOutViewController(title: "Success", message: " Appointment Cancelled Successfully !!!", viewController: self, buttons: ["Ok"])
+                       
         }) { (error, errorCode) in
             activityIndicator.hide()
 

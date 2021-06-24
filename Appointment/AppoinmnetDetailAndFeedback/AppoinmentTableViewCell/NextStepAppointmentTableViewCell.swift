@@ -13,10 +13,19 @@ enum nextStepViewType {
     case erType
 }
 
+protocol NextStepAppointmentTableViewCelldelegate {
+    func addNextStep()
+    func markCompleteStatus(id:String)
+}
+
+
+
 class NextStepAppointmentTableViewCell: UITableViewCell {
     var objNextStepViewType : nextStepViewType!
 
+    var delegate : NextStepAppointmentTableViewCelldelegate!
     @IBAction func btnAddNextStepTapped(_ sender: Any) {
+        delegate.addNextStep()
     }
     @IBOutlet weak var btnAddNextStep: UIButton!
     @IBOutlet weak var nextStepCollectionView: NextStepCollectionView!
@@ -34,17 +43,19 @@ class NextStepAppointmentTableViewCell: UITableViewCell {
     func customization()  {
         self.backgroundColor = .clear
 
-        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16)
+        let fontHeavyBtn = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
         UILabel.labelUIHandling(label: lblNextStepHeader, text: "Next steps", textColor: ILColor.color(index: 34), isBold: false,fontType: fontHeavy)
 
         nextStepCollectionView.register(UINib.init(nibName: "NextStepCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NextStepCollectionViewCell")
         nextStepCollectionView.viewController = viewController
         nextStepCollectionView.nextModalObj = self.nextModalObj
+        nextStepCollectionView.delegateI = self.delegate
         nextStepCollectionView.objNextStepViewType = self.objNextStepViewType
         nextStepCollectionView.customize()
         self.viewContainer.backgroundColor = .clear
         
-        UIButton.buttonUIHandling(button: btnAddNextStep, text: "Add Next Steps", backgroundColor: .clear, textColor: ILColor.color(index: 23))
+        UIButton.buttonUIHandling(button: btnAddNextStep, text: "Add Next Steps", backgroundColor: .clear, textColor: ILColor.color(index: 23),fontType: fontHeavyBtn)
 
 //       self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 3)
     }

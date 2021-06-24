@@ -46,7 +46,6 @@ class ERHomeViewModal {
     {
         activityIndicator = ActivityIndicatorView.showActivity(view: viewController.view, message: StringConstants.FetchingCoachSelection)
         
-        
         switch enumType {
         case .ERSideHome:
             self.customERSIdeHome()
@@ -56,13 +55,11 @@ class ERHomeViewModal {
             break
         case .ERSidePast:
             self.customeERSideMYAPPO(index: 4)
-            
             break
         case .ERSidePending:
             self.customeERSideMYAPPO(index: 3)
             break
         default: break
-            
         }
         
     }

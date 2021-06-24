@@ -14,27 +14,46 @@ protocol ERUpdateAppoinmentViewControllerDelegate {
 
 class ERUpdateAppoinmentViewController: SuperViewController {
     var results: ERSideAppointmentModalNewResult!
-    
     var delegate  : ERUpdateAppoinmentViewControllerDelegate!
     
     
     @IBOutlet weak var tblView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     
     override func viewDidAppear(_ animated: Bool) {
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Update Attendance Status")
         tblView.register(UINib.init(nibName: "ERUpdateAppoinmentTableViewCell", bundle: nil), forCellReuseIdentifier: "ERUpdateAppoinmentTableViewCell")
+        self.perform(#selector(ERUpdateAppoinmentViewController.swipeFirstCell), with: nil, afterDelay: 0.1)
 
     }
     override func buttonClicked(sender: UIBarButtonItem) {
-              self.navigationController?.popViewController(animated: false)
-          }
+        self.navigationController?.popViewController(animated: false)
+    }
+    
+    @objc func swipeFirstCell()  {
+        tblView.layoutIfNeeded();
+        let firstCell = (tblView.cellForRow(at: IndexPath(row: 0, section: 0)) as! ERUpdateAppoinmentTableViewCell);
+        let viewContainer = firstCell.viewContainer!
+        firstCell.viewSwipeLook.isHidden = false
+        firstCell.layoutIfNeeded()
+        UIView.animate(withDuration:  0.3, animations: {
+            viewContainer.frame = CGRect(x: viewContainer.frame.origin.x - 100, y: viewContainer.frame.origin.y, width: viewContainer.bounds.size.width , height: viewContainer.bounds.size.height)
+        }) { (finished) in
+            UIView.animate(withDuration: 0.3, animations: {
+                viewContainer.frame = CGRect(x: viewContainer.frame.origin.x + 100, y: viewContainer.frame.origin.y, width: viewContainer.bounds.size.width, height: viewContainer.bounds.size.height)
+                
 
+            }, completion: { (finished) in
+                firstCell.viewSwipeLook.isHidden = true
+            })
+        }
+    }
+    
 }
 
 extension ERUpdateAppoinmentViewController: UITableViewDelegate,UITableViewDataSource{
@@ -62,10 +81,33 @@ extension ERUpdateAppoinmentViewController: UITableViewDelegate,UITableViewDataS
         return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    {
-       
+    
+    
+    func tableView(_ tableView: UITableView,
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive,
+                                        title: "Not Attended") { [weak self] (action, view, completionHandler) in
+            self?.attendedStatus(requestStudentDetail: (self?.results.requests![indexPath.row])!)
+            
+            completionHandler(true)
+        }
+        action.backgroundColor = ILColor.color(index: 57)
+        action.image = UIImage.init(named: "notattendedCross")
+        return UISwipeActionsConfiguration(actions: [action])
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive,
+                                        title: "Attended") { [weak self] (action, view, completionHandler) in
+            self?.attendedStatus(requestStudentDetail: (self?.results.requests![indexPath.row])!)
+            completionHandler(true)
+        }
+        action.backgroundColor = ILColor.color(index: 58)
+        action.image = UIImage.init(named: "attenededtick")
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+    
     
 }
 
@@ -100,15 +142,17 @@ extension ERUpdateAppoinmentViewController : ERUpdateAppoinmentTableViewCellDele
                        "csrf_token" : csrftoken
             ] as [String : AnyObject]
         
-        
+        let  activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
+
         ERSideAppointmentService().erUpdateAttendence(params: params, studentId: selectedStudent.id ?? 0, { (data) in
-            
+            activityIndicator.hide()
             let json : Dictionary<String,Bool> = self.dataToJSON(data: data) as! Dictionary<String, Bool>
             if json["status"]! {
                 self.reloadData(requestStudentDetail: selectedStudent)
             }
         }) { (error, errorCode) in
-            
+            activityIndicator.hide()
+
             
         }
     }

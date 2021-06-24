@@ -28,7 +28,7 @@ enum ERRedirectionType {
 }
 
 
-class ERSideHomeViewController: SuperViewController {
+class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
     
     
     @IBOutlet weak var viewFloatingOuter: UIView!
@@ -47,28 +47,46 @@ class ERSideHomeViewController: SuperViewController {
         self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
     }
     
-    @IBOutlet weak var btnNextStep: UIButton!
+    @IBOutlet weak var btnDuplicate: UIButton!
     
     
-    @IBAction func btnNextStepTapped(_ sender: Any) {
+    @IBAction func btnDuplicateTapped(_ sender: Any) {
+        
         UIView.animate(withDuration: 0.25, animations: {
-            self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
-        })
+                   self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+               })
         
-        let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
-        objERSideOpenHourListVC.objviewTypeOpenHour = .duplicateSetHour
-        objERSideOpenHourListVC.dateSelected = self.dateSelected
+        let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
+        let navigationController = UINavigationController.init(rootViewController: objERSideOpenHourListVC)
         self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
-        
-        
     }
     
     
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var imgViewSetOpen: UIImageView!
     @IBOutlet weak var lblSetOpen: UILabel!
-    @IBOutlet weak var imgViewNextStep: UIImageView!
-    @IBOutlet weak var lblNextStep: UILabel!
+
+    @IBOutlet weak var imgViewDuplicate: UIImageView!
+    @IBOutlet weak var lblNextDuplicate: UILabel!
+   
+    @IBOutlet weak var imgViewAddHOc: UIImageView!
+       @IBOutlet weak var lblAddHOc: UILabel!
+    
+    @IBAction func btnAdHocTapped(_ sender: Any) {
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+        })
+     
+        
+        let objAdhocFlowFirstViewController = AdhocFlowFirstViewController.init(nibName: "AdhocFlowFirstViewController", bundle: nil)
+        objAdhocFlowFirstViewController.dateSelected = self.dateSelected
+        self.navigationController?.pushViewController(objAdhocFlowFirstViewController, animated: false)
+        
+        
+    }
+    
+    @IBOutlet weak var btnAdHoc: UIButton!
     @IBOutlet weak var nslayoutConstrintFloatingHeight: NSLayoutConstraint!
     @IBOutlet weak var btnFloatingButton: UIButton!
 
@@ -88,7 +106,7 @@ class ERSideHomeViewController: SuperViewController {
                            options: [],
                            animations: {
                             
-                            self.nslayoutConstrintFloatingHeight.constant = 106
+                            self.nslayoutConstrintFloatingHeight.constant = 130
                             self.viewContainer.layoutIfNeeded()
                             
                             //Do all animations here
@@ -216,8 +234,12 @@ class ERSideHomeViewController: SuperViewController {
         btnFloatingButton.isHidden = true
         customizFloatingButton()
         
+        ( (self.slideMenuController()?.leftViewController as! UINavigationController).viewControllers.first as! SliderViewController).delegateRedirection = self
+        
     }
-    
+    func deleteDelgateRefresh(){
+         self.callingViewModal()
+    }
     
     
     func customizFloatingButton(){
@@ -319,32 +341,33 @@ class ERSideHomeViewController: SuperViewController {
         let headerNib = UINib.init(nibName: "ERSideHomeSectionHeader", bundle: Bundle.main)
         tblView.register(headerNib, forHeaderFooterViewReuseIdentifier: "ERSideHomeSectionHeader")
         tableViewHandler.dataAppoinmentModal = self.dataAppoinmentModal
+        tableViewHandler.dateSelected = self.dateSelected
         tableViewHandler.customization()
         
         btnFloatingButton.isHidden = false
         
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.hidesBottomBarWhenPushed = false;
-
-        GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"Schedule");
-        
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
-                self.hidesBottomBarWhenPushed = true;
+           if  self.navigationController?.viewControllers.count ?? 0 > 1 {
+                      self.tabBarController?.tabBar.isHidden = true
+
+                  }
+      }
+    override func viewWillAppear(_ animated: Bool) {
+               self.tabBarController?.tabBar.isHidden = false
+
 
     }
-    
     override func viewDidAppear(_ animated: Bool) {
+        GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"Schedule");
         foatingViewCustomization();
         
     }
     
-    override func logout(sender: UIButton) {
-        GeneralUtility.alertViewLogout(title: "".localized(), message: "LOGOUT".localized(), viewController: self, buttons: ["Cancel","Ok"]);
+  
+    @objc override func humbergerCilcked(sender: UIBarButtonItem) {
+        self.toggleLeft()
     }
     
     
@@ -354,7 +377,21 @@ class ERSideHomeViewController: SuperViewController {
 }
 
 
-extension ERSideHomeViewController : ERHomeViewModalVMDelegate,ERSideHeaderCollectionVCDelegate{
+extension ERSideHomeViewController : ERHomeViewModalVMDelegate,ERSideHeaderCollectionVCDelegate,HomeViewcontrollerRedirection{
+    func redirectToParticularViewController(type: RedirectionType) {
+        slideMenuController()?.closeLeft();
+
+        switch type {
+        case .logOut:
+            GeneralUtility.alertViewLogout(title: "".localized(), message: "LOGOUT".localized(), viewController: self, buttons: ["Cancel","Ok"]);
+        default:
+            break;
+        }
+        
+       
+    }
+    
+   
     
     
     func dateSelected(modalCalender: ERSideCalender) {
@@ -389,20 +426,27 @@ extension ERSideHomeViewController:UIGestureRecognizerDelegate{
         self.viewFloatingOuter.isHidden = true
         
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        UILabel.labelUIHandling(label: lblSetOpen, text: " Set Advising Appoinment Hours ", textColor: .white, isBold: false, fontType: fontHeavy)
-        UILabel.labelUIHandling(label: lblNextStep, text: "Duplicate Schedule", textColor: .white, isBold: false, fontType: fontHeavy)
+        UILabel.labelUIHandling(label: lblSetOpen, text: " Set Advising Appoinment Hours ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
+        UILabel.labelUIHandling(label: lblNextDuplicate, text: " Duplicate Schedule ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
         
-        lblNextStep.textAlignment = .center
+        UILabel.labelUIHandling(label: lblAddHOc, text: " Add Ad hoc Appointment ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
+        imgViewAddHOc.image = UIImage.init(named: "Adhoc")
+        imgViewAddHOc.contentMode = .scaleToFill
+
+        
+        lblNextDuplicate.textAlignment = .center
         lblSetOpen.textAlignment = .center
+        lblAddHOc.textAlignment = .center
 
         imgViewSetOpen.image = UIImage.init(named: "appoinmentHour")
-        imgViewSetOpen.contentMode = .scaleAspectFill
-        imgViewNextStep.image = UIImage.init(named: "duplicate")
+        imgViewSetOpen.contentMode = .scaleToFill
+        imgViewDuplicate.image = UIImage.init(named: "duplicate")
         viewContainer.backgroundColor = .clear
-        imgViewNextStep.contentMode = .scaleAspectFill
+        imgViewDuplicate.contentMode = .scaleToFill
 
-        lblNextStep.backgroundColor = ILColor.color(index: 25)
+        lblNextDuplicate.backgroundColor = ILColor.color(index: 25)
         lblSetOpen.backgroundColor = ILColor.color(index: 25)
+        lblAddHOc.backgroundColor = ILColor.color(index: 25)
 
         self.viewFloatingOuter.tag = 19683
         tapGesture()

@@ -10,42 +10,80 @@ import UIKit
 
 
 protocol RefreshSelectedTimeSlotDelegate {
-    func refreshSelectedTS(id:String)
+    func refreshSelectedTS(id:Int,isSelected: Bool)
 }
 
 class ERSideTimeSlotDuplicate: UIView {
     
     var objtimeSlotDuplicateModal : timeSlotDuplicateModal!
     @IBOutlet weak var lblTimeSlot: UILabel!
-    
+    var objStudentListType : StudentListType?
     var delegate : RefreshSelectedTimeSlotDelegate!
     var viewconTroller : UIViewController!
     
     @IBOutlet weak var btnTimeSlot: UIButton!
     
     @IBAction func btnTimeSlotTapped(_ sender: Any) {
-        //        delegate.refreshSelectedTS(id: objtimeSlotDuplicateModal.id)
-        delegate.refreshSelectedTS(id: "objtimeSlotDuplicateModal.id")
+        delegate.refreshSelectedTS(id: objtimeSlotDuplicateModal.id, isSelected: !objtimeSlotDuplicateModal.isSelected);
+        
+        switch  self.objStudentListType {
+        case .groupType:
+            
+            if objtimeSlotDuplicateModal.isSelected {
+                btnTimeSlot.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+            }
+            else{
+                btnTimeSlot.setImage(UIImage.init(named: "check_box"), for: .normal);
+            }
+            
+            break
+            
+        case .One2OneType:
+            if objtimeSlotDuplicateModal.isSelected {
+                btnTimeSlot.setImage(UIImage.init(named: "Radio_filled"), for: .normal);
+            }
+            else{
+                btnTimeSlot.setImage(UIImage.init(named: "Radio"), for: .normal);
+            }
+            
+            break
+            
+        default:
+            break
+        }
         
     }
     
     func customization()  {
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE11)
         
-        UILabel.labelUIHandling(label: lblTimeSlot, text: "10:30 AM    -  10:45 AM", textColor: ILColor.color(index: 42), isBold: false, fontType: fontBook)
+        UILabel.labelUIHandling(label: lblTimeSlot, text:  objtimeSlotDuplicateModal.timeStart + "-" + objtimeSlotDuplicateModal.timeEnd, textColor: ILColor.color(index: 42), isBold: false, fontType: fontBook)
         
-        btnTimeSlot.setImage(UIImage.init(named: "Check_box_selected"), for: .normal)
-        
-        
-        //        if objtimeSlotDuplicateModal.isSelected {
-        //
-        //            btnTimeSlot.setImage(UIImage.init(named: "Check_box_selected"), for: .normal)
-        //        }
-        //        else{
-        //            btnTimeSlot.setImage(UIImage.init(named: "check_box"), for: .normal)
-        //
-        //        }
-        
+        switch  self.objStudentListType {
+        case .groupType:
+            
+            if objtimeSlotDuplicateModal.isSelected {
+                btnTimeSlot.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+            }
+            else{
+                btnTimeSlot.setImage(UIImage.init(named: "check_box"), for: .normal);
+            }
+            
+            break
+            
+        case .One2OneType:
+            if objtimeSlotDuplicateModal.isSelected {
+                btnTimeSlot.setImage(UIImage.init(named: "Radio_filled"), for: .normal);
+            }
+            else{
+                btnTimeSlot.setImage(UIImage.init(named: "Radio"), for: .normal);
+            }
+            
+            break
+            
+        default:
+            break
+        }
     }
     
     func loadView() -> UIView{

@@ -21,8 +21,8 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
     
     @IBOutlet weak var viewInfo: UIView!
     @IBOutlet weak var tblview: UITableView!
-    var arrImage = ["my event black","my event black","my event black"];
-    var arrName = ["Profile", "My Event","History"];
+    var arrImage = ["my event black","my event black","my event black","Logout"];
+    var arrName = ["Profile", "My Event","History","Logout"];
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
@@ -142,14 +142,19 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        switch indexPath.row {
-//        case 0:
-//            delegateRedirection.redirectToParticularViewController(type: .profile)
-//
-//        default:
-//            delegateRedirection.redirectToParticularViewController(type: .profile)
-//
-//        }
+        switch indexPath.row {
+        case 0:
+            delegateRedirection.redirectToParticularViewController(type: .profile)
+        case 1:
+            delegateRedirection.redirectToParticularViewController(type: .profile)
+        case 2:
+            delegateRedirection.redirectToParticularViewController(type: .profile)
+        case 3:
+            delegateRedirection.redirectToParticularViewController(type: .logOut)
+
+        default:
+            delegateRedirection.redirectToParticularViewController(type: .profile)
+        }
         
     }
     

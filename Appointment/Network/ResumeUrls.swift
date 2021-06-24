@@ -40,7 +40,10 @@ class Urls {
        static let stagingRoleList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
 
        static let liveRoleList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
-
+  
+    static let devResumeView =   "https://employerdev.vmock.com/khagesh/api/test-resume-management/public/"
+    static let stagingResumeView =   "https://employerdev.vmock.com/khagesh/api/test-resume-management/public/"
+    static let liveResumeView =   "https://employerdev.vmock.com/khagesh/api/test-resume-management/public/"
 
     
     static let testShareEvents = "https://temp3.vmock.com/dashboard/events/my-events"
@@ -64,6 +67,7 @@ class Urls {
     static let runningEnvStudentList = devStudentList
 
     static let runningEnvRoleList = devRoleList
+    static let runningEnvResumeView = devResumeView
 
     
     #else
@@ -77,6 +81,7 @@ class Urls {
     
     static let runningEnvStudentList = devStudentList
     static let runningEnvRoleList = devRoleList
+    static let runningEnvResumeView = devResumeView
 
     
     //        static let runningEnv = liveEnv
@@ -102,6 +107,8 @@ class Urls {
     var type8 = "\(runningEnvStudentList)api/v1/"
 
     var type9 = "\(runningEnvRoleList)api/v1/"
+    var type10 = "\(runningEnvResumeView)api/v1/"
+
 
     var typeJob1 = "\(runningEnvJobs)ats/api/v1/"
     var typeJob2 = "\(runningEnvJobs)relationship-management/api/v1/"
@@ -453,7 +460,20 @@ class Urls {
     
     func deletesNotes(id: String)-> String{
         
-        return "\(Urls.runningEnvNotes)api/v1/student/notes/" + id
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+
+        if isStudent ?? true
+        {
+            return "\(Urls.runningEnvNotes)api/v1/student/notes/" + id
+
+        }
+        else
+        {
+            return "\(Urls.runningEnvNotes)api/v1/community/notes/" + id
+
+        }
+        
+        
         
     }
     
@@ -484,22 +504,22 @@ class Urls {
        }
     
     func erSideAppointmentAccept(id: String) -> String{
-           return "\(typeEvent1)community/appointment-slots/requests/" + "\(id)" + "/accept"
+           return "\(typeEvent2)community/appointments/requests/" + "\(id)" + "/accept"
            
        }
     
+    func erSideAppointmentNScomplete(id: String) -> String{
+           return "\(typeEvent2)community/appointment-next-steps/" + "\(id)"
+           
+       }
     func erSideAppointmentDandC(id: String,idIndex: Int) -> String{
         if idIndex == 1{
-            return "\(typeEvent1)community/appointment-slots/meetings/" + "\(id)" + "/cancel"
-
+            return "\(typeEvent2)community/appointments/" + "\(id)" + "/cancel"
         }
         else{
-            return "\(typeEvent1)community/appointment-slots/requests/" + "\(id)" + "/reject"
-
+            return "\(typeEvent2)community/appointments/requests/" + "\(id)" + "/reject"
         }
-        
-              
-          }
+    }
     
     func erSideAppointmentCancel(id: String) -> String{
               return "\(typeEvent1)community/appointment-slots/" + "\(id)" + "cancel"
@@ -550,18 +570,49 @@ class Urls {
            return "\(typeEvent2)community/open-hour"
 
        }
-    
+    func editedOpenHour(id: String) -> String{
+        return "\(typeEvent2)community/open-hour/" + id
+
+          }
     
     func erSideStudentListAppoinment() -> String{
         return "\(Urls.runningEnvJobs)students/api/v1/students"
 
     }
     
-    func erSideResumeListAppoinment() -> String{
-           return "\(type8)app-view"
-       }
+   
     
     func erSideUpdateAttendence(studentId: Int) -> String{
               return "\(typeEvent2)community/appointments/requests/\(studentId)/mark-attendance"
           }
+    func erSideSubmitNotes()-> String{
+        return "\(Urls.runningEnvNotes)api/v1/community/notes"
+       }
+    
+    func erSideEditNotes(id: String)-> String{
+        return "\(Urls.runningEnvNotes)api/v1/community/notes/\(id)"
+       }
+    
+    func erSideStandardRepone()-> String{
+           return "\(typeEvent2)community/appointment-next-steps/standard-responses"
+          }
+    
+   func erSideSubmitNext()-> String{
+    return "\(typeEvent2)community/appointment-next-steps"
+   }
+    
+  
+    func erSideDuplicatePurpose()-> String{
+     return "\(typeEvent2)community/open-hour/duplicate/purposes"
+    }
+    
+    func submitAdhocAppointment()-> String{
+        return "\(typeEvent2)community/appointments/adhoc"
+       }
+    
+    func erSideResumeView(resumeId:Int) -> String{
+           return "\(type10)university/resumes/latest/pdf"
+           
+       }
+    
 }

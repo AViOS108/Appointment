@@ -11,10 +11,24 @@ struct notesHeaderModal {
     var title : String?
     var id : Int?
 }
+enum viewTypeERAddNotesVC {
+    case editNotes
+    case AddNew
+}
+
+protocol ERAddNotesViewControllerDelegate {
+    func refreshTableView()
+}
 
 
 class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
     @IBOutlet weak var tblView: UITableView!
+    
+    var viewType : viewTypeERAddNotesVC!
+    var delegate : ERAddNotesViewControllerDelegate!
+    var appoinmentDetailModalObj : AppoinmentDetailModalNew?
+    var noteModelResult : NotesModalNewResult!
+    var textViewStr : String = ""
     
     var objERSideRoleSpecificUserModal : ERSideRoleSpecificUserModal!
     var results: ERSideAppointmentModalResult!
@@ -22,53 +36,98 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
     var activityIndicator: ActivityIndicatorView?
 
     var objERSideNotesSpecificUserModalSelected : ERSideNotesSpecificUserModal!
+    var arrNameSurvey = [SearchTextFieldItem]()
+    let pickerView = UIPickerView()
+
     
     func callApi()   {
         
-        //
-        //        var activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.SubmittingDandCOpenHour)
-        //
-        //        var arrEntities = Array<Dictionary<String,AnyObject>>()
-        //
-        //        let entitesObj1 = ["entity_id":results.participants![0].id,
-        //                           "entity_type":"student_user",
-        //                           "can_view_note":isFooter1Selected] as [String : AnyObject]
-        //
-        //        let entitesObj2 = ["entity_id":results.id,
-        //                           "entity_type":"community",
-        //                           "can_view_note":isFooter2Selected] as [String : AnyObject]
-        //        let entitesObj3 = ["entity_id":results.identifier,
-        //                                  "entity_type":"event"] as [String : AnyObject]
-        //
-        //        arrEntities.append(entitesObj1)
-        //        arrEntities.append(entitesObj2)
-        //        arrEntities.append(entitesObj3)
-        //
-        //
-        //        let params = [
-        //            "_method" : "post",
-        //            "data":txtView.text ?? "",
-        //            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String,
-        //            "appointment_cancellation_reason" :txtView.text ?? "",
-        //            "entities":arrEntities
-        //
-        //            ] as Dictionary<String,AnyObject>
-        //
-        //
-        //
-        //        ERSideAppointmentService().erSideAppointemntSaveNotes(params: params, { (data) in
-        //
-        //            activityIndicator.hide()
-        //
-        //
-        //        }) { (error, errorCode) in
-        //
-        //            activityIndicator.hide()
-        //
-        //        }
-        //
+        
+        var activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.SubmittingDandCOpenHour)
+        
+        var arrEntities = Array<Dictionary<String,AnyObject>>()
+        
+        let entitesObj1 = ["entity_id": "\(self.appoinmentDetailModalObj?.id ?? 0)",
+                           "entity_type":"appointment"
+            ] as [String : AnyObject]
+        
+        arrEntities.append(entitesObj1)
+
+        for student in self.arrNameSurvey{
+            if student.isSelected {
+                let entitesStudent = ["entity_id":"\(student.id ?? 0)",
+                                                 "entity_type":"student_user",
+                                                 "can_view_note":"1"] as [String : AnyObject]
+                           arrEntities.append(entitesStudent)
+            }
+            
+        }
         
         
+        if self.objERSideNotesSpecificUserModalSelected != nil {
+            
+            for specificUser in self.objERSideNotesSpecificUserModalSelected.items!{
+                
+                let entitesStudent = ["entity_id":"\(specificUser.id ?? 0)",
+                                      "entity_type":"community_user",
+                                      "can_view_note":"1"] as [String : AnyObject]
+                arrEntities.append(entitesStudent)
+            }
+        }
+        
+        for specificRole in self.objERSideRoleSpecificUserModal.items!{
+            if specificRole.isSelected {
+                let entitesStudent = ["entity_id":"\(specificRole.id ?? 0)",
+                                      "entity_type":"role",
+                                      "can_view_note":"1"] as [String : AnyObject]
+                arrEntities.append(entitesStudent)
+            }
+            
+        }
+        
+        var method = ""
+        switch viewType {
+        case .AddNew:
+            method = "post"
+            break
+        case .editNotes:
+            method = "put"
+            break
+        default:
+            break
+        }
+        
+        let params = [
+            "_method" : method,
+            "data":textViewStr ,
+            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String,
+            "entities":arrEntities
+            
+            ] as Dictionary<String,AnyObject>
+        
+        
+        if noteModelResult != nil{
+            ERSideAppointmentService().erSideSubmitNotes(params:params, { (data) in
+                activityIndicator.hide()
+                self.delegate.refreshTableView()
+                self.navigationController?.popViewController(animated: false)
+            }, failure: { (error, errorCode) in
+                activityIndicator.hide()
+
+            }, noteModelResult: self.noteModelResult)
+        }
+        else
+        {
+            ERSideAppointmentService().erSideSubmitNotes(params:params, { (data) in
+                activityIndicator.hide()
+                self.delegate.refreshTableView()
+                self.navigationController?.popViewController(animated: false)
+            }, failure: { (error, errorCode) in
+                activityIndicator.hide()
+
+            }, noteModelResult: nil)
+        }
+         
     }
     
     
@@ -84,8 +143,22 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"Add Notes");
 
         callViewModal()
+        setNeedSearchTextField()
         // Do any additional setup after loading the view.
     }
+    
+    func setNeedSearchTextField() {
+        
+        for requestI in (self.appoinmentDetailModalObj?.requests)!{
+            let objSearchTextFieldItem  = SearchTextFieldItem()
+            objSearchTextFieldItem.title =  requestI.studentDetails?.name ?? ""
+            objSearchTextFieldItem.id =  requestI.studentDetails?.id
+            objSearchTextFieldItem.isSelected  = false
+            arrNameSurvey.append(objSearchTextFieldItem);
+        }
+    }
+    
+    
     
     @objc override func buttonClicked(sender: UIBarButtonItem) {
            self.navigationController?.popViewController(animated: true)
@@ -98,12 +171,17 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
     
     func customize()  {
         
+        let fontheavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
+        
+        UIButton.buttonUIHandling(button: btnSubmit, text: "Submit", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3 , fontType: fontheavy)
         
         tblView.register(UINib.init(nibName: "ERNotesTextViewTableViewCell", bundle: nil), forCellReuseIdentifier: "ERNotesTextViewTableViewCell")
 
         tblView.register(UINib.init(nibName: "ERNoteSelectableTypeTableViewCell", bundle: nil), forCellReuseIdentifier: "ERNoteSelectableTypeTableViewCell")
 
         tblView.register(UINib.init(nibName: "ERNotesHeaderTypeTableViewCell", bundle: nil), forCellReuseIdentifier: "ERNotesHeaderTypeTableViewCell")
+         tblView.register(UINib.init(nibName: "ERNotesStudentSelectTableViewCell", bundle: nil), forCellReuseIdentifier: "ERNotesStudentSelectTableViewCell")
+        
 
     }
     
@@ -158,14 +236,20 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
         var firstAdditionObject = Role()
         firstAdditionObject.displayName = "Community Member"
         firstAdditionObject.id  = -999
-        
-        var lastAdditionObject = Role()
-        lastAdditionObject.displayName = "Students"
-        lastAdditionObject.id  = -1999
-        
         self.objERSideRoleSpecificUserModal.items?.insert(firstAdditionObject, at: 0)
-        let lastCount = self.objERSideRoleSpecificUserModal.items?.count
-        self.objERSideRoleSpecificUserModal.items?.insert(lastAdditionObject, at: (lastCount ?? 1))
+        
+        switch viewType {
+        case .AddNew:
+            break;
+        case .editNotes:
+            let data = self.noteModelResult?.data
+            textViewStr = data ?? ""
+            
+            break;
+      
+        case .none:
+            break
+        }
 
     }
     
@@ -203,10 +287,23 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
 
 
 
-extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ERNotesTextViewTableViewCellDelegate,ERNoteSelectableTypeTableViewCellDelegate,ERSelecteSpecificUserViewControllerDelegate{
+extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ERNotesTextViewTableViewCellDelegate,ERNoteSelectableTypeTableViewCellDelegate,ERSelecteSpecificUserViewControllerDelegate,ERNotesStudentSelectTableViewCellDelegate{
+    
+    func changeModal(searchItem: SearchTextFieldItem,  isAdded: Bool) {
+        let selectedItem =  self.arrNameSurvey.filter{$0.id == searchItem.id}[0]
+        selectedItem.isSelected = isAdded
+        let indexSelected = self.arrNameSurvey.firstIndex(where: {$0.id == searchItem.id})
+        self.arrNameSurvey.remove(at: indexSelected ?? 00)
+        self.arrNameSurvey.insert(selectedItem, at: indexSelected ?? 0)
+        tblView.reloadData()
+    }
+    
+    
+    
     func sendselectedUser(objERSideNotesSpecificUserModalSelected: ERSideNotesSpecificUserModal) {
         
         self.objERSideNotesSpecificUserModalSelected = objERSideNotesSpecificUserModalSelected
+        
         createNotesHeaderModal()
         tblView.reloadData()
     }
@@ -225,7 +322,7 @@ extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ER
     
    
     func sendDescription(strText: String) {
-        
+        textViewStr = strText
     }
     
     
@@ -235,6 +332,7 @@ extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ER
             let cell = tableView.dequeueReusableCell(withIdentifier: "ERNotesTextViewTableViewCell", for: indexPath) as! ERNotesTextViewTableViewCell;
             cell.selectionStyle = UITableViewCell.SelectionStyle.none;
             cell.delegate = self;
+            cell.txtView.text = textViewStr
             cell.customization();
             return cell
         }
@@ -255,17 +353,16 @@ extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ER
             return cell
             
         }
-        else if indexPath.row >= 3 &&  indexPath.row < ((self.objERSideRoleSpecificUserModal.items?.count ?? 0) + 1 ){
+        else if (indexPath.row >= 3) && indexPath.row < ((self.objERSideRoleSpecificUserModal.items?.count ?? 0) + 2) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ERNoteSelectableTypeTableViewCell", for: indexPath) as! ERNoteSelectableTypeTableViewCell
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.delegate = self
-
             cell.items = self.objERSideRoleSpecificUserModal.items?[indexPath.row - 2]
             cell.customization()
             return cell
             
         }
-        else if indexPath.row == ((self.objERSideRoleSpecificUserModal.items?.count ?? 0) + 1 ){
+        else if indexPath.row == ((self.objERSideRoleSpecificUserModal.items?.count ?? 0) + 2 ){
             let cell = tableView.dequeueReusableCell(withIdentifier: "ERNotesHeaderTypeTableViewCell", for: indexPath) as! ERNotesHeaderTypeTableViewCell
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.objNotesHeaderModal = self.arrNotesHeaderModal[1];
@@ -274,12 +371,12 @@ extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ER
             
         }
         else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ERNoteSelectableTypeTableViewCell", for: indexPath) as! ERNoteSelectableTypeTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ERNotesStudentSelectTableViewCell", for: indexPath) as! ERNotesStudentSelectTableViewCell
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            let totolCount = self.objERSideRoleSpecificUserModal.items?.count
+            cell.arrNameSurvey = arrNameSurvey
+            cell.viewControllerI = self
             cell.delegate = self
-
-            cell.items = self.objERSideRoleSpecificUserModal.items?[(totolCount ?? 1) - 1]
+            cell.tblview = self.tblView
             cell.customization()
             return cell
         }
@@ -289,7 +386,7 @@ extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ER
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if objERSideRoleSpecificUserModal != nil && objERSideRoleSpecificUserModal.items?.count ?? 0 > 0{
-            return objERSideRoleSpecificUserModal.items!.count + 3
+            return objERSideRoleSpecificUserModal.items!.count + 4
         }
         else {
             return 0
@@ -306,7 +403,7 @@ extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ER
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if indexPath.row == ((self.objERSideRoleSpecificUserModal.items?.count ?? 0) + 1 ) {
+         if indexPath.row == ((self.objERSideRoleSpecificUserModal.items?.count ?? 0) + 2 ){
             let objERSelecteSpecificUserViewController = ERSelecteSpecificUserViewController.init(nibName: "ERSelecteSpecificUserViewController", bundle: nil)
 
             objERSelecteSpecificUserViewController.delegate = self
@@ -319,5 +416,31 @@ extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ER
         }
         
     }
+    
+}
+
+// MARK: - KeyBoard Function
+
+
+extension ERAddNotesViewController {
+    
+    func deRegisterKeyboardNotifications() {
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    func registerForKeyboardNotifications()  {
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown2(aNotification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+//
+//          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//
+
+    }
+    
+    
+    
+    
     
 }

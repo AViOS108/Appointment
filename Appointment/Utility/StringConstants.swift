@@ -76,7 +76,8 @@ class StringConstants{
     
     static let AcceptOpenHour = "Accepting Request... "
 
-    
+    static let NEXTSTEPCOMPLETION = "Submitting Request... "
+
     static let SubmittingDandCOpenHour = "Submitting Request... "
 
     
@@ -98,7 +99,7 @@ class StringConstants{
 
     static let DEADLINEERROR = "Please provide your Deadlines"
 
-    static let STUDENTERROR = "Please select any Students"
+    static let STUDENTERROR = "Please select any Student"
 
     static let CONFIRMAPPOINTMENT = "Confirming Appointment..."
     static let KUPGRADETOLATESTOS = "This particular functionality needs latest OS, please upgarde your iOS version"
@@ -106,8 +107,19 @@ class StringConstants{
     static let appointmentInfoApiLoader = "Getting Appointment details"
     static let ERTIMESLOTERROR = "Please specify the time for the slot. Ensure that the End time is greater than start time"
 
+    static let ERSELECTAVAILABELTIMESLOTERROR = "Please select an available time slot"
+    static let ERNOAVAILABELTIMESLOTERROR = "No available time slot"
+
+    
     static let GROUPLIMITERROR = "Please provide group limit"
     static let GROUPLIMITRANGEERROR = "Please enter valid group size limit (between 1 to 15)"
+
+    static let ERRADDNEXTSTEPDESCRIPTION = "Please enter description"
+    static let ERRADDNEXTSTEPDATETIME = "Please enter date and time"
+    static let ERRDUPLICATETIMEDATE = "Please enter both the date"
+    static let ERRDUPLICATETIMESLOTSELECTED = "Please select atleast one time slot"
+
+    static let ERRCOMMENTCANCELDECLINEAPPO = "Please type comment"
 
 
     

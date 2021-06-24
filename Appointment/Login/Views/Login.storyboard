@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="44v-xe-QA7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="44v-xe-QA7">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,6 +38,7 @@
                                 <color key="color" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="bbb-ey-cvs"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="IsF-ai-PWH" firstAttribute="centerX" secondItem="bbb-ey-cvs" secondAttribute="centerX" id="CDK-RY-z5Z"/>
@@ -45,7 +46,6 @@
                             <constraint firstItem="IsF-ai-PWH" firstAttribute="centerY" secondItem="Dj8-F6-QNF" secondAttribute="centerY" id="Tcw-GC-Ody"/>
                             <constraint firstItem="mi2-p1-zmH" firstAttribute="centerX" secondItem="bbb-ey-cvs" secondAttribute="centerX" id="gx2-fx-lKV"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="bbb-ey-cvs"/>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="mi2-p1-zmH" id="zr1-Q0-PRS"/>
@@ -303,6 +303,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="rOP-71-J1B"/>
                         <color key="backgroundColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="gDy-ji-JwM" firstAttribute="centerX" secondItem="rOP-71-J1B" secondAttribute="centerX" id="2y7-6I-hnH"/>
@@ -320,7 +321,6 @@
                             <constraint firstItem="rOP-71-J1B" firstAttribute="trailing" secondItem="QAk-XW-rFl" secondAttribute="trailing" constant="16" id="rAe-Jh-Np2"/>
                             <constraint firstItem="rOP-71-J1B" firstAttribute="bottom" secondItem="gDy-ji-JwM" secondAttribute="bottom" constant="55" id="raA-Vh-zgT"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="rOP-71-J1B"/>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
@@ -407,7 +407,7 @@
                                     <action selector="nextButtonTappedWith_sender:" destination="2Rn-8Z-FnN" eventType="touchUpInside" id="Xml-6K-FXh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qtX-xs-jOr">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qtX-xs-jOr">
                                 <rect key="frame" x="34" y="549" width="307" height="30"/>
                                 <state key="normal" title="Continue without selecting school">
                                     <color key="titleColor" red="0.0" green="0.45882352941176469" blue="0.79607843137254897" alpha="1" colorSpace="calibratedRGB"/>
@@ -417,6 +417,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="qXn-Fi-OL6"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="dhg-13-GH6" firstAttribute="trailing" secondItem="AIX-MB-tQg" secondAttribute="trailing" id="33H-JI-Scb"/>
@@ -438,7 +439,6 @@
                             <constraint firstItem="mfL-nA-mDy" firstAttribute="trailing" secondItem="NzF-If-bAU" secondAttribute="trailing" id="sD4-ti-yBR"/>
                             <constraint firstItem="mfL-nA-mDy" firstAttribute="top" secondItem="NzF-If-bAU" secondAttribute="bottom" constant="8" id="wUi-Ie-s6g"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="qXn-Fi-OL6"/>
                     </view>
                     <navigationItem key="navigationItem" id="9IC-lg-Ebm">
                         <barButtonItem key="leftBarButtonItem" image="BackBlue" id="tBr-X0-0NP">
@@ -530,7 +530,7 @@
                                             <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="18"/>
                                         </variation>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nFm-Qa-Ij0">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nFm-Qa-Ij0">
                                         <rect key="frame" x="34" y="310.5" width="307" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -552,7 +552,7 @@
                                             <action selector="communityButtonTapped:" destination="8d0-gq-nLO" eventType="touchUpInside" id="3Vx-Lo-6w0"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8F-qe-Bol">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8F-qe-Bol">
                                         <rect key="frame" x="34" y="380.5" width="307" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -597,6 +597,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="cak-Id-xQ2"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="rcp-m5-gh3" firstAttribute="width" secondItem="cW8-HU-Ocd" secondAttribute="width" id="2rs-RB-oFK"/>
@@ -605,7 +606,6 @@
                             <constraint firstItem="cak-Id-xQ2" firstAttribute="bottom" secondItem="FlC-3V-9C2" secondAttribute="bottom" id="hO2-aG-hH9"/>
                             <constraint firstItem="FlC-3V-9C2" firstAttribute="top" secondItem="cW8-HU-Ocd" secondAttribute="top" id="wlv-BM-b8K"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="cak-Id-xQ2"/>
                     </view>
                     <navigationItem key="navigationItem" id="xaU-v0-X8u">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="tCT-iT-Dwy">
@@ -713,7 +713,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="xrs-9R-qIf">
                                         <rect key="frame" x="34" y="295" width="307" height="244"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBV-Vb-l3K">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBV-Vb-l3K">
                                                 <rect key="frame" x="0.0" y="0.0" width="307" height="50"/>
                                                 <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -848,7 +848,7 @@
                                                             <fontDescription key="fontDescription" name="SanFranciscoText-Medium" family="San Francisco Text" pointSize="18"/>
                                                         </variation>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DnV-23-FpI">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DnV-23-FpI">
                                                         <rect key="frame" x="0.0" y="45" width="307" height="50"/>
                                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -903,6 +903,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="9H0-Af-CZS"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SN1-jz-z78" firstAttribute="top" secondItem="ZaJ-3p-gbU" secondAttribute="top" id="2iS-Gz-pwY"/>
@@ -911,7 +912,6 @@
                             <constraint firstItem="SN1-jz-z78" firstAttribute="leading" secondItem="9H0-Af-CZS" secondAttribute="leading" id="Sb1-dR-r3p"/>
                             <constraint firstItem="rh7-gc-M4U" firstAttribute="width" secondItem="ZaJ-3p-gbU" secondAttribute="width" id="ba4-Wc-PfM"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="9H0-Af-CZS"/>
                     </view>
                     <navigationItem key="navigationItem" id="6d3-ze-OUd">
                         <barButtonItem key="leftBarButtonItem" title="Switch School" id="Ry2-q3-tN5">
@@ -966,6 +966,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="NY4-OU-5YI"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="crW-Yr-HSx" firstAttribute="leading" secondItem="HfC-Je-PUJ" secondAttribute="leading" id="57F-1t-eql"/>
@@ -973,7 +974,6 @@
                             <constraint firstItem="crW-Yr-HSx" firstAttribute="top" secondItem="NY4-OU-5YI" secondAttribute="top" id="WN2-9c-nV5"/>
                             <constraint firstItem="NY4-OU-5YI" firstAttribute="trailing" secondItem="crW-Yr-HSx" secondAttribute="trailing" id="gc2-MY-RXg"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="NY4-OU-5YI"/>
                     </view>
                     <navigationItem key="navigationItem" id="2Ll-tg-59E">
                         <barButtonItem key="leftBarButtonItem" image="BackBlue" id="KJq-no-KME">
@@ -1094,7 +1094,7 @@
                                             <constraint firstAttribute="trailing" secondItem="lBw-8M-ace" secondAttribute="trailing" id="qv7-wX-okn"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mqL-A0-ZPn">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mqL-A0-ZPn">
                                         <rect key="frame" x="34" y="427" width="307" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -1137,6 +1137,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="7pj-fg-e6D"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="7pj-fg-e6D" firstAttribute="trailing" secondItem="2MK-Ab-hC5" secondAttribute="trailing" id="ISl-EM-6Hh"/>
@@ -1145,7 +1146,6 @@
                             <constraint firstItem="2MK-Ab-hC5" firstAttribute="leading" secondItem="7pj-fg-e6D" secondAttribute="leading" id="jYb-Jx-Efk"/>
                             <constraint firstItem="KOe0-rZt" firstAttribute="width" secondItem="f6U-aU-IbP" secondAttribute="width" id="oe7-E2-uku"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="7pj-fg-e6D"/>
                     </view>
                     <navigationItem key="navigationItem" id="BFS-Lr-FMG">
                         <barButtonItem key="leftBarButtonItem" image="BackBlue" id="ehr-ai-g2W">
@@ -1278,6 +1278,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="5oI-L2-KjR"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="5oI-L2-KjR" firstAttribute="trailing" secondItem="UQe-HJ-k5c" secondAttribute="trailing" id="1Cl-Ve-zKF"/>
@@ -1286,7 +1287,6 @@
                             <constraint firstItem="5oI-L2-KjR" firstAttribute="bottom" secondItem="UQe-HJ-k5c" secondAttribute="bottom" id="S6b-Fk-fha"/>
                             <constraint firstItem="UQe-HJ-k5c" firstAttribute="top" secondItem="jTX-bn-7HA" secondAttribute="top" id="VpB-ku-pce"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="5oI-L2-KjR"/>
                     </view>
                     <navigationItem key="navigationItem" id="zW5-Jn-vmk">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="1HO-Lb-b2p">
@@ -1413,7 +1413,7 @@
                                                     <outlet property="delegate" destination="rxL-4e-fEp" id="pcD-ad-Iql"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LCc-Mq-aNj">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LCc-Mq-aNj">
                                                 <rect key="frame" x="267" y="0.0" width="60" height="48"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -1443,7 +1443,7 @@
                                             <constraint firstItem="P2Z-J8-Wv1" firstAttribute="leading" secondItem="LY7-YC-ebu" secondAttribute="leading" id="mwu-bo-naC"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oax-Bt-LMQ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oax-Bt-LMQ">
                                         <rect key="frame" x="24" y="313" width="136" height="31"/>
                                         <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                         <state key="normal" title="Forgot Password ?">
@@ -1500,7 +1500,7 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6w0-th-ROv">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6w0-th-ROv">
                                         <rect key="frame" x="34" y="514" width="307" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -1550,6 +1550,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Q9O-e7-HVE"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="LA8-cR-xjb" firstAttribute="width" secondItem="QRe-Rn-1zs" secondAttribute="width" id="IBp-N0-4TN"/>
@@ -1558,7 +1559,6 @@
                             <constraint firstItem="Q9O-e7-HVE" firstAttribute="trailing" secondItem="gVc-mK-JHC" secondAttribute="trailing" id="gRP-tZ-QaD"/>
                             <constraint firstAttribute="bottom" secondItem="gVc-mK-JHC" secondAttribute="bottom" id="gUz-gV-txm"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Q9O-e7-HVE"/>
                     </view>
                     <navigationItem key="navigationItem" id="IG4-pX-zdV">
                         <barButtonItem key="leftBarButtonItem" image="BackBlue" id="xP9-Mp-mgB">
@@ -1724,7 +1724,7 @@
                                                     <outlet property="delegate" destination="WUZ-d3-IKD" id="JcP-nS-sf5"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPK-hK-J1h">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPK-hK-J1h">
                                                 <rect key="frame" x="287" y="0.0" width="40" height="48"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -1783,7 +1783,7 @@
                                             <outlet property="delegate" destination="WUZ-d3-IKD" id="0lT-RV-jLV"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5H-El-lWk">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5H-El-lWk">
                                         <rect key="frame" x="24" y="566" width="327" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -1851,6 +1851,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="88U-j0-bug"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="88U-j0-bug" firstAttribute="trailing" secondItem="v5H-El-lWk" secondAttribute="trailing" constant="24" id="1ie-x3-PlX"/>
@@ -1875,7 +1876,6 @@
                             <constraint firstItem="88U-j0-bug" firstAttribute="trailing" secondItem="pbr-Z5-dur" secondAttribute="trailing" constant="24" id="xPK-a6-wJq"/>
                             <constraint firstItem="88U-j0-bug" firstAttribute="trailing" secondItem="IH0-eE-76J" secondAttribute="trailing" constant="14" id="zpS-qr-vsp"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="88U-j0-bug"/>
                     </view>
                     <navigationItem key="navigationItem" id="mtf-7N-ipT">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="V48-ia-iRb">
@@ -2050,7 +2050,7 @@
                                                     <outlet property="delegate" destination="0yS-9H-5Qo" id="pUF-DV-gmE"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19f-Z7-n5e">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19f-Z7-n5e">
                                                 <rect key="frame" x="282" y="0.0" width="45" height="48"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -2088,7 +2088,7 @@
                                             <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="14"/>
                                         </variation>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAt-w2-KtT">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAt-w2-KtT">
                                         <rect key="frame" x="24" y="556" width="327" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -2169,6 +2169,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="gyi-Ig-Rhs"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gyi-Ig-Rhs" firstAttribute="bottom" secondItem="fGc-lk-zgO" secondAttribute="bottom" id="A2y-3V-fH0"/>
@@ -2176,7 +2177,6 @@
                             <constraint firstItem="fGc-lk-zgO" firstAttribute="top" secondItem="a5m-Dl-PLN" secondAttribute="top" id="ey9-DC-LaO"/>
                             <constraint firstItem="fGc-lk-zgO" firstAttribute="leading" secondItem="gyi-Ig-Rhs" secondAttribute="leading" id="lkn-XX-i4c"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="gyi-Ig-Rhs"/>
                     </view>
                     <navigationItem key="navigationItem" id="269-2b-PeT">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="HSd-Hy-HQ9">
@@ -2319,6 +2319,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="caS-w4-jF5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4s4-DF-lHc" firstAttribute="leading" secondItem="caS-w4-jF5" secondAttribute="leading" id="BgJ-Y3-dsE"/>
@@ -2327,7 +2328,6 @@
                             <constraint firstItem="4s4-DF-lHc" firstAttribute="top" secondItem="iup-BP-q81" secondAttribute="top" id="md8-ui-qxR"/>
                             <constraint firstItem="4AN-m7-eGX" firstAttribute="width" secondItem="iup-BP-q81" secondAttribute="width" id="pe3-FB-Lj9"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="caS-w4-jF5"/>
                     </view>
                     <navigationItem key="navigationItem" id="iCp-6U-sIj">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="bxV-Y6-W8J">
@@ -2403,7 +2403,7 @@
                                             <outlet property="delegate" destination="NoK-Yo-yKg" id="53E-oO-yag"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WeT-3R-o5w">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WeT-3R-o5w">
                                         <rect key="frame" x="20" y="226.5" width="141.5" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -2443,7 +2443,7 @@
                                             <action selector="reloadButtonTapped:" destination="NoK-Yo-yKg" eventType="touchUpInside" id="htZ-eA-aik"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Hz-CK-4HV">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Hz-CK-4HV">
                                         <rect key="frame" x="181.5" y="226.5" width="141.5" height="40"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -2497,6 +2497,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="s14-oM-cVa"/>
                         <color key="backgroundColor" white="0.0" alpha="0.40146346830985913" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="evF-wa-Wvk" secondAttribute="trailing" id="FkG-1Y-HFx">
@@ -2508,7 +2509,6 @@
                             <constraint firstItem="evF-wa-Wvk" firstAttribute="centerX" secondItem="s14-oM-cVa" secondAttribute="centerX" id="K2Q-x2-lcF"/>
                             <constraint firstItem="evF-wa-Wvk" firstAttribute="centerY" secondItem="gH1-4C-i4S" secondAttribute="centerY" id="mRY-7e-Bju"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="s14-oM-cVa"/>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="0Hz-CK-4HV" id="mQw-gU-WMf"/>
@@ -2631,7 +2631,7 @@
                                                     <outlet property="delegate" destination="HTC-Un-vLK" id="UnD-Zx-5PN"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJb-CY-DAZ">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJb-CY-DAZ">
                                                 <rect key="frame" x="282" y="0.0" width="45" height="48"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -2662,7 +2662,7 @@
                                             <constraint firstItem="RJb-CY-DAZ" firstAttribute="top" secondItem="Eky-68-QGH" secondAttribute="top" id="rQu-0e-zdd"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nxd-cO-9IQ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nxd-cO-9IQ">
                                         <rect key="frame" x="43" y="372" width="298" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -2719,6 +2719,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="ZOS-Oe-tFO"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ZOS-Oe-tFO" firstAttribute="bottom" secondItem="2j3-Dp-YpB" secondAttribute="bottom" id="Hhs-bT-9Ob"/>
@@ -2727,7 +2728,6 @@
                             <constraint firstItem="HDJ-d7-HHd" firstAttribute="width" secondItem="baN-PK-YhP" secondAttribute="width" id="jPn-Fp-awI"/>
                             <constraint firstItem="ZOS-Oe-tFO" firstAttribute="trailing" secondItem="2j3-Dp-YpB" secondAttribute="trailing" id="kiV-Vj-o0y"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="ZOS-Oe-tFO"/>
                     </view>
                     <connections>
                         <outlet property="communityLogo" destination="pkH-hn-RRU" id="aq5-LG-oZb"/>
@@ -2817,7 +2817,7 @@
                                     <action selector="cancelButtonTapped:" destination="fAU-5g-Vp7" eventType="touchUpInside" id="KrJ-FA-Hgh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Msj-6a-TFJ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Msj-6a-TFJ">
                                 <rect key="frame" x="34" y="321" width="307" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -2849,6 +2849,7 @@
                                 </variation>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="QSN-DG-lD9"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="QSN-DG-lD9" firstAttribute="trailing" secondItem="m5r-DX-QpF" secondAttribute="trailing" constant="24" id="2b9-4T-xQw"/>
@@ -2868,7 +2869,6 @@
                             <constraint firstItem="m5r-DX-QpF" firstAttribute="top" secondItem="tKm-ut-MCd" secondAttribute="bottom" constant="10" id="oqT-t8-abH"/>
                             <constraint firstItem="QSN-DG-lD9" firstAttribute="trailing" secondItem="X3n-Yx-bbZ" secondAttribute="trailing" id="wg9-4o-ZuP"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="QSN-DG-lD9"/>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="dLr-NC-YOG" id="k9x-3o-eTy"/>
@@ -2943,7 +2943,7 @@
                                             <fontDescription key="fontDescription" name="Baskerville-SemiBoldItalic" family="Baskerville" pointSize="18"/>
                                         </variation>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bgr-yt-TJB">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bgr-yt-TJB">
                                         <rect key="frame" x="34" y="298.5" width="307" height="50"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -2984,6 +2984,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="4xW-Xh-oiy"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="VMD-ki-owb" firstAttribute="leading" secondItem="4xW-Xh-oiy" secondAttribute="leading" id="5mI-nZ-Gfq"/>
@@ -2992,7 +2993,6 @@
                             <constraint firstItem="VMD-ki-owb" firstAttribute="top" secondItem="f4V-zn-uiE" secondAttribute="top" id="Xr7-oT-JqV"/>
                             <constraint firstItem="4xW-Xh-oiy" firstAttribute="bottom" secondItem="VMD-ki-owb" secondAttribute="bottom" id="um6-TF-BIK"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="4xW-Xh-oiy"/>
                     </view>
                     <navigationItem key="navigationItem" id="PlB-yq-ST3">
                         <barButtonItem key="leftBarButtonItem" title="Switch School" id="fTq-a2-UMq">
@@ -3086,6 +3086,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="ej9-Zp-O7z"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="DUo-uy-QUi" firstAttribute="leading" secondItem="ej9-Zp-O7z" secondAttribute="leading" id="ZNZ-Dj-RzP"/>
@@ -3093,7 +3094,6 @@
                             <constraint firstItem="DUo-uy-QUi" firstAttribute="top" secondItem="ej9-Zp-O7z" secondAttribute="top" id="mV1-L9-uxI"/>
                             <constraint firstItem="ej9-Zp-O7z" firstAttribute="bottom" secondItem="DUo-uy-QUi" secondAttribute="bottom" id="mem-pO-Da4"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="ej9-Zp-O7z"/>
                     </view>
                     <navigationItem key="navigationItem" title="Select your school" id="dbb-xn-aJ1">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="Back" id="4P9-iF-qhf">
@@ -3179,7 +3179,7 @@
                                     <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="OvF-an-t9p">
                                         <rect key="frame" x="82.5" y="233" width="210" height="37"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Le9-C1-PeK">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Le9-C1-PeK">
                                                 <rect key="frame" x="0.0" y="0.0" width="90" height="37"/>
                                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="18"/>
                                                 <inset key="contentEdgeInsets" minX="15" minY="8" maxX="15" maxY="8"/>
@@ -3188,7 +3188,7 @@
                                                     <action selector="declineButtonAction:" destination="vRx-Ck-qs8" eventType="touchUpInside" id="6RU-cI-62Z"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkz-0Z-ML7">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkz-0Z-ML7">
                                                 <rect key="frame" x="120" y="0.0" width="90" height="37"/>
                                                 <fontDescription key="fontDescription" name="SanFranciscoText-Medium" family="San Francisco Text" pointSize="18"/>
                                                 <inset key="contentEdgeInsets" minX="15" minY="8" maxX="15" maxY="8"/>
@@ -3218,6 +3218,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="9X1-rM-1V3"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="AUL-Y5-jce" firstAttribute="top" secondItem="9X1-rM-1V3" secondAttribute="top" id="A21-GX-mcg"/>
@@ -3226,7 +3227,6 @@
                             <constraint firstItem="iSq-4S-mOB" firstAttribute="width" secondItem="mK0-7w-ZnA" secondAttribute="width" id="ooa-SW-Yoq"/>
                             <constraint firstItem="AUL-Y5-jce" firstAttribute="leading" secondItem="9X1-rM-1V3" secondAttribute="leading" id="pZS-cV-xnT"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="9X1-rM-1V3"/>
                     </view>
                     <connections>
                         <outlet property="buttonsStack" destination="OvF-an-t9p" id="nXZ-cF-0bY"/>
@@ -3241,6 +3241,23 @@
             <point key="canvasLocation" x="-1908" y="391"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="IH0-eE-76J">
+            <size key="intrinsicContentSize" width="17" height="17"/>
+        </designable>
+        <designable name="Z56-bF-IT5">
+            <size key="intrinsicContentSize" width="1099" height="19"/>
+        </designable>
+        <designable name="egA-wb-xYm">
+            <size key="intrinsicContentSize" width="735" height="19"/>
+        </designable>
+        <designable name="kQb-MI-Z1m">
+            <size key="intrinsicContentSize" width="17" height="17"/>
+        </designable>
+        <designable name="mfL-nA-mDy">
+            <size key="intrinsicContentSize" width="739" height="19"/>
+        </designable>
+    </designables>
     <resources>
         <image name="Artboard" width="375" height="157"/>
         <image name="Back" width="48" height="48"/>

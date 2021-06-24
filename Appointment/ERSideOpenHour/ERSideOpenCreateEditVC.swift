@@ -19,15 +19,17 @@ enum viewTypeOpenHour {
 
 
 struct timeSlotDuplicateModal {
-    var timeSlot : String!
-    var isSelected : Bool!
-    var id : String!
+    var timeStart : String!
+    var timeEnd : String!
+    var isSelected = false
+    var id : Int!
 }
 
 
 struct openHourModalSubmit {
     var userPurposeId : [SearchTextFieldItem]!
     var slotArr : Array<Dictionary<String,String>>!
+    var selectedSlotID : Int?
     var timeZone = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
 //    var slotDuration : Int?
    // var maximum_meetings_per_day : Int?
@@ -52,8 +54,10 @@ struct ParticipantOH {
 class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,CalenderViewDelegate {
 
     
+    @IBOutlet weak var viewPurpose: UIView!
     @IBOutlet weak var btnAdd: UIButton!
-    
+    var delegate : ErSideOpenHourTCDelegate!
+
     @IBAction func btnAddTapped(_ sender: Any) {
         configureStartEndView(isnewlyAdded: true)
     }
@@ -63,7 +67,8 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     var arrERStartEndTImeView = [ERStartEndTImeView]()
 //    var arrDataStartEndTimeView : Array<Dictionary<String,String>>!
     
-    
+    var arrtimeSlotDuplicateModal = [timeSlotDuplicateModal]();
+
     
     @IBOutlet weak var lblDate: UILabel!
     
@@ -167,7 +172,6 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     }
     @IBOutlet weak var btnDateDuplicateTo: UIButton!
     // Purpose
-    @IBOutlet weak var viewHeightConstraint: NSLayoutConstraint!
 
     @IBOutlet weak var nslayoutHeightDuplicateToView: NSLayoutConstraint!
     
@@ -264,6 +268,9 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     @IBOutlet weak var lblOccurrenceCountText: UILabel!
     var objERSideCreateEditOHVM : ERSideCreateEditOHVM!
     var dataPurposeModal: ERSidePurposeDetailModalArr?
+    var  dataPurposeNewModal : ERSidePurposeDetailNewModalArr?
+    var objERSideOPenHourModal : ERSideOPenHourModal?
+
     var timeZOneArr: [TimeZoneSel]!
     var searchArrayPurpose = [SearchTextFieldItem]()
 
@@ -288,7 +295,24 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM YYYY"
         
-        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
+       
+        switch self.objviewTypeOpenHour {
+        case .setOpenHour:
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
+            break;
+        case .duplicateSetHour:
+            
+           GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Duplicate Schedules")
+            
+            break;
+        case .editOpenHour:
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
+            break;
+        default:
+            break;
+        }
+        
+       
         
         // Do any additional setup after loading the view.
     }
@@ -298,7 +322,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
        }
        
     override func viewWillAppear(_ animated: Bool) {
-        
+        registerForKeyboardNotifications()
     }
     
     func callViewModal()
@@ -306,6 +330,9 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         objERSideCreateEditOHVM = ERSideCreateEditOHVM()
         objERSideCreateEditOHVM.viewController = self
         objERSideCreateEditOHVM.delegate = self
+        objERSideCreateEditOHVM.objviewTypeOpenHour = self.objviewTypeOpenHour
+        objERSideCreateEditOHVM.dateSelected = self.dateSelected
+        
         objERSideCreateEditOHVM.customizeCreateEditOPenHour()
         
     }
@@ -315,8 +342,9 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         self.viewInner.isHidden = false
         self.viewInner.backgroundColor =  .white
         self.viewHeader.backgroundColor =  .white
-        self.view.backgroundColor =  ILColor.color(index: 22)
+        self.view.backgroundColor =  .white
         self.viewOuter.backgroundColor =  ILColor.color(index: 22)
+//        self.viewScroll.backgroundColor = .red
         lblStepHeader.isHidden = false;
         customizeHeader()
         customizePurpose()
@@ -325,22 +353,18 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         customizSlotDuration()
         customizeReccurrence()
         
-        
         viewMonthRepeat.isHidden = true
         nslayoutRepeatMonthViewHeight.constant = 0
         
-        
-        
         switch objviewTypeOpenHour {
         case .setOpenHour:
-            
             self.configureStartEndView(isnewlyAdded: true)
-            
             break
         case .duplicateSetHour:
-            self.timeSlotDuplicate()
+            self.timeSlotModal()
+            timeSlotDuplicate()
             changeForDuplicate()
-            
+            setDynamicView()
             break
         case .editOpenHour :
             self.configureStartEndView(isnewlyAdded: true)
@@ -403,6 +427,15 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     
     
     override func actnResignKeyboard() {
+        
+//        if activeField == txtPurpose || activeField == txtTimeZone{
+//            self.viewScroll.setContentOffset(CGPoint.init(x: 0, y: 0), animated: false)
+//        }
+        if activeField == txtTimeZone{
+            timeZoneViewController.dismiss(animated: false) {
+            }
+        }
+        
         activeField!.resignFirstResponder()
      }
     
@@ -418,7 +451,10 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         
         self.addInputAccessoryForTextFields(textFields: [txtOccurenceCount], dismissable: true, previousNextable: true)
         
-        registerForKeyboardNotifications()
+        
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        deRegisterKeyboardNotifications()
     }
     
     func deRegisterKeyboardNotifications() {
@@ -446,10 +482,10 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         {
             return
         }
-        
-        
         let kbSize = ((notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue)!
-        self.viewScroll.contentSize = CGSize.init(width: self.viewScroll.contentSize.width, height: self.viewScroll.contentSize.height - kbSize.size.height)
+
+            self.viewInner.layoutIfNeeded()
+            self.viewScroll.contentSize = CGSize.init(width: self.viewScroll.contentSize.width, height:  self.viewInner.frame.height)
         keyBooradAlreadyShown = false
 
     }
@@ -461,20 +497,17 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         print("a")
         
         if activeField != nil{
-            
         }
         else
         {
             return
         }
-        
-        
         let kbSize = ((aNotification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue)!
         
         keyBoardHieght = (kbSize.height)
         if !keyBooradAlreadyShown {
             self.viewScroll.contentSize = CGSize.init(width: self.viewScroll.contentSize.width, height: self.viewScroll.contentSize.height + kbSize.size.height)
-
+            
         }
         
         keyBooradAlreadyShown = true
@@ -737,7 +770,12 @@ extension ERSideOpenCreateEditVC
             self.txtDateSelected.layer.borderWidth = 1;
             
             txtDateSelected.leftViewMode = .always;
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dateConverted = dateFormatter.string(from: self.dateSelected)
             
+            let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:dateConverted , fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd/MM/yyyy")
+            txtDateSelected.text = dateSelectedValue
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15),  let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE15)
                 
             {
@@ -836,7 +874,7 @@ extension ERSideOpenCreateEditVC
             
             txtDateSelected.alpha = 0.6
             btmDateSelected.alpha = 0.6
-
+            
             break
             
             
@@ -857,6 +895,8 @@ extension ERSideOpenCreateEditVC
          self.objOpenHourModalSubmit =  formingModal()
             let objERSideOpenCreateEditSecondVC = ERSideOpenCreateEditSecondVC.init(nibName: "ERSideOpenCreateEditSecondVC", bundle: nil)
             objERSideOpenCreateEditSecondVC.objERSideOpenHourPrefilledDetail = self.objERSideOpenHourPrefilledDetail
+            
+            objERSideOpenCreateEditSecondVC.delegate = self.delegate
             
             objERSideOpenCreateEditSecondVC.objviewTypeOpenHour = self.objviewTypeOpenHour
             
@@ -897,8 +937,10 @@ extension ERSideOpenCreateEditVC
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let dateI = dateFormatter.string(from: self.dateSelected)
             
-            let startime =  GeneralUtility.dateConvertToUTC(emiDate: view.txtStartTime.text!, withDateFormat: "hh:mm a", todateFormat: "HH:mm")
-            let endTime = GeneralUtility.dateConvertToUTC(emiDate: view.txtEndTime.text!, withDateFormat: "hh:mm a", todateFormat: "HH:mm")
+
+            
+            let startime = GeneralUtility.currentDateDetailType4(emiDate: view.txtStartTime.text!, fromDateF: "hh:mm a", toDateFormate: "hh:mm")
+            let endTime = GeneralUtility.currentDateDetailType4(emiDate: view.txtEndTime.text!, fromDateF: "hh:mm a", toDateFormate: "hh:mm")
             
             let completeStartdate = dateI + " " + startime + ":00"
             let completeendDate = dateI + " " + endTime + ":00"
@@ -914,193 +956,367 @@ extension ERSideOpenCreateEditVC
         return arrSlot
     }
     
+    func logicforDuplicateSlotS() -> Array<Dictionary<String,String>>  {
+        
+        let selectedDuplicateSlot = self.arrtimeSlotDuplicateModal.filter({$0.isSelected == true})
+       
+        
+        let dateStart = GeneralUtility.currentDateDetailType4(emiDate: txtDateDuplicateto.text ?? "", fromDateF: "dd/mm/yyyy", toDateFormate: "yyyy-MM-dd")
+        
+        var stringTimeSlot = Array<Dictionary<String,String>>()
+        for strtime in selectedDuplicateSlot{
+            let dictionary = ["start_datetime" : dateStart + " " + GeneralUtility.currentDateDetailType4(emiDate: strtime.timeStart, fromDateF: "hh:mm a", toDateFormate: "hh:mm:ss") ,
+                              "end_datetime" :  dateStart + " " + GeneralUtility.currentDateDetailType4(emiDate: strtime.timeEnd, fromDateF: "hh:mm a", toDateFormate: "hh:mm:ss") ]
+            stringTimeSlot.append(dictionary)
+        }
+       return stringTimeSlot
+        
+    }
+    
     
     
     func formingModal() -> openHourModalSubmit {
         
         
-        var objOpenHourModalSubmit = openHourModalSubmit()
-        objOpenHourModalSubmit.userPurposeId = self.searchArrayPurpose;
-        objOpenHourModalSubmit.slotArr = self.logicForSlotDurationTiming()
-        if isRecurrenceEnable{
-            var recurrenceText = ""
-            let freq = ["DAILY","WEEKLY","MONTHLY","YEARLY"]
-            let  arrPickerFreq = ["day","Week","Month","Year"]
-            let indexFreq = arrPickerFreq.firstIndex(where: {
-                $0 == txtCategoryTime.text
-            })
-            let frqText = "FREQ=\(freq[indexFreq ?? 0])"
+        switch objviewTypeOpenHour {
+        case .setOpenHour:
             
-            recurrenceText.append(frqText)
-            recurrenceText.append(";")
-            
-            var countText = ""
-            
-            if endsOnTapped == 2 {
-                
-                let count = Int(txtOccurenceCount.text ?? "1")
-                countText =  "COUNT=\(count ?? 0)"
-                recurrenceText.append(countText)
-                recurrenceText.append(";")
-            }
-            else if endsOnTapped == 1{
-                countText =  "UNTIL=\(GeneralUtility.dateConvertToUTC(emiDate: (self.txtEndsOnDate.text! + " " + "00:00:00") , withDateFormat: "yyyy-MM-dd HH:mm:ss", todateFormat: "YYYYMMDDTHHMMSSZ"))"
-                recurrenceText.append(countText)
-                recurrenceText.append(";")
-                
-            }
-            else{
-                
-            }
-            
-            let intervalText = "INTERVAL=\(txtRepeatCount.text ?? "")"
-            
-            recurrenceText.append(intervalText)
-            recurrenceText.append(";")
-            
-            recurrenceText.append("WKST=MO")
-            
-            
-            
-            if indexFreq == 1{
-                recurrenceText.append(";")
-                let arrWeekDay = ["SU","MO","TU","WE","TH","FR","SA"]
-                
-                var arrSelectedWeek : String = ""
-                self.btnRepeatWeekArr.forEach { (btn) in
-                                  if btn.isSelected{
-                                      arrSelectedWeek.append(arrWeekDay[btn.tag]);
-                                      arrSelectedWeek.append(",");
-                                  }
-                              }
-                             
-                arrSelectedWeek =  String(arrSelectedWeek.dropLast())
-              
-                let BYDAY = "BYDAY=\(arrSelectedWeek)"
-                recurrenceText.append(BYDAY)
-                
-            }
-            else if indexFreq == 2{
-                recurrenceText.append(";")
-                let arrMonthRepeatOn = getMonthReccureenceArray();
-                let indexFreq = arrMonthRepeatOn.firstIndex(where: {
-                    $0 == txtRepeatMonth.text
+            var objOpenHourModalSubmit = openHourModalSubmit()
+            objOpenHourModalSubmit.userPurposeId = self.searchArrayPurpose;
+            objOpenHourModalSubmit.slotArr = self.logicForSlotDurationTiming()
+            if isRecurrenceEnable{
+                var recurrenceText = ""
+                let freq = ["DAILY","WEEKLY","MONTHLY","YEARLY"]
+                let  arrPickerFreq = ["day","Week","Month","Year"]
+                let indexFreq = arrPickerFreq.firstIndex(where: {
+                    $0 == txtCategoryTime.text
                 })
-                if indexFreq == 0 {
+                let frqText = "FREQ=\(freq[indexFreq ?? 0])"
+                
+                recurrenceText.append(frqText)
+                recurrenceText.append(";")
+                
+                var countText = ""
+                
+                if endsOnTapped == 2 {
                     
-                    let textSeleted = arrMonthRepeatOn[indexFreq ?? 0];
-                    let arrString = textSeleted.split(separator: " ")
-                    let BYDAY = "BYMONTHDAY=\(arrString[3])"
-                    recurrenceText.append(BYDAY)
+                    let count = Int(txtOccurenceCount.text ?? "1")
+                    countText =  "COUNT=\(count ?? 0)"
+                    recurrenceText.append(countText)
+                    recurrenceText.append(";")
+                }
+                else if endsOnTapped == 1{
+                  
+                    var currentTime = GeneralUtility.dateConvertToUTC(emiDate: GeneralUtility.todayDate(), withDateFormat: "yyyy-MM-dd HH:mm:ss", todateFormat: "HH:mm:ss")
+                    
+                 countText =   "UNTIL=\(GeneralUtility.dateConvertToUTC(emiDate: (self.txtEndsOnDate.text! + " " + currentTime) , withDateFormat: "dd/MM/yyyy HH:mm:ss", todateFormat: "yyyyMMdd'T'HHmmssZ"))"
+                    
+                    recurrenceText.append(countText)
+                    recurrenceText.append(";")
+                    
                 }
                 else{
-                    let textSeleted = arrMonthRepeatOn[indexFreq ?? 0];
-                    let arrString = textSeleted.split(separator: " ")
-                    let arrWeekDay = ["SU","MO","TU","WE","TH","FR","SA"]
-                    let weekDayArr =  ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]
-                    let indexSelected =  weekDayArr.firstIndex(where: {$0 == arrString[4]})
-                    let BYDAY = "BYSETPOS=-1;BYDAY=\(arrWeekDay[indexSelected ?? 0])"
-                    recurrenceText.append(BYDAY)
+                     
                 }
+                
+                let intervalText = "INTERVAL=\(txtRepeatCount.text ?? "")"
+                
+                recurrenceText.append(intervalText)
+                recurrenceText.append(";")
+                
+                recurrenceText.append("WKST=MO")
+                
+                
+                
+                if indexFreq == 1{
+                    recurrenceText.append(";")
+                    let arrWeekDay = ["SU","MO","TU","WE","TH","FR","SA"]
+                    
+                    var arrSelectedWeek : String = ""
+                    self.btnRepeatWeekArr.forEach { (btn) in
+                        if btn.isSelected{
+                            arrSelectedWeek.append(arrWeekDay[btn.tag]);
+                            arrSelectedWeek.append(",");
+                        }
+                    }
+                    
+                    arrSelectedWeek =  String(arrSelectedWeek.dropLast())
+                    
+                    let BYDAY = "BYDAY=\(arrSelectedWeek)"
+                    recurrenceText.append(BYDAY)
+                    
+                }
+                else if indexFreq == 2{
+                    recurrenceText.append(";")
+                    let arrMonthRepeatOn = getMonthReccureenceArray();
+                    let indexFreq = arrMonthRepeatOn.firstIndex(where: {
+                        $0 == txtRepeatMonth.text
+                    })
+                    if indexFreq == 0 {
+                        
+                        let textSeleted = arrMonthRepeatOn[indexFreq ?? 0];
+                        let arrString = textSeleted.split(separator: " ")
+                        let BYDAY = "BYMONTHDAY=\(arrString[3])"
+                        recurrenceText.append(BYDAY)
+                    }
+                    else{
+                        let textSeleted = arrMonthRepeatOn[indexFreq ?? 0];
+                        let arrString = textSeleted.split(separator: " ")
+                        let arrWeekDay = ["SU","MO","TU","WE","TH","FR","SA"]
+                        let weekDayArr =  ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]
+                        let indexSelected =  weekDayArr.firstIndex(where: {$0 == arrString[4]})
+                        let BYDAY = "BYSETPOS=-1;BYDAY=\(arrWeekDay[indexSelected ?? 0])"
+                        recurrenceText.append(BYDAY)
+                    }
+                }
+                objOpenHourModalSubmit.recurrence = recurrenceText
             }
-            objOpenHourModalSubmit.recurrence = recurrenceText
+            else{
+                objOpenHourModalSubmit.recurrence = "-1"
+            }
+            return objOpenHourModalSubmit;
+            
+        case .duplicateSetHour:
+            var objOpenHourModalSubmit = openHourModalSubmit()
+            objOpenHourModalSubmit.userPurposeId = self.searchArrayPurpose;
+            objOpenHourModalSubmit.slotArr = self.logicforDuplicateSlotS()
+            return objOpenHourModalSubmit;
+            
+        case .editOpenHour :
+            var objOpenHourModalSubmit = openHourModalSubmit()
+            objOpenHourModalSubmit.userPurposeId = self.searchArrayPurpose;
+            objOpenHourModalSubmit.slotArr = self.logicForSlotDurationTiming()
+          
+            return objOpenHourModalSubmit;
+        case .none:
+            return openHourModalSubmit();
+            
         }
-        else{
-            objOpenHourModalSubmit.recurrence = "-1"
-        }
-        return objOpenHourModalSubmit;
+        
     }
     
     
     
     
     func validatingForm()-> Bool{
-
         
-        if self.searchArrayPurpose.filter({$0.isSelected}) .count <= 0{
         
-            CommonFunctions().showError(title: "Error", message: StringConstants.PURPOSEERROR)
-            return false
-        }
-        
-        var isAllTimeSlotFilled = true;
-        var isAlltimeValid = true
-        let subViews = self.viewContainerStartEnd.subviews as! [ERStartEndTImeView]
-        for view in arrERStartEndTImeView{
-            
-            if view.isBothTimeField {
+        switch self.objviewTypeOpenHour {
+        case .setOpenHour:
+            if self.searchArrayPurpose.filter({$0.isSelected}) .count <= 0{
                 
-            }
-            else{
-                isAllTimeSlotFilled = false
-                break;
-            }
-            
-        }
-        
-        for view in arrERStartEndTImeView{
-            
-            if view.isTimeValid {
-                
-            }
-            else{
-                isAlltimeValid = false
-                break;
-            }
-            
-        }
-        
-        if !isAllTimeSlotFilled{
-            CommonFunctions().showError(title: "Error", message: StringConstants.ERTIMESLOTERROR)
-                       return false
-            
-        }
-        if !isAlltimeValid{
-                   CommonFunctions().showError(title: "Error", message: StringConstants.ERTIMESLOTERROR)
-                              return false
-                   
-               }
-
-        
-        if txtRepeatCount.text!.isEmpty {
-            
-        }
-        else{
-            
-            if (Int(self.txtRepeatCount.text!)! > 1000){
-                
-                CommonFunctions().showError(title: "Error", message: "Repeat value must be less than or equal to 1000")
-                
+                CommonFunctions().showError(title: "Error", message: StringConstants.PURPOSEERROR)
                 return false
             }
             
-            if (Int(self.txtRepeatCount.text!)! < 1){
+            var isAllTimeSlotFilled = true;
+            var isAlltimeValid = true
+            let subViews = self.viewContainerStartEnd.subviews as! [ERStartEndTImeView]
+            for view in arrERStartEndTImeView{
                 
-                CommonFunctions().showError(title: "Error", message: "Repeat value must be greater than or equal to 1")
+                if view.isBothTimeField {
+                    
+                }
+                else{
+                    isAllTimeSlotFilled = false
+                    break;
+                }
                 
-                return false
             }
-        }
-        if txtOccurenceCount.text!.isEmpty {
-        }
-        else
-        {
-            if (Int(self.txtOccurenceCount.text!)! > 1000){
+            
+            for view in arrERStartEndTImeView{
                 
-                CommonFunctions().showError(title: "Error", message: "Occurrences must be greater than or equal to 1")
+                if view.isTimeValid {
+                    
+                }
+                else{
+                    isAlltimeValid = false
+                    break;
+                }
                 
+            }
+            
+            if !isAllTimeSlotFilled{
+                CommonFunctions().showError(title: "Error", message: StringConstants.ERTIMESLOTERROR)
+                return false
+                
+            }
+            if !isAlltimeValid{
+                CommonFunctions().showError(title: "Error", message: StringConstants.ERTIMESLOTERROR)
+                return false
+                
+            }
+            
+            if isRecurrenceEnable {
+                
+                if txtRepeatCount.text!.isEmpty {
+                    CommonFunctions().showError(title: "Error", message: "Please specify repeat count")
+                    return false
+                }
+                else{
+                    
+                    if (Int(self.txtRepeatCount.text!)! > 1000){
+                        
+                        CommonFunctions().showError(title: "Error", message: "Repeat value must be less than or equal to 1000")
+                        
+                        return false
+                    }
+                    
+                    if (Int(self.txtRepeatCount.text!)! < 1){
+                        
+                        CommonFunctions().showError(title: "Error", message: "Repeat value must be greater than or equal to 1")
+                        
+                        return false
+                    }
+                }
+                if txtOccurenceCount.text!.isEmpty {
+                }
+                else
+                {
+                    if (Int(self.txtOccurenceCount.text!)! > 1000){
+                        
+                        CommonFunctions().showError(title: "Error", message: "Occurrences must be less than or equal to 1000")
+                        
+                        return false
+                    }
+                    
+                    if (Int(self.txtOccurenceCount.text!)! < 1){
+                        CommonFunctions().showError(title: "Error", message: "Occurrences must be greater than or equal to 1")
+                        return false
+                    }
+                    
+                }
+                
+            }
+            
+            
+            return true
+        case .editOpenHour:
+            
+            if self.searchArrayPurpose.filter({$0.isSelected}) .count <= 0{
+                
+                CommonFunctions().showError(title: "Error", message: StringConstants.PURPOSEERROR)
                 return false
             }
             
-            if (Int(self.txtOccurenceCount.text!)! < 1){
+            var isAllTimeSlotFilled = true;
+            var isAlltimeValid = true
+            let subViews = self.viewContainerStartEnd.subviews as! [ERStartEndTImeView]
+            for view in arrERStartEndTImeView{
                 
-                CommonFunctions().showError(title: "Error", message: "Occurrences must be less than or equal to 1000")
+                if view.isBothTimeField {
+                    
+                }
+                else{
+                    isAllTimeSlotFilled = false
+                    break;
+                }
                 
+            }
+            
+            for view in arrERStartEndTImeView{
+                
+                if view.isTimeValid {
+                    
+                }
+                else{
+                    isAlltimeValid = false
+                    break;
+                }
+                
+            }
+            
+            if !isAllTimeSlotFilled{
+                CommonFunctions().showError(title: "Error", message: StringConstants.ERTIMESLOTERROR)
+                return false
+                
+            }
+            if !isAlltimeValid{
+                CommonFunctions().showError(title: "Error", message: StringConstants.ERTIMESLOTERROR)
+                return false
+                
+            }
+            
+            if isRecurrenceEnable {
+                
+                if txtRepeatCount.text!.isEmpty {
+                    CommonFunctions().showError(title: "Error", message: "Please specify repeat count")
+                }
+                else{
+                    
+                    if (Int(self.txtRepeatCount.text!)! > 1000){
+                        
+                        CommonFunctions().showError(title: "Error", message: "Repeat value must be less than or equal to 1000")
+                        
+                        return false
+                    }
+                    
+                    if (Int(self.txtRepeatCount.text!)! < 1){
+                        
+                        CommonFunctions().showError(title: "Error", message: "Repeat value must be greater than or equal to 1")
+                        
+                        return false
+                    }
+                }
+                if txtOccurenceCount.text!.isEmpty {
+                }
+                else
+                {
+                    if (Int(self.txtOccurenceCount.text!)! > 1000){
+                        
+                        CommonFunctions().showError(title: "Error", message: "Occurrences must be greater than or equal to 1")
+                        
+                        return false
+                    }
+                    
+                    if (Int(self.txtOccurenceCount.text!)! < 1){
+                        
+                        CommonFunctions().showError(title: "Error", message: "Occurrences must be less than or equal to 1000")
+                        
+                        return false
+                    }
+                    
+                }
+                
+            }
+            
+            
+            return true
+            
+        case .duplicateSetHour:
+            
+            if (txtDateSelected.text?.isEmpty ?? true)    {
+                CommonFunctions().showError(title: "Error", message: StringConstants.ERRDUPLICATETIMEDATE)
+                return false
+            }
+            if (txtDateDuplicateto.text?.isEmpty ?? true){
+                CommonFunctions().showError(title: "Error", message: StringConstants.ERRDUPLICATETIMEDATE)
                 return false
             }
             
+            if self.searchArrayPurpose.filter({$0.isSelected}) .count <= 0{
+                CommonFunctions().showError(title: "Error", message: StringConstants.PURPOSEERROR)
+                return false
+            }
+            
+            let timeSlotSeleted = self.arrtimeSlotDuplicateModal.filter({$0.isSelected == true})
+            if timeSlotSeleted.count > 0 {
+                
+            }
+            else
+            {
+                CommonFunctions().showError(title: "Error", message: StringConstants.ERRDUPLICATETIMESLOTSELECTED)
+                return false
+                
+            }
+            
+            return true
+        default:
+            break;
         }
-        return true
+        return false
+        
+        
     }
     
 }
@@ -1114,40 +1330,38 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
     func customizePurpose()  {
         
         var indexID = 0
-        for purpose in dataPurposeModal!{
-            let searchItem = SearchTextFieldItem()
-            searchItem.title = purpose.displayName!
-            searchItem.id  = indexID
-            searchArrayPurpose.append(searchItem)
-            indexID = indexID + 1;
-        }
-        
-        
-        switch self.objviewTypeOpenHour {
-        case .editOpenHour:
-            for purpose in (self.objERSideOpenHourPrefilledDetail?.purposes)!{
-                
-                var purposeNew = self.searchArrayPurpose.filter({$0.title == purpose.purposeText });
-                
-                if purposeNew.count > 0{
-                    
-                }
-                else{
-                    let searchItem = SearchTextFieldItem()
-                    searchItem.title = purpose.purposeText!
-                    searchItem.id  = indexID
-                    searchArrayPurpose.append(searchItem)
-                    indexID = indexID + 1;
-                }
+        switch objviewTypeOpenHour {
+        case .setOpenHour:
+            for purpose in dataPurposeModal!{
+                let searchItem = SearchTextFieldItem()
+                searchItem.title = purpose.displayName!
+                searchItem.id  = indexID
+                searchArrayPurpose.append(searchItem)
+                indexID = indexID + 1;
             }
             break
+        case .duplicateSetHour:
+            for purpose in dataPurposeNewModal!{
+                let searchItem = SearchTextFieldItem()
+                searchItem.title = purpose.purposeText ?? ""
+                searchItem.isSelected = true
+                searchItem.id  = indexID
+                searchArrayPurpose.append(searchItem)
+                indexID = indexID + 1;
+            }
+            break
+        case .editOpenHour :
+            for purpose in dataPurposeModal!{
+                let searchItem = SearchTextFieldItem()
+                searchItem.title = purpose.displayName!
+                searchItem.id  = indexID
+                searchArrayPurpose.append(searchItem)
+                indexID = indexID + 1;
+            }
         default:
             break
         }
-        
-        
-        
-        self.setDynamicView()
+ 
         
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
         {
@@ -1194,8 +1408,6 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
                 self.searchArrayPurpose.insert(selectedId[0], at: index)
             }
             
-            
-            
         }
         
         setDynamicView()
@@ -1206,33 +1418,42 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
     
     @IBAction func btnPurposeTapped(_ sender: UIButton)
     {
+        
+//         self.viewScroll.contentOffset = CGPoint.init(x:  0, y:  0)
+        activeField = txtPurpose
         let searchViewController = SearchViewController.init(nibName: "SearchViewController", bundle: nil)
         searchViewController.modalPresentationStyle = .overFullScreen
         searchViewController.maxHeight = 200;
         searchViewController.isCreateNew = true
+        
         let frameI =
             sender.superview?.convert(sender.frame, to: nil)
-        let changedFrame = frameI
+        var changedFrame = frameI
+
+        self.viewScroll.contentOffset = CGPoint.init(x:  self.viewScroll.contentOffset.x, y:  self.viewScroll.contentOffset.y + (frameI!.origin.y - 140))
+        changedFrame = CGRect.init(x: (changedFrame?.origin.x)!, y: ((changedFrame?.origin.y)! - (frameI!.origin.y - 140)), width: (changedFrame?.size.width)!, height: (changedFrame?.size.height)!)
+        
         searchViewController.placeholder = "Search or create new"
         searchViewController.arrNameSurvey = self.searchArrayPurpose.filter({$0.isSelected == false});
-            
+        
         searchViewController.txtfieldRect = changedFrame
         searchViewController.isAPiHIt = false
         searchViewController.delegate = self
-
+        
         self.present(searchViewController, animated: false) {
         }
     }
     
     func setDynamicView()
     {
+   
         for view in   self.viewSelectedContainer.subviews
         {
             view.removeFromSuperview()
         }
         var viewPrevius : UIView?;
         var viewPreviusC : UIView?;
-        self.viewHeightConstraint.constant = 0
+//        self.viewHeightConstraint.constant = 0
         var sumWidth : CGFloat = 0.0
         let arrView = self.searchArrayPurpose.filter({$0.isSelected == true})
         var index = 0
@@ -1259,14 +1480,24 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
                     }
                     else
                     {
-                        viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
+//
+                        viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-2-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
                     }
+                   
+                    
                 }
                 else
                 {
+                    
                     viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevius":viewPrevius!,"view" :view ]))
                     viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[viewPrevius]-8-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevius":viewPrevius!,"view" :view ]))
-                    self.viewHeightConstraint.constant = self.viewHeightConstraint.constant + 35;
+                    view.layoutIfNeeded();
+                    if (view.frame.width  >= self.view.frame.width){
+                        viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[view]-8-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
+                    }
+                    
+                    
+//                    self.viewHeightConstraint.constant = self.viewHeightConstraint.constant + 35;
                     viewPreviusC = viewPrevius
                     sumWidth = 0;
                 }
@@ -1277,12 +1508,21 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
                 view.layoutIfNeeded();
                 view.cornerRadius = 5;
                 viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
-                viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
+                viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-2-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
                 viewPrevius = view;
-                self.viewHeightConstraint.constant = self.viewHeightConstraint.constant + 35;
+//                self.viewHeightConstraint.constant = self.viewHeightConstraint.constant + 35;
+                 view.layoutIfNeeded();
+                if (view.frame.width  >= self.view.frame.width){
+                     viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[view]-8-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
+                }
             }
             index = index + 1
         }
+        if viewPrevius != nil {
+             viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[view]-(8)-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :viewPrevius ]))
+        }
+        viewSelectedContainer.layoutIfNeeded()
+      
     }
     
     func  innverView(viewC : UIView,str: String)  {
@@ -1367,8 +1607,11 @@ extension ERSideOpenCreateEditVC : SearchViewControllerDelegate
         }
         
         setDynamicView()
+     //   viewSelectedContainer.layoutIfNeeded()
+   
         
     }
+    
     
 }
 
@@ -1404,9 +1647,6 @@ extension ERSideOpenCreateEditVC{
                 strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
                 lblTimingFrom.attributedText = strHeader
             }
-            
-            
-            
             break;
         case .setOpenHour,.editOpenHour:
             
@@ -1509,6 +1749,9 @@ extension ERSideOpenCreateEditVC: TimeZoneViewControllerDelegate{
     
     
     @IBAction func btnSelectTimeZoneTapped(_ sender: UIButton) {
+//        self.viewScroll.contentOffset = CGPoint.init(x:  0, y:  0)
+
+        activeField = txtTimeZone
         
         var selectedTextZone : String = ""
         for timeZone in self.timeZOneArr{
@@ -1525,7 +1768,13 @@ extension ERSideOpenCreateEditVC: TimeZoneViewControllerDelegate{
         
         let frameI =
             sender.superview?.convert(sender.frame, to: nil)
-        timeZoneViewController.txtfieldRect = frameI
+        var changedFrame = frameI
+        
+        self.viewScroll.contentOffset = CGPoint.init(x:  self.viewScroll.contentOffset.x, y:  self.viewScroll.contentOffset.y + (frameI!.origin.y - 140))
+        changedFrame = CGRect.init(x: (changedFrame?.origin.x)!, y: ((changedFrame?.origin.y)! - (frameI!.origin.y - 140)), width: (changedFrame?.size.width)!, height: (changedFrame?.size.height)!)
+        
+        
+        timeZoneViewController.txtfieldRect = changedFrame
         self.present(timeZoneViewController, animated: false) {
             self.timeZoneViewController.reloadTableview()
         }
@@ -1795,7 +2044,7 @@ extension ERSideOpenCreateEditVC{
             txtRepeatCount.backgroundColor = ILColor.color(index: 48)
             //        self.txtBreakBufferAfter.layer.cornerRadius = 3;
             
-            txtRepeatCount.placeholder = "1"
+            txtRepeatCount.placeholder = "Repeat count"
             txtCategoryTime.backgroundColor = ILColor.color(index: 48)
             let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
             pickerViewSetUp(txtInput: txtCategoryTime, tag: 194)
@@ -1903,17 +2152,44 @@ extension ERSideOpenCreateEditVC{
 
 
 extension ERSideOpenCreateEditVC:DeleteParticularStartTimeViewDelegate,RefreshSelectedTimeSlotDelegate {
-    func refreshSelectedTS(id: String) {
+    func refreshSelectedTS(id:Int,isSelected: Bool) {
+
+        var selectedTimeSlot = self.arrtimeSlotDuplicateModal.filter ({$0.id == id})[0]
+        let index = self.arrtimeSlotDuplicateModal.firstIndex(where: {$0.id == id}) ?? 0
+        selectedTimeSlot.isSelected = isSelected
+        arrtimeSlotDuplicateModal.remove(at: index)
+        arrtimeSlotDuplicateModal.insert(selectedTimeSlot, at: index)
+        
+        timeSlotDuplicate()
+    }
+    
+    func timeSlotModal() {
+        
+        for modaloH in (self.objERSideOPenHourModal?.results)!{
+            var objtimeSlotDuplicateModal = timeSlotDuplicateModal()
+            objtimeSlotDuplicateModal.id = modaloH.id
+            let startTime = GeneralUtility.dateConvertToUTCDuplicate(emiDate: modaloH.startDatetimeUTC ?? "", withDateFormat: "yyyy-MM-dd HH:mm:ss", todateFormat: "hh:mm a");
+            let endTime = GeneralUtility.dateConvertToUTCDuplicate(emiDate: modaloH.endDatetimeUTC ?? "", withDateFormat: "yyyy-MM-dd HH:mm:ss", todateFormat: "hh:mm a");
+            objtimeSlotDuplicateModal.timeStart = startTime
+            objtimeSlotDuplicateModal.timeEnd = endTime
+            arrtimeSlotDuplicateModal.append(objtimeSlotDuplicateModal)
+        }
+        
         
     }
     
     func timeSlotDuplicate(){
         
         var viewPrevious : UIView?
-        for index in [1,2,3]{
+        for view  in  self.viewContainerStartEnd.subviews{
+            view.removeFromSuperview()
+        }
+        for objTimeslot in arrtimeSlotDuplicateModal{
             let objERSideTimeSlotDuplicate =  ERSideTimeSlotDuplicate().loadView() as! ERSideTimeSlotDuplicate
             objERSideTimeSlotDuplicate.viewconTroller = self
             objERSideTimeSlotDuplicate.delegate = self
+            objERSideTimeSlotDuplicate.objtimeSlotDuplicateModal = objTimeslot
+            objERSideTimeSlotDuplicate.objStudentListType = .groupType
             objERSideTimeSlotDuplicate.translatesAutoresizingMaskIntoConstraints = false
             objERSideTimeSlotDuplicate.customization()
             self.viewContainerStartEnd.addSubview(objERSideTimeSlotDuplicate)
@@ -1932,27 +2208,16 @@ extension ERSideOpenCreateEditVC:DeleteParticularStartTimeViewDelegate,RefreshSe
             }
             viewPrevious = objERSideTimeSlotDuplicate
         }
+        if viewPrevious != nil{
+            viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[viewPrevious(==34)]-(4)-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevious":viewPrevious!]))
+        }
         
-         viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[viewPrevious(==34)]-(4)-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevious":viewPrevious!]))
     }
 
     
     
     
     
-    
-    func addValueToDicModal(tag: Int, data: String) {
-        
-        if tag == 998{
-            let dicStartEndTime = [ "StartTime" : "HH:MM",
-                                    "EndTime" : "HH:MM"
-            ]
-            //                  arrDataStartEndTimeView.append(dicStartEndTime)
-        }
-        else{
-            
-        }
-    }
     
    
     func deleteViewWith(tag: Int) {
@@ -2103,14 +2368,30 @@ extension ERSideOpenCreateEditVC:DeleteParticularStartTimeViewDelegate,RefreshSe
 
 extension ERSideOpenCreateEditVC : ERSideCreateEditOHVMDelegate{
     
-    
-    
-    func sentDataToERSideCreateEditOHVC(dataPurposeModal: ERSidePurposeDetailModalArr?, timeZOneArr: [TimeZoneSel]?, success: Bool) {
+    func sentDataToERSideCreateEditOHVC(dataModalAll : ERSideCreateEditOHVMAllModal?, success: Bool) {
         if success{
             
-            self.timeZOneArr = timeZOneArr
-            self.dataPurposeModal = dataPurposeModal
-            self.customization()
+            switch objviewTypeOpenHour {
+            case .setOpenHour:
+                
+                self.timeZOneArr = dataModalAll?.timeZOneArr
+                self.dataPurposeModal = dataModalAll?.purposeArr
+                self.customization()
+                break
+            case .duplicateSetHour:
+                self.timeZOneArr = dataModalAll?.timeZOneArr
+                self.dataPurposeNewModal = dataModalAll?.purposeNewArr
+                self.objERSideOPenHourModal = dataModalAll?.objERSideOPenHourModal
+                self.customization()
+                
+                break
+            case .editOpenHour :
+                self.timeZOneArr = dataModalAll?.timeZOneArr
+                self.dataPurposeModal = dataModalAll?.purposeArr
+                self.customization()
+            default:
+                break
+            }
             
         }
         else{
@@ -2127,10 +2408,10 @@ extension ERSideOpenCreateEditVC {
     
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-           
            super.viewWillTransition(to: size, with: coordinator)
 
         coordinator.animate(alongsideTransition: nil, completion: { (_) in
+            
             self.viewSelectedContainer.layoutIfNeeded()
             self.setDynamicView()
             

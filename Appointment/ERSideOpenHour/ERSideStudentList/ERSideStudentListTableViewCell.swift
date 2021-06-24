@@ -16,7 +16,8 @@ protocol ERSideStudentListTableViewCellDelegate {
 
 class ERSideStudentListTableViewCell: UITableViewCell {
     
-    
+  var objStudentListType : StudentListType!
+
     @IBOutlet weak var viewSeperator: UIView!
     var delegateI : ERSideStudentListTableViewCellDelegate!
     
@@ -33,12 +34,35 @@ class ERSideStudentListTableViewCell: UITableViewCell {
     @IBAction func btnSelectTapped(_ sender: Any) {
         
         isSelectedStudent = !isSelectedStudent
-        if isSelectedStudent {
-            btnSelect.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+        
+        switch  self.objStudentListType {
+        case .groupType:
+            
+            if isSelectedStudent {
+                btnSelect.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+            }
+            else{
+                btnSelect.setImage(UIImage.init(named: "check_box"), for: .normal);
+            }
+            
+            break
+            
+        case .One2OneType:
+            if isSelectedStudent {
+                btnSelect.setImage(UIImage.init(named: "Radio_filled"), for: .normal);
+            }
+            else{
+//                btnSelect.setImage(UIImage.init(named: "Radio"), for: .normal);
+            }
+            
+            
+            break
+            
+        default:
+            break
         }
-        else{
-            btnSelect.setImage(UIImage.init(named: "check_box"), for: .normal);
-        }
+        
+        
         delegateI.studentSelected(items: self.items!, isSelectedStudent: isSelectedStudent)
     }
     
@@ -101,11 +125,32 @@ class ERSideStudentListTableViewCell: UITableViewCell {
         strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
         lblStudentName.attributedText = strHeader
         
-        if isSelectedStudent {
-            btnSelect.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
-        }
-        else{
-            btnSelect.setImage(UIImage.init(named: "check_box"), for: .normal);
+        
+        switch  self.objStudentListType {
+        case .groupType:
+            
+            if isSelectedStudent {
+                btnSelect.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+            }
+            else{
+                btnSelect.setImage(UIImage.init(named: "check_box"), for: .normal);
+            }
+            
+            break
+            
+        case .One2OneType:
+            if isSelectedStudent {
+                btnSelect.setImage(UIImage.init(named: "Radio_filled"), for: .normal);
+            }
+            else{
+                btnSelect.setImage(UIImage.init(named: "Radio"), for: .normal);
+            }
+            
+            
+            break
+            
+        default:
+            break
         }
     }
     

@@ -18,8 +18,8 @@ class ErSideHomeTableViewVC: UIViewController,UITableViewDelegate,UITableViewDat
     var nocoach = false,noAlumini = false
     
     var dataAppoinmentModal: ERSideAppointmentModalNew?
+    var dateSelected : Date!
 
-    
     func customization()  {
         
         guard viewControllerI != nil else {
@@ -37,7 +37,8 @@ class ErSideHomeTableViewVC: UIViewController,UITableViewDelegate,UITableViewDat
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ERSideAppointmentTableViewCell", for: indexPath) as! ERSideAppointmentTableViewCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        
+        cell.viewControllerI = self.viewControllerI
+        cell.dateSelected = self.dateSelected
         let appoinment = self.customizationModalBool(section: indexPath.section);
         
         if appoinment{
@@ -52,7 +53,6 @@ class ErSideHomeTableViewVC: UIViewController,UITableViewDelegate,UITableViewDat
         {
         }
         else{
-            
             
         }
         return cell

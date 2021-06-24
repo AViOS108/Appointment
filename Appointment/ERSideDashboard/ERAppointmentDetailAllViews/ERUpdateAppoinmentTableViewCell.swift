@@ -15,18 +15,17 @@ protocol ERUpdateAppoinmentTableViewCellDelegate {
 
 class ERUpdateAppoinmentTableViewCell: UITableViewCell {
 
-    
+    @IBOutlet weak var viewSwipeLook: UIView!
+    @IBOutlet weak var imageViewAttendence: UIImageView!
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var imgProfile: UIImageView!
     @IBOutlet weak var lblInitialName: UILabel!
     @IBOutlet weak var lblAttended: UILabel!
-    @IBOutlet weak var switchAttended: UISwitch!
     var requestStudentDetail : Request!
     var delegate : ERUpdateAppoinmentTableViewCellDelegate!
     
-    @IBAction func switchAttendedTapped(_ sender: Any) {
-    }
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -36,6 +35,7 @@ class ERUpdateAppoinmentTableViewCell: UITableViewCell {
     {
         nameIntialandImageLogic()
         switchLogic()
+        fakeSwipeView()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -44,44 +44,49 @@ class ERUpdateAppoinmentTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @objc func switchValueDidChange(_ sender: UISwitch) {
-        let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE12)
-        if (sender.isOn == true){
-            switchAttended.onTintColor = ILColor.color(index: 23)
-            UILabel.labelUIHandling(label: lblAttended, text: "Attended", textColor: ILColor.color(index: 23), isBold: false, fontType: fontMedium)
-        }
-        else{
-            switchAttended.onTintColor = ILColor.color(index: 50)
-            UILabel.labelUIHandling(label: lblAttended, text: "Not Attended", textColor: ILColor.color(index: 26), isBold: false, fontType: fontMedium)
-        }
-        delegate.attendedStatus(requestStudentDetail: requestStudentDetail);
+    func shadowWithCorner(viewContainer : UIView,cornerRadius: CGFloat)
+       {
+           // corner radius
+           viewContainer.layer.cornerRadius = cornerRadius
+           // border
+           viewContainer.layer.borderWidth = 1.0
+           viewContainer.layer.borderColor = ILColor.color(index: 27).cgColor
+           // shadow
+           viewContainer.layer.shadowColor = ILColor.color(index: 27).cgColor
+           viewContainer.layer.shadowOffset = CGSize(width: 3, height: 3)
+           viewContainer.layer.shadowOpacity = 0.7
+           viewContainer.layer.shadowRadius = 4.0
+       }
+
+    
+    func fakeSwipeView(){
+        viewSwipeLook.backgroundColor = ILColor.color(index: 58)
+        imageViewAttendence.image = UIImage.init(named: "attenededtick")
     }
     
+    
     func switchLogic(){
-        switchAttended.addTarget(self, action: #selector(switchValueDidChange(_:)), for: .valueChanged)
 
+        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
         
-        let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE12)
-        if self.requestStudentDetail.hasAttended == 1{
-            UILabel.labelUIHandling(label: lblAttended, text: "Attended", textColor: ILColor.color(index: 23), isBold: false, fontType: fontMedium)
-            switchAttended.setOn(true, animated: false)
-            switchAttended.onTintColor = ILColor.color(index: 23)
-
+        if let _ = self.requestStudentDetail.hasAttended{
+            UILabel.labelUIHandling(label: lblAttended, text: "Update Status", textColor: ILColor.color(index: 23), isBold: false, fontType: fontMedium)
         }
-        else{
-             UILabel.labelUIHandling(label: lblAttended, text: "Not Attended", textColor: ILColor.color(index: 26), isBold: false, fontType: fontMedium)
-            switchAttended.setOn(false, animated: false)
-            switchAttended.onTintColor = ILColor.color(index: 50)
-
-
+        else {
+            if self.requestStudentDetail.hasAttended == 1{
+                UILabel.labelUIHandling(label: lblAttended, text: "Attended", textColor: ILColor.color(index: 58), isBold: false, fontType: fontMedium)
+            }
+            else{
+                 UILabel.labelUIHandling(label: lblAttended, text: "Not Attended", textColor: ILColor.color(index: 57), isBold: false, fontType: fontMedium)
+            }
         }
-        
     }
     
     
     
     func nameIntialandImageLogic(){
         let radius =  (Int)(lblInitialName.frame.height)/2
+        self.shadowWithCorner(viewContainer: self.viewContainer, cornerRadius: 2)
         //        if let urlImage = URL.init(string: self.requestDetail?.studentDetails?.firstName ?? "") {
         //            self.imgProfile
         //                .setImageWith(urlImage, placeholderImage: UIImage.init(named: "Placeeholderimage"))

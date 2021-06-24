@@ -77,6 +77,10 @@ class TimeZoneViewController: SuperViewController {
 
         textField.resignFirstResponder()
         
+        self.dismiss(animated: false) {
+            
+        }
+        
        }
     
     

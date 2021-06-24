@@ -10,7 +10,6 @@ import UIKit
 
 protocol  DeleteParticularStartTimeViewDelegate {
     func deleteViewWith(tag: Int)
-    func addValueToDicModal(tag: Int,data:String)
 
 }
 
@@ -29,6 +28,8 @@ class ERStartEndTImeView: UIView {
     
     @IBOutlet weak var viewContainer: UIView!
     
+    var noDeleteBtn = false
+    
     var delegate : DeleteParticularStartTimeViewDelegate!
     
     var objtimeDifference : timeDifference!
@@ -45,13 +46,26 @@ class ERStartEndTImeView: UIView {
     var isBothTimeField : Bool = false
     var isTimeValid = false
     
+    @IBOutlet weak var nslayoutConstarintWidth: NSLayoutConstraint!
     @IBAction func btnDeleteTapped(_ sender: UIButton) {
         delegate.deleteViewWith(tag: sender.tag)
     }
     
     func customization()  {
         
-        btnDelete.setImage(UIImage.init(named: "crossDeletion"), for: .normal);
+        if noDeleteBtn {
+            btnDelete.setImage(UIImage.init(named: "crossDeletion"), for: .normal);
+            btnDelete.isHidden = true
+            nslayoutConstarintWidth.constant = 0
+        }
+        else{
+            btnDelete.setImage(UIImage.init(named: "crossDeletion"), for: .normal);
+            btnDelete.isHidden = false
+            nslayoutConstarintWidth.constant = 40
+ 
+
+        }
+        
         
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         txtStartTime.backgroundColor = ILColor.color(index: 48)
@@ -103,6 +117,11 @@ class ERStartEndTImeView: UIView {
             dbDatePickerFromTiming.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: .valueChanged)
             dbDatePickerFromTiming.timeZone = NSTimeZone.default;
             dbDatePickerFromTiming.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            dbDatePickerFromTiming.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
             txtInput.inputView = dbDatePickerFromTiming;
             if tag == 998{
                 

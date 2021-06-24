@@ -11,13 +11,15 @@ import CoreData
 import SlideMenuControllerSwift
 import Firebase
 import Reachability
-
+import UserNotifications
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var reachability : Reachability?
     var orientationLock = UIInterfaceOrientationMask.portrait
 
+    
+    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -153,17 +155,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                     SlideMenuOptions.contentViewScale = 1.0
                     window?.backgroundColor = .clear
-                    window?.rootViewController = navigationController
+                    window?.rootViewController = v1
                     window?.makeKeyAndVisible()
                     
                     
                 }
                 else{
                     
-                    let erside = ERSideTabBar()
-                    var storyBoard  = UIStoryboard(name: "Dashboard", bundle: Bundle.main)
-                    var  erSideTabbar =  (UIStoryboard(name: "Dashboard", bundle: Bundle.main).instantiateViewController(withIdentifier: "ERSideTabBar") as! ERSideTabBar );
-                    changeRootVC(erSideTabbar)
+                    let  erSideTabbar =  (UIStoryboard(name: "ERSideHome", bundle: Bundle.main).instantiateViewController(withIdentifier: "ERSideTabBar") as! ERSideTabBar );
+                  
+                    let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
+                    let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
+                    
+                    let v1 = SlideMenuController(mainViewController: erSideTabbar, leftMenuViewController: navigationControllerS);
+                    SlideMenuOptions.contentViewScale = 1.0
+                   
+                    changeRootVC(v1)
                     
                     
                 }

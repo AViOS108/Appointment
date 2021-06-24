@@ -20,6 +20,9 @@ class CoachOpenhourTableViewCell: UITableViewCell {
     @IBOutlet weak var viewContainer: UIView!
     
     func customize()  {
+        
+      
+        
         if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13), let fontheavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
         {
             UILabel.labelUIHandling(label: lblTiming, text: GeneralUtility.currentDateDetailType3(emiDate: objModal.startDatetimeUTC!) + " - " + GeneralUtility.currentDateDetailType3(emiDate: objModal.endDatetimeUTC!), textColor:ILColor.color(index: 29) , isBold: false , fontType: fontheavy,   backgroundColor:.clear )

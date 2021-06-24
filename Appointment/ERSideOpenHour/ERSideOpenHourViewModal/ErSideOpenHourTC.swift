@@ -16,20 +16,13 @@ protocol ErSideOpenHourTCDelegate {
 }
 
 
-
 class ErSideOpenHourTC: UITableViewCell {
     @IBOutlet weak var lblTiming: UILabel!
-    
     @IBOutlet weak var btnCross: UIButton!
-    
     var delegate :  ErSideOpenHourTCDelegate!;
-    
     var viewController : UIViewController!;
-    
-    
-    
-    
-    
+
+
     @IBAction func btnCrossTapped(_ sender: Any) {
         
         let erSideOHDetail = ERSideOHDetailViewController.init(nibName: "ERSideOHDetailViewController", bundle: nil)
@@ -40,9 +33,7 @@ class ErSideOpenHourTC: UITableViewCell {
         erSideOHDetail.modalPresentationStyle = .overFullScreen
 //        erSideOHDetail.dateSelected = self.dateSelected
         viewController.navigationController?.pushViewController(erSideOHDetail, animated: false)
-        
-        
-     
+    
     }
     
     var results: ResultERSideOPenHourModal?
@@ -65,8 +56,6 @@ class ErSideOpenHourTC: UITableViewCell {
         viewContainer.dropShadowER()
         
     }
-    
-    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

@@ -237,7 +237,7 @@ class GeneralUtility {
         let slider =  UIBarButtonItem(customView: hamburger)
         viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
         
-        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut], animated: true)
+//        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut], animated: true)
         viewController.navigationController?.navigationBar.topItem?.setLeftBarButtonItems([slider], animated: true)
         
         viewController.navigationController?.navigationBar.topItem?.title = title;
@@ -343,17 +343,18 @@ class GeneralUtility {
         
         let reachability = try! Reachability()
         
-        reachability.whenReachable = { reachability in
-            return true
-        }
-        reachability.whenUnreachable = { _ in
-            return false;
-        }
-        
+//        reachability.whenReachable = { reachability in
+//            return true
+//        }
+//        reachability.whenUnreachable = { _ in
+//            return false;
+//        }
+//
         do {
             try reachability.startNotifier()
         } catch {
             print("Unable to start notifier")
+            return false;
         }
         
         return true;
@@ -400,6 +401,19 @@ class GeneralUtility {
            viewController.present(alert, animated: true, completion: nil)
        }
     
+    public  class func  alertViewPopOutToParticularViewController(title : String,message : String,viewController : UIViewController,buttons:[String],index : Int)  {
+              let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+              for string in buttons{
+                  alert.addAction(UIAlertAction(title: string, style: .default, handler: { action in
+                    var secondViewController = viewController.navigationController?.viewControllers[index]
+                    viewController.navigationController?.popToViewController(secondViewController!, animated: false)
+                   
+                   
+                  }))
+              }
+              viewController.present(alert, animated: true, completion: nil)
+          }
+    
     
     
     
@@ -416,15 +430,30 @@ class GeneralUtility {
                     break;
                 case .some(_):
                     break;
-                @unknown default:
-                    print("destructive")
+            
                 }}))
         }
         viewController.present(alert, animated: true, completion: nil)
     }
     
-    
-    
+    public  class  func alertViewWithClousre(title : String,message : String,viewController : UIViewController,buttons:[String],completeHandler:@escaping ()->Void){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        for string in buttons{
+            alert.addAction(UIAlertAction(title: string, style: .default, handler: { action in
+                switch action.title{
+                case "Ok":
+                    completeHandler();
+                case "Cancel":
+                    print("")
+                case .none:
+                    break;
+                case .some(_):
+                    break;
+                }}))
+        }
+        viewController.present(alert, animated: true, completion: nil)
+        
+    }
     
     public  class func   todayDate() -> String {
         let dateFormatter = DateFormatter()
@@ -814,14 +843,28 @@ class GeneralUtility {
         dateFormatter.dateFormat = todateFormat
         dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
         
-        
         if let dateF  = date{
             return dateFormatter.string(from: dateF)
         }
         
         return ""
     }
-    
+    public  class func   dateConvertToUTCDuplicate(emiDate : String,withDateFormat: String,todateFormat:String) -> String {
+              
+              let dateFormatter = DateFormatter()
+              dateFormatter.dateFormat = withDateFormat
+              dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
+              let token = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
+              let date = dateFormatter.date(from: emiDate)
+              dateFormatter.dateFormat = todateFormat
+              dateFormatter.timeZone = TimeZone.init(identifier: token)
+
+              if let dateF  = date{
+                  return dateFormatter.string(from: dateF)
+              }
+              
+              return ""
+          }
     
     public  class func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()

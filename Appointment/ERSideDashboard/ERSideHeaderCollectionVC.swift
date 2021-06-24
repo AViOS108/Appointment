@@ -31,11 +31,11 @@ class ERSideHeaderCollectionVC: UICollectionView,UICollectionViewDelegateFlowLay
             
             let componentI = selectedDate.get(.day,.month,.year)
             let componentII = objERSideCalenderI.dateC.get(.day,.month,.year)
-
+            
             
             if componentI.day == componentII.day && componentI.month == componentII.month && componentI.year == componentII.year{
                 objERSideCalenderI.isSelected = true
-
+                
             }else{
                 objERSideCalenderI.isSelected = false
             }
@@ -104,24 +104,33 @@ class ERSideHeaderCollectionVC: UICollectionView,UICollectionViewDelegateFlowLay
             let componentI = selectedDate.get(.day,.month,.year)
             let componentII = dateI.get(.day,.month,.year)
             
-//            let componentIII = Date().get(.day,.month,.year)
-
+            let componentIII = Date().get(.day,.month,.year)
             
-            if dateI  >= Date() {
-                calenderMo.isClickable = true
-            }
-            else{
+            if componentII.year! >= componentIII.year!{
+                if componentII.month! >= componentIII.month!{
+                    if componentII.day! >= componentIII.day!{
+                        calenderMo.isClickable = true
+                        
+                    }
+                    else{
+                        calenderMo.isClickable = false
+                        
+                    }
+                    
+                } else{
+                    calenderMo.isClickable = false
+                }
+                
+            } else{
                 calenderMo.isClickable = false
+                
             }
-            
             
             if componentI.day == componentII.day && componentI.month == componentII.month && componentI.year == componentII.year{
                 calenderMo.isSelected = true
-                
             }else{
                 calenderMo.isSelected = false
             }
-            
             modalAray.append(calenderMo)
             index = index + 1;
         }
@@ -151,11 +160,7 @@ class ERSideHeaderCollectionVC: UICollectionView,UICollectionViewDelegateFlowLay
         cell.delegate = self
         cell.modalCalender = self.modalAray[indexPath.row]
         cell.customize()
-        
-        
-        
         return cell
-        
     }
     
     

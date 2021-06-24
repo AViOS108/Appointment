@@ -48,12 +48,21 @@ class ERNoteSelectableTypeTableViewCell: UITableViewCell {
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         UILabel.labelUIHandling(label: lblTitle, text: items.displayName ?? "", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
         
-        if (items.id == -999) || (items.id == -1999){
+        if  (items.id == -1999){
             nslayoutLeadingSpace.constant = 8
         }
         else{
             nslayoutLeadingSpace.constant = 20
         }
+        if (items.id == -999)  {
+               btnSelected.isHidden = true
+               nslayoutLeadingSpace.constant = -18
+
+               }
+        else{
+            btnSelected.isHidden = false
+        }
+        
         if items.isSelected {
             btnSelected.setImage(UIImage.init(named: "Check_box_selected"), for: .normal)
         }

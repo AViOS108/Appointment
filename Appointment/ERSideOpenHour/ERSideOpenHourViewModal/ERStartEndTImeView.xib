@@ -74,6 +74,7 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="btnDelete" destination="XuY-d4-lJe" id="0j4-Vk-omP"/>
+                <outlet property="nslayoutConstarintWidth" destination="vo0-Yf-uZV" id="vg8-0R-8fo"/>
                 <outlet property="txtEndTime" destination="n7H-v3-D5D" id="0fg-ro-xvq"/>
                 <outlet property="txtStartTime" destination="fr7-Zb-GHS" id="L6y-N8-olp"/>
                 <outlet property="viewContainer" destination="E6o-WV-7Qf" id="hIo-Dq-4gi"/>

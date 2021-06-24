@@ -9,6 +9,14 @@
 import UIKit
 
 
+enum StudentListType{
+    
+    case groupType
+    case One2OneType
+    
+}
+
+
 protocol ERSideStudentListViewControllerDelegate{
     
     func selectedStudentPrivateHour(objStudentDetailModalSelected : StudentDetailModal)
@@ -22,7 +30,7 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
       
     }
     
-    
+    var objStudentListType : StudentListType!
     var delegate : ERSideStudentListViewControllerDelegate!
     var objERFilterTag : [ERFilterTag]?
     @IBOutlet weak var viewSearch: UIView!
@@ -96,7 +104,8 @@ var isSearchEnabled = false
         txtSearchBar.backgroundColor = UIColor.clear
         txtSearchBar.isTranslucent = true
         txtSearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-        
+        txtSearchBar.placeholder = "Search Student"
+        txtSearchBar.backgroundColor = .clear
         
         self.viewSearch.isHidden = true
         self.tblView.isHidden = true
@@ -249,6 +258,25 @@ var isSearchEnabled = false
         
         btnEnableDisable()
         self.tblView.reloadData()
+        
+        
+        switch self.objStudentListType {
+        case .groupType:
+            
+            break
+        case .One2OneType:
+            
+            btnSelectAll.isUserInteractionEnabled = false
+            btnSelectAll.alpha = 0.6
+            lblSelectAll.alpha = 0.6
+            break
+            
+            
+        default:
+            break
+        }
+        
+        
     }
     
     
@@ -390,36 +418,84 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
     
     func studentSelected(items: StudentDetailModalItem,isSelectedStudent: Bool) {
         
-        if isSelectedStudent{
-            objStudentDetailModalSelected?.total = self.objStudentDetailModal?.total
-            objStudentDetailModalSelected?.items?.append(items)
+        
+        switch  self.objStudentListType {
+        case .groupType:
             
-            var selectedId = objStudentDetailModal?.items!.filter({$0.id == items.id})[0]
-            selectedId!.isSelected = true
-            let index = self.objStudentDetailModal?.items!.firstIndex(where: {$0.id == items.id}) ?? 0
-            self.objStudentDetailModal?.items!.removeAll(where: {$0.id == items.id})
-            self.objStudentDetailModal?.items!.insert(selectedId!, at: index)
+             
+                  if isSelectedStudent{
+                      objStudentDetailModalSelected?.total = self.objStudentDetailModal?.total
+                      objStudentDetailModalSelected?.items?.append(items)
+                      
+                      var selectedId = objStudentDetailModal?.items!.filter({$0.id == items.id})[0]
+                      selectedId!.isSelected = true
+                      let index = self.objStudentDetailModal?.items!.firstIndex(where: {$0.id == items.id}) ?? 0
+                      self.objStudentDetailModal?.items!.removeAll(where: {$0.id == items.id})
+                      self.objStudentDetailModal?.items!.insert(selectedId!, at: index)
+                      
+                  }
+                  else{
+                      self.objStudentDetailModalSelected?.items!.removeAll(where: {$0.id == items.id})
+                      var selectedId = objStudentDetailModal?.items!.filter({$0.id == items.id})[0]
+                      selectedId!.isSelected = false
+                      let index = self.objStudentDetailModal?.items!.firstIndex(where: {$0.id == items.id}) ?? 0
+                      self.objStudentDetailModal?.items!.removeAll(where: {$0.id == items.id})
+                      self.objStudentDetailModal?.items!.insert(selectedId!, at: index)
+                      
+                  }
+                  
+                  
+                  
+                  self.allStudentSelectedImage()
+                  
+                  if isSearchEnabled {
+                      makeCopyModalInSync()
+                  }
+                  GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+                  self.tblView.reloadData()
+            break
             
-        }
-        else{
-            self.objStudentDetailModalSelected?.items!.removeAll(where: {$0.id == items.id})
-            var selectedId = objStudentDetailModal?.items!.filter({$0.id == items.id})[0]
-            selectedId!.isSelected = false
-            let index = self.objStudentDetailModal?.items!.firstIndex(where: {$0.id == items.id}) ?? 0
-            self.objStudentDetailModal?.items!.removeAll(where: {$0.id == items.id})
-            self.objStudentDetailModal?.items!.insert(selectedId!, at: index)
+        case .One2OneType:
             
+            if isSelectedStudent{
+                
+                self.objStudentDetailModalSelected = StudentDetailModal.init(total: 0, items: [StudentDetailModalItem]())
+                
+                objStudentDetailModalSelected?.total = self.objStudentDetailModal?.total
+                objStudentDetailModalSelected?.items?.append(items)
+                
+                var deSelectID = objStudentDetailModal?.items!.filter({$0.isSelected == true})
+                if deSelectID?.count ?? 0 > 0{
+                    var deSelect = deSelectID?[0]
+                    let index = self.objStudentDetailModal?.items!.firstIndex(where: {$0.isSelected == true}) ?? 0
+                    self.objStudentDetailModal?.items!.removeAll(where: {$0.isSelected == true})
+                    deSelect?.isSelected = false
+                    self.objStudentDetailModal?.items!.insert(deSelect!, at: index)
+                    
+                }
+                
+                var selectedId = objStudentDetailModal?.items!.filter({$0.id == items.id})[0]
+                selectedId!.isSelected = true
+                let index = self.objStudentDetailModal?.items!.firstIndex(where: {$0.id == items.id}) ?? 0
+                self.objStudentDetailModal?.items!.removeAll(where: {$0.id == items.id})
+                self.objStudentDetailModal?.items!.insert(selectedId!, at: index)
+                self.tblView.reloadData()
+
+            }
+            else{
+              
+                
+            }
+            
+            
+            
+            break
+            
+        default:
+            break
         }
         
-        
-        
-        self.allStudentSelectedImage()
-        
-        if isSearchEnabled {
-            makeCopyModalInSync()
-        }
-        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
-        self.tblView.reloadData()
+      
     }
     
     
@@ -481,6 +557,7 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ERSideStudentListTableViewCell", for: indexPath) as! ERSideStudentListTableViewCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.objStudentListType = self.objStudentListType
         cell.items = self.objStudentDetailModal?.items?[indexPath.row]
         cell.delegateI = self
         cell.customization()

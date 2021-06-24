@@ -56,7 +56,7 @@ class NotesCollectionViewlayout: UICollectionViewLayout {
         // 2
         let totalRows = collectionView.numberOfItems(inSection: 0)
         
-        let xOffset: [CGFloat] = .init(repeating: 8, count: totalRows)
+        let xOffset: [CGFloat] = .init(repeating: 0, count: totalRows)
         contentWidth = delegate!.widthCell()
         var yOffset: [CGFloat] = .init(repeating: 0, count: totalRows)
         // 3

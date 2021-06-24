@@ -89,18 +89,21 @@ struct Request: Codable {
        let studentID: Int?
        let purposes: [Purpose]?
        let createdByID: Int?
-       let reason,  targetFunctions: [String]?
+    let reason: String?
+    let targetFunctions: [String]?
        let  additionalComments : String?
        let createdByType: String?
        var hasAttended: Int?
        let studentDetails: StudentDetails?
        let appointmentID: Int?
        let targetCompanies: [String]?
+        let feedback: Feedback?
 
     enum CodingKeys: String, CodingKey {
         case state
         case attachmentInfo = "attachment_info"
         case id
+        case feedback
         case targetIndustries = "target_industries"
         case studentID = "student_id"
         case purposes

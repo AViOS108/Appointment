@@ -22,6 +22,8 @@ enum RedirectionType {
     case feedback
     case appointmentDetail
     case cancelAppoinment
+    case logOut
+
 
 }
 
@@ -94,6 +96,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         // Do any additional setup after loading the view.
     }
     
+   
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         if self.viewCalender != nil{
             self.viewCalender.dismiss(animated: false) {
@@ -186,6 +189,10 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         viewCalender.modalPresentationStyle = .overFullScreen
         self.present(viewCalender, animated: false) {
         }
+    }
+    
+    @objc  override func humbergerCilcked(sender: UIBarButtonItem) {
+        slideMenuController()?.openLeft();
     }
     
     override func logout(sender: UIButton) {

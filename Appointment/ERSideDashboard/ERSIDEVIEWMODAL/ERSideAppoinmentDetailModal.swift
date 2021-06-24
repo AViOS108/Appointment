@@ -27,7 +27,7 @@ class ERSideAppoinmentDetailModal{
     var appoinmentDetailModalObj : AppoinmentDetailModalNew?
     
     var callbackVC: ((_ suceess: Bool) -> Void)?
-
+    var detailType : Int = 0
 
     var delegate : ERSideAppoinmentDetailModalDeletgate!
     
@@ -62,20 +62,72 @@ class ERSideAppoinmentDetailModal{
         
         var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
         
-        let states = ["accepted","auto_accepted"]
-        let  param = [
-            ParamName.PARAMFILTERSEL : [
-                "states" : ["confirmed"],
-                "has_request":
-                    ["states": states],
-                "with_request":
-                    ["states":states
+        var    param : [String : AnyObject]!
+        
+        if detailType == 2{
+            // Upcoming
+            
+            let states = ["accepted","auto_accepted"]
+            param = [
+                ParamName.PARAMFILTERSEL : [
+                    "states" : ["confirmed"],
+                    "has_request":
+                        ["states": states],
+                    "with_request":
+                        ["states":states
+                        ],
+                    "timezone":localTimeZoneAbbreviation,
+                    "from": GeneralUtility.todayDate() as AnyObject,
                 ],
-                "timezone":localTimeZoneAbbreviation,
-                "from": GeneralUtility.todayDate() as AnyObject,
-            ],
-            ParamName.PARAMINTIMEZONEEL :"utc",
+                ParamName.PARAMINTIMEZONEEL :"utc",
             ] as [String : AnyObject]
+        }
+        else if detailType == 3{
+           // Pending
+            let states = ["accepted","pending","auto_accepted","rejected"]
+            param = [
+                ParamName.PARAMFILTERSEL : [
+                    "states" : ["pending"],
+                    "has_request":
+                        ["states": states],
+                    "with_request":
+                        ["states":states
+                        ],
+                    "timezone":localTimeZoneAbbreviation,
+                    "from": GeneralUtility.todayDate() as AnyObject,
+                ],
+                ParamName.PARAMINTIMEZONEEL :"utc",
+            ] as [String : AnyObject]
+        }
+        else{
+            //Past
+            
+            let states = ["accepted","auto_accepted"]
+            param = [
+                ParamName.PARAMFILTERSEL : [
+                    "states" : ["confirmed"],
+                    "has_request":
+                        ["states": states],
+                    "with_request":
+                        ["states":states
+                        ],
+                    "timezone":localTimeZoneAbbreviation,
+                    "from": GeneralUtility.todayDate() as AnyObject,
+                ],
+                ParamName.PARAMINTIMEZONEEL :"utc",
+            ] as [String : AnyObject]
+        }
+        
+        
+      
+        
+        
+        
+
+
+       
+        
+        
         
         
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
@@ -262,24 +314,6 @@ class ERSideAppoinmentDetailModal{
         
     }
     
-    
-    
-    func deleteNotes(objnoteModal : NotesResult?)   {
-        
-        let params = [
-            "_method" : "delete",
-            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
-            ] as [String : AnyObject]
-        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
-        
-        Network().makeApiEventRequest(true, url: Urls().deletesNotes(id: "\(objnoteModal?.id ?? 0)"), methodType: .post, params: params, header: headers, completion: { (data) in
-            self.callbackVC!(true)
-        }) { (error, errorCode) in
-            CommonFunctions().showError(title: "", message: error)
-            self.callbackVC!(false)
-        }
-        
-    }
     
     
     func cancelAppoinment(id : String)   {

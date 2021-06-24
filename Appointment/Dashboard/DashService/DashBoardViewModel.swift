@@ -103,14 +103,7 @@ class DashBoardViewModel  {
         }
     }
     
-    func saveContext(){
-        do {
-            try managedObjectContext.save()
-        } catch let error as NSError {
-            debugPrint("Could not save \(error), \(error.userInfo)")
-        }
-    }
-    
+     
     
     func storeTimeDetails(timeZone : TimeZoneModal)  {
         
@@ -161,7 +154,7 @@ class DashBoardViewModel  {
                let objects = try managedObjectContext.fetch(fetchRequest)
                for object in objects {
                    managedObjectContext.delete(object)
-                  saveContext()
+                self.saveContext()
                }
              
            } catch {
@@ -188,5 +181,13 @@ class DashBoardViewModel  {
                fatalError("Failed to fetch community list: \(error)")
            }
        }
+    
+    func saveContext(){
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            debugPrint("Could not save \(error), \(error.userInfo)")
+        }
+    }
     
 }

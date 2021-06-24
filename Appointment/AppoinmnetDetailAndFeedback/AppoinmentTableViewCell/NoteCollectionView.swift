@@ -95,7 +95,7 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
 extension NoteCollectionView: NotesCollectionViewlayoutDelegate {
     
     func widthCell()->CGFloat{
-      return  viewController.view.frame.width - 32
+      return  viewController.view.frame.width - 16
     }
     
    func collectionView(

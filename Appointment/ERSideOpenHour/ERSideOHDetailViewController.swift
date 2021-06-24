@@ -84,6 +84,7 @@ class ERSideOHDetailViewController: SuperViewController {
         self.dismiss(animated: false) {
             let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
             objERSideOpenHourListVC.dateSelected = self.dateSelected
+            objERSideOpenHourListVC.delegate = self.delegate
             objERSideOpenHourListVC.objviewTypeOpenHour = .editOpenHour
             objERSideOpenHourListVC.objERSideOpenHourPrefilledDetail = self.objERSideOpenHourDetail
             self.viewControllerI.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
@@ -116,7 +117,7 @@ class ERSideOHDetailViewController: SuperViewController {
     
     func creatingModal(){
         tblview.register(UINib.init(nibName: "ERSideDetailEditTableViewCell", bundle: nil), forCellReuseIdentifier: "ERSideDetailEditTableViewCell")
-
+        
         var purposeModal = ERSideOHDetailModal();
         purposeModal.headLinetext = "Purpose"
         var purpose = "NA"
@@ -197,62 +198,63 @@ class ERSideOHDetailViewController: SuperViewController {
         self.objModalArray.append(RequestApprovalModal)
         
         
-        var bookingDeadlineDays = ""
-
+        var bookingDeadlineDays = "NA"
+        
         if let bookingDeadlineDaysBefore = objERSideOpenHourDetail?.appointmentConfig?.bookingDeadlineDaysBefore
         {
-            if bookingDeadlineDaysBefore == "1"{
-                bookingDeadlineDays = "1 day before Appointment "
-            }
-            else if bookingDeadlineDaysBefore == "2"{
-                bookingDeadlineDays = "2 day before Appointment "
-
-            }
-            else if bookingDeadlineDaysBefore == "3"{
-                bookingDeadlineDays = "3 day before Appointment "
-
-            }
-            else{
-                bookingDeadlineDays = "4 day before Appointment "
+            if !bookingDeadlineDaysBefore.isEmpty{
+                if bookingDeadlineDaysBefore == "1"{
+                    bookingDeadlineDays = "1 day before Appointment "
+                }
+                else if bookingDeadlineDaysBefore == "2"{
+                    bookingDeadlineDays = "2 day before Appointment "
+                    
+                }
+                else if bookingDeadlineDaysBefore == "3"{
+                    bookingDeadlineDays = "3 day before Appointment "
+                    
+                }
+                else{
+                    bookingDeadlineDays = "4 day before Appointment "
+                }
+                  bookingDeadlineDays.append(" ( before ")
             }
         }
-        
-        bookingDeadlineDays.append(" ( before ")
         
         if let bookingDeadlineTimeonDay = objERSideOpenHourDetail?.appointmentConfig?.bookingDeadlineTimeonDay
         {
-            let timeDay = (Int(bookingDeadlineTimeonDay))
-            let hour = (timeDay!/3600)
-            if  hour <= 12{
-                let mintue = (timeDay! % 3600)/60
-                bookingDeadlineDays.append(String(format: "%02d", hour) + ":" + String(format: "%02d", mintue)  + " AM )")
-            }else{
-                let mintue = (timeDay! % 3600)/60
-                bookingDeadlineDays.append(String(format: "%02d", hour - 12) + ":" + String(format: "%02d", mintue)  + " PM )")
+            
+            if !bookingDeadlineTimeonDay.isEmpty{
+                let timeDay = (Int(bookingDeadlineTimeonDay))
+                let hour = (timeDay!/3600)
+                if  hour <= 12{
+                    let mintue = (timeDay! % 3600)/60
+                    bookingDeadlineDays.append(String(format: "%02d", hour) + ":" + String(format: "%02d", mintue)  + " AM )")
+                }else{
+                    let mintue = (timeDay! % 3600)/60
+                    bookingDeadlineDays.append(String(format: "%02d", hour - 12) + ":" + String(format: "%02d", mintue)  + " PM )")
+                }
             }
-            
-            var AppointmentDeadlineModal = ERSideOHDetailModal();
-            AppointmentDeadlineModal.headLinetext = "Appointment Deadline"
-            AppointmentDeadlineModal.valueText = bookingDeadlineDays
-            AppointmentDeadlineModal.index = 7;
-            self.objModalArray.append(AppointmentDeadlineModal)
-            
         }
-             
+        
+        var AppointmentDeadlineModal = ERSideOHDetailModal();
+        AppointmentDeadlineModal.headLinetext = "Appointment Deadline"
+        AppointmentDeadlineModal.valueText = bookingDeadlineDays
+        AppointmentDeadlineModal.index = 7;
+        self.objModalArray.append(AppointmentDeadlineModal)
+        
         var strLocation = "Not available"
         var imageName = "false"
         
         if objERSideOpenHourDetail?.locationType == "physical_location"{
-                    imageName = "custom_location"
-                    strLocation = " Physical Location"
-
-                }
-                else{
-                    imageName = "In_person_meeting"
-                    strLocation = " Meeting Url"
-                }
+            imageName = "custom_location"
+            strLocation = " Physical Location"
             
-
+        }
+        else{
+            imageName = "In_person_meeting"
+            strLocation = " Meeting Url"
+        }
         
         
         var LocationModal = ERSideOHDetailModal();
@@ -262,8 +264,6 @@ class ERSideOHDetailViewController: SuperViewController {
         LocationModal.index = 8;
         self.objModalArray.append(LocationModal)
         
-        
-        
         var LocationModalValue = ERSideOHDetailModal();
         LocationModalValue.headLinetext = "Selected Location"
         LocationModalValue.valueText = objERSideOpenHourDetail?.location
@@ -271,14 +271,14 @@ class ERSideOHDetailViewController: SuperViewController {
         self.objModalArray.append(LocationModalValue)
         
         var participants = "NA"
-//        if (objERSideOpenHourDetail?.participants) != nil{
-//            if objERSideOpenHourDetail?.participants!.count ?? 0 > 0 {
-//                participants = objERSideOpenHourDetail?.participants![0].name ?? ""
-//            }
-//            if objERSideOpenHourDetail?.participants!.count ?? 0 > 1 {
-//                participants = participants + ", + \((objERSideOpenHourDetail?.participants!.count ?? 0) - 1 )"
-//            }
-//        }
+                if (objERSideOpenHourDetail?.participants) != nil{
+                    if objERSideOpenHourDetail?.participants!.count ?? 0 > 0 {
+                        participants = "\(objERSideOpenHourDetail?.participants!.count ?? 0)"
+                    }
+//                    if objERSideOpenHourDetail?.participants!.count ?? 0 > 1 {
+//                        participants = participants + ", + \((objERSideOpenHourDetail?.participants!.count ?? 0) - 1 )"
+//                    }
+                }
         
         var privateModal = ERSideOHDetailModal();
         privateModal.headLinetext = "Private open hours \n Total Students visible for this open hours"

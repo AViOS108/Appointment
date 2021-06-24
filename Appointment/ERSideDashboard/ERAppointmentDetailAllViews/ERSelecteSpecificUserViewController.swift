@@ -39,7 +39,7 @@ class ERSelecteSpecificUserViewController: SuperViewController {
     @IBAction func btnAddStudentTapped(_ sender: Any) {
         
         if self.objERSideNotesSpecificUserModalSelected.items?.count ?? 0>0{
-           
+            delegate.sendselectedUser(objERSideNotesSpecificUserModalSelected: objERSideNotesSpecificUserModalSelected)
             
             self.navigationController?.popViewController(animated: true);
         }
@@ -50,10 +50,14 @@ class ERSelecteSpecificUserViewController: SuperViewController {
         
     }
     
+    @objc override func actnResignKeyboard() {
+           txtSearchBar.resignFirstResponder()
+           
+          }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+        self.addInputAccessoryForSearchbar(textVIew: txtSearchBar)
         if self.objERSideNotesSpecificUserModalSelected != nil{
             
         }
@@ -89,8 +93,18 @@ class ERSelecteSpecificUserViewController: SuperViewController {
         
         self.viewSelectAll.borderWithWidth(1, color: ILColor.color(index: 48))
         
-        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "0")
-        
+        if let selected = self.objERSideNotesSpecificUserModalSelected{
+           let selectedCount = selected.items?.count ?? 0
+            if selectedCount > 0 {
+                GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "\(selectedCount)")
+            }
+            else{
+                GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "0")
+            }
+        }
+        else{
+            GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "0")
+        }
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16)
         UIButton.buttonUIHandling(button: btnAddStudent, text: "Add", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3, fontType: fontHeavy)
         
@@ -179,6 +193,9 @@ class ERSelecteSpecificUserViewController: SuperViewController {
 
 extension ERSelecteSpecificUserViewController: ERSideSpecificUserTableViewCellDelegate,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
     
+    
+    
+    
     func specificUserSelected(items: ERSideNotesSpecificUserModalItem) {
         
         var selectedId = objERSideNotesSpecificUserModal?.items!.filter({$0.id == items.id})[0]
@@ -189,15 +206,17 @@ extension ERSelecteSpecificUserViewController: ERSideSpecificUserTableViewCellDe
         self.allStudentSelectedImage()
         
         
-        let selectedAll = objERSideNotesSpecificUserModal?.items!.filter({$0.isSelected == true});
-        if selectedAll?.count ?? 0 > 0{
-            self.objERSideNotesSpecificUserModalSelected.items = selectedAll;
+        if !items.isSelected {
+            self.objERSideNotesSpecificUserModalSelected.items?.append(items)
         }
         else{
-            self.objERSideNotesSpecificUserModalSelected.items?.removeAll()
+            let index = self.objERSideNotesSpecificUserModalSelected?.items!.firstIndex(where: {$0.id == items.id}) ?? 0
+            self.objERSideNotesSpecificUserModalSelected.items?.remove(at: index)
         }
-        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "\(selectedAll?.count ?? 0)")
-        delegate.sendselectedUser(objERSideNotesSpecificUserModalSelected: objERSideNotesSpecificUserModalSelected)
+        
+        
+        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "\(self.objERSideNotesSpecificUserModalSelected.items?.count ?? 0)")
+//        delegate.sendselectedUser(objERSideNotesSpecificUserModalSelected: objERSideNotesSpecificUserModalSelected)
 
         
         self.tblView.reloadData()
@@ -216,7 +235,18 @@ extension ERSelecteSpecificUserViewController: ERSideSpecificUserTableViewCellDe
             btnSelectAll.setImage(UIImage.init(named: "check_box"), for: .normal);
         }
         
-        
+        if let selected = self.objERSideNotesSpecificUserModalSelected{
+                         let selectedCount = selected.items?.count ?? 0
+                          if selectedCount > 0 {
+                              GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "\(selectedCount)")
+                          }
+                          else{
+                              GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "0")
+                          }
+                      }
+                      else{
+                          GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "0")
+                      }
         
     }
     
@@ -236,11 +266,13 @@ extension ERSelecteSpecificUserViewController: ERSideSpecificUserTableViewCellDe
         else{
             btnSelectAll.setImage(UIImage.init(named: "check_box"), for: .normal);
         }
+     
+
     }
     
     func changeStudentSelectedModal(isSelected : Bool){
         
-        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "0")
+//        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "0")
         
         let arrStudentListView = self.objERSideNotesSpecificUserModal!.items!
                let arrStudentSelectedListView = self.objERSideNotesSpecificUserModalSelected!.items!
@@ -276,7 +308,7 @@ extension ERSelecteSpecificUserViewController: ERSideSpecificUserTableViewCellDe
                        index = index + 1;
                    }
                }
-           delegate.sendselectedUser(objERSideNotesSpecificUserModalSelected: objERSideNotesSpecificUserModalSelected)
+          
         self.tblView.reloadData()
         
     }
@@ -292,14 +324,12 @@ extension ERSelecteSpecificUserViewController: ERSideSpecificUserTableViewCellDe
             
         }
         
-        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
-            self.allStudentSelectedImage()
-            tblView.reloadData()
-            
+            callViewModal()
+             searchBar.resignFirstResponder();
         }
         
     }

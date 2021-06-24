@@ -244,7 +244,7 @@ class AppoinmentdetailViewModal{
     
     
     
-    func deleteNotes(objnoteModal : NotesResult?)   {
+    func deleteNotes(objnoteModal : NotesModalNewResult?)   {
         
         let params = [
             "_method" : "delete",

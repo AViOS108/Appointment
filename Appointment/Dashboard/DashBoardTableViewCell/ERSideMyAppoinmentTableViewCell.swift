@@ -16,11 +16,13 @@ protocol ERSideMyAppoinmentTableViewCellDelegate {
 
 class ERSideMyAppoinmentTableViewCell: UITableViewCell {
   
+    @IBOutlet weak var viewSeperatorHorizontal: UIView!
+   @IBOutlet weak var viewSeperatorHorizontal2: UIView!
+
+    @IBOutlet weak var viewSeperatorVertical1: UIView!
+    
+    @IBOutlet weak var viewSeperatorVertical2: UIView!
     @IBOutlet weak var btnViewResume: UIButton!
-    
-    
-    
-    
     
     @IBOutlet weak var btnUpdateStatus: UIButton!
     
@@ -86,18 +88,23 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
     
     
     func customize()  {
+        
+        viewSeperatorHorizontal.backgroundColor = ILColor.color(index:49);
+        viewSeperatorHorizontal2.backgroundColor = ILColor.color(index:49);
+        viewSeperatorVertical1.backgroundColor = ILColor.color(index:49);
+        viewSeperatorVertical2.backgroundColor = ILColor.color(index:49);
+        viewSeperatorVertical2.isHidden = false;
         self.viewContainer.isHidden = false
         let strHeader = NSMutableAttributedString.init()
         let strHeaderDesc = NSMutableAttributedString.init()
         collectionViewDataFeed();
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-            
         {
             let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.requests![0].studentDetails?.name, _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
+                                                   , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
             let nextLine1 = NSAttributedString.init(string: "\n")
             let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.requests![0].studentDetails?.benchmarkName, _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
+                                                  , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
             para.lineSpacing = 4
@@ -108,15 +115,15 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
             lblName.attributedText = strHeader
         }
         let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-        var componentDay = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .weekday)
+        let componentDay = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .weekday)
         
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-            
+        
         {
-            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: " " +  "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +
-                GeneralUtility.startAndEndDateDetail2(startDate: self.results.startDatetimeUTC ?? "", endDate: self.results.endDatetimeUTC ?? "")
-                , _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
+            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "  " +  "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +
+                                                                                             GeneralUtility.startAndEndDateDetail2(startDate: self.results.startDatetimeUTC ?? "", endDate: self.results.endDatetimeUTC ?? "")
+                                                                                           , _returnType: String.self)
+                                                   , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
             let nextLine1 = NSAttributedString.init(string: "\n")
             var strLocation = "Not available"
             
@@ -125,8 +132,8 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
             image1Attachment.bounds = CGRect.init(x: 0, y: 0, width: 10, height: 14)
             
             let image1Attachment2 = NSTextAttachment()
-                       image1Attachment2.image = UIImage(named: "calenderAppoList")
-                       image1Attachment2.bounds = CGRect.init(x: 0, y: 0, width: 10, height: 10)
+            image1Attachment2.image = UIImage(named: "calenderAppoList")
+            image1Attachment2.bounds = CGRect.init(x: 0, y: 0, width: 10, height: 10)
             
             
             
@@ -134,13 +141,13 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
             // wrap the attachment in its own attributed string so we can append it
             let imageLocation = NSAttributedString(attachment: image1Attachment)
             let imageCalender = NSAttributedString(attachment: image1Attachment2)
-
             
-            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: " " + (self.results.location ?? ""), _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
+            
+            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "  " + (self.results.location ?? ""), _returnType: String.self)
+                                                  , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
-            para.lineSpacing = 4
+            para.lineSpacing = 8
             strHeaderDesc.append(imageCalender)
             strHeaderDesc.append(strTiTle)
             strHeaderDesc.append(nextLine1)
@@ -149,180 +156,198 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
             strHeaderDesc.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeaderDesc.length))
             lblDescribtion.attributedText = strHeaderDesc
         }
-        
-        let stringImg = GeneralUtility.startNameCharacter(stringName: self.results.requests![0].studentDetails?.name ?? " ")
-      
-        
-        
-        let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
-      
-        UIButton.buttonUIHandling(button: btnAccept, text: "Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
-        UIButton.buttonUIHandling(button: btnDecline, text: "Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
-        
         btnAccept.cornerRadius = 3
         btnDecline.cornerRadius = 3
-        
         let monthI   = ["Jan","Feb","Mar","Apr","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
         
         shadowWithCorner(viewContainer: self.viewContainer, cornerRadius: 10)
         shadowWithCorner(viewContainer: self.viewDateContainer, cornerRadius: 3)
         viewDateContainer.clipsToBounds = true
         viewDateContainer.backgroundColor = ILColor.color(index: 33)
-        var componentDate = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .day)
-        
-        
+        let componentDate = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .day)
         if let dayI = componentDate?.day {
             let fontMedium = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
             
             UILabel.labelUIHandling(label: lblDate, text: "\(dayI)", textColor:ILColor.color(index: 34) , isBold: false, fontType: fontMedium)
             lblDate.textAlignment = .center
             lblDate.backgroundColor = .white
-            
         }
-        
         let componentMonth = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .month)
-        
         if let monthCom = componentMonth?.month {
             let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
-            
             UILabel.labelUIHandling(label: lblMonth, text: "\(monthI[monthCom-1])", textColor:ILColor.color(index: 3) , isBold: false, fontType: fontMedium,backgroundColor: ILColor.color(index: 33))
             lblMonth.textAlignment = .center
-            
         }
         self.backgroundColor = .clear
-        
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
-
-        
         if results?.typeERSide == 2{
             // upcoming
             nslayoutCandiateFeedbackView.constant = 0
             nslayoutUpdateStatusViewHeight.constant = 0
             viewFeedback.isHidden = true
             viewUpdateStatus.isHidden = true
-            
             nslayoutAcceptDeclineViewHeight.constant = 46
             viewAcceptDecline.isHidden = false
-            
-            UIButton.buttonUIHandling(button: btnViewResume, text: "View Resume", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "locationAppo"),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
-            
-            UIButton.buttonUIHandling(button: btnAccept, text: "Cancel Appointment", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
+            UIButton.buttonUIHandling(button: btnViewResume, text: " View Resume", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "resumeView"),fontType:fontMedium)
+            UIButton.buttonUIHandling(button: btnAccept, text: " Cancel Appointment", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),buttonImage:UIImage.init(named: "cancel"),fontType:fontMedium)
+            btnAccept.isUserInteractionEnabled = true
+            btnViewResume.isUserInteractionEnabled = true
+            btnDecline.isUserInteractionEnabled = false
+
+            viewSeperatorVertical2.isHidden = true;
             btnDecline.isHidden = true
         }
         else if results?.typeERSide == 3{
             // pending
-            
             nslayoutCandiateFeedbackView.constant = 0
             nslayoutUpdateStatusViewHeight.constant = 0
             viewFeedback.isHidden = true
             viewUpdateStatus.isHidden = true
-            
             nslayoutAcceptDeclineViewHeight.constant = 46
             viewAcceptDecline.isHidden = false
-
-            
             btnAccept.isHidden = false
             btnDecline.isHidden = false
             btnViewResume.isHidden = false
-            UIButton.buttonUIHandling(button: btnViewResume, text: "View Resume", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "locationAppo"),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
-            
-            UIButton.buttonUIHandling(button: btnAccept, text: "Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
-            UIButton.buttonUIHandling(button: btnDecline, text: "Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontMedium)
-            
-            
-            if   !GeneralUtility.isPastDate(date: self.results.startDatetime!){
-                //                btnAccept.isHidden = false
-                //                btnDecline.isHidden = false
-                //
+            UIButton.buttonUIHandling(button: btnViewResume, text: " View Resume", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "resumeView"),fontType:fontMedium)
+            btnViewResume.isUserInteractionEnabled = true
+
+            if  GeneralUtility.isPastDate(date: self.results.startDatetime!){
+                if GeneralUtility.isPastDate(date: self.results.endDatetime!){
+                    UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:.white , textColor: ILColor.color(index: 34),buttonImage:UIImage.init(named: ""),fontType:fontMedium)
+                    btnAccept.setImage(nil, for: .normal)
+                    btnAccept.isUserInteractionEnabled = false
+                }
+                else{
+                    let arrRequest = results.requests
+                    if arrRequest?.count ?? 0 > 1 {
+                        UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "move-arrows"),fontType:fontMedium)
+                        btnAccept.isUserInteractionEnabled = true
+
+                    }
+                    else{
+                        if arrRequest?[0].state == "pending"{
+                            UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:.white ,textColor: ILColor.color(index: 34),fontType:fontMedium)
+                            btnAccept.setImage(nil, for: .normal)
+                            btnAccept.isUserInteractionEnabled = false
+
+                        }
+                        else if arrRequest?[0].state == "accepted" || arrRequest?[0].state == "auto_accepted"{
+                            UIButton.buttonUIHandling(button: btnAccept, text: "Accepted", backgroundColor:.white ,textColor: ILColor.color(index: 58),fontType:fontMedium)
+                            btnAccept.setImage(nil, for: .normal)
+                            btnAccept.isUserInteractionEnabled = false
+
+                        }
+                        else  {
+                            UIButton.buttonUIHandling(button: btnAccept, text: "Decline", backgroundColor:.white ,textColor: ILColor.color(index: 57),fontType:fontMedium)
+                            btnAccept.setImage(nil, for: .normal)
+                            btnAccept.isUserInteractionEnabled = false
+
+                        }
+                    }
+                }
+                btnDecline.isUserInteractionEnabled = false
+                btnDecline.isHidden = true
             }
             else{
-                
-                //                btnAccept.isHidden = false
-                //                btnDecline.isHidden = true
-                
-//                let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
-//
-//                UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:UIColor.clear ,textColor: ILColor.color(index: 52),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
-                
+                if results.requests?.count ?? 0 > 1 {
+                    UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "move-arrows"),fontType:fontMedium)
+                    btnAccept.isUserInteractionEnabled = true
+                    btnDecline.isHidden = true
+                    btnDecline.isUserInteractionEnabled = true
+
+                }
+                else{
+                    let arrRequest = results.requests
+                    if arrRequest?[0].state == "pending"{
+                        UIButton.buttonUIHandling(button: btnAccept, text: " Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "accept-circular-button-outline"),fontType:fontMedium)
+                        UIButton.buttonUIHandling(button: btnDecline, text: " Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),buttonImage:UIImage.init(named: "cancel"),fontType:fontMedium)
+                        btnAccept.isUserInteractionEnabled = true
+                        btnDecline.isUserInteractionEnabled = true
+
+                    }
+                    else if arrRequest?[0].state == "accepted" || arrRequest?[0].state == "auto_accepted" {
+                        UIButton.buttonUIHandling(button: btnAccept, text: "Accepted", backgroundColor:.white ,textColor: ILColor.color(index: 58),fontType:fontMedium)
+                        btnAccept.setImage(nil, for: .normal)
+                        btnDecline.isHidden = true
+                        btnAccept.isUserInteractionEnabled = false
+                        btnDecline.isUserInteractionEnabled = false
+
+                    }
+                    else  {
+                        UIButton.buttonUIHandling(button: btnAccept, text: "Decline", backgroundColor:.white ,textColor: ILColor.color(index: 57),fontType:fontMedium)
+                        btnAccept.setImage(nil, for: .normal)
+                        btnDecline.isHidden = true
+                        btnAccept.isUserInteractionEnabled = false
+                        btnDecline.isUserInteractionEnabled = false
+
+                    }
+                }
             }
-            
         }
         else{
-            
             nslayoutCandiateFeedbackView.constant = 69
-            nslayoutUpdateStatusViewHeight.constant = 45
+            nslayoutUpdateStatusViewHeight.constant = 41
             viewFeedback.isHidden = false
             viewUpdateStatus.isHidden = false
             nslayoutAcceptDeclineViewHeight.constant = 0
             viewAcceptDecline.isHidden = true
-            
             self.btnCoachPreciseGrp.forEach { (btn) in
                 btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
             }
-            
             let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16)
             
-            UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Update Attendance Status", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
-            
+            if results.requests?.count ?? 1 > 1{
+                UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Update Attendance Status", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontHeavy2)
+                btnUpdateStatus.isUserInteractionEnabled = true
+            }
+            else{
+                let hasattendence = results.requests?[0].hasAttended
+                if hasattendence == 1{
+                    UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Attended", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 58),fontType:fontHeavy2)
+                    btnUpdateStatus.isUserInteractionEnabled = false
+
+                }
+                else{
+                    UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Not Attended", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 57),fontType:fontHeavy2)
+                    btnUpdateStatus.isUserInteractionEnabled = false
+
+                }
+            }
             if  let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-                
+            
             {
                 let strHeaderFeedback = NSMutableAttributedString.init()
-
-                
                 let strTiTle = NSAttributedString.init(string: "Candidate’s Feedback"
-                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:42),NSAttributedString.Key.font : fontMedium]);
+                                                       , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:42),NSAttributedString.Key.font : fontMedium]);
                 let nextLine1 = NSAttributedString.init(string: "\n")
                 let strType = NSAttributedString.init(string: "Not added"
-                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
+                                                      , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
                 let para = NSMutableParagraphStyle.init()
                 //            para.alignment = .center
                 para.lineSpacing = 4
                 strHeaderFeedback.append(strTiTle)
-                strHeaderFeedback.append(nextLine1)
-                strHeaderFeedback.append(strType)
+                if let feedback = results.requests?[0].feedback {
+                    
+                    self.btnCoachPreciseGrp.forEach { (btn) in
+                        
+                        btn.setImage(UIImage.init(named: "noun_Star_select"), for: .normal)
+                        
+                    }
+                    
+                }
+                else{
+                    strHeaderFeedback.append(nextLine1)
+                    strHeaderFeedback.append(strType)
+                    nslayoutCustomerRatingViewHeight.constant = 0
+                    nslayoutCandiateFeedbackView.constant = 60
+                }
+               
                 strHeaderFeedback.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeaderFeedback.length))
                 lblFeedback.attributedText = strHeaderFeedback
-                
-                nslayoutCustomerRatingViewHeight.constant = 0
-                nslayoutCandiateFeedbackView.constant = 60
-
                 viewCustomerRating.isHidden = true
             }
-            
-            
-            
-            
-            
-            
-            //            if let isCompleted = results.appointmentIsCompleted{
-            //
-            //
-            //                let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-            //
-            //
-            //                btnAccept.isUserInteractionEnabled = false
-            //                btnAccept.isEnabled = false
-            //
-            //                if isCompleted == 0 {
-            //                    let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
-            //
-            //                    UIButton.buttonUIHandling(button: btnAccept, text: "Not Attended", backgroundColor:UIColor.clear ,textColor: ILColor.color(index: 52),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
-            //                }
-            //                else{
-            //                    UIButton.buttonUIHandling(button: btnAccept, text: "Attended", backgroundColor:.clear ,textColor: ILColor.color(index: 51),borderColor: .clear, borderWidth: 1,fontType:fontHeavy2)
-            //                }
-            //
-            //
-            //            }
-            //            else{
-            //
-            //                UIButton.buttonUIHandling(button: btnAccept, text: "Update Status", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
-            //            }
         }
-        btnDecline.isUserInteractionEnabled = true
-        btnAccept.isUserInteractionEnabled = true
-        btnViewResume.isUserInteractionEnabled = true
+      
     }
     
     
@@ -374,40 +399,24 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         // 5. UpDate Status
         // 6. view Resume
 
-        if results?.typeERSide == 2{
+    if results?.typeERSide == 3{
             
-            if   GeneralUtility.isPastDate(date: self.results.endDatetime!){
-                delegate.changeInFollowingWith(results: results, index: 2)
+        if results.requests?.count ?? 0 > 1 {
+                delegate.changeInFollowingWith(results: results, index: 1)
             }
             else{
-                
-            }
-            
-        }
-        else if results?.typeERSide == 3{
-            
-            if   !GeneralUtility.isPastDate(date: self.results.startDatetime!){
                 delegate.changeInFollowingWith(results: results, index: 3)
-                
-                
-            }
-            else{
-                
             }
             
         }
-        else{
-            
-            //            if let isCompleted = results.appointmentIsCompleted{
-            //            }
-            //            else{
-            //                delegate.changeInFollowingWith(results: results, index: 5)
-            //
-            //            }
-            
-            
-            
-        }
+        
+    else if results?.typeERSide == 2{
+        
+        delegate.changeInFollowingWith(results: results, index: 2)
+        
+    }
+        
+      
         
     }
     

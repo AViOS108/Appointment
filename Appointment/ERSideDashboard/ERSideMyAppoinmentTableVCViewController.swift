@@ -63,9 +63,9 @@ class ERSideMyAppoinmentTableVCViewController: UIViewController,UITableViewDeleg
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if dataAppoinmentModal?.indexType != 3{
+      
             viewControllerI.changeInFollowingWith(results: (dataAppoinmentModal?.results![indexPath.row])!, index: 1)
-        }
+      
     }
     
    

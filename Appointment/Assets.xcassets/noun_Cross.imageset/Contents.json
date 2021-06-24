@@ -6,13 +6,28 @@
       "scale" : "1x"
     },
     {
+      "idiom" : "universal",
+      "memory" : "4GB",
+      "scale" : "1x"
+    },
+    {
       "filename" : "noun_Cross@3x-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "idiom" : "universal",
+      "memory" : "4GB",
+      "scale" : "2x"
+    },
+    {
       "filename" : "noun_Cross@3x.png",
       "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "universal",
+      "memory" : "4GB",
       "scale" : "3x"
     }
   ],

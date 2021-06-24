@@ -8,6 +8,18 @@
 
 import UIKit
 
+enum  ERSideResumeListTaskProvidedBycell{
+    case view
+    case download
+    case print
+}
+
+
+
+
+
+
+
 class ERSideResumeListViewController: SuperViewController {
 
     @IBOutlet weak var tblView: UITableView!
@@ -29,6 +41,8 @@ class ERSideResumeListViewController: SuperViewController {
         tblView.register(UINib.init(nibName: "ERSideResumeListTableViewCell", bundle: nil), forCellReuseIdentifier: "ERSideResumeListTableViewCell")
         tblView.dataSource = self
         tblView.delegate = self
+        self.view.backgroundColor = ILColor.color(index: 22)
+
         tblView.separatorStyle = .none
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Candidate Resume ")
     }
@@ -83,6 +97,7 @@ extension ERSideResumeListViewController: UITableViewDelegate,UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ERSideResumeListTableViewCell", for: indexPath) as! ERSideResumeListTableViewCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.delegate = self;
         cell.objERSideResumeListModalItem = self.objERSideResumeListModal.items![indexPath.row]
         cell.customization()
        
@@ -112,3 +127,111 @@ extension ERSideResumeListViewController: UITableViewDelegate,UITableViewDataSou
     }
     
 }
+
+extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate{
+    
+    func taskProvidedToVC(taskType: ERSideResumeListTaskProvidedBycell, resumeID: Int) {
+        if taskType == .view{
+            apitHitForResumeView(resumeID: resumeID)
+        }
+        else if taskType == .download{
+            apitHitForDownloadResume(resumeID: resumeID)
+        }
+        else{
+            
+        }
+    }
+    
+    
+    func apitHitForDownloadResume(resumeID: Int){
+        
+        activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
+        
+        ERSideAppointmentService().erSideResumeView(resumeId: resumeID,{ (data) in
+          
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    self.downloadResume(url: json["\(resumeID)"] as! String)
+                   }
+                
+            } catch  {
+                CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
+            }
+            
+            
+        }) {
+            (error, errorCode) in
+            self.activityIndicator?.hide()
+        };
+        
+    }
+    
+    func downloadResume(url:String){
+        
+        ERSideAppointmentService().erSideDownloadResume(resumeId: 0) { (data) in
+            self.activityIndicator?.hide()
+            let destinationFileUrl  = data["destinationUrl"] as! URL;
+            
+            do {
+                
+                let documentsUrl:URL =  (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as URL?)!
+                do {
+                    let contents  = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                    for indexx in 0..<contents.count {
+                        if contents[indexx].lastPathComponent == destinationFileUrl.lastPathComponent {
+                            let activityViewController = UIActivityViewController(activityItems: [contents[indexx]], applicationActivities: nil)
+                            self.present(activityViewController, animated: true, completion: nil)
+                        }
+                    }
+                }
+                catch (let err) {
+                    print("error: \(err)")
+                }
+            } catch (let writeError) {
+                print("Error creating a file \(destinationFileUrl) : \(writeError)")
+            }
+            
+            
+        } failure: { (error, errorCode) in
+            self.activityIndicator?.hide()
+
+        }
+
+        
+       
+    }
+    
+    
+    func apitHitForResumeView(resumeID: Int){
+        
+        activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
+        
+        ERSideAppointmentService().erSideResumeView(resumeId: resumeID,{ (data) in
+            self.activityIndicator?.hide()
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    self.openWebView(url: json["\(resumeID)"] as! String)
+                   }
+                
+            } catch  {
+                CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
+            }
+            
+            
+        }) {
+            (error, errorCode) in
+            self.activityIndicator?.hide()
+        };
+        
+    }
+    
+    func openWebView(url:String){
+        let wvc = UIStoryboard.webViewer()
+        wvc.webUrl =  url
+        self.navigationController?.pushViewController(wvc, animated: true)
+    }
+    
+}
+
+
+

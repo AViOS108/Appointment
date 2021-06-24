@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class ERSideTabBar : UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ManageSingleton.destroyCustomSingleton()
@@ -21,26 +21,26 @@ class ERSideTabBar : UITabBarController {
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 3)], for: .selected)
         if let fontDate = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13){
             UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 14),NSAttributedString.Key.font: fontDate],
-            
-                                                        for: .normal)
+                                                             
+                                                             for: .normal)
             UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 3),NSAttributedString.Key.font: fontDate], for: .selected)
             
         }
-
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UserDefaultsDataSource(key: "timeZoneOffset").writeData(TimeZone.current.identifier)
-
+        
     }
     
- 
     
     
-//    @IBAction func unwindToDashboardTabbarController(segue:UIStoryboardSegue) {
-//        self.selectedViewController = self.viewControllers?[0]
-//    }
+    
+    //    @IBAction func unwindToDashboardTabbarController(segue:UIStoryboardSegue) {
+    //        self.selectedViewController = self.viewControllers?[0]
+    //    }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         NSLog("yaba tabBar")

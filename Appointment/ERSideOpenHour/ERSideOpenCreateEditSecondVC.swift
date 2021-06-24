@@ -15,7 +15,8 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     @IBOutlet weak var viewHeader: UIView!
     var objviewTypeOpenHour : viewTypeOpenHour!
     @IBOutlet weak var lblAppointmentType: UILabel!
-    
+    var delegate : ErSideOpenHourTCDelegate!
+
     @IBOutlet weak var txtApointmentType: LeftPaddedTextField!
     
     @IBOutlet weak var txtGroupLimit: LeftPaddedTextField!
@@ -126,7 +127,22 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
         self.viewInner.isHidden = true
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM YYYY"
-        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
+        
+        switch self.objviewTypeOpenHour {
+        case .setOpenHour:
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
+            break;
+        case .duplicateSetHour:
+            
+           GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Duplicate Schedules")
+            
+            break;
+        case .editOpenHour:
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
+            break;
+        default:
+            break;
+        }
         callViewModal()
         
 
@@ -137,63 +153,7 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     }
     
     
-    func newUserpurpose(isBackGround : Bool){
-           var  activityIndicator = ActivityIndicatorView()
-
-           var items = [String]();
-        var flag = false
-           for userPurposeiTem in self.objOpenHourModalSubmit.userPurposeId{
-               if userPurposeiTem.id == -1000 {
-                flag = true
-                   items.append(userPurposeiTem.title)
-               }
-           }
-        
-        if flag {
-            
-        }
-        else{
-            formingmodal()
-            hitFinalApi()
-            return
-        }
-           
-        let param : Dictionary<String, Any> = [
-               "_method" : "post",
-               "items" : items,
-               "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
-           ]
-           
-           if !isBackGround{
-               activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
-           }
-           ERSideOpenEditSecondVM().erSideOPenHourPostPurposeApi(prameter: param, { (data) in
-            
-             if !isBackGround{
-                 self.activityIndicator?.hide()
-            }
-            
-            do {
-                var objNewUserPurposeModalArr = try
-                    JSONDecoder().decode(NewUserPurposeModalArr.self, from: data)
-                self.redefindUserPurposeModal(objNewUserPurposeModalArr: objNewUserPurposeModalArr)
-                
-                self.formingmodal()
-                self.hitFinalApi()
-                
-                
-            } catch   {
-                print(error)
-
-            }
-               
-           }) { (error, errorCode) in
-            if !isBackGround{
-                            self.activityIndicator?.hide()
-                       }
-           }
-           
-       }
+   
     
     func redefindUserPurposeModal(objNewUserPurposeModalArr:NewUserPurposeModalArr )
     {
@@ -409,10 +369,6 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
             }
         }
    }
-    override func removeKeyCommand(_ keyCommand: UIKeyCommand) {
-          
-    }
-    
     
     func deRegisterKeyboardNotifications() {
         
@@ -976,6 +932,11 @@ extension ERSideOpenCreateEditSecondVC{
         dbDatePickerFromTiming.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: .valueChanged)
         dbDatePickerFromTiming.timeZone = NSTimeZone.default;
         dbDatePickerFromTiming.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            dbDatePickerFromTiming.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
         txtInput.inputView = dbDatePickerFromTiming;
         
         let string = "5:00 PM"
@@ -1186,7 +1147,7 @@ extension ERSideOpenCreateEditSecondVC{
         objERSideStudentListViewController.objStudentDetailModal = self.objStudentDetailModalI
         objERSideStudentListViewController.objStudentDetailModalSelected = self.objStudentDetailModalSelected
         objERSideStudentListViewController.delegate = self
-        
+        objERSideStudentListViewController.objStudentListType = .groupType
         
         self.navigationController?.pushViewController(objERSideStudentListViewController, animated: false)
         
@@ -1206,13 +1167,15 @@ extension ERSideOpenCreateEditSecondVC{
                 
                 self.objStudentDetailModalSelected = StudentDetailModal()
                 self.objStudentDetailModalSelected?.total = self.objERSideOpenHourPrefilledDetail?.participants?.count
+                 self.objStudentDetailModalSelected?.items = [StudentDetailModalItem]()
                 for student in (self.objStudentDetailModalI?.items)!{
                     var studentSelected = self.objERSideOpenHourPrefilledDetail?.participants?.filter({$0.studentID == student.invitationID});
                     
                     if studentSelected?.count ?? 0 > 0{
+                        self.objStudentDetailModalSelected?.items?.append(student)
+
                     }
                     else{
-                        self.objStudentDetailModalSelected?.items?.append(student)
                     }
                 }
                 
@@ -1259,9 +1222,11 @@ extension ERSideOpenCreateEditSecondVC{
                 viewPrivateContainer.isHidden = false
                 nslayoutConstarintViewPrivateContainer.constant = calculatedHeightPrivateView
                 self.lblCountStudent.text = "\(objERSideOpenHourPrefilledDetail?.participants?.count ?? 0)"
+                btnPrivateOpenHour.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
 
             }
             else{
+                btnPrivateOpenHour.setImage(UIImage.init(named: "check_box"), for: .normal);
                 viewPrivateContainer.isHidden = true
                 nslayoutConstarintViewPrivateContainer.constant = 0
             }
@@ -1393,8 +1358,6 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
             let indexLocation = deadline_days_before.firstIndex(where: {$0 == txtDeadline.text})
             self.objOpenHourModalSubmit.deadline_days_before = deadline_days_beforeI[indexLocation ?? 0]
             
-         
-            
             let sec =     GeneralUtility.differenceBetweenTwoDateInSec(dateFirst: txtDeadlineTime.text!, dateSecond: "12:00 AM", dateformatter: "hh:mm a")
             
             
@@ -1478,105 +1441,355 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
     func dataFeeding() -> Dictionary<String,AnyObject> {
         
         
-        var isPRivate = 1
-        
-        if isPrivateEnabled{
-            isPRivate = 1
-        }
-        else{
-            isPRivate = 0
+        switch objviewTypeOpenHour {
+        case .setOpenHour:
+            var isPRivate = 1
             
-        }
-        
-     
-        
-       var  user_purpose_ids = [String]()
-        
-        let selectedUserPurposeArr = self.objOpenHourModalSubmit.userPurposeId.filter({$0.isSelected == true})
-        
-        for purpose in selectedUserPurposeArr{
-            user_purpose_ids.append(purpose.title )
-        }
-        
-        
-        
-        
-        var params = ["_method" : "post",
-                      "is_private": isPRivate,
-                      "timezone":self.objOpenHourModalSubmit.timeZone,
-                      "location_type" :  self.objOpenHourModalSubmit.locationType ?? "physical_location",
-                      "location" : self.txtDefaultLocation.text ?? "",
-                      "purposes":user_purpose_ids,
-                      "description":"default",
-                      "slots": self.objOpenHourModalSubmit.slotArr!,
-                      "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
-            
-            ] as [String : Any]
-        
-        //                      "participants": participants,
-        
-        if isPrivateEnabled{
-            
-            var participants = [Int]()
-            for participantI in self.objOpenHourModalSubmit.participant{
-                
-                participants.append(participantI.entity_id!)
+            if isPrivateEnabled{
+                isPRivate = 1
             }
-            params["participants"] = participants
-
-           
-        }
-        var groupSize = "0"
-        
-               if nslayoutConstraintGroupLimitHeight.constant != 0 {
+            else{
+                isPRivate = 0
+                
+            }
+            
+            
+            
+            var  user_purpose_ids = [String]()
+            
+            let selectedUserPurposeArr = self.objOpenHourModalSubmit.userPurposeId.filter({$0.isSelected == true})
+            
+            for purpose in selectedUserPurposeArr{
+                user_purpose_ids.append(purpose.title )
+            }
+            
+            
+            
+            
+            var params = ["_method" : "post",
+                          "is_private": isPRivate,
+                          "timezone":self.objOpenHourModalSubmit.timeZone,
+                          "location_type" :  self.objOpenHourModalSubmit.locationType ?? "physical_location",
+                          "location" : self.txtDefaultLocation.text ?? "",
+                          "purposes":user_purpose_ids,
+                          "description":"default",
+                          "slots": self.objOpenHourModalSubmit.slotArr!,
+                          "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
+                
+                ] as [String : Any]
+            
+            //                      "participants": participants,
+            
+            if isPrivateEnabled{
+                
+                var participants = [Int]()
+                for participantI in self.objOpenHourModalSubmit.participant{
+                    
+                    participants.append(participantI.entity_id!)
+                }
+                params["participants"] = participants
+                
+                
+            }
+            var groupSize = "0"
+            
+            if nslayoutConstraintGroupLimitHeight.constant != 0 {
                 groupSize = txtGroupLimit.text ?? "0"
-                      }
-               else{
-                  groupSize = "1"
-
+            }
+            else{
+                groupSize = "1"
+                
+            }
+            
+            var paramsInner = [ "group_size_limit" : groupSize,
+                                "request_approval_type":self.objOpenHourModalSubmit.open_hours_appointment_approval_process!
+                ] as [String : Any]
+            
+            if isDeadlineEnabled{
+                paramsInner["booking_deadline_days_before"]   =  self.objOpenHourModalSubmit.deadline_days_before;
+                paramsInner["booking_deadline_time_on_day"]  = "\(self.objOpenHourModalSubmit.deadline_time_on_day ?? 0)";
+            }
+            
+            params["appointment_config"] = paramsInner
+            
+            
+            if self.objOpenHourModalSubmit.recurrence != "-1"{
+                params["recurrence"] = self.objOpenHourModalSubmit.recurrence
+            }
+            
+            return params as Dictionary<String,AnyObject>
+            
+            
+            break
+        case .duplicateSetHour:
+            var isPRivate = 1
+               
+               if isPrivateEnabled{
+                   isPRivate = 1
                }
-        
-        var paramsInner = [ "group_size_limit" : groupSize,
-                            "request_approval_type":self.objOpenHourModalSubmit.open_hours_appointment_approval_process!
-                            ] as [String : Any]
-        
-        if isDeadlineEnabled{
-            paramsInner["booking_deadline_days_before"]   =  self.objOpenHourModalSubmit.deadline_days_before;
-            paramsInner["booking_deadline_time_on_day"]  = self.objOpenHourModalSubmit.deadline_time_on_day;
+               else{
+                   isPRivate = 0
+                   
+               }
+               
+               
+               
+               var  user_purpose_ids = [String]()
+               
+               let selectedUserPurposeArr = self.objOpenHourModalSubmit.userPurposeId.filter({$0.isSelected == true})
+               
+               for purpose in selectedUserPurposeArr{
+                   user_purpose_ids.append(purpose.title )
+               }
+               
+               
+               
+               
+               var params = ["_method" : "post",
+                             "is_private": isPRivate,
+                             "timezone":self.objOpenHourModalSubmit.timeZone,
+                             "location_type" :  self.objOpenHourModalSubmit.locationType ?? "physical_location",
+                             "location" : self.txtDefaultLocation.text ?? "",
+                             "purposes":user_purpose_ids,
+                             "description":"default",
+                             "slots": self.objOpenHourModalSubmit.slotArr!,
+                             "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
+                   
+                   ] as [String : Any]
+               
+               //                      "participants": participants,
+               
+               if isPrivateEnabled{
+                   
+                   var participants = [Int]()
+                   for participantI in self.objOpenHourModalSubmit.participant{
+                       
+                       participants.append(participantI.entity_id!)
+                   }
+                   params["participants"] = participants
+                   
+                   
+               }
+               var groupSize = "0"
+               
+               if nslayoutConstraintGroupLimitHeight.constant != 0 {
+                   groupSize = txtGroupLimit.text ?? "0"
+               }
+               else{
+                   groupSize = "1"
+                   
+               }
+               
+               var paramsInner = [ "group_size_limit" : groupSize,
+                                   "request_approval_type":self.objOpenHourModalSubmit.open_hours_appointment_approval_process!
+                   ] as [String : Any]
+               
+               if isDeadlineEnabled{
+                   paramsInner["booking_deadline_days_before"]   =  self.objOpenHourModalSubmit.deadline_days_before;
+                   paramsInner["booking_deadline_time_on_day"]  = "\(self.objOpenHourModalSubmit.deadline_time_on_day ?? 0)";
+               }
+               
+               params["appointment_config"] = paramsInner
+               
+               
+               if self.objOpenHourModalSubmit.recurrence != "-1"{
+                   params["recurrence"] = self.objOpenHourModalSubmit.recurrence
+               }
+               
+               return params as Dictionary<String,AnyObject>
+            
+            break
+        case .editOpenHour :
+            var isPRivate = 1
+               
+               if isPrivateEnabled{
+                   isPRivate = 1
+               }
+               else{
+                   isPRivate = 0
+                   
+               }
+               
+               
+               
+               var  user_purpose_ids = [String]()
+               
+               let selectedUserPurposeArr = self.objOpenHourModalSubmit.userPurposeId.filter({$0.isSelected == true})
+               
+               for purpose in selectedUserPurposeArr{
+                   user_purpose_ids.append(purpose.title )
+               }
+               
+               
+               
+               
+               var params = ["_method" : "patch",
+                             "is_private": isPRivate,
+                             "timezone":self.objOpenHourModalSubmit.timeZone,
+                             "location_type" :  self.objOpenHourModalSubmit.locationType ?? "physical_location",
+                             "location" : self.txtDefaultLocation.text ?? "",
+                             "purposes":user_purpose_ids,
+                             "slots": self.objOpenHourModalSubmit.slotArr!,
+                             "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String,
+                    "open_hour_identifier" : "\(objERSideOpenHourPrefilledDetail?.id ?? 0)"
+                   ] as [String : Any]
+               
+               //                      "participants": participants,
+               
+               if isPrivateEnabled{
+                   
+                   var participants = [Int]()
+                   for participantI in self.objOpenHourModalSubmit.participant{
+                       
+                       participants.append(participantI.entity_id!)
+                   }
+                   params["participants"] = participants
+                   
+                   
+               }
+               var groupSize = "0"
+               
+               if nslayoutConstraintGroupLimitHeight.constant != 0 {
+                   groupSize = txtGroupLimit.text ?? "0"
+               }
+               else{
+                   groupSize = "1"
+                   
+               }
+               
+               var paramsInner = [ "group_size_limit" : groupSize,
+                                   "request_approval_type":self.objOpenHourModalSubmit.open_hours_appointment_approval_process!
+                   ] as [String : Any]
+               
+               if isDeadlineEnabled{
+                   paramsInner["booking_deadline_days_before"]   =  self.objOpenHourModalSubmit.deadline_days_before;
+                   paramsInner["booking_deadline_time_on_day"]  = "\(self.objOpenHourModalSubmit.deadline_time_on_day ?? 0)";
+               }
+               
+               params["appointment_config"] = paramsInner
+               
+               
+            
+               
+               return params as Dictionary<String,AnyObject>
+            
+            break
+        default:
+            return Dictionary<String,AnyObject>()
+            break
         }
         
-        params["appointment_config"] = paramsInner
-       
         
-        if self.objOpenHourModalSubmit.recurrence != "-1"{
-            params["recurrence"] = self.objOpenHourModalSubmit.recurrence
-        }
+   
         
-    return params as Dictionary<String,AnyObject>
-    
-    
+        
     }
     
     func hitFinalApi()  {
-              
-              activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
-              
-               ERSideStudentListViewModal().submitNewOpenHour(prameter: dataFeeding(), { (data) in
+        
+        activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message:
+                                                                StringConstants.FetchingCoachSelection)
+        
+        switch self.objviewTypeOpenHour {
+        case .duplicateSetHour:
+            
+            ERSideStudentListViewModal().submitNewOpenHour(prameter: dataFeeding(), { (data) in
                 do {
+                    if self.delegate != nil{
+                        self.delegate.deleteDelgateRefresh();
+                    }
                     
-                    GeneralUtility.alertViewPopOutViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"])
+                    let index = self.navigationController?.viewControllers.firstIndex(where: { $0.isKind(of: ERSideOpenHourListVC.self) })
+                    if index != nil{
+                        GeneralUtility.alertViewPopOutToParticularViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"], index: index ?? 1)
+                        
+                    }
+                    else{
+                        GeneralUtility.alertViewPopOutViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"])
+                    }
+                    
                     
                     
                     
                 } catch   {
-                      print(error)
-                      self.activityIndicator?.hide()
-                      
-                  }
-                  
-              }) { (error, errorCode) in
-                  self.activityIndicator?.hide()
-              }
+                    print(error)
+                    self.activityIndicator?.hide()
+                    
+                }
+                
+            }) { (error, errorCode) in
+                self.activityIndicator?.hide()
+            }
+            
+            break;
+            
+        case .editOpenHour:
+            
+            ERSideStudentListViewModal().submitEditedOpenHour(prameter: dataFeeding(), id: "\(objERSideOpenHourPrefilledDetail?.id ?? 0)", { (data) in
+                do {
+                    if self.delegate != nil{
+                        self.delegate.deleteDelgateRefresh();
+                    }
+                    
+                    let index = self.navigationController?.viewControllers.firstIndex(where: { $0.isKind(of: ERSideOpenHourListVC.self) })
+                    if index != nil{
+                        GeneralUtility.alertViewPopOutToParticularViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"], index: index ?? 1)
+                        
+                    }
+                    else{
+                        GeneralUtility.alertViewPopOutViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"])
+                    }
+                    
+                    
+                    
+                    
+                } catch   {
+                    print(error)
+                    self.activityIndicator?.hide()
+                    
+                }
+                
+            }) { (error, errorCode) in
+                self.activityIndicator?.hide()
+            }
+            
+            break;
+            
+        case .setOpenHour :
+            ERSideStudentListViewModal().submitNewOpenHour(prameter: dataFeeding(), { (data) in
+                do {
+                    if self.delegate != nil{
+                        self.delegate.deleteDelgateRefresh();
+                    }
+                    
+                    let index = self.navigationController?.viewControllers.firstIndex(where: { $0.isKind(of: ERSideOpenHourListVC.self) })
+                    if index != nil{
+                        GeneralUtility.alertViewPopOutToParticularViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"], index: index ?? 1)
+                        
+                    }
+                    else{
+                        GeneralUtility.alertViewPopOutViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"])
+                    }
+                    
+                    
+                    
+                    
+                } catch   {
+                    print(error)
+                    self.activityIndicator?.hide()
+                    
+                }
+                
+            }) { (error, errorCode) in
+                self.activityIndicator?.hide()
+            }
+            
+            break
+            
+        default:
+            break
+        }
+        
         
     }
     
@@ -1588,7 +1801,6 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
         }
         formingmodal()
         hitFinalApi()
-        //         newUserpurpose(isBackGround: false);
     }
         
 }

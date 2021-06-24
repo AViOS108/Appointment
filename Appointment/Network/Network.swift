@@ -52,7 +52,7 @@ class Network {
               
            self.stopAllSessions()
                   
-                  var requestParams = params
+        let requestParams = params
                   if(!addHeader){
                     Network.alamoFireManagerEventList.request(url, method: methodType, parameters: requestParams, encoding: URLEncoding.default).responseJSON() {
                           response in
@@ -94,7 +94,7 @@ class Network {
     func makeApiCoachRequest(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
         
      
-        var requestParams = params
+        let requestParams = params
         if(!addHeader){
          alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default).responseData{
                 response in
@@ -138,7 +138,7 @@ class Network {
     func makeApiStudentList(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
                  
               
-                 var requestParams = params
+        let requestParams = params
                  if(!addHeader){
                   Network.alamoFireManagerEventList.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default).responseData{
                          response in
@@ -183,9 +183,8 @@ class Network {
     
     
     func makeApiEventRequest(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
-              
            
-              var requestParams = params
+        let requestParams = params
               if(!addHeader){
                alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default).responseData{
                       response in
@@ -268,7 +267,7 @@ class Network {
                           completion(response.data!)
                         
                         if let JSON = response.result.value as? [String : Any]{
-                            let messageString = JSON["message"] as? String
+                            _ = JSON["message"] as? String
                              // use the JSON
                             }else {
                                //error hanlding
@@ -297,7 +296,7 @@ class Network {
     
     func makeApiEventGetRequest(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
         
-        var requestParams = params
+        let requestParams = params
         if(!addHeader){
          alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: URLEncoding.default).responseData{
                 response in
@@ -338,11 +337,37 @@ class Network {
     }
     
     
+    func makeApiDownloadFile(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Dictionary<String,Any>) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
+        
+        let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+            var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            // the name of the file here I kept is yourFileName with appended extension
+               documentsURL.appendPathComponent("yourFileName"+".pdf")
+               return (documentsURL, [.removePreviousFile])
+        }
+        
+        _ = params
+        if(!addHeader){
+            
+            Alamofire.download("https://www.tutorialspoint.com/swift/swift_tutorial.pdf", to: destination).response { response in
+                
+                let responseDict =          ["destinationUrl":response.destinationURL,
+                                "tempUrl": response.temporaryURL]
+                
+                completion(responseDict as Dictionary<String, Any>)
+            }
+        }else{
+            Alamofire.download("https://www.tutorialspoint.com/swift/swift_tutorial.pdf", to: destination).response { response in
+                print(response)
+            }
+        }
+    }
+    
     
     
     func makeApiRequest(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: SwiftyJSON.JSON) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
         
-        var requestParams = params        
+        let requestParams = params
         if(!addHeader){
             alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: URLEncoding.default).responseJSON() {
                 response in
@@ -380,7 +405,7 @@ class Network {
     
     func makeApiRequestJsonEncoded(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: SwiftyJSON.JSON) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
         
-        var requestParams = params
+        let requestParams = params
         if(!addHeader){
             alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: URLEncoding.default).responseJSON() {
                 response in
@@ -425,7 +450,7 @@ class Network {
     
     
     func makeThirdPartyApiRequest(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: SwiftyJSON.JSON) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
-        var requestParams = params
+        let requestParams = params
         if(!addHeader){
             alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: URLEncoding.default).responseJSON() {
                 response in
@@ -456,7 +481,7 @@ class Network {
     }
     
     func makeApiRequestJSONEncoded(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: SwiftyJSON.JSON) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
-        var requestParams = params
+        let requestParams = params
         if(!addHeader){
             alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default).responseJSON() {
                 response in
@@ -505,7 +530,7 @@ class Network {
     }
     
     func makeApiRequestJSONEncodedERLOGIN(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: SwiftyJSON.JSON) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
-         var requestParams = params
+        let requestParams = params
          if(!addHeader){
              alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default).responseJSON() {
                  response in

@@ -49,7 +49,7 @@ class ERStudentOverlayCollectionViewCell: UICollectionViewCell {
             lblInitial.layer.cornerRadius = lblInitial.frame.size.height/2
             lblInitial.clipsToBounds = true
             lblInitial.layer.masksToBounds = true
-            lblInitial.backgroundColor = .red
+            lblInitial.backgroundColor = .white
         }
         
         self.viewImage?.isHidden = true

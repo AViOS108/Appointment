@@ -8,14 +8,18 @@
 
 import UIKit
 
+protocol ERSideResumeListTableViewCellDelegate {
+    func taskProvidedToVC(taskType:ERSideResumeListTaskProvidedBycell,resumeID: Int)
+}
+
 class ERSideResumeListTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var imgProfile: UIImageView!
     @IBOutlet weak var lblInitialName: UILabel!
-    
     var objERSideResumeListModalItem : ERSideResumeListModalItem!
-    
+    var delegate : ERSideResumeListTableViewCellDelegate?
     
     @IBOutlet weak var viewLatestUpload: UIView!
     @IBOutlet weak var lblLatestUpload: UILabel!
@@ -23,10 +27,21 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var btnLatestUploadView: UIButton!
     @IBAction func btnLatestUploadViewTapped(_ sender: Any) {
+        
+        if let delegateAssign = delegate {
+            delegateAssign.taskProvidedToVC(taskType: .view, resumeID: objERSideResumeListModalItem.rpLatestResumeID ?? 0);
+
+        }
+        
+        
     }
     @IBOutlet weak var lblLatestScore: UILabel!
     @IBOutlet weak var btnLatestDownload: UIButton!
     @IBAction func btnLatestDownloadTapped(_ sender: Any) {
+        if let delegateAssign = delegate {
+            delegateAssign.taskProvidedToVC(taskType: .download, resumeID: objERSideResumeListModalItem.rpLatestResumeID ?? 0);
+
+        }
     }
     @IBOutlet weak var btnLatestDownloadPrint: UIButton!
     @IBAction func btnLatestDownloadPrintTapped(_ sender: Any) {
@@ -106,7 +121,7 @@ class ERSideResumeListTableViewCell: UITableViewCell {
         //            self.lblInitialName.isHidden = true
         //            self.imgProfile?.isHidden = false
         //
-        
+        shadowWithCorner(viewContainer: self.viewContainer, cornerRadius: 3)
         self.imgProfile?.isHidden = true
         self.lblInitialName.isHidden = false
         
@@ -114,7 +129,7 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             " " + (self.objERSideResumeListModalItem?.lastName ?? "")
         
         var stringImg = GeneralUtility.startNameCharacter(stringName: displayName)
-        if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
+        if   let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         {
             UILabel.labelUIHandling(label: lblInitialName, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
             lblInitialName.textAlignment = .center
@@ -135,24 +150,38 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             strHeader.append(strTiTle)
             strHeader.append(nextLine1)
             strHeader.append(strType)
-            strHeader.append(nextLine1)
             strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
             lblName.attributedText = strHeader
         }
     }
-    
+    func shadowWithCorner(viewContainer : UIView,cornerRadius: CGFloat)
+       {
+           // corner radius
+           viewContainer.layer.cornerRadius = cornerRadius
+           // border
+           viewContainer.layer.borderWidth = 1.0
+           viewContainer.layer.borderColor = ILColor.color(index: 27).cgColor
+           // shadow
+           viewContainer.layer.shadowColor = ILColor.color(index: 27).cgColor
+           viewContainer.layer.shadowOffset = CGSize(width: 3, height: 3)
+           viewContainer.layer.shadowOpacity = 0.7
+           viewContainer.layer.shadowRadius = 4.0
+       }
+       
     
     func resumeDetail(){
         
         let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
-           let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE10)
+        let fontHeavy3 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16)
+
+           let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE10)
         if (self.objERSideResumeListModalItem.rpLatestResumeID != nil){
             UILabel.labelUIHandling(label: lblLatestUpload, text: "Latest uploaded", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy2)
-            UILabel.labelUIHandling(label: lblLatestUploadResume, text: self.objERSideResumeListModalItem.rpSummary?[0].filename ?? "", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
+            UILabel.labelUIHandling(label: lblLatestUploadResume, text: self.objERSideResumeListModalItem.rpSummary?[0].filename?.capitalized ?? "", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
             
             
             if case let .integer(score) = self.objERSideResumeListModalItem.rpLatestResumeScore {
-                UILabel.labelUIHandling(label: lblLatestScore , text: "\(score)", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy2)
+                UILabel.labelUIHandling(label: lblLatestScore , text: "\(score)", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy3)
             }
             UIButton.buttonUIHandling(button: btnLatestUploadView, text: "View", backgroundColor: .clear,textColor: ILColor.color(index: 23),fontType: fontMedium)
             btnLatestDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
@@ -183,10 +212,10 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             
             UILabel.labelUIHandling(label: lblHighestUpload, text: "Highest Scored Resume", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy2)
             UIButton.buttonUIHandling(button: btnHighestUploadView, text: "View", backgroundColor: .clear,textColor: ILColor.color(index: 23),fontType: fontMedium)
-            UILabel.labelUIHandling(label: lblHighestUploadResume, text: self.objERSideResumeListModalItem.rpSummary?[0].filename ?? "", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
+            UILabel.labelUIHandling(label: lblHighestUploadResume, text: self.objERSideResumeListModalItem.rpSummary?[0].filename?.capitalized ?? "", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
             
             if case let .integer(score) = self.objERSideResumeListModalItem.rpHighestScoredResumeScore {
-                UILabel.labelUIHandling(label: lblHighestScore , text: "\(score)", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy2)
+                UILabel.labelUIHandling(label: lblHighestScore , text: "\(score)", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy3)
             }
             
             btnHighestDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
@@ -213,10 +242,10 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             
             UILabel.labelUIHandling(label: lblApprovedUpload, text: "Approved Resume", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy2)
             UIButton.buttonUIHandling(button: btnApprovedUploadView, text: "View", backgroundColor: .clear,textColor: ILColor.color(index: 23),fontType: fontMedium)
-            UILabel.labelUIHandling(label: lblApprovedUploadResume, text: self.objERSideResumeListModalItem.rpSummary?[0].filename ?? "", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
+            UILabel.labelUIHandling(label: lblApprovedUploadResume, text: self.objERSideResumeListModalItem.rpSummary?[0].filename?.capitalized ?? "", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
             
             if case let .integer(score) = self.objERSideResumeListModalItem.rpFirstResumeScore {
-                UILabel.labelUIHandling(label: lblApprovedScore , text: "\(score)", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy2)
+                UILabel.labelUIHandling(label: lblApprovedScore , text: "\(score)", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy3)
             }
             
             btnApprovedUploadView.isHidden = false

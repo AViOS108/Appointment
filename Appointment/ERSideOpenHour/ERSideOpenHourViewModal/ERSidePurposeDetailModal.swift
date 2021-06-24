@@ -13,6 +13,18 @@
 
 import Foundation
 
+
+struct  ERSidePurposeDetailNewModal: Codable {
+    let purposeText: String?
+
+    enum CodingKeys: String, CodingKey {
+        case purposeText = "purpose_text"
+    }
+}
+
+typealias ERSidePurposeDetailNewModalArr = [ERSidePurposeDetailNewModal]
+
+
 // MARK: - WelcomeElement
 struct  ERSidePurposeDetailModal: Codable {
     let id: Int?

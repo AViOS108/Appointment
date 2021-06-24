@@ -27,17 +27,6 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
 
    
     @IBAction func btnDeleteTappped(_ sender: Any) {
-        
-//        if !(mynotes ?? true){
-//
-//                   self.btnEditDelete.isEnabled = false
-//                   self.btnEditDelete.isUserInteractionEnabled = false
-//
-//
-//               }
-        
-        
-        
         delegate.editDeleteFunctionality(objModel: noteResultModal, isMyNotes: mynotes, isDeleted: true)
         
         
@@ -64,20 +53,25 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
     }
     
     
+
     func shadowWithCorner(viewContainer : UIView,cornerRadius: CGFloat)
-       {
-           // corner radius
-           viewContainer.layer.cornerRadius = cornerRadius
-           // border
-           viewContainer.layer.borderWidth = 1.0
-           viewContainer.layer.borderColor = ILColor.color(index: 27).cgColor
-          
-       }
-    
+    {
+        // corner radius
+        viewContainer.layer.cornerRadius = cornerRadius
+        // border
+        viewContainer.layer.borderWidth = 1.0
+        viewContainer.layer.borderColor = ILColor.color(index: 27).cgColor
+        // shadow
+        viewContainer.layer.shadowColor = ILColor.color(index: 27).cgColor
+        viewContainer.layer.shadowOffset = CGSize(width: 3, height: 3)
+        viewContainer.layer.shadowOpacity = 0.7
+        viewContainer.layer.shadowRadius = 4.0
+        viewContainer.backgroundColor = .white
+    }
     
     func customization(noNotes: Bool) {
         
-        self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 2)
+        self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 10)
 
         if noNotes{
             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -158,7 +152,7 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         btnEdit.isEnabled = true
         
         btnEdit.setImage(UIImage.init(named: "noun_edit_648236"), for: .normal)
-        btnDelete.setImage(UIImage.init(named: "noun_edit_648236"), for: .normal)
+        btnDelete.setImage(UIImage.init(named: "noun_Delete_2899273"), for: .normal)
         
         btnDelete.isUserInteractionEnabled = true
         btnDelete.isEnabled = true
@@ -194,6 +188,7 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
             strHeader.append(nextLine1)
             strHeader.append(strSharedInfo)
             strHeader.append(nextLine1)
+
             strHeader.append(strDescription)
 
             strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))

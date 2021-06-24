@@ -88,9 +88,6 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         
         
         
-        
-        
-        
         searchViewController.arrNameSurvey = self.arrNameSurvey.filter({$0.isSelected == false})
         searchViewController.txtfieldRect = changedFrame
         searchViewController.isAPiHIt = isAPiHIt
@@ -226,6 +223,11 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
                 {
                     viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevius":viewPrevius!,"view" :view ]))
                     viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[viewPrevius]-8-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevius":viewPrevius!,"view" :view ]))
+                    view.layoutIfNeeded();
+                                       if (view.frame.width  >= self.frame.width){
+                                           viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[view]-8-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
+                                       }
+                                       
                     self.viewHeightConstraint.constant = self.viewHeightConstraint.constant + 35;
                     viewPreviusC = viewPrevius
                     sumWidth = 0;
@@ -240,6 +242,10 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
                 viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
                 viewPrevius = view;
                 self.viewHeightConstraint.constant = self.viewHeightConstraint.constant + 35;
+                view.layoutIfNeeded();
+                if (view.frame.width  >= self.frame.width){
+                     viewSelectedContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[view]-8-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :view ]))
+                }
             }
             index = index + 1
         }

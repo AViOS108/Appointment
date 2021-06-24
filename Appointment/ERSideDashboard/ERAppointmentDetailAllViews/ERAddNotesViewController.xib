@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ERAddNotesViewController" customModule="Appointment" customModuleProvider="target">
             <connections>
+                <outlet property="btnSubmit" destination="QGK-Qv-4NU" id="eMT-Ie-cWR"/>
                 <outlet property="tblView" destination="Hcy-H1-dFl" id="K4l-Iw-nua"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,16 +21,29 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Hcy-H1-dFl">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="754"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGK-Qv-4NU">
+                    <rect key="frame" x="107" y="806" width="200" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="fvl-et-bcK"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="btnSubmitTapped:" destination="-1" eventType="touchUpInside" id="Ob8-il-C2g"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Hcy-H1-dFl" secondAttribute="trailing" id="2vO-Dj-gJi"/>
+                <constraint firstItem="QGK-Qv-4NU" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.483092" id="BS9-jF-yU1"/>
+                <constraint firstItem="QGK-Qv-4NU" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="VdJ-YU-0EV"/>
                 <constraint firstItem="Hcy-H1-dFl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="WFd-vp-wc9"/>
+                <constraint firstItem="QGK-Qv-4NU" firstAttribute="top" secondItem="Hcy-H1-dFl" secondAttribute="bottom" constant="8" id="aMU-si-7XE"/>
                 <constraint firstItem="Hcy-H1-dFl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bY8-gm-DaI"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Hcy-H1-dFl" secondAttribute="bottom" id="eiz-Lo-Kt8"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="QGK-Qv-4NU" secondAttribute="bottom" constant="10" id="iYx-C7-eUu"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="105.80357142857143"/>

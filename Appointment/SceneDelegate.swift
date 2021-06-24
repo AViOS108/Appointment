@@ -42,7 +42,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 let viewcontrollerHome = BaseTabBarViewController()
                 let navigationController = UINavigationController.init(rootViewController: viewcontrollerHome)
-                
                 let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
                 let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
                 
@@ -50,14 +49,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 SlideMenuOptions.contentViewScale = 1.0
                 windowI.backgroundColor = .clear
-                windowI.rootViewController = navigationController
+                windowI.rootViewController = v1
                 windowI.makeKeyAndVisible()
                 
             }
             else{
-                let erside = ERSideTabBar()
-                var  erSideTabbar =  (UIStoryboard(name: "ERSideHome", bundle: Bundle.main).instantiateViewController(withIdentifier: "ERSideTabBar") as! ERSideTabBar );
-                windowI.rootViewController = erSideTabbar
+                let  erSideTabbar =  (UIStoryboard(name: "ERSideHome", bundle: Bundle.main).instantiateViewController(withIdentifier: "ERSideTabBar") as! ERSideTabBar );
+              
+                let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
+                let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
+                
+                let v1 = SlideMenuController(mainViewController: erSideTabbar, leftMenuViewController: navigationControllerS);
+                
+                SlideMenuOptions.contentViewScale = 1.0
+                windowI.backgroundColor = .clear
+                
+                windowI.rootViewController = v1
                 windowI.makeKeyAndVisible()
                 
             }

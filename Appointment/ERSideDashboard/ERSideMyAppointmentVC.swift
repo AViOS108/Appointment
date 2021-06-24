@@ -22,11 +22,115 @@ enum indexSelectedEnum {
 class ERSideMyAppointmentVC: SuperViewController,UISearchBarDelegate,ERFilterViewControllerDelegate,
 ERSideMyAppoinmentTableViewCellDelegate{
    
-    
-   
-    
-    
+    @IBOutlet weak var viewFloatingOuter: UIView!
+    @IBOutlet weak var nslayoutConstrintFloatingHeight: NSLayoutConstraint!
 
+    @IBOutlet weak var btnFloatingButton: UIButton!
+    @IBOutlet weak var viewContainer: UIView!
+
+    @IBOutlet weak var imgViewSetOpen: UIImageView!
+     @IBOutlet weak var lblSetOpen: UILabel!
+    @IBOutlet weak var btnSetOpenHour: UIButton!
+       
+       @IBAction func btnSetOpenHourTaped(_ sender: Any) {
+           
+           UIView.animate(withDuration: 0.25, animations: {
+                      self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+                  })
+           
+           let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
+           let navigationController = UINavigationController.init(rootViewController: objERSideOpenHourListVC)
+           self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
+       }
+    
+    
+     @IBOutlet weak var imgViewDuplicate: UIImageView!
+     @IBOutlet weak var lblNextDuplicate: UILabel!
+    
+     @IBOutlet weak var imgViewAddHOc: UIImageView!
+        @IBOutlet weak var lblAddHOc: UILabel!
+     
+     @IBAction func btnAdHocTapped(_ sender: Any) {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+        })
+     
+        
+        let objAdhocFlowFirstViewController = AdhocFlowFirstViewController.init(nibName: "AdhocFlowFirstViewController", bundle: nil)
+        objAdhocFlowFirstViewController.dateSelected = Date()
+        self.navigationController?.pushViewController(objAdhocFlowFirstViewController, animated: false)
+     }
+     
+     @IBOutlet weak var btnAdHoc: UIButton!
+    @IBOutlet weak var btnDuplicate: UIButton!
+      
+      
+    @IBAction func btnDuplicateTapped(_ sender: Any) {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+        })
+        
+        let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
+        let navigationController = UINavigationController.init(rootViewController: objERSideOpenHourListVC)
+        self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
+    }
+    
+    
+    
+    @IBAction func btnFloatingButtonTapped(_ sender: UIButton) {
+        
+        if viewFloatingOuter.isHidden {
+            UIView.animate(withDuration: 0.25, animations: {
+                self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 15)
+            })
+            viewContainer.isHidden = false
+            viewFloatingOuter.isHidden = false
+            UIView.animate(withDuration:0.9,
+                           delay: 0,
+                           usingSpringWithDamping: 0.4,
+                           initialSpringVelocity: 0,
+                           options: [],
+                           animations: {
+                            
+                            self.nslayoutConstrintFloatingHeight.constant = 130
+                            self.viewContainer.layoutIfNeeded()
+                            
+                            //Do all animations here
+            }, completion: {
+                //Code to run after animating
+                (value: Bool) in
+            })
+        }
+        else{
+            UIView.animate(withDuration: 0.25, animations: {
+                self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+            })
+            UIView.animate(withDuration:0.9,
+                           delay: 0,
+                           usingSpringWithDamping: 0.4,
+                           initialSpringVelocity: 0,
+                           options: [],
+                           animations: {
+                            
+                            self.viewContainer.isHidden = true
+                            self.viewFloatingOuter.isHidden = true
+                            self.viewContainer.layoutIfNeeded()
+                            
+                            //Do all animations here
+            }, completion: {
+                //Code to run after animating
+                
+                (value: Bool) in
+                self.nslayoutConstrintFloatingHeight.constant = 0
+                
+            })
+            
+        }
+        
+    }
+    
+    
+    
     var indexSelected : indexSelectedEnum!;
     
     var objERFilterTag : [ERFilterTag]?
@@ -69,24 +173,38 @@ ERSideMyAppoinmentTableViewCellDelegate{
         txtSearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         txtSearchBar.placeholder = "Search Appoinments"
         txtSearchBar.backgroundColor = .clear
+        customizFloatingButton()
         
     }
+   
     override func viewWillDisappear(_ animated: Bool) {
-                self.hidesBottomBarWhenPushed = true;
+        
+        if  self.navigationController?.viewControllers.count ?? 0 > 1 {
+            self.tabBarController?.tabBar.isHidden = true
 
+        }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if self.isMovingFromParent{
+          print("pu")
+        }
+        if self.isMovingToParent{
+            print("pu1")
+
+        }
+                  self.tabBarController?.tabBar.isHidden = false
+       }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.hidesBottomBarWhenPushed = false;
 
         viewCollection.backgroundColor = ILColor.color(index: 23)
         viewCollection.delegateI = self
         viewCollection.customize()
         self.view.backgroundColor = ILColor.color(index: 22)
-        GeneralUtility.customeNavigationBarERSideMyAppointment(viewController: self,title:"Appointments");
-        
+        GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"Appointments");
         btnFilter.setImage(UIImage.init(named: "noun_filter_"), for: .normal);
-
+        foatingViewCustomization();
         
         refreshControl.bounds = CGRect.init(x: refreshControl.bounds.origin.x, y: 10, width: refreshControl.bounds.size.width, height: refreshControl.bounds.size.height)
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
@@ -103,6 +221,7 @@ ERSideMyAppoinmentTableViewCellDelegate{
     }
     
     @objc func refreshControlAPi(){
+        resetDataModal()
             callViewModal()
              
          }
@@ -116,8 +235,13 @@ ERSideMyAppoinmentTableViewCellDelegate{
         
     }
     @objc override func logout(sender: UIButton) {
-        
+        GeneralUtility.alertViewLogout(title: "".localized(), message: "LOGOUT".localized(), viewController: self, buttons: ["Cancel","Ok"]);
     }
+    
+    @objc override func humbergerCilcked(sender: UIBarButtonItem) {
+        self.toggleLeft()
+    }
+    
     
     func viewModalUpcomingCalling()  {
         viewModalupcomming = ERHomeViewModal()
@@ -180,16 +304,23 @@ ERSideMyAppoinmentTableViewCellDelegate{
             tablViewHandler.dataAppoinmentModal = self.dataModalPast;
             tablViewHandler.customization()
         }
-        
+        btnFloatingButton.isHidden = false
+
     }
     
     
 }
 
+
+
+
+
+
 //Mark : Clickable logics
 
 
 extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
+    
     func refreshTableView() {
         self.resetDataModal()
         self.callViewModal()
@@ -200,22 +331,21 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
         let objERAppointmentDetailViewController = ERAppointmentDetailViewController.init(nibName: "ERAppointmentDetailViewController", bundle: nil)
         objERAppointmentDetailViewController.selectedResult =  self.selectedResult;
         objERAppointmentDetailViewController.index = selected
-        
         self.navigationController?.pushViewController(objERAppointmentDetailViewController, animated: false)
         
     }
     
-    func acceptCustomize(){
-        
+    func acceptApi(){
         let params = [
-            "_method" : "patch",
-            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
-            ] as Dictionary<String,AnyObject>
+            "_method" : "post",
+            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String,
+            "appointment_id": selectedResult.id ?? "0"
+        ] as Dictionary<String,AnyObject>
         
-        var activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.AcceptOpenHour)
-        ERSideAppointmentService().erSideAppointemntAccept(params: params, id: String(describing: selectedResult.id ?? 0) , { (jsonData) in
+        let activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.AcceptOpenHour)
+        ERSideAppointmentService().erSideAppointemntAccept(params: params, id: String(describing: selectedResult.requests?[0].id ?? 0) , { (jsonData) in
             activityIndicator.hide()
-            
+           
             GeneralUtility.alertView(title: "", message: "Accepted".localized(), viewController: self, buttons: ["Ok"]);
             self.resetDataModal()
             self.callViewModal()
@@ -225,6 +355,14 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
             
         }
         
+    }
+    
+    func acceptCustomize(){
+        
+        
+        GeneralUtility.alertViewWithClousre(title: "", message: "Are you sure to accept this Appoinment", viewController: self, buttons: ["Cancel","Ok"]) {
+            self.acceptApi()
+        }
         
     }
     func declineCustomize(){
@@ -263,7 +401,7 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
         self.navigationController?.pushViewController(objERSideResumeListViewController, animated: false)
         
     }
-   
+    
     
     func changeInFollowingWith(results: ERSideAppointmentModalNewResult, index: Int?) {
         
@@ -631,4 +769,91 @@ extension ERSideMyAppointmentVC:ERHomeViewModalVMDelegate,ERSideMyAppointmentCol
             CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
         }
     }
+}
+extension ERSideMyAppointmentVC:UIGestureRecognizerDelegate{
+    
+    func foatingViewCustomization()
+    {
+        self.viewContainer.isHidden = true
+        self.viewFloatingOuter.isHidden = true
+        
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+        UILabel.labelUIHandling(label: lblSetOpen, text: " Set Advising Appoinment Hours ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
+        UILabel.labelUIHandling(label: lblNextDuplicate, text: " Duplicate Schedule ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
+        
+        UILabel.labelUIHandling(label: lblAddHOc, text: " Add Ad hoc Appointment ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
+        imgViewAddHOc.image = UIImage.init(named: "Adhoc")
+        imgViewAddHOc.contentMode = .scaleToFill
+
+        
+        lblNextDuplicate.textAlignment = .center
+        lblSetOpen.textAlignment = .center
+        lblAddHOc.textAlignment = .center
+
+        imgViewSetOpen.image = UIImage.init(named: "appoinmentHour")
+        imgViewSetOpen.contentMode = .scaleToFill
+        imgViewDuplicate.image = UIImage.init(named: "duplicate")
+        viewContainer.backgroundColor = .clear
+        imgViewDuplicate.contentMode = .scaleToFill
+
+        lblNextDuplicate.backgroundColor = ILColor.color(index: 25)
+        lblSetOpen.backgroundColor = ILColor.color(index: 25)
+        lblAddHOc.backgroundColor = ILColor.color(index: 25)
+
+        self.viewFloatingOuter.tag = 19683
+        tapGesture()
+        viewFloatingOuter.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
+        
+        
+    }
+    
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view?.isDescendant(of: self.view) == true  && touch.view?.tag != 19683  {
+            self.view.resignFirstResponder()
+            
+            return false
+        }
+        return true
+    }
+    
+    func tapGesture()  {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        tap.delegate = self
+        self.viewFloatingOuter.isUserInteractionEnabled = true
+        self.viewFloatingOuter.addGestureRecognizer(tap)
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        viewContainer.isHidden = true
+        viewFloatingOuter.isHidden = true
+        self.nslayoutConstrintFloatingHeight.constant = 0
+        UIView.animate(withDuration: 0.25, animations: {
+            self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+        })
+        
+    }
+    func customizFloatingButton(){
+           
+           UIButton.buttonUIHandling(button: btnFloatingButton, text: "", backgroundColor: .white,  cornerRadius: Int(btnFloatingButton.frame.size.width)/2,  buttonImage: UIImage.init(named: "plus"))
+           
+           self.shadowWithCorner(viewContainer: btnFloatingButton)
+           
+           
+           
+       }
+       
+       
+       func shadowWithCorner(viewContainer : UIView)
+       {
+           viewContainer.layer.masksToBounds = false
+           viewContainer.layer.shadowColor = ILColor.color(index: 27).cgColor
+           viewContainer.layer.shadowOffset =  CGSize.zero
+           viewContainer.layer.shadowOpacity = 0.5
+           viewContainer.layer.shadowRadius = 4
+           
+       }
+       
+    
+    
 }

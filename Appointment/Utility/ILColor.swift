@@ -237,13 +237,25 @@ import UIKit
                  }
         
         else if index == 53 {
-            // background appointment color #797979
             return UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1.0)
         }
         else if index == 54 {
-            // background appointment color #797979
             return UIColor.init(red: 235/255, green: 235/255, blue: 235/255, alpha: 1.0)
         }
+        else if index == 55 {
+            return UIColor.init(red: 214/255, green: 243/255, blue: 255/255, alpha: 1.0)
+        }
+        else if index == 56 {
+            return UIColor.init(red: 255/255, green: 251/255, blue: 224/255, alpha: 1.0)
+        }
+        else if index == 57 {
+            return UIColor.init(red: 227/255, green: 93/255, blue: 93/255, alpha: 1.0)
+        }
+        else if index == 58 {
+            return UIColor.init(red: 5/255, green: 145/255, blue: 102/255, alpha: 1.0)
+        }
+        
+        
         return UIColor.clear
     }
 }

@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol ERSideFIrstTypeCollectionViewDelegate {
+    func acceptDeclineApi(isAccept : Bool)
+}
+
+
 class ERSideFIrstTypeCollectionView: UICollectionView, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     var appoinmentDetailAllModalObj: ApooinmentDetailAllNewModal?
+    var delegateI : ERSideFIrstTypeCollectionViewDelegate!
     var viewController : UIViewController!
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -51,6 +57,7 @@ class ERSideFIrstTypeCollectionView: UICollectionView, UICollectionViewDataSourc
         cell.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj
         cell.index = self.appoinmentDetailAllModalObj?.status ?? 2
         cell.indexPathRow = indexPath.row
+        cell.delegate = self
         cell.customization();
         
         
@@ -69,7 +76,6 @@ class ERSideFIrstTypeCollectionView: UICollectionView, UICollectionViewDataSourc
 extension ERSideFIrstTypeCollectionView :ERAppoDetailFirstCollectionViewLayoutDelegate{
     func collectionView(_ collectionView: UICollectionView, width: CGFloat, heightForCellAtIndexpath indexPath: IndexPath) -> CGFloat {
         
-        
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: (viewController.view.frame.width - 48), height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -80,12 +86,26 @@ extension ERSideFIrstTypeCollectionView :ERAppoDetailFirstCollectionViewLayoutDe
         label.attributedText = cell.descriptionLogic()
         //    label.attributedText = attributedText
         label.sizeToFit()
-        return label.frame.height + 120        
+        return 285.0
       
     }
     
     func widthCell() -> CGFloat {
-        return  viewController.view.frame.width
+        return  (viewController.view.frame.width - 16)
     }
     
+}
+
+extension ERSideFIrstTypeCollectionView : ERSideAppoDetailTypeFirstCollectionViewCellDelegate {
+    func acceptDeclineApi(isAccept: Bool) {
+        delegateI.acceptDeclineApi(isAccept: isAccept)
+    }
+    func moveCollectionView(backward: Bool) {
+        if backward {
+            self.scrollToPreviousItem()
+        }
+        else{
+            self.scrollToNextItem()
+        }
+    }
 }

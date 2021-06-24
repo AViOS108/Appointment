@@ -17,6 +17,7 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
     @IBAction func btnDuplicateTapped(_ sender: Any) {
         let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
         objERSideOpenHourListVC.objviewTypeOpenHour = .duplicateSetHour
+        objERSideOpenHourListVC.delegate = self
         objERSideOpenHourListVC.dateSelected = self.dateSelected
         self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
         
@@ -27,6 +28,8 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
     @IBAction func btnSetOpenHoursTapped(_ sender: Any) {
         let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
         objERSideOpenHourListVC.objviewTypeOpenHour = .setOpenHour
+        objERSideOpenHourListVC.delegate = self
+
         objERSideOpenHourListVC.dateSelected = self.dateSelected
         self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
     }
@@ -34,10 +37,8 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
     //Zero State
     
     @IBOutlet weak var viewZeroState: UIView!
-       @IBOutlet weak var imageViewZeroState: UIImageView!
-       @IBOutlet weak var lblZeroState: UILabel!
-    
-    
+    @IBOutlet weak var imageViewZeroState: UIImageView!
+    @IBOutlet weak var lblZeroState: UILabel!
     
     
     // TimeZOne
@@ -48,7 +49,7 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
     var dashBoardViewModal = DashBoardViewModel()
     var selectedTextZone = ""
     @IBOutlet weak var btnSelectTimeZOne: UIButton!
-
+    
     
     // DATECALENDER VIEW
     
@@ -59,11 +60,11 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
     @IBOutlet weak var lblMonth: UILabel!
     var dateSelected : Date!
     @IBOutlet weak var viewOuter: UIView!
-
+    
     var viewModalERSideOH : ERSideOpenhourVM!
     var tblViewHandler : ERSideOpenHourTableHandler!
     var dataAppoinmentModal: ERSideOPenHourModal?
-
+    
     
     @IBOutlet weak var nslayoutbtnDuplicateHeight: NSLayoutConstraint!
     
@@ -72,7 +73,7 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
         super.viewDidLoad()
         zeroStateLogic()
         btnSetOpenHours.isHidden = true
-                   btnDuplicate.isHidden = true
+        btnDuplicate.isHidden = true
         
         calenderView()
         dashBoardViewModal.viewController = self
@@ -82,12 +83,11 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
             self.viewModalCalling()
             
         }
-        
         // Do any additional setup after loading the view.
     }
     override func buttonClicked(sender: UIBarButtonItem) {
-           self.navigationController?.popViewController(animated: false)
-       }
+        self.navigationController?.popViewController(animated: false)
+    }
     
     func zeroStateLogic()  {
         if self.dataAppoinmentModal?.results?.count == 0
@@ -103,13 +103,14 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
             btnDuplicate.isHidden = true
             nslayoutbtnDuplicateHeight.constant = 0
             btnSetOpenHours.isHidden = false
-
+            
         }
         else{
             self.viewZeroState.isHidden = true
             self.tblView.isHidden = false
             btnSetOpenHours.isHidden = false
             btnDuplicate.isHidden = false
+            nslayoutbtnDuplicateHeight.constant = 50
 
         }
     }
@@ -127,14 +128,14 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
         UIButton.buttonUIHandling(button: btnDuplicate, text: "Duplicate Schedules", backgroundColor: .white, textColor: ILColor.color(index: 23), cornerRadius: 3,borderColor: ILColor.color(index: 23),borderWidth: 1, fontType: fontheavy)
         
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: " Advising Appointment Hour")
-
-       
+        
+        
     }
     
     
     func refreshModal(){
         self.viewModalCalling()
-
+        
     }
     
     func customizeTableView()
@@ -319,49 +320,49 @@ extension ERSideOpenHourListVC: ERSideHeaderCollectionVCDelegate{
 extension ERSideOpenHourListVC : TimeZoneViewControllerDelegate {
     
     func sendTimeZoneSelected(timeZone: TimeZoneSel) {
-           self.txtTimeZone.text = timeZone.displayName
-           self.viewModalCalling()
-
-       }
+        self.txtTimeZone.text = timeZone.displayName
+        self.viewModalCalling()
+        
+    }
     
     
     func setTimeZoneTextField()  {
-           let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE12)
-           let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
-           UILabel.labelUIHandling(label: lblTimeZone, text: "Time Zone", textColor:ILColor.color(index: 42) , isBold: false, fontType: fontMedium)
-           for timeZone in timeZOneArr{
-               if timeZone.offset == GeneralUtility().currentOffset() && timeZone.identifier == GeneralUtility().getCurrentTimeZone(){
-                   selectedTextZone = timeZone.displayName!
-                   break
-               }
-           }
-           self.txtTimeZone.text = selectedTextZone
-           self.txtTimeZone.font = fontHeavy1
-           self.txtTimeZone.layer.borderColor = ILColor.color(index: 27).cgColor
-           self.txtTimeZone.layer.borderWidth = 1;
-           self.txtTimeZone.layer.cornerRadius = 3;
-           self.txtTimeZone.rightView = UIImageView.init(image: UIImage.init(named: "dropdown"))
-           txtTimeZone.rightViewMode = .always;
-           
-           timeZoneViewController = TimeZoneViewController.init(nibName: "TimeZoneViewController", bundle: nil)
-           timeZoneViewController.delegate = self
-           timeZoneViewController.selectedTextZone = selectedTextZone
-           timeZoneViewController.viewControllerI = self
-           timeZoneViewController.modalPresentationStyle = .overFullScreen
-           
-           
-       }
+        let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE12)
+        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
+        UILabel.labelUIHandling(label: lblTimeZone, text: "Time Zone", textColor:ILColor.color(index: 42) , isBold: false, fontType: fontMedium)
+        for timeZone in timeZOneArr{
+            if timeZone.offset == GeneralUtility().currentOffset() && timeZone.identifier == GeneralUtility().getCurrentTimeZone(){
+                selectedTextZone = timeZone.displayName!
+                break
+            }
+        }
+        self.txtTimeZone.text = selectedTextZone
+        self.txtTimeZone.font = fontHeavy1
+        self.txtTimeZone.layer.borderColor = ILColor.color(index: 27).cgColor
+        self.txtTimeZone.layer.borderWidth = 1;
+        self.txtTimeZone.layer.cornerRadius = 3;
+        self.txtTimeZone.rightView = UIImageView.init(image: UIImage.init(named: "dropdown"))
+        txtTimeZone.rightViewMode = .always;
+        
+        timeZoneViewController = TimeZoneViewController.init(nibName: "TimeZoneViewController", bundle: nil)
+        timeZoneViewController.delegate = self
+        timeZoneViewController.selectedTextZone = selectedTextZone
+        timeZoneViewController.viewControllerI = self
+        timeZoneViewController.modalPresentationStyle = .overFullScreen
+        
+        
+    }
     
     
     @IBAction func btnSelectTimeZoneTapped(_ sender: UIButton) {
-           let frameI =
-           txtTimeZone.superview?.convert(txtTimeZone.frame, to: nil)
-           
-           timeZoneViewController.txtfieldRect = frameI
-           self.present(timeZoneViewController, animated: false) {
-               self.timeZoneViewController.reloadTableview()
-           }
-       }
+        let frameI =
+            txtTimeZone.superview?.convert(txtTimeZone.frame, to: nil)
+        
+        timeZoneViewController.txtfieldRect = frameI
+        self.present(timeZoneViewController, animated: false) {
+            self.timeZoneViewController.reloadTableview()
+        }
+    }
     
     
     

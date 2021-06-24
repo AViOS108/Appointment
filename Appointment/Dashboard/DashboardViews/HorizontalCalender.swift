@@ -240,8 +240,6 @@ class HorizontalCalender: UIView,UICollectionViewDelegate,UICollectionViewDataSo
 
 extension UICollectionView {
     
-   
-    
     @objc func scrollToNextItem() {
         let contentOffset = CGFloat(floor(self.contentOffset.x + self.bounds.size.width))
         self.moveToFrame(contentOffset: contentOffset)

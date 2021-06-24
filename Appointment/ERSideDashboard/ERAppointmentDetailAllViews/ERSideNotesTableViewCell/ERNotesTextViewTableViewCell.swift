@@ -38,9 +38,11 @@ class ERNotesTextViewTableViewCell: TableviewCellSuperClass, UITextViewDelegate 
     func customization()  {
         
         txtView.delegate = self
-        txtView.text = "Type here (max 10000 characters)"
+        if txtView.text.isEmpty {
+            txtView.text = "Type here (max 10000 characters)"
+            txtView.textColor = .lightGray
+        }
         self.addInputAccessoryForTextView(textVIew: txtView )
-        txtView.textColor = .lightGray
 
         txtView.backgroundColor = ILColor.color(index: 22)
         txtView.autocorrectionType = .no
