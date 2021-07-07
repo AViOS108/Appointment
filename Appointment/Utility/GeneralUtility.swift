@@ -251,6 +251,36 @@ class GeneralUtility {
     }
     
     
+    class func customeNavigationBarWithBackAndPrint(viewController: UIViewController,title:String){
+        
+        
+        
+        let backButton = UIButton(type: .custom)
+        backButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        backButton.addTarget(viewController, action: #selector(SuperViewController.buttonClicked(sender:)), for: .touchUpInside)
+        backButton.setImage(UIImage.init(named: "Back"), for: .normal)
+        backButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: -30, bottom: 0, right: 0)
+        backButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: -40, bottom: 0, right: 0)
+        
+        backButton.setTitle(title, for: .normal)
+        backButton.semanticContentAttribute = .forceLeftToRight
+        
+        let back =  UIBarButtonItem(customView: backButton)
+        viewController.navigationItem.leftBarButtonItem = back
+        
+        
+        let calenderButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
+        calenderButton.contentMode = .scaleAspectFit
+        //        searchButton.backgroundColor = .red
+        calenderButton.addTarget(viewController, action: #selector(SuperViewController.calenderClicked(sender:)), for: .touchUpInside)
+        calenderButton.setImage(UIImage.init(named: "Calendar"), for: .normal)
+        let calender =  UIBarButtonItem(customView: calenderButton)
+        viewController.navigationItem.rightBarButtonItems = [calender];
+        viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+    }
+    
+    
     
     class func customeNavigationBarWithBack(viewController: UIViewController,title:String){
         
@@ -320,7 +350,28 @@ class GeneralUtility {
         viewController.navigationItem.rightBarButtonItems = [addButtonBarButton];
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
     }
+    
+    class func customeNavigationBarWithTwoButtons(viewController: UIViewController,titleButtonL:String, TittleButtonR: String,titleNavBar: String){
         
+        let left = UIBarButtonItem(title: titleButtonL, style: .plain, target: viewController, action: #selector(SuperViewController.buttonClickedLeft(sender:)));
+        viewController.navigationItem.leftBarButtonItems = [left];
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+
+        left.setTitleTextAttributes(textAttributes, for: .normal)
+        viewController.navigationController?.navigationBar.isTranslucent = true
+        viewController.navigationController?.navigationBar.topItem?.title = titleNavBar;
+        viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        let rightButton = UIBarButtonItem(title: TittleButtonR, style: .plain, target: viewController, action: #selector(SuperViewController.buttonClickedRight(sender:)));
+        viewController.navigationItem.rightBarButtonItems = [rightButton];
+        rightButton.setTitleTextAttributes(textAttributes, for: .normal)
+
+        viewController.navigationController?.navigationBar.isTranslucent = true
+        viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        
+        
+        
+    }
     
     public class func optionalHandling<T>(_param: T!, _returnType: T.Type) -> T {
         if let value = _param {

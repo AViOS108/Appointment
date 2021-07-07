@@ -176,6 +176,12 @@ class ERLoginViewController: UIViewController {
                     if Managementaccess && eventaccess{
                         UserDefaultsDataSource(key: "loggedIn").writeData(true)
                         AppDataSync.shared.beginTimer()
+                        
+                        UserDefaultsDataSource(key: "userEmail").writeData(modalEventI.email)
+                        UserDefaultsDataSource(key: "firstName").writeData(modalEventI.name?.trimmingCharacters(in: .whitespaces))
+                        UserDefaultsDataSource(key: "userProfile").writeData(modalEventI.picture)
+                        UserDefaultsDataSource(key: "lastName").writeData("")
+                        
                         (UIApplication.shared.delegate as? AppDelegate)?.checkLoginState()
                     }
                     else{

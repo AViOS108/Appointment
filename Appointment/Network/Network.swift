@@ -345,11 +345,9 @@ class Network {
                documentsURL.appendPathComponent("yourFileName"+".pdf")
                return (documentsURL, [.removePreviousFile])
         }
-        
-        _ = params
         if(!addHeader){
             
-            Alamofire.download("https://www.tutorialspoint.com/swift/swift_tutorial.pdf", to: destination).response { response in
+            Alamofire.download(url, to: destination).response { response in
                 
                 let responseDict =          ["destinationUrl":response.destinationURL,
                                 "tempUrl": response.temporaryURL]
@@ -357,7 +355,7 @@ class Network {
                 completion(responseDict as Dictionary<String, Any>)
             }
         }else{
-            Alamofire.download("https://www.tutorialspoint.com/swift/swift_tutorial.pdf", to: destination).response { response in
+            Alamofire.download(url, to: destination).response { response in
                 print(response)
             }
         }

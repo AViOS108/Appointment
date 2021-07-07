@@ -217,7 +217,29 @@ class Urls {
     }
     
     func uploadProfilePicture() -> String{
-        return "\(type1)profile/photo"
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true
+        {
+            return "\(type1)profile/photo"
+        }
+        else
+        {
+            return "\(type9)users/me/profile_picture"
+        }
+    }
+    
+    func updateProfileNew() -> String{
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true
+        {
+            return "\(type1)users/me"
+        }
+        else
+        {
+            return "\(type9)users/me"
+        }
     }
     
     func verifyPayment(provider: String) -> String{

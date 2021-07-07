@@ -48,6 +48,11 @@
 		1A2243082628737C00C6F101 /* ERSideNotesSpecificUserModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2243072628737C00C6F101 /* ERSideNotesSpecificUserModal.swift */; };
 		1A22430B262EDB6800C6F101 /* ERSelecteSpecificUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A224309262EDB6800C6F101 /* ERSelecteSpecificUserViewController.swift */; };
 		1A22430C262EDB6800C6F101 /* ERSelecteSpecificUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A22430A262EDB6800C6F101 /* ERSelecteSpecificUserViewController.xib */; };
+		1A4939D42692DBA400A4C8A5 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4939D02692DBA400A4C8A5 /* ChangePasswordViewController.swift */; };
+		1A4939D52692DBA400A4C8A5 /* ProfilePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4939D12692DBA400A4C8A5 /* ProfilePictureViewController.swift */; };
+		1A4939D62692DBA400A4C8A5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4939D22692DBA400A4C8A5 /* ProfileViewController.swift */; };
+		1A4939D72692DBA400A4C8A5 /* SettingProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A4939D32692DBA400A4C8A5 /* SettingProfile.storyboard */; };
+		1A493A602694834100A4C8A5 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A493A5F2694834100A4C8A5 /* Settings.storyboard */; };
 		1A54700924B59460005F1058 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54700824B59460005F1058 /* AppDelegate.swift */; };
 		1A54700B24B59460005F1058 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54700A24B59460005F1058 /* SceneDelegate.swift */; };
 		1A54700D24B59460005F1058 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54700C24B59460005F1058 /* ViewController.swift */; };
@@ -209,7 +214,6 @@
 		1A6CAF9D251DFFEC000C9887 /* NextStepCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CAF9C251DFFEC000C9887 /* NextStepCollectionView.swift */; };
 		1A6CAFA0251E006A000C9887 /* NextStepCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6CAF9E251E006A000C9887 /* NextStepCollectionViewCell.swift */; };
 		1A6CAFA1251E006A000C9887 /* NextStepCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A6CAF9F251E006A000C9887 /* NextStepCollectionViewCell.xib */; };
-		1A6CAFA325222C09000C9887 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A6CAFA225222C09000C9887 /* Settings.storyboard */; };
 		1A712B6224FE3E1000D761D2 /* TimeZoneModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A712B6124FE3E1000D761D2 /* TimeZoneModal.swift */; };
 		1A725F6425B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A725F6225B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.swift */; };
 		1A725F6525B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A725F6325B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.xib */; };
@@ -387,6 +391,11 @@
 		1A2243072628737C00C6F101 /* ERSideNotesSpecificUserModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideNotesSpecificUserModal.swift; sourceTree = "<group>"; };
 		1A224309262EDB6800C6F101 /* ERSelecteSpecificUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSelecteSpecificUserViewController.swift; sourceTree = "<group>"; };
 		1A22430A262EDB6800C6F101 /* ERSelecteSpecificUserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERSelecteSpecificUserViewController.xib; sourceTree = "<group>"; };
+		1A4939D02692DBA400A4C8A5 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		1A4939D12692DBA400A4C8A5 /* ProfilePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePictureViewController.swift; sourceTree = "<group>"; };
+		1A4939D22692DBA400A4C8A5 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		1A4939D32692DBA400A4C8A5 /* SettingProfile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingProfile.storyboard; sourceTree = "<group>"; };
+		1A493A5F2694834100A4C8A5 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1A54700524B59460005F1058 /* Appointment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Appointment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A54700824B59460005F1058 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A54700A24B59460005F1058 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -554,7 +563,6 @@
 		1A6CAF9C251DFFEC000C9887 /* NextStepCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextStepCollectionView.swift; sourceTree = "<group>"; };
 		1A6CAF9E251E006A000C9887 /* NextStepCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextStepCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A6CAF9F251E006A000C9887 /* NextStepCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NextStepCollectionViewCell.xib; sourceTree = "<group>"; };
-		1A6CAFA225222C09000C9887 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1A712B6124FE3E1000D761D2 /* TimeZoneModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeZoneModal.swift; sourceTree = "<group>"; };
 		1A725F6225B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERUpdateStatusAddNextStepViewController.swift; sourceTree = "<group>"; };
 		1A725F6325B06C7E007DFF4E /* ERUpdateStatusAddNextStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERUpdateStatusAddNextStepViewController.xib; sourceTree = "<group>"; };
@@ -779,9 +787,22 @@
 			path = ERSideNotesTableViewCell;
 			sourceTree = "<group>";
 		};
+		1A4939CF2692DBA400A4C8A5 /* SettingProfile */ = {
+			isa = PBXGroup;
+			children = (
+				1A4939D02692DBA400A4C8A5 /* ChangePasswordViewController.swift */,
+				1A4939D12692DBA400A4C8A5 /* ProfilePictureViewController.swift */,
+				1A4939D22692DBA400A4C8A5 /* ProfileViewController.swift */,
+				1A4939D32692DBA400A4C8A5 /* SettingProfile.storyboard */,
+			);
+			name = SettingProfile;
+			path = Appointment/SettingProfile;
+			sourceTree = "<group>";
+		};
 		1A546FFC24B59460005F1058 = {
 			isa = PBXGroup;
 			children = (
+				1A4939CF2692DBA400A4C8A5 /* SettingProfile */,
 				1A6A77372643BFDA0022DC27 /* AdHocFlow */,
 				1A61EFE1250616C500257CB5 /* CoachSelectionPopViewC */,
 				1A9532D0256E868100EC3D1F /* ERSideOpenHour */,
@@ -961,7 +982,7 @@
 		1A54706724B5D241005F1058 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1A6CAFA225222C09000C9887 /* Settings.storyboard */,
+				1A493A5F2694834100A4C8A5 /* Settings.storyboard */,
 				1A54706824B5D241005F1058 /* Login.storyboard */,
 			);
 			path = Views;
@@ -1585,10 +1606,10 @@
 				1AE09EF625EF99E000542493 /* ERSideTimeSlotDuplicate.xib in Resources */,
 				1A85BE9A258CD52600E72A3A /* ERSideFilterTableViewCell.xib in Resources */,
 				1A89E7F32567972A00A34C0F /* ERSideMyAppointmentHeaderCollectionViewCell.xib in Resources */,
+				1A493A602694834100A4C8A5 /* Settings.storyboard in Resources */,
 				1A2243042628628300C6F101 /* ERNotesHeaderTypeTableViewCell.xib in Resources */,
 				1AE9E800252C881300843D88 /* EditNotesViewController.xib in Resources */,
 				1A79151E25383C7900BC0AA7 /* FeedbackViewController.xib in Resources */,
-				1A6CAFA325222C09000C9887 /* Settings.storyboard in Resources */,
 				1AF8188624F64B0E00C52286 /* CoachSelectionViewController.xib in Resources */,
 				1A5470FF24B5DE9D005F1058 /* SliderViewController.xib in Resources */,
 				1AD10EA02615C7B4007F6115 /* ERSideAppoDetailTypeFirstCollectionViewCell.xib in Resources */,
@@ -1605,6 +1626,7 @@
 				1A8B503E251B640A00111C77 /* NotesAppointmentTableViewCell.xib in Resources */,
 				1A61EFF4250773DA00257CB5 /* ConfirmationPopUpFirstTableViewCell.xib in Resources */,
 				1A1053722577D81300FD3CF0 /* ERSideOpenCreateEditSecondVC.xib in Resources */,
+				1A4939D72692DBA400A4C8A5 /* SettingProfile.storyboard in Resources */,
 				1A5470F624B5D2AE005F1058 /* Localizable.strings in Resources */,
 				1A725F6925B06C92007DFF4E /* ERAddNotesViewController.xib in Resources */,
 				1A6CAF97251DFA8D000C9887 /* AppoinmentPurposeTableViewCell.xib in Resources */,
@@ -1891,6 +1913,7 @@
 				1A8B5036251A1E4A00111C77 /* AppoinmentdetailViewModal.swift in Sources */,
 				1A61EFFB250A13E300257CB5 /* ConfirmationPopupFileShareTableViewCell.swift in Sources */,
 				1AB4EE99262EE702006078C9 /* ERSideSpecificUserTableViewCell.swift in Sources */,
+				1A4939D42692DBA400A4C8A5 /* ChangePasswordViewController.swift in Sources */,
 				1A0053A52511ED780065C63E /* HomeMyAppointmentTableViewController.swift in Sources */,
 				1A54706B24B5D241005F1058 /* SelectCommunityViewController.swift in Sources */,
 				1A54708624B5D242005F1058 /* LoginService.swift in Sources */,
@@ -1990,6 +2013,7 @@
 				1AD10EA32615DD9D007F6115 /* ERAppoDetailSecondTableViewCell.swift in Sources */,
 				1A725F6B25BADE75007DFF4E /* ERSideAppoinmentDetailModal.swift in Sources */,
 				1A2242FB2628623B00C6F101 /* ERNotesTextViewTableViewCell.swift in Sources */,
+				1A4939D52692DBA400A4C8A5 /* ProfilePictureViewController.swift in Sources */,
 				1A78314E24F8D37F0054AAF8 /* HorizontalCalender.swift in Sources */,
 				1A54711224B5E2E0005F1058 /* UIView.swift in Sources */,
 				1ABE3134260A259D001C55A2 /* ERSideAppointmentModalNew.swift in Sources */,
@@ -2020,6 +2044,7 @@
 				1A5470DE24B5D2AE005F1058 /* RefreshDBController.swift in Sources */,
 				1A08F7AA25AF0A5800E27035 /* ERCancelViewController.swift in Sources */,
 				1A54711A24B5E2E0005F1058 /* UIView+KeyboardInputAccessoryView.swift in Sources */,
+				1A4939D62692DBA400A4C8A5 /* ProfileViewController.swift in Sources */,
 				1A5470E724B5D2AE005F1058 /* UserDefaults.swift in Sources */,
 				1A85BE9125891F6B00E72A3A /* ERSideStudentListTableViewCell.swift in Sources */,
 			);

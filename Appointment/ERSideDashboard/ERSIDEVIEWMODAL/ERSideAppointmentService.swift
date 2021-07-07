@@ -287,14 +287,11 @@ class ERSideAppointmentService {
         
     }
     
-    func erSideDownloadResume(resumeId: Int,  _ success :@escaping (Dictionary<String,Any>) -> Void,failure :@escaping (String,Int) -> Void ){
+    func erSideDownloadResume(url: String,  _ success :@escaping (Dictionary<String,Any>) -> Void,failure :@escaping (String,Int) -> Void ){
         
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
         
-        let paramsResumeIDs = ["resume_ids" : [resumeId]
-        ] as Dictionary<String, AnyObject>
-        
-        Network().makeApiDownloadFile(false, url: "", methodType: .get, params: paramsResumeIDs, header: headers) { (data) in
+        Network().makeApiDownloadFile(false, url:  url, methodType: .get, params: ["":"" as AnyObject], header: headers) { (data) in
             success(data)
             
         } failure: { (error, errorCode) in

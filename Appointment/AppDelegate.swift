@@ -149,6 +149,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let navigationController = UINavigationController.init(rootViewController: viewcontrollerHome)
                     
                     let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
+                    viewcontrollerSlider.delegateRedirection = viewcontrollerHome.item1;
+
                     let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
                     
                     let v1 = SlideMenuController(mainViewController: navigationController, leftMenuViewController: navigationControllerS);
@@ -163,11 +165,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 else{
                     
                     let  erSideTabbar =  (UIStoryboard(name: "ERSideHome", bundle: Bundle.main).instantiateViewController(withIdentifier: "ERSideTabBar") as! ERSideTabBar );
-                  
+                    let navigationController = UINavigationController.init(rootViewController: erSideTabbar)
+
                     let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
                     let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
-                    
-                    let v1 = SlideMenuController(mainViewController: erSideTabbar, leftMenuViewController: navigationControllerS);
+                    viewcontrollerSlider.delegateRedirection = erSideTabbar.viewControllers?[0] as! HomeViewcontrollerRedirection
+
+                    let v1 = SlideMenuController(mainViewController: navigationController, leftMenuViewController: navigationControllerS);
                     SlideMenuOptions.contentViewScale = 1.0
                    
                     changeRootVC(v1)

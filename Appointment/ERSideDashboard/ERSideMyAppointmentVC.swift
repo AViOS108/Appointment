@@ -178,13 +178,17 @@ ERSideMyAppoinmentTableViewCellDelegate{
     }
    
     override func viewWillDisappear(_ animated: Bool) {
-        
+        slideMenuController()?.removeLeftGestures()
+
         if  self.navigationController?.viewControllers.count ?? 0 > 1 {
             self.tabBarController?.tabBar.isHidden = true
 
         }
     }
     override func viewWillAppear(_ animated: Bool) {
+        
+        
+
         
         if self.isMovingFromParent{
           print("pu")
@@ -197,6 +201,7 @@ ERSideMyAppoinmentTableViewCellDelegate{
        }
     
     override func viewDidAppear(_ animated: Bool) {
+        slideMenuController()?.addLeftGestures()
 
         viewCollection.backgroundColor = ILColor.color(index: 23)
         viewCollection.delegateI = self

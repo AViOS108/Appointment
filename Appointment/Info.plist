@@ -18,6 +18,12 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need access to the microphone to receive messages from nearby devices using sound.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>This app needs to access the camera so that you can customize your profile</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app needs to access the photo gallery so that you can customize your profile</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>

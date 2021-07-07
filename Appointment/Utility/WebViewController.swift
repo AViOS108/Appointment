@@ -1,80 +1,68 @@
-//
 //  WebViewController.swift
 //  Resume
 //
 //  Created by VM User on 09/02/17.
 //  Copyright © 2017 VM User. All rights reserved.
 //
-
 import UIKit
 import WebKit
 
-extension WKWebViewConfiguration {
-    /// Async Factory method to acquire WKWebViewConfigurations packaged with system cookies
-    static func cookiesIncluded(completion: @escaping (WKWebViewConfiguration?) -> Void) {
-        let config = WKWebViewConfiguration()
-        guard let cookies = HTTPCookieStorage.shared.cookies else {
-            completion(config)
-            return
-        }
-        // Use nonPersistent() or default() depending on if you want cookies persisted to disk
-        // and shared between WKWebViews of the same app (default), or not persisted and not shared
-        // across WKWebViews in the same app.
-        let dataStore = WKWebsiteDataStore.nonPersistent()
-        let waitGroup = DispatchGroup()
-        for cookie in cookies {
-            waitGroup.enter()
-            dataStore.httpCookieStore.setCookie(cookie) { waitGroup.leave() }
-        }
-        waitGroup.notify(queue: DispatchQueue.main) {
-            config.websiteDataStore = dataStore
-            completion(config)
-        }
-    }
+enum webViewType{
+    case printable
+    case others
 }
 
-class WebViewController: UIViewController {
+class WebViewController: SuperViewController {
 
     var webUrl: String = String()
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    var wkConfig : WKWebViewConfiguration!
+    var printController = UIPrintInteractionController.shared;
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Your webView code goes here
+        activityIndicator.startAnimating()
+        let request = NSURLRequest(url: URL(string: webUrl)!) as URLRequest
         
-        
-        WKWebViewConfiguration.cookiesIncluded { (config) in
-            let webview = WKWebView(frame: self.webview.bounds, configuration: config!)
-            
-            self.webview.addSubview(webview)
-            var request = NSURLRequest(url: URL(string: self.webUrl)!) as URLRequest
-         //
-                 request.httpMethod = "POST"
-           webview.navigationDelegate = self
-            webview.uiDelegate = self
-            webview.load(request)
-        }
-        
-//        var request = NSURLRequest(url: URL(string: webUrl)!) as URLRequest
-//
 //        request.httpMethod = "POST"
-//        //        paymentGatewayWebView.scalesPageToFit = true
-//        webview.navigationDelegate = self
-//        webview.uiDelegate = self
-//
-//        webview.load(request)
+        //        paymentGatewayWebView.scalesPageToFit = true
+        webview.navigationDelegate = self
+        webview.uiDelegate = self
         
-        
-   
-
-         
-        
-        
-        
-        
+        webview.load(request)
         activityIndicator.hidesWhenStopped = true
+        
+        GeneralUtility.customeNavigationBarWithBackAndPrint(viewController: self, title: "Print Resume")
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let printInfo = UIPrintInfo(dictionary:nil)
+        printInfo.outputType = .general
+        printInfo.jobName = webUrl
+        printInfo.duplex = .none
+        printInfo.orientation = .portrait
+
+        //New stuff
+        printController.printPageRenderer = nil
+        printController.printingItems = nil
+        printController.printingItem = URL.init(string: webUrl)
+        //New stuff
+
+        printController.printInfo = printInfo
+        printController.showsNumberOfCopies = true
+    }
+    
+    
+    @objc override func calenderClicked(sender: UIButton) {
+        printController.present(animated: false) { (interactionVC, bool, erro) in
+        }
+    }
+    
+    func printTapped(){
+       
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -97,11 +85,11 @@ class WebViewController: UIViewController {
 
 extension WebViewController : WKNavigationDelegate,WKUIDelegate{
    
-   
-    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        activityIndicator.stopAnimating()
-    }
+        if activityIndicator != nil{
+            activityIndicator.startAnimating()
+
+        }    }
     
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -119,7 +107,10 @@ extension WebViewController : WKNavigationDelegate,WKUIDelegate{
     }
     
      public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!){
-        activityIndicator.startAnimating()
+        if activityIndicator != nil{
+            activityIndicator.startAnimating()
+
+        }
     }
     
  

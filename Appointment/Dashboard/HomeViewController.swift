@@ -653,8 +653,8 @@ extension HomeViewController : HomeViewcontrollerRedirection{
         slideMenuController()?.closeLeft();
         switch type {
         case .profile:
-            //            let wvc = UIStoryboard.profileView()
-            //            self.navigationController?.pushViewController(wvc, animated: true)
+                        let wvc = UIStoryboard.profileView()
+                        self.navigationController?.pushViewController(wvc, animated: true)
             break
         case .about:
             break

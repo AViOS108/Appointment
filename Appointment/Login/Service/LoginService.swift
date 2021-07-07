@@ -118,6 +118,44 @@ class LoginService{
         })
     }
     
+    
+    func getUserInfoER(_ success :@escaping (JSON) -> Void,failure :@escaping (String,Int) -> Void ){
+        guard let token = UserDefaultsDataSource(key: "accessToken").readData() else{
+            failure("yaba",105)
+            return
+        }
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(token)"]
+        Network().makeApiRequest(true, url: Urls().updateProfileNew(), methodType: .get, params: ["":"" as AnyObject], header: headers, completion: {
+            response in
+            
+            if response["error"]["code"] != JSON.null{
+                if response["error"]["errors"] != JSON.null {
+                    if let keys = response["error"]["errors"].dictionary?.keys{
+                        if let object = response["error"]["errors"][keys.first!].string {
+                            failure(object,response["error"]["code"].int!)
+                        }
+                        else if let object = response["error"]["errors"][keys.first!].array ,object.count > 0 {
+                            failure(object[0].string!,response["error"]["code"].int!)
+                        }
+                    }
+                }else{
+                    failure(response["error"]["message"].string!,response["error"]["code"].int!)
+                }
+            }else{
+                
+                UserDefaultsDataSource(key: "userEmail").writeData(response["email"].string)
+
+                UserDefaultsDataSource(key: "firstName").writeData(response["name"].string?.trimmingCharacters(in: .whitespaces))
+                UserDefaultsDataSource(key: "userProfile").writeData(response["profile_pic_url"].string )
+                 
+                success(response)
+            }
+        },failure:{ (error,errorCode) in
+            failure(Network().handleErrorCases(error: error),errorCode)
+        })
+    }
+    
+    
     func getCustomizations(_ success :@escaping (JSON) -> Void,failure :@escaping (String,Int) -> Void ){
         guard let token = UserDefaultsDataSource(key: "accessToken").readData() else {
             failure("yaba",105)

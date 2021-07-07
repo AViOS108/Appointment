@@ -16,10 +16,6 @@ enum  ERSideResumeListTaskProvidedBycell{
 
 
 
-
-
-
-
 class ERSideResumeListViewController: SuperViewController {
 
     @IBOutlet weak var tblView: UITableView!
@@ -138,9 +134,37 @@ extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate
             apitHitForDownloadResume(resumeID: resumeID)
         }
         else{
-            
+            apitHitForPrintResume(resumeID: resumeID)
+
         }
     }
+    
+    
+    func apitHitForPrintResume(resumeID: Int){
+        
+        activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
+        
+        ERSideAppointmentService().erSideResumeView(resumeId: resumeID,{ (data) in
+            self.activityIndicator?.hide()
+
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    
+                    self.openWebView(url: json["\(resumeID)"] as! String)
+                   }
+                
+            } catch  {
+                CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
+            }
+            
+        }) {
+            (error, errorCode) in
+            self.activityIndicator?.hide()
+        };
+        
+    }
+    
+    
     
     
     func apitHitForDownloadResume(resumeID: Int){
@@ -148,7 +172,6 @@ extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate
         activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
         
         ERSideAppointmentService().erSideResumeView(resumeId: resumeID,{ (data) in
-          
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                     self.downloadResume(url: json["\(resumeID)"] as! String)
@@ -168,7 +191,7 @@ extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate
     
     func downloadResume(url:String){
         
-        ERSideAppointmentService().erSideDownloadResume(resumeId: 0) { (data) in
+        ERSideAppointmentService().erSideDownloadResume(url: url) { (data) in
             self.activityIndicator?.hide()
             let destinationFileUrl  = data["destinationUrl"] as! URL;
             

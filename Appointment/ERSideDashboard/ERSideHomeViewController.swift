@@ -234,7 +234,6 @@ class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
         btnFloatingButton.isHidden = true
         customizFloatingButton()
         
-        ( (self.slideMenuController()?.leftViewController as! UINavigationController).viewControllers.first as! SliderViewController).delegateRedirection = self
         
     }
     func deleteDelgateRefresh(){
@@ -349,17 +348,25 @@ class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        slideMenuController()?.removeLeftGestures()
+
            if  self.navigationController?.viewControllers.count ?? 0 > 1 {
                       self.tabBarController?.tabBar.isHidden = true
 
                   }
       }
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
+
                self.tabBarController?.tabBar.isHidden = false
 
 
     }
     override func viewDidAppear(_ animated: Bool) {
+        slideMenuController()?.addLeftGestures()
+
         GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"Schedule");
         foatingViewCustomization();
         
@@ -380,15 +387,19 @@ class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
 extension ERSideHomeViewController : ERHomeViewModalVMDelegate,ERSideHeaderCollectionVCDelegate,HomeViewcontrollerRedirection{
     func redirectToParticularViewController(type: RedirectionType) {
         slideMenuController()?.closeLeft();
-
         switch type {
         case .logOut:
             GeneralUtility.alertViewLogout(title: "".localized(), message: "LOGOUT".localized(), viewController: self, buttons: ["Cancel","Ok"]);
+            break
+        case .profile:
+            let wvc = UIStoryboard.profileView()
+            self.navigationController?.pushViewController(wvc, animated: true)
+            break
         default:
             break;
         }
         
-       
+        
     }
     
    

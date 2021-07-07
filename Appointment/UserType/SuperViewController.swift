@@ -10,6 +10,14 @@ import UIKit
 
 class SuperViewController: UIViewController {
 
+    
+    @objc func buttonClickedLeft(sender: UIBarButtonItem) {
+
+       }
+    @objc func buttonClickedRight(sender: UIBarButtonItem) {
+
+         }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

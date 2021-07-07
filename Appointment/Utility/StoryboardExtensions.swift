@@ -25,7 +25,7 @@ extension UIStoryboard {
     }
     
     class func settingsStroyboard() -> UIStoryboard {
-        return UIStoryboard(name: "Settings", bundle: Bundle.main)
+        return UIStoryboard(name: "SettingProfile", bundle: Bundle.main)
     }
     
     class func mobileResumeFormatStroyboard() -> UIStoryboard {
@@ -158,9 +158,9 @@ extension UIStoryboard {
         return (settingsStroyboard().instantiateViewController(withIdentifier: "WebViewController") as? WebViewController)!
     }
 //    
-//    class func profileView() -> ProfileViewController{
-//        return (settingsStroyboard().instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController)!
-//    }
+    class func profileView() -> ProfileViewController{
+        return (settingsStroyboard().instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController)!
+    }
 //    
 //    class func paymentWebView() -> PaymentGatewayWebViewController{
 //        return (settingsStroyboard().instantiateViewController(withIdentifier: "PaymentGatewayWebViewController") as? PaymentGatewayWebViewController)!

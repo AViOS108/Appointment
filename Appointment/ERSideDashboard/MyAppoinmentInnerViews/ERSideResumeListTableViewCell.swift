@@ -45,6 +45,10 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     }
     @IBOutlet weak var btnLatestDownloadPrint: UIButton!
     @IBAction func btnLatestDownloadPrintTapped(_ sender: Any) {
+        if let delegateAssign = delegate {
+            delegateAssign.taskProvidedToVC(taskType: .print, resumeID: objERSideResumeListModalItem.rpLatestResumeID ?? 0);
+
+        }
     }
     
     
@@ -54,13 +58,25 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var btnHighestUploadView: UIButton!
     @IBAction func btnHighestUploadViewTapped(_ sender: Any) {
+        if let delegateAssign = delegate {
+            delegateAssign.taskProvidedToVC(taskType: .view, resumeID: objERSideResumeListModalItem.rpHighestScoredResumeID ?? 0);
+
+        }
     }
     @IBOutlet weak var lblHighestScore: UILabel!
     @IBOutlet weak var btnHighestDownload: UIButton!
     @IBAction func btnHighestDownloadTapped(_ sender: Any) {
+        if let delegateAssign = delegate {
+            delegateAssign.taskProvidedToVC(taskType: .download, resumeID: objERSideResumeListModalItem.rpHighestScoredResumeID ?? 0);
+
+        }
     }
     @IBOutlet weak var btnHighestDownloadPrint: UIButton!
     @IBAction func btnHighestDownloadPrintTapped(_ sender: Any) {
+        if let delegateAssign = delegate {
+            delegateAssign.taskProvidedToVC(taskType: .print, resumeID: objERSideResumeListModalItem.rpHighestScoredResumeID ?? 0);
+
+        }
     }
     
     
@@ -70,13 +86,25 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var btnApprovedUploadView: UIButton!
     @IBAction func btnApprovedUploadViewTapped(_ sender: Any) {
+        if let delegateAssign = delegate {
+            delegateAssign.taskProvidedToVC(taskType: .view, resumeID: objERSideResumeListModalItem.rpFirstResumeID ?? 0);
+
+        }
     }
     @IBOutlet weak var lblApprovedScore: UILabel!
     @IBOutlet weak var btnApprovedDownload: UIButton!
     @IBAction func btnApprovedDownloadTapped(_ sender: Any) {
+        if let delegateAssign = delegate {
+            delegateAssign.taskProvidedToVC(taskType: .download, resumeID: objERSideResumeListModalItem.rpFirstResumeID ?? 0);
+
+        }
     }
     @IBOutlet weak var btnApprovedDownloadPrint: UIButton!
     @IBAction func btnApprovedDownloadPrintTapped(_ sender: Any) {
+        if let delegateAssign = delegate {
+            delegateAssign.taskProvidedToVC(taskType: .print, resumeID: objERSideResumeListModalItem.rpFirstResumeID ?? 0);
+
+        }
     }
     
     

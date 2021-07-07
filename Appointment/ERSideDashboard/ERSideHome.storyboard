@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MML-4e-eFQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MML-4e-eFQ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,15 +19,15 @@
                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="1Fh-iv-CLs" kind="relationship" relationship="viewControllers" id="GVt-3c-uiF"/>
-                        <segue destination="TgO-IM-TMZ" kind="relationship" relationship="viewControllers" id="g1f-vo-uar"/>
+                        <segue destination="E44-M0-R4Q" kind="relationship" relationship="viewControllers" id="cbs-3h-zr1"/>
+                        <segue destination="HgY-kr-2M1" kind="relationship" relationship="viewControllers" id="THK-hv-3iU"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a9b-2p-6cq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2232" y="-522"/>
         </scene>
-        <!--Side My AppointmentVC-->
+        <!--Appoinments-->
         <scene sceneID="hK2-oL-FUn">
             <objects>
                 <viewController id="HgY-kr-2M1" customClass="ERSideMyAppointmentVC" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
@@ -35,7 +36,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ggL-mv-x6R">
-                                <rect key="frame" x="0.0" y="88" width="414" height="55"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="55"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-ba-whd" customClass="ERSideMyAppointmentCollectionView" customModule="Appointment" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
@@ -49,7 +50,7 @@
                                         <cells/>
                                     </collectionView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="Jlf-GF-gFp"/>
                                     <constraint firstAttribute="trailing" secondItem="0BS-ba-whd" secondAttribute="trailing" id="dWO-kx-kzk"/>
@@ -59,7 +60,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kft-63-QZm">
-                                <rect key="frame" x="0.0" y="151" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="107" width="414" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xay-x7-bbG">
                                         <rect key="frame" x="356" y="5" width="40" height="40"/>
@@ -88,7 +89,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mLg-Le-d7O">
-                                <rect key="frame" x="0.0" y="209" width="414" height="604"/>
+                                <rect key="frame" x="0.0" y="165" width="414" height="648"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGh-Xi-qYH">
@@ -98,8 +99,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMq-XX-mRF">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJe-79-H4U">
                                 <rect key="frame" x="338" y="737" width="60" height="60"/>
@@ -177,7 +178,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
                                     <constraint firstItem="RWH-eL-CEe" firstAttribute="bottom" secondItem="nJx-FW-4ST" secondAttribute="bottom" id="0hu-P1-eEZ"/>
                                     <constraint firstItem="SY7-4X-xPI" firstAttribute="centerY" secondItem="hh6-Gt-prk" secondAttribute="centerY" id="1Mt-ov-Ubo"/>
@@ -214,7 +215,8 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="vCw-p1-SIt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vCw-p1-SIt" firstAttribute="top" secondItem="gMq-XX-mRF" secondAttribute="top" id="19A-z0-xLo"/>
                             <constraint firstItem="vCw-p1-SIt" firstAttribute="bottom" secondItem="gMq-XX-mRF" secondAttribute="bottom" id="2QR-mE-eFP"/>
@@ -239,8 +241,8 @@
                             <constraint firstItem="vCw-p1-SIt" firstAttribute="bottom" secondItem="mLg-Le-d7O" secondAttribute="bottom" id="yZW-YL-coS"/>
                             <constraint firstItem="vCw-p1-SIt" firstAttribute="trailing" secondItem="TGh-Xi-qYH" secondAttribute="trailing" constant="8" id="yny-a4-FjM"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="vCw-p1-SIt"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Appoinments" image="My_Appoinntment_2" selectedImage="My_Appointment" id="UkW-Dn-erD"/>
                     <navigationItem key="navigationItem" id="P06-kF-4eJ"/>
                     <connections>
                         <outlet property="btnAdHoc" destination="21n-j7-N7G" id="XKg-ah-vVp"/>
@@ -268,7 +270,7 @@
             </objects>
             <point key="canvasLocation" x="460.86956521739131" y="-115.17857142857142"/>
         </scene>
-        <!--Side Home View Controller-->
+        <!--Home-->
         <scene sceneID="n9h-47-0BQ">
             <objects>
                 <viewController id="E44-M0-R4Q" customClass="ERSideHomeViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
@@ -277,7 +279,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oaj-oD-MjQ">
-                                <rect key="frame" x="0.0" y="88" width="414" height="90"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="90"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pbg-O1-CPs">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="34"/>
@@ -319,7 +321,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="aKp-Ub-bIs" secondAttribute="bottom" constant="2" id="1WL-pm-S9g"/>
                                             <constraint firstItem="4SE-m9-lBa" firstAttribute="top" secondItem="Pbg-O1-CPs" secondAttribute="top" constant="2" id="37b-0N-nuZ"/>
@@ -341,7 +343,7 @@
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="akH-K0-e59" customClass="ERSideHeaderCollectionVC" customModule="Appointment" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="35" width="414" height="55"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OnB-vX-c1k">
                                             <size key="itemSize" width="66" height="57"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -364,13 +366,13 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y6C-Gm-eRy">
-                                <rect key="frame" x="0.0" y="185" width="414" height="628"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <rect key="frame" x="0.0" y="141" width="414" height="672"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJ7-Wh-KYB">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AgG-rM-CIL">
                                 <rect key="frame" x="305" y="598" width="93" height="130"/>
@@ -436,7 +438,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
                                     <constraint firstItem="YA5-QU-tl9" firstAttribute="centerY" secondItem="OEi-5Z-6ng" secondAttribute="centerY" id="0SG-nZ-nT3"/>
                                     <constraint firstAttribute="trailing" secondItem="YA5-QU-tl9" secondAttribute="trailing" id="2ez-4v-ECy"/>
@@ -483,7 +485,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="UYg-8u-Jas"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="oaj-oD-MjQ" firstAttribute="trailing" secondItem="UYg-8u-Jas" secondAttribute="trailing" id="8CB-57-YKW"/>
                             <constraint firstItem="vzS-bh-cIx" firstAttribute="top" secondItem="AgG-rM-CIL" secondAttribute="bottom" constant="9" id="9r9-cP-ulb"/>
@@ -501,8 +504,8 @@
                             <constraint firstItem="nJ7-Wh-KYB" firstAttribute="leading" secondItem="UYg-8u-Jas" secondAttribute="leading" id="oYn-bU-pBh"/>
                             <constraint firstItem="UYg-8u-Jas" firstAttribute="trailing" secondItem="Y6C-Gm-eRy" secondAttribute="trailing" id="vPb-kg-aQV"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="UYg-8u-Jas"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="Home_notselect" selectedImage="Home_notselect" id="7BS-K4-EBd"/>
                     <navigationItem key="navigationItem" id="wBm-eB-aJE"/>
                     <connections>
                         <outlet property="btnAdHoc" destination="JyE-15-DqB" id="DqZ-TJ-aFM"/>
@@ -531,44 +534,6 @@
             </objects>
             <point key="canvasLocation" x="-78.260869565217391" y="-767.41071428571422"/>
         </scene>
-        <!--Home-->
-        <scene sceneID="BeD-TK-BxA">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1Fh-iv-CLs" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="Home_notselect" selectedImage="noun_Home_selected" id="HZI-Ql-vhE"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vNl-7u-ha8">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="E44-M0-R4Q" kind="relationship" relationship="rootViewController" id="AFb-xy-7oF"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Znv-dM-9OX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1186" y="-796"/>
-        </scene>
-        <!--Appointments-->
-        <scene sceneID="pzL-Wk-Mar">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TgO-IM-TMZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Appointments" image="My_Appointment" selectedImage="My_Appoinntment_2" id="vjT-1n-qMk"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Di1-dS-55o">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="HgY-kr-2M1" kind="relationship" relationship="rootViewController" id="Av0-jG-mRP"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="U0p-VH-QC9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-836.23188405797111" y="-73.660714285714278"/>
-        </scene>
     </scenes>
     <resources>
         <image name="Home_notselect" width="28" height="28"/>
@@ -576,6 +541,11 @@
         <image name="My_Appointment" width="48" height="48"/>
         <image name="appoinmentHour" width="96" height="96"/>
         <image name="duplicate" width="96" height="96"/>
-        <image name="noun_Home_selected" width="28" height="28"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
