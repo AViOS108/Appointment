@@ -12,16 +12,23 @@ class ERSideAppointmentTableViewCell: UITableViewCell {
 
     @IBAction func btnViewDetailTapped(_ sender: Any) {
         
-        let erSideOHDetail = ERSideOHDetailViewController.init(nibName: "ERSideOHDetailViewController", bundle: nil)
-       
-//        erSideOHDetail.identifier = self.objERSideAppointmentModalResult?.identifier
-        erSideOHDetail.viewControllerType = 1
-        erSideOHDetail.delegate = viewControllerI as! ErSideOpenHourTCDelegate
         
-        erSideOHDetail.viewControllerI = viewControllerI
-        erSideOHDetail.modalPresentationStyle = .overFullScreen
-        erSideOHDetail.dateSelected = self.dateSelected
-        viewControllerI.navigationController?.pushViewController(erSideOHDetail, animated: false)
+        let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
+        let navigationController = UINavigationController.init(rootViewController: objERSideOpenHourListVC)
+        objERSideOpenHourListVC.dateSelected = self.dateSelected
+        viewControllerI.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
+        
+        
+//        let erSideOHDetail = ERSideOHDetailViewController.init(nibName: "ERSideOHDetailViewController", bundle: nil)
+//
+////        erSideOHDetail.identifier = self.objERSideAppointmentModalResult?.identifier
+//        erSideOHDetail.viewControllerType = 1
+//        erSideOHDetail.delegate = viewControllerI as! ErSideOpenHourTCDelegate
+//
+//        erSideOHDetail.viewControllerI = viewControllerI
+//        erSideOHDetail.modalPresentationStyle = .overFullScreen
+//        erSideOHDetail.dateSelected = self.dateSelected
+//        viewControllerI.navigationController?.pushViewController(erSideOHDetail, animated: false)
     }
     @IBOutlet weak var viewouter: UIView!
     var dateSelected : Date!
