@@ -27,10 +27,10 @@ class ERSideFilterHeaderView: UITableViewHeaderFooterView {
         objERFilterTag.isExpand = !objERFilterTag.isExpand
         delegate.expandCollapse(objERFilterTag: objERFilterTag, isExpand: objERFilterTag.isExpand)
         if objERFilterTag.isExpand  {
-            btnExpand.setImage(UIImage.init(named: "dropdown"), for: .normal);
+            btnExpand.setImage(UIImage.init(named: "uparrow"), for: .normal);
         }
         else{
-            btnExpand.setImage(UIImage.init(named: "dropdown"), for: .normal);
+            btnExpand.setImage(UIImage.init(named: "Drop-down_arrow"), for: .normal);
         }
     }
     
@@ -38,7 +38,6 @@ class ERSideFilterHeaderView: UITableViewHeaderFooterView {
         
         
         viewContainer.backgroundColor = ILColor.color(index: 22)
-        
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
         {
             UILabel.labelUIHandling(label: lblCategoryName, text: objERFilterTag.categoryTitle ?? "", textColor:ILColor.color(index: 42) , isBold: false, fontType: fontHeavy)
@@ -47,7 +46,7 @@ class ERSideFilterHeaderView: UITableViewHeaderFooterView {
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
 
         if objERFilterTag.isExpand  {
-            btnExpand.setImage(UIImage.init(named: "Drop-down_arrow"), for: .normal);
+            btnExpand.setImage(UIImage.init(named: "uparrow"), for: .normal);
         }
         else{
             btnExpand.setImage(UIImage.init(named: "Drop-down_arrow"), for: .normal);

@@ -18,7 +18,7 @@ class WebViewController: SuperViewController {
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var printController = UIPrintInteractionController.shared;
-
+    var isResumeWebView = false
     override func viewDidLoad() {
         super.viewDidLoad()
         // Your webView code goes here
@@ -32,8 +32,15 @@ class WebViewController: SuperViewController {
         
         webview.load(request)
         activityIndicator.hidesWhenStopped = true
-        
-        GeneralUtility.customeNavigationBarWithBackAndPrint(viewController: self, title: "Print Resume")
+        if isResumeWebView{
+            GeneralUtility.customeNavigationBarWithBackAndPrint(viewController: self, title: "Print Resume")
+
+        }
+    }
+    
+    @objc override func buttonClicked(sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -12,6 +12,8 @@ import UIKit
 protocol ERSideAppoDetailTypeFirstCollectionViewCellDelegate {
     func moveCollectionView(backward :Bool)
     func acceptDeclineApi(isAccept : Bool)
+    func sendEmail()
+
 }
 
 
@@ -21,7 +23,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var nslayoutConstraintContainerTop: NSLayoutConstraint!
     @IBOutlet weak var viewContainer: UIView!
     var appoinmentDetailModalObj : AppoinmentDetailModalNew?
-    var requestDetail : Request!
+    var requestDetail : RequestER!
     var index = 0;
     var  indexPathRow = 0;
     @IBOutlet weak var btnLeftArrow: UIButton!
@@ -53,7 +55,13 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var btnAccept: UIButton!
     
     @IBAction func btnAcceptTapped(_ sender: Any) {
-        delegate.acceptDeclineApi(isAccept: true)
+        if index == 3{
+            delegate.acceptDeclineApi(isAccept: true)
+        }
+        else{
+            delegate.sendEmail()
+        }
+        
     }
     @IBAction func btnDeclineTapped(_ sender: Any) {
         delegate.acceptDeclineApi(isAccept: false)
@@ -150,10 +158,10 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
             let strPurposeText = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Purpose", _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:42),NSAttributedString.Key.font : fontHeavy]);
             
-            var purpose = "Not Available"
+            var purpose = ""
             var index = 0
             for userpurpose in (self.requestDetail.purposes)!{
-                if let displayName = userpurpose.userPurpose?.displayName {
+                if let displayName = userpurpose.purposeText {
                     purpose.append(displayName)
                     index = index + 1
                     if index >= self.requestDetail.purposes?.count ?? 0{
@@ -162,7 +170,9 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
                         purpose.append(",")
                     }
                 }
-               
+            }
+            if purpose.isEmpty {
+                purpose = "Not Available"
             }
             
             let strPurposeValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: purpose, _returnType: String.self)

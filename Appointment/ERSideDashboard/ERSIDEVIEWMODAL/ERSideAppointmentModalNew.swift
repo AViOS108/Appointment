@@ -20,7 +20,7 @@ struct ERSideAppointmentModalNewResult: Codable {
     var typeERSide : Int?
 
   let startDatetimeUTC, locationType: String?
-       let cancellationReason: JSONNull?
+       let cancellationReason: String?
        let inTimezone, timezone: String?
        let coachDetails: CoachDetails?
        let location: String?
@@ -80,6 +80,50 @@ struct AttachmentInfo: Codable {
         case url
     }
 }
+
+// MARK: - Request
+struct RequestER: Codable {
+        let state: String?
+       let attachmentInfo: [AttachmentInfo]?
+       let id: Int?
+       let targetIndustries: [String]?
+       let studentID: Int?
+       let purposes: [ERSidePurposeDetailNewModal]?
+       let createdByID: Int?
+    let reason: String?
+    let targetFunctions: [String]?
+       let  additionalComments : String?
+       let createdByType: String?
+       var hasAttended: Int?
+       let studentDetails: StudentDetails?
+       let appointmentID: Int?
+       let targetCompanies: [String]?
+        let feedback: Feedback?
+
+    enum CodingKeys: String, CodingKey {
+        case state
+        case attachmentInfo = "attachment_info"
+        case id
+        case feedback
+        case targetIndustries = "target_industries"
+        case studentID = "student_id"
+        case purposes
+        case createdByID = "created_by_id"
+        case reason
+        case additionalComments = "additional_comments"
+        case targetFunctions = "target_functions"
+        case createdByType = "created_by_type"
+        case hasAttended = "has_attended"
+        case studentDetails = "student_details"
+        case appointmentID = "appointment_id"
+        case targetCompanies = "target_companies"
+    }
+}
+
+
+
+
+
 // MARK: - Request
 struct Request: Codable {
         let state: String?

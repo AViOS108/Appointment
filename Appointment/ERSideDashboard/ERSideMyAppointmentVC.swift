@@ -173,13 +173,14 @@ ERSideMyAppoinmentTableViewCellDelegate{
         txtSearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         txtSearchBar.placeholder = "Search Appoinments"
         txtSearchBar.backgroundColor = .clear
+        txtSearchBar.delegate = self
         customizFloatingButton()
+       
         
     }
    
     override func viewWillDisappear(_ animated: Bool) {
         slideMenuController()?.removeLeftGestures()
-
         if  self.navigationController?.viewControllers.count ?? 0 > 1 {
             self.tabBarController?.tabBar.isHidden = true
 
@@ -480,12 +481,11 @@ extension ERSideMyAppointmentVC {
             
             if searchBar.text != ""
             {
-                if selected == 2{
-                }
-                else if selected == 3{
-                }
-                else{
-                }
+               
+                resetDataModal()
+                makeFilterModal()
+                callViewModal()
+               
             }
         }
         searchBar.resignFirstResponder();
@@ -496,13 +496,9 @@ extension ERSideMyAppointmentVC {
         if searchBar.tag == 10001 {
             
             if searchText == "" {
-                if selected == 2{
-                }
-                else if selected == 3{
-                }
-                else{
-                }
-                tblView.reloadData()
+                resetDataModal()
+                makeFilterModal()
+                callViewModal()
                 searchBar.resignFirstResponder();
             }
 
@@ -521,36 +517,42 @@ extension ERSideMyAppointmentVC {
         
         var benchMark = Array<Int>()
         var tag =  Dictionary<String,Array<String>>()
-        for objERFlter in self.objERFilterTag!{
-            if objERFlter.id == -999{
-                let selectedBenchMarkArr =  objERFlter.objTagValue?.filter({ $0.isSelected == true
-                })
-                if (selectedBenchMarkArr?.count ?? 0) > 0{
-                    for selectedBench in selectedBenchMarkArr!{
-                        benchMark.append(selectedBench.eRFilterid!)
+        
+        if self.objERFilterTag != nil{
+            for objERFlter in self.objERFilterTag!{
+                if objERFlter.id == -999{
+                    let selectedBenchMarkArr =  objERFlter.objTagValue?.filter({ $0.isSelected == true
+                    })
+                    if (selectedBenchMarkArr?.count ?? 0) > 0{
+                        for selectedBench in selectedBenchMarkArr!{
+                            benchMark.append(selectedBench.eRFilterid!)
+                        }
+                    }
+                }
+                else{
+                    let selectedTagArr =    objERFlter.objTagValue?.filter({$0.isSelected == true})
+                    if (selectedTagArr?.count ?? 0) > 0 {
+                        var tagSelected = [String]()
+                        for selectedTag in selectedTagArr!{
+                            tagSelected.append(selectedTag.tagValueText!)
+                        }
+                        
+                        tag[objERFlter.category!] = tagSelected
                     }
                 }
             }
-            else{
-                let selectedTagArr =    objERFlter.objTagValue?.filter({$0.isSelected == true})
-                if (selectedTagArr?.count ?? 0) > 0 {
-                    var tagSelected = [String]()
-                    for selectedTag in selectedTagArr!{
-                        tagSelected.append(selectedTag.tagValueText!)
-                    }
-                   
-                    tag[objERFlter.category!] = tagSelected
-                }
+            if benchMark.count > 0 {
+                filterAdded["benchmark"] = benchMark as Any
             }
-        }
-        if benchMark.count > 0 {
-            filterAdded["benchmark"] = benchMark as Any
-        }
-        if !tag.isEmpty {
-            filterAdded["tag"] = tag as Any
+            if !tag.isEmpty {
+                filterAdded["tag"] = tag as Any
+            }
+            
         }
         if txtSearchBar.text?.isEmpty ?? true{
-            
+            if filterAdded["name_email"] != nil{
+                filterAdded.removeValue(forKey: "name_email")
+            }
         }
         else{
             filterAdded["name_email"] = txtSearchBar.text as AnyObject?
@@ -608,13 +610,22 @@ extension ERSideMyAppointmentVC {
 
 extension ERSideMyAppointmentVC:ERHomeViewModalVMDelegate,ERSideMyAppointmentCollectionViewDelegate,ERSideMyAppoinmentTableVCViewControllerDelegate,ERUpdateAppoinmentViewControllerDelegate{
     func refreshData(index: Int) {
-                    callViewModal()
+        resetDataModal()
+        callViewModal()
     }
     
     func selectedHeaderCV(id: Int) {
         
         filterAdded = Dictionary<String,AnyObject>()
         objERFilterTag =  nil
+        if txtSearchBar.text?.isEmpty ?? true{
+           
+        }
+        else{
+            txtSearchBar.text = ""
+            resetDataModal()
+        }
+        
         if id == 1{
             selected = 2
             if self.dataModalupcomming != nil{

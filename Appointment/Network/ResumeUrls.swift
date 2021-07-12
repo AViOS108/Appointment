@@ -569,7 +569,7 @@ class Urls {
     }
     
     func erSideOPenHourTags() -> String{
-        return "\(Urls.runningEnvJobs)students/api/v1/users/roles"
+        return "\(Urls.runningEnvJobs)students/api/v1/students/list/tags"
         
     }
     

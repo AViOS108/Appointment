@@ -113,18 +113,23 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         for sharedwith in (self.noteResultModal?.entities)!{
             
             if sharedwith.canViewNote != "0"{
-                if let displayName = sharedwith.info?.displayName{
+                  var displayName = ""
+                if sharedwith.info?.name != nil{
+                    displayName = sharedwith.info?.name ?? ""
+                    }
+                    else if sharedwith.info?.displayName != nil {
+                        displayName = sharedwith.info?.displayName ?? ""
+                    }
+                if totalCount <= 2{
                     if name.isEmpty{
-                      name = displayName
+                        name = displayName
                     }
                     else{
-                        if totalCount <= 2{
-                            name.append(",")
-                            name.append(displayName)
-                        }
+                        name.append(",")
+                        name.append(displayName)
                     }
-                    
                 }
+                
                 totalCount = totalCount + 1;
             }
         }

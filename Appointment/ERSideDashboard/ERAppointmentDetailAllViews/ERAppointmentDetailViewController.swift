@@ -105,6 +105,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
             let cell = tableView.dequeueReusableCell(withIdentifier: "ERAppoDetailSecondTableViewCell", for: indexPath) as! ERAppoDetailSecondTableViewCell
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.viewController = self;
+            cell.index = self.appoinmentDetailAllModalObj?.status ?? 2;
             cell.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj
             cell.customization()
             cell.layoutIfNeeded()
@@ -248,9 +249,24 @@ extension ERAppointmentDetailViewController : ERSideAppoinmentDetailModalDeletga
         }
     }
 }
+import MessageUI
 
-
-extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDelegate,NoteCollectionViewCellDelegate,EditNotesViewControllerDelegate,ERAddNotesViewControllerDelegate,NextStepAppointmentTableViewCelldelegate,ERUpdateStatusAddNextStepViewControllerDelegate,ERSideFIrstTypeCollectionViewDelegate,ERCancelViewControllerDelegate{
+extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDelegate,NoteCollectionViewCellDelegate,EditNotesViewControllerDelegate,ERAddNotesViewControllerDelegate,NextStepAppointmentTableViewCelldelegate,ERUpdateStatusAddNextStepViewControllerDelegate,ERSideFIrstTypeCollectionViewDelegate,ERCancelViewControllerDelegate,MFMailComposeViewControllerDelegate{
+    func sendEmail() {
+        if MFMailComposeViewController.canSendMail() {
+               let mail = MFMailComposeViewController()
+               mail.mailComposeDelegate = self
+               mail.setToRecipients([])
+               mail.setMessageBody("", isHTML: true)
+               present(mail, animated: true)
+           } else {
+               // show failure alert
+           }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
   
     
     func markCompleteStatus(id: String) {
@@ -284,6 +300,8 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
             declineCustomize()
         }
     }
+    
+    
     
     func acceptApi(){
         let params = [

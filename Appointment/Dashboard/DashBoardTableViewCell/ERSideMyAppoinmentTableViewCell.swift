@@ -115,7 +115,7 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
             lblName.attributedText = strHeader
         }
         let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-        let componentDay = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .weekday)
+        let componentDay = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .weekday,isUTC : true)
         
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
         
@@ -164,7 +164,7 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         shadowWithCorner(viewContainer: self.viewDateContainer, cornerRadius: 3)
         viewDateContainer.clipsToBounds = true
         viewDateContainer.backgroundColor = ILColor.color(index: 33)
-        let componentDate = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .day)
+        let componentDate = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .day,isUTC : true)
         if let dayI = componentDate?.day {
             let fontMedium = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
             
@@ -172,7 +172,7 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
             lblDate.textAlignment = .center
             lblDate.backgroundColor = .white
         }
-        let componentMonth = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .month)
+        let componentMonth = GeneralUtility.dateComponent(date: self.results.startDatetimeUTC!, component: .month,isUTC : true)
         if let monthCom = componentMonth?.month {
             let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
             UILabel.labelUIHandling(label: lblMonth, text: "\(monthI[monthCom-1])", textColor:ILColor.color(index: 3) , isBold: false, fontType: fontMedium,backgroundColor: ILColor.color(index: 33))

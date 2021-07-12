@@ -251,6 +251,7 @@ extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate
     func openWebView(url:String){
         let wvc = UIStoryboard.webViewer()
         wvc.webUrl =  url
+        wvc.isResumeWebView = true
         self.navigationController?.pushViewController(wvc, animated: true)
     }
     

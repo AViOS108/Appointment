@@ -69,16 +69,19 @@ class ERUpdateAppoinmentTableViewCell: UITableViewCell {
 
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
         
-        if let _ = self.requestStudentDetail.hasAttended{
-            UILabel.labelUIHandling(label: lblAttended, text: "Update Status", textColor: ILColor.color(index: 23), isBold: false, fontType: fontMedium)
-        }
-        else {
-            if self.requestStudentDetail.hasAttended == 1{
+        if let attendedStatus = self.requestStudentDetail.hasAttended{
+            
+            if attendedStatus == 1{
                 UILabel.labelUIHandling(label: lblAttended, text: "Attended", textColor: ILColor.color(index: 58), isBold: false, fontType: fontMedium)
             }
             else{
                  UILabel.labelUIHandling(label: lblAttended, text: "Not Attended", textColor: ILColor.color(index: 57), isBold: false, fontType: fontMedium)
             }
+            
+        }
+        else {
+            UILabel.labelUIHandling(label: lblAttended, text: "Update Status", textColor: ILColor.color(index: 23), isBold: false, fontType: fontMedium)
+
         }
     }
     

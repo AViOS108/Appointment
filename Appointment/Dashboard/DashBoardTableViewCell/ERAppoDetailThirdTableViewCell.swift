@@ -20,14 +20,14 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
     @IBOutlet var btnCoachPreciseGrp: [UIButton]!
     @IBAction func btnCoachPreTapped(_ sender: UIButton) {
         //        coach_expertise = sender.tag
-        self.btnCoachPreciseGrp.forEach { (btn) in
-            if btn.tag <= sender.tag{
-                btn.setImage(UIImage.init(named: "noun_Star_select"), for: .normal)
-            }
-            else{
-                btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
-            }
-        }
+//        self.btnCoachPreciseGrp.forEach { (btn) in
+//            if btn.tag <= sender.tag{
+//                btn.setImage(UIImage.init(named: "noun_Star_select"), for: .normal)
+//            }
+//            else{
+//                btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+//            }
+//        }
         
     }
     
@@ -54,9 +54,33 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
         UILabel.labelUIHandling(label: lblCandidateText, text: "Candidate’s Feedback", textColor: ILColor.color(index: 34), isBold: false, fontType: fontHeavy)
         self.viewRating.backgroundColor = .white
-        self.btnCoachPreciseGrp.forEach { (btn) in
-            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+        if self.appoinmentDetailModalObj?.requests?.count ?? 0 > 0{
+            if self.appoinmentDetailModalObj?.requests?[0].feedback != nil{
+                let rating : Int = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.averageRating?.rounded() ?? 0)
+                self.btnCoachPreciseGrp.forEach { (btn) in
+                    if btn.tag > rating{
+                        btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+                    }
+                    else{
+                        btn.setImage(UIImage.init(named: "noun_Star_select"), for: .normal)
+
+                    }
+                    
+                }
+                
+            }
+            else{
+                self.btnCoachPreciseGrp.forEach { (btn) in
+                    btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+                }
+            }
         }
+        else{
+            self.btnCoachPreciseGrp.forEach { (btn) in
+                btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+            }
+        }
+       
         self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 10)
     }
     

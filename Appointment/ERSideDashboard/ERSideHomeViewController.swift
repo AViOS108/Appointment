@@ -349,12 +349,12 @@ class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
     
     override func viewWillDisappear(_ animated: Bool) {
         slideMenuController()?.removeLeftGestures()
-
-           if  self.navigationController?.viewControllers.count ?? 0 > 1 {
-                      self.tabBarController?.tabBar.isHidden = true
-
-                  }
-      }
+        
+        if  self.navigationController?.viewControllers.count ?? 0 > 1 {
+            self.tabBarController?.tabBar.isHidden = true
+            
+        }
+    }
     
     
     

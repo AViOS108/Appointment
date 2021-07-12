@@ -63,7 +63,7 @@ extension ERUpdateAppoinmentViewController: UITableViewDelegate,UITableViewDataS
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.requestStudentDetail = self.results.requests![indexPath.row]
         cell.customization()
-        cell.delegate = self
+//        cell.delegate = self
         return cell
     }
     
@@ -87,7 +87,7 @@ extension ERUpdateAppoinmentViewController: UITableViewDelegate,UITableViewDataS
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .destructive,
                                         title: "Not Attended") { [weak self] (action, view, completionHandler) in
-            self?.attendedStatus(requestStudentDetail: (self?.results.requests![indexPath.row])!)
+            self?.attendedStatus(requestStudentDetail: (self?.results.requests![indexPath.row])!, status: 0)
             
             completionHandler(true)
         }
@@ -99,7 +99,7 @@ extension ERUpdateAppoinmentViewController: UITableViewDelegate,UITableViewDataS
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .destructive,
                                         title: "Attended") { [weak self] (action, view, completionHandler) in
-            self?.attendedStatus(requestStudentDetail: (self?.results.requests![indexPath.row])!)
+            self?.attendedStatus(requestStudentDetail: (self?.results.requests![indexPath.row])!, status: 1)
             completionHandler(true)
         }
         action.backgroundColor = ILColor.color(index: 58)
@@ -111,19 +111,15 @@ extension ERUpdateAppoinmentViewController: UITableViewDelegate,UITableViewDataS
     
 }
 
-extension ERUpdateAppoinmentViewController : ERUpdateAppoinmentTableViewCellDelegate{
-    func attendedStatus(requestStudentDetail: Request) {
+extension ERUpdateAppoinmentViewController {
+    func attendedStatus(requestStudentDetail: Request,status: Int) {
         var selectedId = results?.requests!.filter({$0.studentID == requestStudentDetail.studentID})[0]
-        if requestStudentDetail.hasAttended == 0{
-            selectedId?.hasAttended = 1
-        }
-        else{
-            selectedId?.hasAttended = 0
-        }
+        selectedId?.hasAttended = status
+
         let index = results?.requests!.firstIndex(where: {$0.studentID == requestStudentDetail.studentID}) ?? 0
         results?.requests!.removeAll(where: {$0.studentID == requestStudentDetail.studentID})
         results?.requests?.insert(selectedId!, at: index)
-        viewModal(selectedStudent: requestStudentDetail)
+        viewModal(selectedStudent: selectedId!)
     }
 
     

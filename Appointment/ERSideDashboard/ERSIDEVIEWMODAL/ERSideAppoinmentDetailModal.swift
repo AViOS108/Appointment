@@ -43,6 +43,7 @@ class ERSideAppoinmentDetailModal{
         self.nextStepDetail()
         dispatchGroup.enter()
         self.mynotesDetail()
+    
 //        dispatchGroup.enter()
 //        self.coachNotesDetail()
 //
@@ -117,16 +118,6 @@ class ERSideAppoinmentDetailModal{
                 ParamName.PARAMINTIMEZONEEL :"utc",
             ] as [String : AnyObject]
         }
-        
-        
-      
-        
-        
-        
-
-
-       
-        
         
         
         

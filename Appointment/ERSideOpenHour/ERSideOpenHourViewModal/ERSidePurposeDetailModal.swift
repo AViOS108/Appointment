@@ -16,9 +16,11 @@ import Foundation
 
 struct  ERSidePurposeDetailNewModal: Codable {
     let purposeText: String?
+    let id: Int?
 
     enum CodingKeys: String, CodingKey {
         case purposeText = "purpose_text"
+        case id = "id"
     }
 }
 

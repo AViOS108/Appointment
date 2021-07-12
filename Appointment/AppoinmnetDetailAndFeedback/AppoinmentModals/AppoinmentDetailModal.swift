@@ -211,7 +211,7 @@ struct AppoinmentDetailModalNew: Codable {
     let locationType, state: String?
     let coachID: Int?
     let cancellationReason: String?
-    var requests: [Request]?
+    var requests: [RequestER]?
     let nextsteps: [Nextstep]?
     let appointmentConfig: AppointmentConfig?
     let title, type: String?

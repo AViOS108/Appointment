@@ -661,10 +661,13 @@ class GeneralUtility {
         
     }
     
-    public  class func dateComponent(date: String,component: Calendar.Component)-> DateComponents?{
+    public  class func dateComponent(date: String,component: Calendar.Component,isUTC : Bool = false)-> DateComponents?{
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        if isUTC{
+            dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        }
         let dateI = dateFormatter.date(from: date)
         if let dateOp = dateI{
             let tomorrow = Calendar.current.date(byAdding: .day, value: 0, to: dateI!)
@@ -726,15 +729,23 @@ class GeneralUtility {
     }
     
     
-    public  class func   currentDateDetailType4(emiDate : String,fromDateF:String, toDateFormate : String ) -> String {
+    public  class func   currentDateDetailType4(emiDate : String,fromDateF:String, toDateFormate : String,isUTC : Bool = false ) -> String {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = fromDateF //"
+        dateFormatter.dateFormat = fromDateF
+        if isUTC{
+            dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        }
+        
+        //"
         //        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
         //
         //        dateFormatter.timeZone = TimeZone(abbreviation: localTimeZoneAbbreviation)
         let date = dateFormatter.date(from: emiDate)
         dateFormatter.dateFormat = toDateFormate //
+        if isUTC{
+            dateFormatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+        }
         if let dateF  = date{
             return dateFormatter.string(from: dateF)
         }

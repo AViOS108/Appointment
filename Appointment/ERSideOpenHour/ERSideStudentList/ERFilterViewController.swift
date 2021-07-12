@@ -273,7 +273,7 @@ extension ERFilterViewController: ERSideFilterTableViewCellDelegate{
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50;
+        return 46;
     }
 }
 

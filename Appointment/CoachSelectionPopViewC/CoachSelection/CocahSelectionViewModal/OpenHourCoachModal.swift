@@ -183,10 +183,11 @@ struct CreatedBy: Codable {
 struct Feedback: Codable {
     let averageRating: Float?
     let createdAt: String?
-    let coachHelpfulness: Int?
+    let coachHelpfulness: String?
     let updatedAt: String?
-    let coachExpertise, overallExperience, id: Int?
+    let coachExpertise, overallExperience : String?
     let comments: String?
+    let id: Int?
 
     enum CodingKeys: String, CodingKey {
         case averageRating = "average_rating"
