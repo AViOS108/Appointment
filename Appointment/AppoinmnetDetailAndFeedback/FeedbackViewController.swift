@@ -238,121 +238,121 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     
     
     func customization()  {
-        
-        let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
-        
-        
-        
-        txtView.backgroundColor = ILColor.color(index: 22)
-        txtView.autocorrectionType = .no
-        txtView.spellCheckingType = .no
-        txtView.font = fontMedium
-        txtView.delegate = self
-        txtView.layer.borderWidth = 1;
-        txtView.layer.borderColor = ILColor.color(index: 22).cgColor
-        txtView.text = "Your notes here"
-        txtView.textColor = .lightGray
-        self.addInputAccessoryForTextView(textVIew: txtView )
-        
-        
-        
-        
-        let radius =  (Int)(lblImageView.frame.height)/2
-        if let urlImage = URL.init(string: self.selectedAppointmentModal?.coach?.profilePicURL ?? "") {
-            self.imgView
-                .setImageWith(urlImage, placeholderImage: UIImage.init(named: "Placeeholderimage"))
-            
-            self.imgView?.cornerRadius = CGFloat(radius)
-            imgView?.clipsToBounds = true
-            //                self.imgView.layer.borderColor = UIColor.black.cgColor
-            //                self.imgView.layer.borderWidth = 1
-            self.imgView?.layer.masksToBounds = true;
-        }
-        else{
-            self.imgView.image = UIImage.init(named: "Placeeholderimage");
-            //            self.imgView.contentMode = .scaleAspectFit;
-            
-        }
-        
-        if self.selectedAppointmentModal?.coach?.profilePicURL == nil ||
-            GeneralUtility.optionalHandling(_param: self.selectedAppointmentModal?.coach?.profilePicURL?.isBlank, _returnType: Bool.self)
-        {
-            
-            self.imgView?.isHidden = true
-            self.lblImageView.isHidden = false
-            
-            let stringImg = GeneralUtility.startNameCharacter(stringName: self.selectedAppointmentModal?.coach?.name ?? " ")
-            if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
-            {
-                
-                UILabel.labelUIHandling(label: lblImageView, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
-                lblImageView.textAlignment = .center
-                lblImageView.layer.borderColor = UIColor.black.cgColor
-            }
-            
-            
-        }
-        else
-        {
-            self.lblImageView.isHidden = true
-            self.imgView?.isHidden = false
-            
-        }
-        
-        
-        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-       
-        
-        self.textWithAstrikMark(lblSpecific: lblOverallExp, text: "Overall Experience for the sessions")
-        self.textWithAstrikMark(lblSpecific: lblCoachPrecise, text: "Coach’s precision and helpfulness")
-        self.textWithAstrikMark(lblSpecific: lblHelpFulness, text: "Helpfulness due to coach’s area of expertise")
-
-        
-        
-        UILabel.labelUIHandling(label: lblHeader, text: "Fill Feedback for this session", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
-        
-        UILabel.labelUIHandling(label: lblCoachName, text: selectedAppointmentModal?.coach?.name ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
-        UILabel.labelUIHandling(label: lblCoachType, text: selectedAppointmentModal?.coach?.headline ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontBook)
-        
-        
-        UILabel.labelUIHandling(label: lbltxtView, text: "Additional Comments", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
-
-        
-        
-        UIButton.buttonUIHandling(button: btnCancel, text: "Cancel", backgroundColor: .white, textColor: ILColor.color(index: 23), cornerRadius: 3, borderColor:  ILColor.color(index: 23), borderWidth: 1, fontType: fontMedium)
-        
-        UIButton.buttonUIHandling(button: btnSubmit, text: "Submit", backgroundColor: ILColor.color(index: 23) , textColor: .white, cornerRadius: 3, fontType: fontHeavy)
-        //noun_Star_nonselect
-        
-        //        noun_Star_select
-        
-        viewSeperators.forEach { (viewSep) in
-            viewSep.backgroundColor = ILColor.color(index: 22)
-        }
-        var index = 1
-        self.btnOverallExpGrp.forEach { (btn) in
-            btn.tag = index
-            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
-            index = index + 1
-        }
-        index = 1
-        self.btnHelpFulnessGrp.forEach { (btn) in
-            btn.tag = index
-            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
-            index = index + 1
-        }
-        index = 1
-        self.btnCoachPreciseGrp.forEach { (btn) in
-            btn.tag = index
-            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
-            index = index + 1
-        }
-        
-        
-        contentSize = CGSize.init(width: self.viewScroll.contentSize.width, height: self.viewScroll.contentSize.height)
-        
-    }
+//
+//        let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
+//
+//
+//
+//        txtView.backgroundColor = ILColor.color(index: 22)
+//        txtView.autocorrectionType = .no
+//        txtView.spellCheckingType = .no
+//        txtView.font = fontMedium
+//        txtView.delegate = self
+//        txtView.layer.borderWidth = 1;
+//        txtView.layer.borderColor = ILColor.color(index: 22).cgColor
+//        txtView.text = "Your notes here"
+//        txtView.textColor = .lightGray
+//        self.addInputAccessoryForTextView(textVIew: txtView )
+//
+//
+//
+//
+//        let radius =  (Int)(lblImageView.frame.height)/2
+//        if let urlImage = URL.init(string: self.selectedAppointmentModal?.coach?.profilePicURL ?? "") {
+//            self.imgView
+//                .setImageWith(urlImage, placeholderImage: UIImage.init(named: "Placeeholderimage"))
+//
+//            self.imgView?.cornerRadius = CGFloat(radius)
+//            imgView?.clipsToBounds = true
+//            //                self.imgView.layer.borderColor = UIColor.black.cgColor
+//            //                self.imgView.layer.borderWidth = 1
+//            self.imgView?.layer.masksToBounds = true;
+//        }
+//        else{
+//            self.imgView.image = UIImage.init(named: "Placeeholderimage");
+//            //            self.imgView.contentMode = .scaleAspectFit;
+//
+//        }
+//
+//        if self.selectedAppointmentModal?.coach?.profilePicURL == nil ||
+//            GeneralUtility.optionalHandling(_param: self.selectedAppointmentModal?.coach?.profilePicURL?.isBlank, _returnType: Bool.self)
+//        {
+//
+//            self.imgView?.isHidden = true
+//            self.lblImageView.isHidden = false
+//
+//            let stringImg = GeneralUtility.startNameCharacter(stringName: self.selectedAppointmentModal?.coach?.name ?? " ")
+//            if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
+//            {
+//
+//                UILabel.labelUIHandling(label: lblImageView, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
+//                lblImageView.textAlignment = .center
+//                lblImageView.layer.borderColor = UIColor.black.cgColor
+//            }
+//
+//
+//        }
+//        else
+//        {
+//            self.lblImageView.isHidden = true
+//            self.imgView?.isHidden = false
+//
+//        }
+//
+//
+//        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+//        let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+//
+//
+//        self.textWithAstrikMark(lblSpecific: lblOverallExp, text: "Overall Experience for the sessions")
+//        self.textWithAstrikMark(lblSpecific: lblCoachPrecise, text: "Coach’s precision and helpfulness")
+//        self.textWithAstrikMark(lblSpecific: lblHelpFulness, text: "Helpfulness due to coach’s area of expertise")
+//
+//
+//
+//        UILabel.labelUIHandling(label: lblHeader, text: "Fill Feedback for this session", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
+//
+//        UILabel.labelUIHandling(label: lblCoachName, text: selectedAppointmentModal?.coach?.name ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
+//        UILabel.labelUIHandling(label: lblCoachType, text: selectedAppointmentModal?.coach?.headline ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontBook)
+//
+//
+//        UILabel.labelUIHandling(label: lbltxtView, text: "Additional Comments", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
+//
+//
+//
+//        UIButton.buttonUIHandling(button: btnCancel, text: "Cancel", backgroundColor: .white, textColor: ILColor.color(index: 23), cornerRadius: 3, borderColor:  ILColor.color(index: 23), borderWidth: 1, fontType: fontMedium)
+//
+//        UIButton.buttonUIHandling(button: btnSubmit, text: "Submit", backgroundColor: ILColor.color(index: 23) , textColor: .white, cornerRadius: 3, fontType: fontHeavy)
+//        //noun_Star_nonselect
+//
+//        //        noun_Star_select
+//
+//        viewSeperators.forEach { (viewSep) in
+//            viewSep.backgroundColor = ILColor.color(index: 22)
+//        }
+//        var index = 1
+//        self.btnOverallExpGrp.forEach { (btn) in
+//            btn.tag = index
+//            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+//            index = index + 1
+//        }
+//        index = 1
+//        self.btnHelpFulnessGrp.forEach { (btn) in
+//            btn.tag = index
+//            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+//            index = index + 1
+//        }
+//        index = 1
+//        self.btnCoachPreciseGrp.forEach { (btn) in
+//            btn.tag = index
+//            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+//            index = index + 1
+//        }
+//
+//
+//        contentSize = CGSize.init(width: self.viewScroll.contentSize.width, height: self.viewScroll.contentSize.height)
+//
+   }
     
     
     func textWithAstrikMark(lblSpecific: UILabel,text:String){

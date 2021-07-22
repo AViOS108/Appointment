@@ -89,54 +89,9 @@ class HomeMyAppointmentTableViewController: UITableViewController {
     }
         
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0
-        {
-            
-            if noUpcommingAppo == true
-            {
-                return 1
-            }
-            
-            
-            if (viewControllerI.dataFeedingAppointmentModal?.sectionHeader![section].seeAll)!
-            {
-                return viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == false}).count ?? 0
-            }
-            else
-            {
-                if viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == false}).count ?? 0 < 2
-                {
-                    return viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == false}).count ?? 0
-                }
-                else{
-                    return 2
-                    
-                }
-            }
-        }
-        else
-        {
-            if noPastAppo == true
-            {
-                return 1
-            }
-            
-            
-            if (viewControllerI.dataFeedingAppointmentModal?.sectionHeader![section].seeAll)!
-            {
-                return viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == true}).count ?? 0
-            }
-            else
-            {
-                if viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == true}).count ?? 0 < 2
-                {
-                    return viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == true}).count ?? 0
-                }
-                else{
-                    return 2
-                    
-                }            }
-        }
+        
+        return viewControllerI.dataFeedingAppointmentModal?.results?.count ?? 0
+
     }
         
         
@@ -147,17 +102,5 @@ class HomeMyAppointmentTableViewController: UITableViewController {
             return 2
         }
         
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderSectionCoach") as! HeaderSectionCoach
-            headerView.delegate = viewControllerI as? HeaderSectionCoachDelegate
-            headerView.sectionHeader = viewControllerI.dataFeedingAppointmentModal?.sectionHeader![section];
-            headerView.customization()
-            return headerView
-            
-        }
-        
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 50
-        }
-    
+ 
 }

@@ -19,7 +19,6 @@ import Foundation
 struct OpenHourCoachModal: Codable {
     var results: [OpenHourCoachModalResult]?
     var total: Int?
-    var sectionHeader: [sectionHead]?
 
 }
 
@@ -32,63 +31,41 @@ struct OpenHourCoachModalResult: Codable {
     
   
     
-    let id: String?
     var isPastAppointment : Bool = false
     var isFeedbackEnabled : Bool = false
 
-    let eventTypeID: Int?
-    let title, resultDescription, timezone, startDatetimeUTC: String?
-    let endDatetimeUTC: String?
-    let duration: Int?
-    let state, createdAt, lastChangedAt, createdByID: String?
-    let createdByType, updatedByID, updatedByType: String?
-    let type: TypeClass?
-    let participants: [Participant]?
-    let calendars:[String]?
-    let parent: [Parent]?
-    let locationsUniversityRoom, openHoursAppointmentApprovalProcess, slotDuration, identifier: String?
-    let isRecurringInstance, isSessionInstance, isSlotInstance: Bool?
-    let idsHistory: [String]?
-    let startDatetime, endDatetime, inTimezone: String?
-    let createdBy: CreatedBy!
-    let purposes: [Purpose]?
-    var coach : Coach?
-    let appointmentIsCompleted: Int?
-    let locations: [Location]?
+    let id: Int
+      let startDatetimeUTC, endDatetimeUTC: String
+      let parentID: Int?
+      let createdByID: Int
+      let purposes: [Purpose]
+      let timezone: String
+      let recurrence: String?
+      let location: String
+      let locationType: String
+      let appointmentConfig: AppointmentConfig
+      let identifier: String
+      let isRecurringInstance: Bool
+      let startDatetime, endDatetime: String
+      let inTimezone: String
+      let createdBy: CreatedBy
 
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case eventTypeID = "event_type_id"
-        case title
-        case resultDescription = "description"
-        case timezone
-        case startDatetimeUTC = "start_datetime_utc"
-        case endDatetimeUTC = "end_datetime_utc"
-        case duration, state
-        case createdAt = "created_at"
-        case lastChangedAt = "last_changed_at"
-        case createdByID = "created_by_id"
-        case createdByType = "created_by_type"
-        case updatedByID = "updated_by_id"
-        case updatedByType = "updated_by_type"
-        case type, participants, calendars, parent
-        case locationsUniversityRoom = "locations_university_room"
-        case openHoursAppointmentApprovalProcess = "open_hours_appointment_approval_process"
-        case slotDuration = "slot_duration"
-        case identifier
-        case isRecurringInstance = "is_recurring_instance"
-        case isSessionInstance = "is_session_instance"
-        case isSlotInstance = "is_slot_instance"
-        case idsHistory = "ids_history"
-        case startDatetime = "start_datetime"
-        case endDatetime = "end_datetime"
-        case inTimezone = "in_timezone"
-        case createdBy = "created_by"
-        case appointmentIsCompleted = "appointment_is_completed"
-        case locations
-        case purposes
-    }
+      enum CodingKeys: String, CodingKey {
+          case id
+          case startDatetimeUTC = "start_datetime_utc"
+          case endDatetimeUTC = "end_datetime_utc"
+          case parentID = "parent_id"
+          case createdByID = "created_by_id"
+          case purposes, timezone, recurrence, location
+          case locationType = "location_type"
+          case appointmentConfig = "appointment_config"
+          case identifier
+          case isRecurringInstance = "is_recurring_instance"
+          case startDatetime = "start_datetime"
+          case endDatetime = "end_datetime"
+          case inTimezone = "in_timezone"
+          case createdBy = "created_by"
+      }
     
 }
 
@@ -100,7 +77,7 @@ struct Parent: Codable {
     let openHoursAppointmentApprovalProcess, createdByID, slotDuration: String?
     let eventTypeID: Int?
     let startDatetimeUTC: String?
-    let idsHistory: [JSONAny]?
+    let idsHistory: [String]?
     let sessions: String?
     let identifier, originalEndDatetimeUTC, lastChangedAt: String?
     let parentType: String?
@@ -115,7 +92,7 @@ struct Parent: Codable {
     let locationsUniversityRoom: String?
     let isRecurring: Int?
     let title, updatedByID, endDatetimeUTC: String?
-    let parent: [JSONAny]?
+    let parent: [String]?
     let pivot: Pivot?
     let isSessionInstance: Bool?
 

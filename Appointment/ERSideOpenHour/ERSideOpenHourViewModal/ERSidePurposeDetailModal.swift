@@ -11,8 +11,7 @@
 //
 //   let welcome = try? newJSONDecoder().decode(Welcome.self, from: jsonData)
 
-import Foundation
-
+ 
 
 struct  ERSidePurposeDetailNewModal: Codable {
     let purposeText: String?
@@ -81,6 +80,7 @@ struct StudentDetailModalItem: Codable {
     let benchmark: Benchmark?
     let tags: Tags?
 
+   
     enum CodingKeys: String, CodingKey {
         case id
         case firstName = "first_name"
@@ -133,7 +133,10 @@ struct ERFilterTag: Codable {
 
 struct TagValueObject : Codable,Equatable {
     var eRFilterid: Int?
+    var id = 0;
+
     var tagValueText : String?
+    var machineName = ""
     var isSelected : Bool?
     var isTag = false
     
@@ -180,9 +183,64 @@ struct NewUserPurposeCreatedBy: Codable {
 typealias NewUserPurposeModalArr = [NewUserPurposeModal]
 
 
+// Student Side  filter
+
+
+struct SSFilterRoles: Codable {
+    let items: [FilterRoles]?
+    let total: Int?
+}
+
+// MARK: - Item
+struct FilterRoles: Codable {
+    let id: Int?
+    let machineName, displayName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case machineName = "machine_name"
+        case displayName = "display_name"
+    }
+}
+
+
+struct SSFilterExpertise: Codable {
+    let expertiseID: Int?
+    let displayName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case expertiseID = "expertise_id"
+        case displayName = "display_name"
+    }
+}
+
+typealias SSFilterExpertiseArr = [SSFilterExpertise]
 
 
 
+struct SSFilterIndustries: Codable {
+    let industryID: Int?
+    let displayName: String?
 
+    enum CodingKeys: String, CodingKey {
+        case industryID = "industry_id"
+        case displayName = "display_name"
+    }
+}
+
+typealias SSFilterIndustriesArr = [SSFilterIndustries]
+
+
+struct SSFilterClubs: Codable {
+    let id: Int?
+    let displayName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case displayName = "display_name"
+    }
+}
+
+typealias SSFilterClubsArr = [SSFilterClubs]
 
 

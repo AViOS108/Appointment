@@ -184,8 +184,8 @@ class AppoinmentdetailViewModal{
         
         if let _ = self.nextModalObj , let _ = self.noteModalObj , let _ = self.coachNoteModalObj , let _ = self.appoinmentDetailModalObj{
             var objApooinmentDetailAllModal = ApooinmentDetailAllModal();
-            self.appoinmentDetailModalObj?.coach = selectedAppointmentModal?.coach
-            self.appoinmentDetailModalObj?.parent = selectedAppointmentModal?.parent;
+//            self.appoinmentDetailModalObj?.coach = selectedAppointmentModal?.coach
+//            self.appoinmentDetailModalObj?.parent = selectedAppointmentModal?.parent;
         
             objApooinmentDetailAllModal.nextModalObj = self.nextModalObj
             objApooinmentDetailAllModal.noteModalObj = self.noteModalObj

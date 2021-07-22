@@ -120,7 +120,7 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
     
     func modalFormation(){
         
-        for purpose in results.purposes!{
+        for purpose in results.purposes{
             let searchItem = SearchTextFieldItem()
             searchItem.title = purpose.userPurpose?.displayName! as! String
             searchItem.id  = purpose.userPurposeID
@@ -461,7 +461,7 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
 
         let  activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.CONFIRMAPPOINTMENT)
              
-        CoachSelectionService().confirmAppointment(identifier: results.identifier!, params: params as Dictionary<String, AnyObject>, { (data) in
+        CoachSelectionService().confirmAppointment(identifier: results.identifier, params: params as Dictionary<String, AnyObject>, { (data) in
             activityIndicator.hide()
             
             self.dismiss(animated: false) {

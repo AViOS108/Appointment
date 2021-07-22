@@ -226,9 +226,7 @@
 		1A78314C24F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78314624F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.swift */; };
 		1A78314D24F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78314724F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.swift */; };
 		1A78314E24F8D37F0054AAF8 /* HorizontalCalender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78314824F8D37F0054AAF8 /* HorizontalCalender.swift */; };
-		1A78315624F8D3D20054AAF8 /* HeaderSectionCoach.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A78315024F8D3D20054AAF8 /* HeaderSectionCoach.xib */; };
 		1A78315724F8D3D20054AAF8 /* CoachListingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A78315124F8D3D20054AAF8 /* CoachListingTableViewCell.xib */; };
-		1A78315824F8D3D20054AAF8 /* HeaderSectionCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78315224F8D3D20054AAF8 /* HeaderSectionCoach.swift */; };
 		1A78315924F8D3D20054AAF8 /* SliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78315324F8D3D20054AAF8 /* SliderTableViewCell.swift */; };
 		1A78315A24F8D3D20054AAF8 /* SliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A78315424F8D3D20054AAF8 /* SliderTableViewCell.xib */; };
 		1A78315B24F8D3D20054AAF8 /* CoachListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78315524F8D3D20054AAF8 /* CoachListingTableViewCell.swift */; };
@@ -576,9 +574,7 @@
 		1A78314624F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalAppointmentInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A78314724F8D37F0054AAF8 /* HorizonatlDateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizonatlDateCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A78314824F8D37F0054AAF8 /* HorizontalCalender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalCalender.swift; sourceTree = "<group>"; };
-		1A78315024F8D3D20054AAF8 /* HeaderSectionCoach.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderSectionCoach.xib; sourceTree = "<group>"; };
 		1A78315124F8D3D20054AAF8 /* CoachListingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoachListingTableViewCell.xib; sourceTree = "<group>"; };
-		1A78315224F8D3D20054AAF8 /* HeaderSectionCoach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSectionCoach.swift; sourceTree = "<group>"; };
 		1A78315324F8D3D20054AAF8 /* SliderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderTableViewCell.swift; sourceTree = "<group>"; };
 		1A78315424F8D3D20054AAF8 /* SliderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SliderTableViewCell.xib; sourceTree = "<group>"; };
 		1A78315524F8D3D20054AAF8 /* CoachListingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoachListingTableViewCell.swift; sourceTree = "<group>"; };
@@ -1207,8 +1203,6 @@
 		1A78314F24F8D3D20054AAF8 /* DashBoardTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				1A78315024F8D3D20054AAF8 /* HeaderSectionCoach.xib */,
-				1A78315224F8D3D20054AAF8 /* HeaderSectionCoach.swift */,
 				1A78315324F8D3D20054AAF8 /* SliderTableViewCell.swift */,
 				1A78315424F8D3D20054AAF8 /* SliderTableViewCell.xib */,
 				1A78315524F8D3D20054AAF8 /* CoachListingTableViewCell.swift */,
@@ -1618,7 +1612,6 @@
 				1A61EFFC250A13E300257CB5 /* ConfirmationPopupFileShareTableViewCell.xib in Resources */,
 				1A61EFF8250773EE00257CB5 /* ConfirmationPopUpSecondTableViewCell.xib in Resources */,
 				1A9532CF256D334500EC3D1F /* ERSideFloatingVCViewController.xib in Resources */,
-				1A78315624F8D3D20054AAF8 /* HeaderSectionCoach.xib in Resources */,
 				1AD10EA82615DE11007F6115 /* ERAppoDetailThirdTableViewCell.xib in Resources */,
 				1A78316024F8D4110054AAF8 /* CoachAluminiSelectionTableViewCell.xib in Resources */,
 				1A1DD5A824FE3CC90005250C /* TimeZoneViewController.xib in Resources */,
@@ -1995,7 +1988,6 @@
 				1A54707324B5D241005F1058 /* CommunityListTableViewCell.swift in Sources */,
 				1A5470E624B5D2AE005F1058 /* GeneralUtility.swift in Sources */,
 				1AB4599C2574EE4400E3671C /* ERSideOpenHourDetail.swift in Sources */,
-				1A78315824F8D3D20054AAF8 /* HeaderSectionCoach.swift in Sources */,
 				1A61EFF7250773EE00257CB5 /* ConfirmationPopUpSecondTableViewCell.swift in Sources */,
 				1A04405B255E51A000339BBE /* ERSideHomeSectionHeader.swift in Sources */,
 				1AEB679624EFDA92006F9C05 /* CalenderCollectionViewCell.swift in Sources */,

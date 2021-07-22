@@ -28,7 +28,7 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
     @IBOutlet weak var viewOuter: UIView!
     
     var pointSign : CGPoint?
-    var nocoach = false,noAlumini = false
+    var nocoach = false
     var viewControllerI : CoachSelectionViewController!
     @IBOutlet weak var tblVIew: UITableView!
     @IBOutlet weak var btnCoach: UIButton!
@@ -85,28 +85,6 @@ class CoachAluminiViewController: UIViewController,UIGestureRecognizerDelegate {
             viewFooterBtnAlumini.backgroundColor = ILColor.color(index: 22)
             
         }
-        
-        if (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "career_coach"
-            })!.count == 1
-        {
-            nocoach = true
-        }
-        else
-        {
-            nocoach = false
-            
-        }
-        
-        if (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "external_coach"
-            })!.count == 1
-        {
-            noAlumini = true
-        }
-        else{
-            noAlumini = false
-            
-        }
-        
         
         
         nslayoutConstraintTop.constant = pointSign?.y as! CGFloat
@@ -180,58 +158,24 @@ extension CoachAluminiViewController: UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "CoachAluminiSelectionTableViewCell", for: indexPath) as! CoachAluminiSelectionTableViewCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         //           cell.delegate = viewControllerI as? CoachListingTableViewCellDelegate
-        if isCoachSelected
-        {
-            if nocoach {
-            }
-            else
-            {
-                    cell.coachModal = (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "career_coach"
-                        })![indexPath.row ];
-                
-            }
-            cell.delegate = viewControllerI
-            cell.customization(noCoach: nocoach, text: "No Coach Found !", row: indexPath.row)
-        }
-        else{
-            if noAlumini {
-            }
-            else
-            {
-                
-                    cell.coachModal = (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "external_coach"
-                        })![indexPath.row ];
-            }
-            cell.customization(noCoach: noAlumini, text: "No Alumni Found !", row: indexPath.row)
-        }
+        
+        cell.coachModal = viewControllerI.dataFeedingModal?.items[indexPath.row]
+        cell.delegate = viewControllerI
+        cell.customization(noCoach: nocoach, text: "No Coach Found !", row: indexPath.row)
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isCoachSelected
+        
+        if nocoach == true
         {
-            if nocoach == true
-            {
-                return 1
-            }
-            else
-            {
-                return (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "career_coach"
-                    })!.count
-            }
+            return 1
         }
-        else
-        {
-            if noAlumini == true
-            {
-                return 1
-            }
-                
-            else{
-                return (viewControllerI.dataFeedingModal?.coaches.filter{ $0.roleMachineName.rawValue == "external_coach"
-                    })!.count
-            }
+        
+        else{
+            return (viewControllerI.dataFeedingModal?.items.count) ?? 0
         }
+        
     }
     
     

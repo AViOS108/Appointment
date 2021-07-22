@@ -34,9 +34,9 @@ class DashBoardViewModel  {
             }
             do{
                 var welcome = try JSONDecoder().decode(DashBoardModel.self, from: jsonData)
-                let welcomeI = welcome.coaches.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
-                    welcome.coaches.removeAll()
-                    welcome.coaches.append(contentsOf: welcomeI)
+                let welcomeI = welcome.items.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+                    welcome.items.removeAll()
+                    welcome.items.append(contentsOf: welcomeI)
                     success(welcome)
                     
                 

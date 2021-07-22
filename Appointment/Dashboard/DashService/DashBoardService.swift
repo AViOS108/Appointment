@@ -14,7 +14,7 @@ class DashboardService {
     func coachListApi(params: Dictionary<String, AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
         
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
-        Network().makeApiCoachRequest(true, url: Urls().coachesList(), methodType: .get, params: params, header: headers, completion: { (data) in
+        Network().makeApiEventRequest(true, url: Urls().coachListStudentSide(), methodType: .post, params: params, header: headers, completion: { (data) in
             success(data)
         }) { (error, errorCode) in
             failure(error,errorCode)

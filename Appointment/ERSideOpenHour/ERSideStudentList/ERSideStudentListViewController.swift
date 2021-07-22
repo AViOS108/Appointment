@@ -62,6 +62,8 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
 //        objERFilterViewController.modalPresentationStyle = .overFullScreen
         objERFilterViewController.objERFilterTag = self.objERFilterTag
         objERFilterViewController.delegate = self
+        objERFilterViewController.objFilterTypeView = .ER
+
         self.navigationController?.pushViewController(objERFilterViewController, animated: false)
 //        self.present(objERFilterViewController, animated: false) {
 //

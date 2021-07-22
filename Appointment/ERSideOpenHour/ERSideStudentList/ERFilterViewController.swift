@@ -13,11 +13,17 @@ protocol ERFilterViewControllerDelegate {
     func passFilter( selectedFilter : [ERFilterTag]?)
 }
 
+enum filterTypeView {
+    case ER
+    case Student
+}
+
 
 class ERFilterViewController: SuperViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var viewFilter: UIView!
     
-    var delegate : ERFilterViewControllerDelegate!
+    var objFilterTypeView : filterTypeView!
+    var delegate : ERFilterViewControllerDelegate?
     @IBOutlet weak var btnReset: UIButton!
     @IBAction func btnResetTapped(_ sender: Any) {
         
@@ -45,8 +51,9 @@ class ERFilterViewController: SuperViewController,UITableViewDelegate,UITableVie
     }
     @IBOutlet weak var btnApply: UIButton!
     @IBAction func btnApplyTapped(_ sender: Any) {
-        
-        self.delegate.passFilter(selectedFilter: self.objERFilterTag)
+        if let deletgateI = self.delegate{
+            deletgateI.passFilter(selectedFilter: self.objERFilterTag)
+        }
         self.navigationController?.popViewController(animated: false)
         
         
@@ -66,11 +73,26 @@ class ERFilterViewController: SuperViewController,UITableViewDelegate,UITableVie
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Filters")
         tblView.register(UINib.init(nibName: "ERSideFilterTableViewCell", bundle: nil), forCellReuseIdentifier: "ERSideFilterTableViewCell")
         
-        if objERFilterTag != nil{
-            self.customization();
-        }
-        else{
-            callViewModal()
+        switch objFilterTypeView {
+        case .ER:
+            if objERFilterTag != nil{
+                self.customization();
+            }
+            else{
+                callViewModalERSide()
+            }
+            break
+        case .Student:
+            if objERFilterTag != nil{
+                self.customization();
+            }
+            else{
+                callViewModalStudentSide()
+            }
+            break
+        break
+        default:
+            break
         }
         
         // Do any additional setup after loading the view.
@@ -80,8 +102,11 @@ class ERFilterViewController: SuperViewController,UITableViewDelegate,UITableVie
         self.navigationController?.popViewController(animated: true)
     }
     
+   
     
-    func callViewModal()  {
+    
+    
+    func callViewModalERSide()  {
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
         ERSideStudentListViewModal().fetchTags({ (data) in
             self.activityIndicator?.hide()
@@ -168,8 +193,8 @@ class ERFilterViewController: SuperViewController,UITableViewDelegate,UITableVie
 
 
 extension ERFilterViewController: ERSideFilterTableViewCellDelegate{
-    func tagSelected(tag: TagValueObject, isSelectedStudent: Bool) {
-        
+    
+    func erTagSelectLogic(tag: TagValueObject, isSelectedStudent: Bool){
         if tag.isTag {
             
             var tagValue = self.objERFilterTag?.filter({
@@ -219,6 +244,48 @@ extension ERFilterViewController: ERSideFilterTableViewCellDelegate{
             self.objERFilterTag?.insert(tagValue!, at: index)
             
             
+        }
+    }
+    
+    func studentSideTagSelectedLogic(tag: TagValueObject, isSelectedStudent: Bool){
+        
+        var tagValue = self.objERFilterTag?.filter({
+            $0.id == tag.eRFilterid
+        })[0]
+        let index = self.objERFilterTag?.firstIndex(where: { $0.id == tag.eRFilterid}) ?? 0
+        var tagSelectedObj = tagValue?.objTagValue?.filter({
+            $0 == tag
+        })[0];
+        
+        if isSelectedStudent{
+            tagSelectedObj?.isSelected = true;
+        }
+        else{
+            tagSelectedObj?.isSelected = false;
+            
+        }
+        let tagSelectedIndex = tagValue?.objTagValue!.firstIndex(where: {  $0 == tag}) ?? 0
+        tagValue?.objTagValue?.remove(at: tagSelectedIndex);
+        tagValue?.objTagValue?.insert(tagSelectedObj!, at: tagSelectedIndex)
+        self.objERFilterTag?.remove(at: index)
+        self.objERFilterTag?.insert(tagValue!, at: index)
+        
+    }
+    
+    
+    func tagSelected(tag: TagValueObject, isSelectedStudent: Bool) {
+        
+      
+        switch self.objFilterTypeView {
+        case .Student:
+            self.studentSideTagSelectedLogic(tag: tag, isSelectedStudent: isSelectedStudent)
+
+            break
+        case .ER:
+            self.erTagSelectLogic(tag: tag, isSelectedStudent: isSelectedStudent)
+            break
+        default:
+            break
         }
         
         self.tblView.reloadData()
@@ -290,4 +357,25 @@ extension ERFilterViewController : ERSideFilterHeaderViewDelegate{
         self.tblView.reloadData()
         
     }
+}
+
+// STudent Side ViewModal Logic
+
+extension ERFilterViewController : StudentSideFilterVMDelegate {
+    func sendDataToFilterVC(objERFilterTag: [ERFilterTag]) {
+        self.objERFilterTag = objERFilterTag
+        self.customization();
+        self.tblView.reloadData()
+        activityIndicator?.hide()
+
+    }
+    
+    
+    func callViewModalStudentSide()  {
+        activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
+        var objStudentSideFilterVM = StudentSideFilterVM();
+        objStudentSideFilterVM.delegate = self
+        objStudentSideFilterVM.customizationViewModel(identifier: "")
+    }
+    
 }

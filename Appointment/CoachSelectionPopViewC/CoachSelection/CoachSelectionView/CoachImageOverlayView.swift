@@ -11,7 +11,7 @@ import UIKit
 
 protocol CoachImageOverlayViewDelegate {
     
-    func selectedDifferentCoach(coach: Coach)
+    func selectedDifferentCoach(coach: Item?)
     
 }
 
@@ -19,7 +19,6 @@ protocol CoachImageOverlayViewDelegate {
 class CoachImageOverlayView: UIView, UICollectionViewDataSource,UICollectionViewDelegate,CoachImageOverlayLayoutDelegate {
    
     func collectionViewReload(width: Int)  {
-        viewcontrollerI.nslayoutconstraintWidthCollection.constant = CGFloat(width)
         viewCollection.frame.size.width = CGFloat(width)
         viewCollection.layoutIfNeeded()
     }
@@ -30,7 +29,7 @@ class CoachImageOverlayView: UIView, UICollectionViewDataSource,UICollectionView
     func customize()
     {
         
-        if viewcontrollerI.selectedDataFeedingModal?.coaches.count == 0{
+        if viewcontrollerI.selectedDataFeedingModal?.items.count == 0{
             return;
         }
         
@@ -48,14 +47,14 @@ class CoachImageOverlayView: UIView, UICollectionViewDataSource,UICollectionView
         if let layout = viewCollection?.collectionViewLayout as? CoachHorizontalSelectionLayout {
             layout.contentWidth = 0
             layout.cache = []
-            layout.numberOfColumns = viewcontrollerI.selectedDataFeedingModal?.coaches.count as! Int
+            layout.numberOfColumns = viewcontrollerI.selectedDataFeedingModal?.items.count as! Int + 1
         }
         viewCollection.reloadData()
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (viewcontrollerI.selectedDataFeedingModal?.coaches.count)!
+        return (viewcontrollerI.selectedDataFeedingModal?.items.count)! + 1
      }
      
       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -63,17 +62,30 @@ class CoachImageOverlayView: UIView, UICollectionViewDataSource,UICollectionView
         viewCollection.register(UINib.init(nibName: "CoachImageOverlayCiCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CoachImageOverlayCiCollectionViewCell")
         
        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CoachImageOverlayCiCollectionViewCell", for: indexPath as IndexPath) as! CoachImageOverlayCiCollectionViewCell
-        cell.coachModal = viewcontrollerI.selectedDataFeedingModal?.coaches[indexPath.row]
-        cell.customize(viewCollectinView: self.viewCollection)
+        if indexPath.row == viewcontrollerI.selectedDataFeedingModal?.items.count{
+            cell.customize(viewCollectinView: self.viewCollection, isnewAdded: true)
+
+        }
+        else{
+            cell.coachModal = viewcontrollerI.selectedDataFeedingModal?.items[indexPath.row]
+            cell.customize(viewCollectinView: self.viewCollection, isnewAdded: false)
+
+        }
        return cell
      }
      
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if collectionView.tag != 9876{
-            delegate?.selectedDifferentCoach(coach: (viewcontrollerI.selectedDataFeedingModal?.coaches[indexPath.row])!)
+        if indexPath.row == viewcontrollerI.selectedDataFeedingModal?.items.count{
+            delegate?.selectedDifferentCoach(coach: nil)
         }
+        else
+        {
+            if collectionView.tag != 9876{
+                delegate?.selectedDifferentCoach(coach: (viewcontrollerI.selectedDataFeedingModal?.items[indexPath.row])!)
+            }
+        }
+       
         
     }
    
