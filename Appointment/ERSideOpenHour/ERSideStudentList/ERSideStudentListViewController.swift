@@ -62,6 +62,8 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
 //        objERFilterViewController.modalPresentationStyle = .overFullScreen
         objERFilterViewController.objERFilterTag = self.objERFilterTag
         objERFilterViewController.delegate = self
+        objERFilterViewController.objFilterTypeView = .ER
+
         self.navigationController?.pushViewController(objERFilterViewController, animated: false)
 //        self.present(objERFilterViewController, animated: false) {
 //
@@ -421,7 +423,6 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
         
         switch  self.objStudentListType {
         case .groupType:
-            
              
                   if isSelectedStudent{
                       objStudentDetailModalSelected?.total = self.objStudentDetailModal?.total
@@ -443,9 +444,6 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
                       self.objStudentDetailModal?.items!.insert(selectedId!, at: index)
                       
                   }
-                  
-                  
-                  
                   self.allStudentSelectedImage()
                   
                   if isSearchEnabled {

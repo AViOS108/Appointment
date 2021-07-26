@@ -117,15 +117,6 @@ class GeneralUtility {
     
     class func customeNavigationBar(viewController: UIViewController,title:String){
         
-        //search_white
-        let searchButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
-        searchButton.contentMode = .scaleAspectFit
-        //        searchButton.backgroundColor = .red
-        searchButton.addTarget(viewController, action: #selector(SuperViewController.searchEvent(sender:)), for: .touchUpInside)
-        searchButton.setImage(UIImage.init(named: "Searrch_white"), for: .normal)
-        let search =  UIBarButtonItem(customView: searchButton)
-        
-        
         let calenderButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
         calenderButton.contentMode = .scaleAspectFit
         //        searchButton.backgroundColor = .red
@@ -159,11 +150,9 @@ class GeneralUtility {
         currHeight?.isActive = true
         viewController.navigationController?.navigationBar.topItem?.setLeftBarButton(hamburgerBarButton, animated: true)
         
-        
-        
         viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
         
-        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut,calender,search], animated: true)
+        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut,calender], animated: true)
         viewController.navigationController?.navigationBar.topItem?.title = title;
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes

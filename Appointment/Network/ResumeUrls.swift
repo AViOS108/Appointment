@@ -216,6 +216,11 @@ class Urls {
         return "\(type1)payments/ccavenue/verify"
     }
     
+    
+    func coachListStudentSide() -> String{
+        return "\(type9)student/career_services/members/appointments"
+    }
+    
     func uploadProfilePicture() -> String{
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
@@ -333,7 +338,7 @@ class Urls {
     }
     
     func openHourCCList() -> String {
-        return "\(typeEvent1)students/appointment-slots"
+        return "\(typeEvent2)students/open-hour/list"
         
     }
     
@@ -637,4 +642,22 @@ class Urls {
            
        }
     
+    func studentSideRole(Id:String) -> String{
+           return "\(type9)student/career_services/roles?_=\(Id)"
+           
+       }
+    
+    func studentSideExpertise(Id:String) -> String{
+           return "\(type9)student/career_services/expertise?_=\(Id)"
+           
+       }
+    func studentSideIndustries(Id:String) -> String{
+           return "\(type9)student/career_services/expertise?_=\(Id)"
+           
+       }
+    
+    func studentSideClubs(Id:String) -> String{
+           return "\(type9)student/career_services/clubs?_=\(Id)"
+           
+       }
 }

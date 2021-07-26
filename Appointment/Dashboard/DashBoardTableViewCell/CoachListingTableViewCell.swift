@@ -11,8 +11,8 @@ import AFNetworking
 
  
 protocol CoachListingTableViewCellDelegate {
-    func changeModal(modal:Coach,seeMore:Bool )
-    func scheduleAppoinment(modal:Coach)
+    func changeModal(modal:Item )
+    func scheduleAppoinment(modal:Item)
 }
 
 
@@ -34,7 +34,7 @@ class CoachListingTableViewCell: UITableViewCell {
     
     @IBOutlet weak var viewContainer: UIView!
     
-    var coachModal : Coach?
+    var coachModal : Item?
     
     
     override func awakeFromNib() {
@@ -85,13 +85,7 @@ class CoachListingTableViewCell: UITableViewCell {
                 
             }
             
-            var coachType = ""
-                   if coachModal?.roleMachineName.rawValue == "career_coach"{
-                       coachType = "Career Coach"
-                   }
-                   else{
-                       coachType = "Alumni"
-                   }
+          
             
             
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -101,10 +95,10 @@ class CoachListingTableViewCell: UITableViewCell {
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
                 let nextLine1 = NSAttributedString.init(string: "\n")
                 
-                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: coachType, _returnType: String.self)
+                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "coachType", _returnType: String.self)
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
                 
-                let strDesc = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.coachModal?.summary, _returnType: String.self)
+                let strDesc = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.coachModal?.coachInfo.summary, _returnType: String.self)
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
                 
                 let para = NSMutableParagraphStyle.init()
@@ -116,7 +110,7 @@ class CoachListingTableViewCell: UITableViewCell {
                 strHeader.append(nextLine1)
                 strHeader.append(strType)
                 
-                if GeneralUtility.optionalHandling(_param: self.coachModal?.summary, _returnType: String.self) != ""{
+                if GeneralUtility.optionalHandling(_param: self.coachModal?.coachInfo.summary, _returnType: String.self) != ""{
                     strHeader.append(nextLine1)
                     strHeader.append(strDesc)
                     
@@ -189,7 +183,7 @@ class CoachListingTableViewCell: UITableViewCell {
     }
     
     @IBAction func coachSelectedTapped(_ sender: Any) {
-        delegate?.changeModal(modal: self.coachModal!, seeMore: false)
+        delegate?.changeModal(modal: self.coachModal!)
     }
     @IBAction func scheduleAppointmentTapped(_ sender: Any) {
         delegate?.scheduleAppoinment(modal: self.coachModal!)

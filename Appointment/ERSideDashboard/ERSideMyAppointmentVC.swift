@@ -600,6 +600,8 @@ extension ERSideMyAppointmentVC {
         objERFilterViewController.modalPresentationStyle = .overFullScreen
         objERFilterViewController.objERFilterTag = self.objERFilterTag
         objERFilterViewController.delegate = self
+        objERFilterViewController.objFilterTypeView = .ER
+
         self.navigationController?.pushViewController(objERFilterViewController, animated: false)
       
     }

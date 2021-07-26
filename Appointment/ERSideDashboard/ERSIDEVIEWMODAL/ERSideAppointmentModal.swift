@@ -48,7 +48,7 @@ struct ERSideAppointmentModalResult: Codable {
     let participants: [Participant]?
     let appointmentCountsByDate: [AppointmentCountsByDate]?
     var parent: [Parent]?
-    let calendars: [JSONAny]?
+    let calendars: [String]?
     let openHoursAppointmentApprovalProcess,  identifier: String?
     let isRecurringInstance, isSessionInstance, isSlotInstance: Bool?
     let idsHistory: [String]?
@@ -122,7 +122,7 @@ struct ERStudentListParticipant: Codable {
     let firstName, lastName, name, email: String?
     let secondaryEmail, benchmarkName, tags, graduationDate: String?
     let graduationLabel, testCategory, sampleTaghjk: String?
-    let alumniJob, preferredJob: JSONNull?
+    let alumniJob, preferredJob: String?
     let tagsWithDimension, products, invitedDate, signedUpStatus: String?
     let signedUpDate, hasFilledSurvey, hasOptedOut: String?
     let hasUploadedResume, signedUpID: Int?

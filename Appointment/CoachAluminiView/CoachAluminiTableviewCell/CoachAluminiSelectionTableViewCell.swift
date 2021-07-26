@@ -10,7 +10,7 @@ import UIKit
 
 protocol CoachAluminiSelectionTableViewCellDelegate {
     
-        func changeModal(modal:Coach,row:Int )
+        func changeModal(modal:Item,row:Int )
 
     
 }
@@ -34,7 +34,7 @@ class CoachAluminiSelectionTableViewCell: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView!
     
     @IBOutlet weak var lblName: UILabel!
-    var coachModal : Coach?
+    var coachModal : Item?
     var indexPathRow : Int!
     override func awakeFromNib() {
         super.awakeFromNib()

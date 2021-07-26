@@ -13,6 +13,7 @@ class CoachSelectionViewController: SuperViewController {
     var resueStudentFunctionI : StudentFunctionSurvey = StudentFunctionSurvey()
     var resueStudentIndustryI : [StudentIndustrySurvey] = [StudentIndustrySurvey]()
     
+    @IBOutlet weak var lblCoachName: UILabel!
     @IBOutlet weak var imgViewNoOpenHour: UIImageView!
    @IBOutlet weak var noOpenHour: UIView!
     @IBOutlet weak var lblNoOpenHour: UILabel!
@@ -20,7 +21,6 @@ class CoachSelectionViewController: SuperViewController {
     
     var objOpenHourCoachModal :OpenHourCoachModal!
     @IBOutlet weak var viewHorizontalCoachSelection: UIView!
-    @IBOutlet weak var nslayoutconstraintWidthCollection: NSLayoutConstraint!
     @IBOutlet weak var nslayoutConstraintHeightCoachSelectionView: NSLayoutConstraint!
     @IBOutlet weak var tblViewList: UITableView!
     @IBOutlet weak var lblheader: UILabel!
@@ -31,58 +31,28 @@ class CoachSelectionViewController: SuperViewController {
     @IBOutlet weak var btnLeft: UIButton!
     @IBOutlet weak var btnRight: UIButton!
     @IBOutlet weak var viewCollectionHorizontalSelection: UICollectionView!
-    @IBOutlet weak var viewCoachSelectionContainer: UIView!
     var currentIndex = 0
-    var SelectedCoachIndex = 0;
     var calenderModal: CalenderModal?
     @IBOutlet weak var viewRestContainer: UIView!
     @IBOutlet weak var btnSelectTimeZOne: UIButton!
     var dashBoardViewModal = DashBoardViewModel()
     @IBOutlet weak var txtTimeZone: LeftPaddedTextField!
     @IBOutlet weak var lblTimeZone: UILabel!
-    @IBOutlet weak var lblMore: UILabel!
     var dataFeedingModal : DashBoardModel?
     var selectedDataFeedingModal : DashBoardModel?
-    var colectionViewHandler = CoachImageOverlayView();
     var colectionViewHandler2 = CoachImageOverlayView();
-    @IBOutlet weak var viewCollection: UICollectionView!
     var selectedTextZone = ""
-    @IBOutlet weak var btnCoachSelection: UIButton!
     var   timeZoneViewController : TimeZoneViewController!
     var timeZOneArr = [TimeZoneSel]()
-    @IBAction func btnCoacheSelectionTapped(_ sender: UIButton) {
-        
-        if self.dataFeedingModal != nil{
-            
-        }
-        else{
-            return
-        }
-        
-        let frameI =
-            sender.superview?.convert(sender.frame.origin, to: nil)
-        
-        coachAluminiViewController = CoachAluminiViewController.init(nibName: "CoachAluminiViewController", bundle: nil)
-        coachAluminiViewController.delegate = self
-        coachAluminiViewController.pointSign = CGPoint.init(x: abs(frameI!.x) + abs(sender.frame.width/2), y: abs(frameI!.y) + abs(sender.frame.size.height/2) + 10 )
-        coachAluminiViewController.viewControllerI = self
-        coachAluminiViewController.modalPresentationStyle = .overFullScreen
-        self.present(coachAluminiViewController, animated: false) {
-        }
-    }
+ 
+    
+   
     var coachAluminiViewController : CoachAluminiViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
         GeneralUtility.customeNavigationBarWithBack(viewController: self,title:"Schedule");
         UserDefaultsDataSource(key: "timeZoneOffset").writeData(TimeZone.current.identifier)
-
-
-        // Do any additional setup after loading the view.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.view.backgroundColor = ILColor.color(index: 22)
-
+        lblCoachName.text = ""
         otherApiHit()
         if (calenderModal != nil){
             
@@ -91,16 +61,12 @@ class CoachSelectionViewController: SuperViewController {
         else{
             self.convertNextDate(index: 0)
         }
-        self.viewRestContainer.dropShadowER()
-        self.viewCoachSelectionContainer.dropShadowER()
-        self.viewCoachSelectionContainer.isHidden = true
-        self.viewRestContainer.isHidden = true
         dashBoardViewModal.viewController = self
-        
+        self.viewRestContainer.dropShadowER()
+        self.viewRestContainer.isHidden = true
+
         dashBoardViewModal.fetchTimeZoneCall { (timeArr) in
-            self.viewCoachSelectionContainer.isHidden = false
             self.viewRestContainer.isHidden = false
-            
             self.timeZOneArr = timeArr
             self.coachSelectedCheck()
             self.setTimeZoneTextField()
@@ -109,8 +75,13 @@ class CoachSelectionViewController: SuperViewController {
             
         }
         
+        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.view.backgroundColor = ILColor.color(index: 22)
         
-        
+       
         btnLeft.setImage(UIImage.init(named: "Left_arrow"), for: .normal)
         btnRight.setImage(UIImage.init(named: "right_arrow"), for: .normal)
         
@@ -127,7 +98,7 @@ class CoachSelectionViewController: SuperViewController {
     
     func coachSelectedCheck(){
         
-        if  self.selectedDataFeedingModal != nil &&  self.selectedDataFeedingModal?.coaches.count != 0{
+        if  self.selectedDataFeedingModal != nil &&  self.selectedDataFeedingModal?.items.count != 0{
             coachSelectedChanges()
             self.collectionViewDataFeed()
             self.makeModelInSyncWithSelected()
@@ -189,9 +160,11 @@ class CoachSelectionViewController: SuperViewController {
     
     
     func setTimeZoneTextField()  {
-        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE17)
-        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
-        UILabel.labelUIHandling(label: lblTimeZone, text: "TimeZone", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+        let fontHeavyMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE14)
+
+        
+        UILabel.labelUIHandling(label: lblTimeZone, text: "Time Zone", textColor:ILColor.color(index: 29) , isBold: false, fontType: fontHeavy)
         for timeZone in timeZOneArr{
             if timeZone.offset == GeneralUtility().currentOffset() && timeZone.identifier == GeneralUtility().getCurrentTimeZone(){
                 selectedTextZone = timeZone.displayName!
@@ -199,7 +172,7 @@ class CoachSelectionViewController: SuperViewController {
             }
         }
         self.txtTimeZone.text = selectedTextZone
-        self.txtTimeZone.font = fontHeavy1
+        self.txtTimeZone.font = fontHeavyMedium
         self.txtTimeZone.layer.borderColor = ILColor.color(index: 27).cgColor
         self.txtTimeZone.layer.borderWidth = 1;
         self.txtTimeZone.layer.cornerRadius = 3;
@@ -219,9 +192,6 @@ class CoachSelectionViewController: SuperViewController {
     
     func collectionViewDataFeed()  {
         self.customizationLabel()
-        colectionViewHandler.viewcontrollerI = self
-        colectionViewHandler.viewCollection = self.viewCollection
-        colectionViewHandler.customize();
         colectionViewHandler2.viewcontrollerI = self
         colectionViewHandler2.delegate = self
         colectionViewHandler2.viewCollection = self.viewCollectionHorizontalSelection
@@ -233,10 +203,20 @@ class CoachSelectionViewController: SuperViewController {
     
     
     func makeModelInSyncWithSelected(){
-        for coach in selectedDataFeedingModal!.coaches{
-            let index = self.dataFeedingModal?.coaches.firstIndex(where: {$0.id == coach.id}) ?? 0
-            self.dataFeedingModal?.coaches.removeAll(where: {$0.id == coach.id })
-            self.dataFeedingModal?.coaches.insert(coach, at: index)
+        
+        if selectedDataFeedingModal?.items.count ?? 0 > 0{
+            var selectedFirst = selectedDataFeedingModal?.items[0]
+            selectedFirst?.isTappedForOpenHour = true
+            selectedDataFeedingModal?.items.remove(at: 0)
+            selectedDataFeedingModal?.items.insert(selectedFirst!, at: 0)
+            
+        }
+        
+        for var coach in selectedDataFeedingModal!.items{
+            coach.isSelected = true;
+            let index = self.dataFeedingModal?.items.firstIndex(where: {$0.id == coach.id}) ?? 0
+            self.dataFeedingModal?.items.removeAll(where: {$0.id == coach.id })
+            self.dataFeedingModal?.items.insert(coach, at: index)
         }
     }
     
@@ -244,69 +224,21 @@ class CoachSelectionViewController: SuperViewController {
     
     func customizationLabel()
     {
-        btnCoachSelection.setImage(UIImage.init(named: "coachSelection"), for: .normal)
-        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
-        
-        if  self.selectedDataFeedingModal != nil &&  selectedDataFeedingModal?.coaches.count != 0{
-            nslayoutconstraintWidthCollection.constant = 146
-            self.viewCollection.isHidden = false
-            var coachText = selectedDataFeedingModal?.coaches[0].name
-            if (selectedDataFeedingModal?.coaches.count ?? 0) > 1
-            {
-                coachText!.append(" +\((selectedDataFeedingModal?.coaches.count)! - 1 ) more")
-            }
-            var coachType = ""
-            if selectedDataFeedingModal?.coaches[0].roleMachineName.rawValue == "career_coach"{
-                coachType = "Career Coach"
-            }
-            else{
-                coachType = "Alumni"
-            }
-            let strHeader = NSMutableAttributedString.init()
-            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-                
-            {
-                let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: coachText, _returnType: String.self)
-                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
-                let nextLine1 = NSAttributedString.init(string: "\n")
-                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: coachType, _returnType: String.self)
-                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
-                let para = NSMutableParagraphStyle.init()
-                //            para.alignment = .center
-                para.lineSpacing = 1
-                strHeader.append(strTiTle)
-                strHeader.append(nextLine1)
-                strHeader.append(strType)
-                strHeader.append(nextLine1)
-                strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-                lblMore.attributedText = strHeader
-            }
-            lblMore.layoutIfNeeded()
-        }
-        else{
-            nslayoutconstraintWidthCollection.constant = 0
-            self.viewCollection.isHidden = true
-            UILabel.labelUIHandling(label: lblMore, text: "No Coach Selected", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
-            GeneralUtility.customeNavigationBarWithBack(viewController: self,title:"Schedule");
+        GeneralUtility.customeNavigationBarWithBack(viewController: self,title:"Schedule");
 
-        }
+       
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let coachCarrerCoach = Coach.init(id: -1, name: "Select All", email: "", profilePicURL: "", summary: "", headline: "", roleID: -1, roleMachineName: .careerCoach, requestedResumes: nil,isSelected: false)
-        let coachExternalCoach = Coach.init(id: -1, name: "Select All", email: "", profilePicURL: "", summary: "", headline: "", roleID: -1, roleMachineName: .externalCoach, requestedResumes: nil,isSelected: false)
-        self.dataFeedingModal?.coaches.insert(coachCarrerCoach, at: 0)
-        self.dataFeedingModal?.coaches.insert(coachExternalCoach, at: 0)
+      
     }
     
     
     override  func calenderClicked(sender: UIButton) {
         
         let frame = sender.convert(sender.frame, from:AppDelegate.getDelegate().window)
-        
         let viewCalender = CalenderViewController.init(nibName: "CalenderViewController", bundle: nil)
         viewCalender.index = 1
-
         viewCalender.viewControllerI = self
         viewCalender.pointSign = CGPoint.init(x: abs(frame.origin.x) + abs(frame.size.width/2), y: abs(frame.origin.y) + abs(frame.size.height/2) + 10 )
         viewCalender.modalPresentationStyle = .overFullScreen
@@ -315,7 +247,6 @@ class CoachSelectionViewController: SuperViewController {
         
     }
     override func buttonClicked(sender: UIBarButtonItem) {
-        
         self.navigationController?.popViewController(animated: false)
         
     }
@@ -324,19 +255,11 @@ class CoachSelectionViewController: SuperViewController {
 extension CoachSelectionViewController:CoachAluminiSelectionTableViewCellDelegate,CoachAluminiViewControllerDelegate{
     
     func syncSelectedModal(){
-        let coachSelected = self.dataFeedingModal?.coaches.filter({$0.isSelected == true})
+        let coachSelected = self.dataFeedingModal?.items.filter({$0.isSelected == true})
       
-        var coachTemp = [Coach](),index = 0,inex1=0
-        for var coachRemove in coachSelected!{
-            if index == inex1{
-                coachRemove.isExpanded = true
-            
-            }
-            else
-            {
-                coachRemove.isExpanded = false
-
-            }
+        var coachTemp = [Item](),index = 0,inex1=0
+        for coachRemove in coachSelected!{
+           
             if coachRemove.id == -1
             {
                 inex1 = 1
@@ -346,39 +269,38 @@ extension CoachSelectionViewController:CoachAluminiSelectionTableViewCellDelegat
             }
             index += 1
         }
-        selectedDataFeedingModal?.coaches.removeAll();
-        selectedDataFeedingModal?.coaches.append(contentsOf: coachTemp);
-        SelectedCoachIndex = 0
+        selectedDataFeedingModal?.items.removeAll();
+        selectedDataFeedingModal?.items.append(contentsOf: coachTemp);
     }
     
-    func changeModal(modal: Coach, row: Int) {
-        let dataFeedingModalLocal = self.dataFeedingModal;
-        if row == 0
-        {
-            var coachArr = [Coach]()
-            let selectedCoach =   self.dataFeedingModal?.coaches
-            for var coaches in selectedCoach!{
-                if coaches.roleMachineName.rawValue == modal.roleMachineName.rawValue{
-                    coaches.isSelected = !modal.isSelected
-                }
-                   coachArr.append(coaches);
-                
-            }
-            self.dataFeedingModal?.coaches.removeAll()
-            self.dataFeedingModal?.coaches.append(contentsOf: coachArr);
-        }
-        else
-        {
-            let index = self.dataFeedingModal?.coaches.firstIndex(where: {$0.id == modal.id})
-            var selectedCoach =   self.dataFeedingModal?.coaches.filter{
-                $0.id == modal.id
-                }[0];
-            let selectedCoachI = selectedCoach;
-            selectedCoach?.isSelected = !selectedCoachI!.isSelected
-            
-            self.dataFeedingModal?.coaches.remove(at: index!)
-            self.dataFeedingModal?.coaches.insert(selectedCoach!, at: index!)
-        }
+    func changeModal(modal: Item, row: Int) {
+        _ = self.dataFeedingModal;
+//        if row == 0
+//        {
+//            var coachArr = [Coach]()
+//            let selectedCoach =   self.dataFeedingModal?.items
+//            for var coaches in selectedCoach!{
+//                if coaches.roleMachineName.rawValue == modal.roleMachineName.rawValue{
+//                    coaches.isSelected = !modal.isSelected
+//                }
+//                   coachArr.append(coaches);
+//
+//            }
+//            self.dataFeedingModal?.coaches.removeAll()
+//            self.dataFeedingModal?.coaches.append(contentsOf: coachArr);
+//        }
+//        else
+//        {
+//            let index = self.dataFeedingModal?.coaches.firstIndex(where: {$0.id == modal.id})
+//            var selectedCoach =   self.dataFeedingModal?.coaches.filter{
+//                $0.id == modal.id
+//                }[0];
+//            let selectedCoachI = selectedCoach;
+//            selectedCoach?.isSelected = !selectedCoachI!.isSelected
+//
+//            self.dataFeedingModal?.coaches.remove(at: index!)
+//            self.dataFeedingModal?.coaches.insert(selectedCoach!, at: index!)
+//        }
         
        
             syncSelectedModal()
@@ -387,7 +309,7 @@ extension CoachSelectionViewController:CoachAluminiSelectionTableViewCellDelegat
     
     func reloadCollectionView()
     {
-        if selectedDataFeedingModal != nil && self.selectedDataFeedingModal?.coaches.count != 0{
+        if selectedDataFeedingModal != nil && self.selectedDataFeedingModal?.items.count != 0{
             coachSelectedChanges()
             self.collectionViewDataFeed()
             self.makeModelInSyncWithSelected()
@@ -427,42 +349,98 @@ extension CoachSelectionViewController: TimeZoneViewControllerDelegate{
 }
 
 
-extension CoachSelectionViewController: CoachImageOverlayViewDelegate{
-    func selectedDifferentCoach(coach: Coach) {
-        var coachaI = [Coach]()
-        var index = 0
-        for var coaches in selectedDataFeedingModal!.coaches{
-            if coaches.id == coach.id
-            {
-                coaches.isExpanded = true
-                SelectedCoachIndex = index
-            }
-            else
-            {
-                coaches.isExpanded = false
-            }
-            coachaI.append(coaches)
-            index += 1
-        }
-        self.selectedDataFeedingModal?.coaches.removeAll()
-        self.selectedDataFeedingModal?.coaches.append(contentsOf: coachaI)
-        colectionViewHandler2.customize()
+extension CoachSelectionViewController: CoachImageOverlayViewDelegate,ERSideStudentListViewControllerDelegate{
+    
+    func selectedStudentPrivateHour(objStudentDetailModalSelected: StudentDetailModal) {
         
-       
-        coachSelectionTableView.results = objOpenHourCoachModal.results?.filter({
-            GeneralUtility.optionalHandling(_param: $0.createdByID, _returnType: String.self) == "\(coach.id)"
-        })
-        coachSelectionTableView.customizeTableView()
-
-        if coachSelectionTableView.results?.count == 0{
-            noCoachSelectedView()
-        }
-        else{
-            CoachSelectedView()
-        }
+        self.selectedDataFeedingModal?.items.removeAll();
+        let filterI = objStudentDetailModalSelected.items
         
+        self.selectedDataFeedingModal?.items =  (self.dataFeedingModal?.items.filter({
+            let dataFeedingObj = $0;
+            let selectedModal =    filterI?.filter({
+                $0.id == dataFeedingObj.id
+            })
+            if selectedModal?.count ?? 0 > 0
+            {
+                return true;
+            }
+            else{
+                return false
+            }
+        }))!
+        makeModelInSyncWithSelected()
+        reloadCollectionView()
         
     }
+    
+   
+    
+    func selectedDifferentCoach(coach: Item?) {
+        
+        if coach != nil{
+            var coachaI = [Item]()
+            for var itemI in  selectedDataFeedingModal!.items
+            {
+                if itemI.id == coach?.id{
+                    itemI.isTappedForOpenHour = true
+                }
+                else{
+                    itemI.isTappedForOpenHour = false
+                }
+                coachaI.append(itemI)
+            }
+            
+            self.selectedDataFeedingModal?.items.removeAll()
+            self.selectedDataFeedingModal?.items.append(contentsOf: coachaI)
+            colectionViewHandler2.customize()
+            coachSelectionTableView.results = objOpenHourCoachModal.results?.filter({
+                GeneralUtility.optionalHandling(_param: $0.createdByID, _returnType: Int.self) == coach!.id
+            })
+            coachSelectionTableView.customizeTableView()
+            if coachSelectionTableView.results?.count == 0{
+                noCoachSelectedView()
+            }
+            else{
+                CoachSelectedView()
+            }
+            
+        }
+        else{
+            
+            let objERSideStudentListViewController = ERSideStudentListViewController.init(nibName: "ERSideStudentListViewController", bundle: nil)
+            objERSideStudentListViewController.objStudentDetailModal = self.modelMapping(objdataFeedingModal: self.dataFeedingModal!)
+            objERSideStudentListViewController.objStudentDetailModalSelected = self.modelMappingSelected(objStudentDetailModal: self.modelMapping(objdataFeedingModal: self.dataFeedingModal!))
+            objERSideStudentListViewController.delegate = self
+            objERSideStudentListViewController.objStudentListType = .groupType
+            self.navigationController?.pushViewController(objERSideStudentListViewController, animated: false)
+            
+        }
+    }
+    
+    func modelMappingSelected(objStudentDetailModal : StudentDetailModal) -> StudentDetailModal{
+    
+        var studentDetailModalI = objStudentDetailModal;
+        studentDetailModalI.items = objStudentDetailModal.items?.filter({$0.isSelected == true})
+        return studentDetailModalI
+    }
+    
+    func modelMapping(objdataFeedingModal : DashBoardModel) -> StudentDetailModal{
+        
+        var objStudentDetailModal = StudentDetailModal()
+        objStudentDetailModal.total = objdataFeedingModal.count
+        var itemsArr =  [StudentDetailModalItem]()
+
+        for items in objdataFeedingModal.items{
+            var objStudentDetailModalItem = StudentDetailModalItem.init(id: items.id, firstName: items.name, lastName: "", email: nil, invitationID:nil, benchmark: nil, tags: nil)
+            objStudentDetailModalItem.isSelected = items.isSelected;
+            itemsArr.append(objStudentDetailModalItem)
+        }
+        objStudentDetailModal.items = itemsArr
+        
+        return objStudentDetailModal
+    }
+    
 }
 
 extension CoachSelectionViewController {
@@ -490,13 +468,13 @@ extension CoachSelectionViewController {
         let tomorrow = Calendar.current.date(byAdding: .day, value: index, to: Date())
         
         let components = tomorrow!.get(.day, .month, .year,.weekday)
-        let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE16)
+        let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE14)
         let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
 
         
         
         if let day = components.day, let month = components.month, let year = components.year,let weekday = components.weekday {
-            UILabel.labelUIHandling(label: lblDay, text: "\(weekDay[weekday-1]) " + "\(day)", textColor:ILColor.color(index: 4) , isBold: false, fontType: fontHeavy1)
+            UILabel.labelUIHandling(label: lblDay, text: "\(weekDay[weekday-1]) " + "\(day)", textColor:ILColor.color(index: 4) , isBold: false, fontType: fontMedium)
             
             UILabel.labelUIHandling(label: lblMonth, text: "\(monthI[month-1]), " + "\(year)", textColor:ILColor.color(index: 4) , isBold: false, fontType: fontHeavy1)
         }
@@ -544,9 +522,9 @@ extension CoachSelectionViewController:CoachSelectionViewModalDelegate{
     func completeModal(coachOpenHourModal: OpenHourCoachModal) {
             
         objOpenHourCoachModal = coachOpenHourModal
-        let firstSelected = self.selectedDataFeedingModal?.coaches[SelectedCoachIndex];
+        let firstSelected = self.selectedDataFeedingModal?.items.filter({$0.isTappedForOpenHour})[0]
         coachSelectionTableView.results = objOpenHourCoachModal.results?.filter({
-            GeneralUtility.optionalHandling(_param: $0.createdByID, _returnType: String.self) == "\(firstSelected!.id)"
+            GeneralUtility.optionalHandling(_param: $0.createdByID, _returnType: Int.self) == firstSelected!.id
         })
     
         
@@ -561,7 +539,7 @@ extension CoachSelectionViewController:CoachSelectionViewModalDelegate{
         
     }
     func formingModal()  {
-        if self.selectedDataFeedingModal != nil &&  self.selectedDataFeedingModal?.coaches.count != 0{
+        if self.selectedDataFeedingModal != nil &&  self.selectedDataFeedingModal?.items.count != 0{
             let coachSelectionViewModal = CoachSelectionViewModal()
             coachSelectionViewModal.selectedDataModal = self.selectedDataFeedingModal
             coachSelectionViewModal.dateStirng = self.calenderModal?.StrDate;

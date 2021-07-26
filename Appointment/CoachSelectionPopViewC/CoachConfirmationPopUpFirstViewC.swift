@@ -120,120 +120,115 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
     }
     
     
-    func customization(){
-        viewContainer.cornerRadius = 3;
-        viewSeperator.backgroundColor = ILColor.color(index:19);
-        viewSeperatorVerticale.backgroundColor = ILColor.color(index:19);
-        viewBottom.backgroundColor = ILColor.color(index:19);
-        let selectedCoach =  self.dataFeedingModal?.coaches.filter({
-            "\($0.id)" == results.createdByID
-        })[0]
-        
-        _ = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
-        let fontBook = UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE13)
-        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
-        let fontNextMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
-        let fontDemiBold = UIFont(name: "FontDemiBold".localized(), size: Device.FONTSIZETYPE13)
-        
-        
-        UILabel.labelUIHandling(label: lblHeader, text: "Confirm Appointment", textColor:ILColor.color(index: 4) , isBold: false , fontType: UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15),   backgroundColor:.white )
-        lblInitial.layoutIfNeeded()
-        let radius =  (Int)(lblInitial.frame.height)/2
-        if let urlImage = URL.init(string: selectedCoach?.profilePicURL ?? "") {
-            self.imgViewCoach
-                .setImageWith(urlImage, placeholderImage: UIImage.init(named: "Placeeholderimage"))
-            
-            self.imgViewCoach?.cornerRadius = CGFloat(radius)
-            imgViewCoach?.clipsToBounds = true
-            self.imgViewCoach?.layer.masksToBounds = true;
-        }
-        else{
-            self.imgViewCoach.image = UIImage.init(named: "Placeeholderimage");
-            
-        }
-        
-        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
-        {
-            UILabel.labelUIHandling(label: lblInitial, text: selectedCoach!.name, textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
-            lblInitial.layer.borderColor = UIColor.red.cgColor
-            lblInitial.layer.borderWidth = 1;
-            lblInitial.layer.cornerRadius = lblInitial.frame.size.height/2
-            lblInitial.clipsToBounds = true
-            lblInitial.layer.masksToBounds = true
-        }
-        
-        if selectedCoach?.profilePicURL == nil ||
-            GeneralUtility.optionalHandling(_param: selectedCoach?.profilePicURL?.isBlank, _returnType: Bool.self)
-        {
-            self.imgViewCoach?.isHidden = true
-            self.lblInitial.isHidden = false
-            
-            let stringImg = GeneralUtility.startNameCharacter(stringName: selectedCoach?.name ?? " ")
-            if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
-            {
-                UILabel.labelUIHandling(label: lblInitial, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
-                lblInitial.textAlignment = .center
-                lblInitial.layer.borderColor = UIColor.black.cgColor
-            }
-        }
-        else
-        {
-            self.lblInitial.isHidden = true
-            self.imgViewCoach?.isHidden = false
-            
-        }
-        let coachText = selectedCoach?.name
-        var coachType = ""
-        if selectedCoach?.roleMachineName.rawValue == "career_coach"{
-            coachType = "Career Coach"
-        }
-        else{
-            coachType = "Alumni"
-        }
-        let strHeader = NSMutableAttributedString.init()
-        
-        let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: coachText, _returnType: String.self)
-            , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
-        let nextLine1 = NSAttributedString.init(string: "\n")
-        let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: coachType, _returnType: String.self)
-            , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
-        let para = NSMutableParagraphStyle.init()
-        //            para.alignment = .center
-        para.lineSpacing = 1
-        strHeader.append(strTiTle)
-        strHeader.append(nextLine1)
-        strHeader.append(strType)
-        strHeader.append(nextLine1)
-        strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-        lblCoachName.attributedText = strHeader
-        
-        
-        let strHeader1 = NSMutableAttributedString.init()
-        
-        let strSlot = NSAttributedString.init(string: "Available Slot on "
-            , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
-        
-        
-        let strDate = NSAttributedString.init(string: self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "dd MMM yyyy", date: (results?.startDatetimeUTC)!)
-            , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
-        let paraSlot = NSMutableParagraphStyle.init()
-        //            para.alignment = .center
-        paraSlot.lineSpacing = 1
-        strHeader1.append(strSlot)
-        strHeader1.append(strDate)
-        strHeader1.addAttribute(NSAttributedString.Key.paragraphStyle, value: paraSlot, range: NSMakeRange(0, strHeader1.length))
-        lblAvailableSlot.attributedText = strHeader1
-        
-        
-        UILabel.labelUIHandling(label: lblStartTimeText, text: "Start Time", textColor:.black , isBold: false , fontType: fontNextMedium,  backgroundColor:.white )
-        UILabel.labelUIHandling(label: lblEndTimeText, text: "End Time", textColor:.black , isBold: false , fontType: fontNextMedium,  backgroundColor:.white )
-        
-        UILabel.labelUIHandling(label: lblStartTimeValue, text:" " + self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "hh:mm a", date: (results?.startDatetimeUTC)!), textColor:.black , isBold: false , fontType: fontDemiBold, isCircular: true,  backgroundColor:.white ,cornerRadius: 2,borderColor:UIColor.black,borderWidth: 1 )
-        
-        UILabel.labelUIHandling(label: lblEndTimeValue, text:" " + self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "hh:mm a", date: (results?.endDatetimeUTC)!), textColor:.black , isBold: false , fontType: fontDemiBold, isCircular: true,  backgroundColor:.white ,cornerRadius: 2,borderColor:UIColor.black,borderWidth: 1 )
-        self.location()
-        
-    }
+   func customization(){
+//        viewContainer.cornerRadius = 3;
+//        viewSeperator.backgroundColor = ILColor.color(index:19);
+//        viewSeperatorVerticale.backgroundColor = ILColor.color(index:19);
+//        viewBottom.backgroundColor = ILColor.color(index:19);
+////        let selectedCoach =  self.dataFeedingModal?.items.filter({
+////            "\($0.id)" == results.createdByID
+////        })[0]
+//
+//        _ = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
+//        let fontBook = UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE13)
+//        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+//        let fontNextMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
+//        let fontDemiBold = UIFont(name: "FontDemiBold".localized(), size: Device.FONTSIZETYPE13)
+//
+//
+//        UILabel.labelUIHandling(label: lblHeader, text: "Confirm Appointment", textColor:ILColor.color(index: 4) , isBold: false , fontType: UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15),   backgroundColor:.white )
+//        lblInitial.layoutIfNeeded()
+//        let radius =  (Int)(lblInitial.frame.height)/2
+//        if let urlImage = URL.init(string: selectedCoach?.profilePicURL ?? "") {
+//            self.imgViewCoach
+//                .setImageWith(urlImage, placeholderImage: UIImage.init(named: "Placeeholderimage"))
+//
+//            self.imgViewCoach?.cornerRadius = CGFloat(radius)
+//            imgViewCoach?.clipsToBounds = true
+//            self.imgViewCoach?.layer.masksToBounds = true;
+//        }
+//        else{
+//            self.imgViewCoach.image = UIImage.init(named: "Placeeholderimage");
+//
+//        }
+//
+//        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+//        {
+////            UILabel.labelUIHandling(label: lblInitial, text: selectedCoach!.name, textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+//            lblInitial.layer.borderColor = UIColor.red.cgColor
+//            lblInitial.layer.borderWidth = 1;
+//            lblInitial.layer.cornerRadius = lblInitial.frame.size.height/2
+//            lblInitial.clipsToBounds = true
+//            lblInitial.layer.masksToBounds = true
+//        }
+//
+//        if selectedCoach?.profilePicURL == nil ||
+//            GeneralUtility.optionalHandling(_param: selectedCoach?.profilePicURL?.isBlank, _returnType: Bool.self)
+//        {
+//            self.imgViewCoach?.isHidden = true
+//            self.lblInitial.isHidden = false
+//
+//            let stringImg = GeneralUtility.startNameCharacter(stringName: selectedCoach?.name ?? " ")
+//            if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
+//            {
+//                UILabel.labelUIHandling(label: lblInitial, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
+//                lblInitial.textAlignment = .center
+//                lblInitial.layer.borderColor = UIColor.black.cgColor
+//            }
+//        }
+//        else
+//        {
+//            self.lblInitial.isHidden = true
+//            self.imgViewCoach?.isHidden = false
+//
+//        }
+//        let coachText = selectedCoach?.name
+//        var coachType = ""
+//
+//        let strHeader = NSMutableAttributedString.init()
+//
+//        let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: coachText, _returnType: String.self)
+//            , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
+//        let nextLine1 = NSAttributedString.init(string: "\n")
+//        let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: coachType, _returnType: String.self)
+//            , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
+//        let para = NSMutableParagraphStyle.init()
+//        //            para.alignment = .center
+//        para.lineSpacing = 1
+//        strHeader.append(strTiTle)
+//        strHeader.append(nextLine1)
+//        strHeader.append(strType)
+//        strHeader.append(nextLine1)
+//        strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+//        lblCoachName.attributedText = strHeader
+//
+//
+//        let strHeader1 = NSMutableAttributedString.init()
+//
+//        let strSlot = NSAttributedString.init(string: "Available Slot on "
+//            , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
+//
+//
+//        let strDate = NSAttributedString.init(string: self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "dd MMM yyyy", date: (results?.startDatetimeUTC)!)
+//            , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
+//        let paraSlot = NSMutableParagraphStyle.init()
+//        //            para.alignment = .center
+//        paraSlot.lineSpacing = 1
+//        strHeader1.append(strSlot)
+//        strHeader1.append(strDate)
+//        strHeader1.addAttribute(NSAttributedString.Key.paragraphStyle, value: paraSlot, range: NSMakeRange(0, strHeader1.length))
+//        lblAvailableSlot.attributedText = strHeader1
+//
+//
+//        UILabel.labelUIHandling(label: lblStartTimeText, text: "Start Time", textColor:.black , isBold: false , fontType: fontNextMedium,  backgroundColor:.white )
+//        UILabel.labelUIHandling(label: lblEndTimeText, text: "End Time", textColor:.black , isBold: false , fontType: fontNextMedium,  backgroundColor:.white )
+//
+//        UILabel.labelUIHandling(label: lblStartTimeValue, text:" " + self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "hh:mm a", date: (results?.startDatetimeUTC)!), textColor:.black , isBold: false , fontType: fontDemiBold, isCircular: true,  backgroundColor:.white ,cornerRadius: 2,borderColor:UIColor.black,borderWidth: 1 )
+//
+//        UILabel.labelUIHandling(label: lblEndTimeValue, text:" " + self.dateChangeWithFormatter(formatterInput: "yyyy-MM-dd HH:mm:ss", formatterOutpput: "hh:mm a", date: (results?.endDatetimeUTC)!), textColor:.black , isBold: false , fontType: fontDemiBold, isCircular: true,  backgroundColor:.white ,cornerRadius: 2,borderColor:UIColor.black,borderWidth: 1 )
+//        self.location()
+//
+   }
     
     
     
@@ -253,18 +248,18 @@ class CoachConfirmationPopUpFirstViewC: UIViewController,UIGestureRecognizerDele
         var strLocationText = "Not available"
         var zoomLink = false
 
-        if let str = results.locations{
-            if str.count > 0 {
-                strLocationText = (str[0].data?.value) ?? "Not available"
-                if str[0].provider == "zoom_link"{
-                               zoomLink = true
-                               strLocationText = " Zoom"
-                           }
-            }
-            
-           
-            
-        }
+//        if let str = results.locations{
+//            if str.count > 0 {
+//                strLocationText = (str[0].data?.value) ?? "Not available"
+//                if str[0].provider == "zoom_link"{
+//                               zoomLink = true
+//                               strLocationText = " Zoom"
+//                           }
+//            }
+//
+//
+//
+//        }
         
         let image1Attachment = NSTextAttachment()
                  image1Attachment.image = UIImage(named: "Zoom")

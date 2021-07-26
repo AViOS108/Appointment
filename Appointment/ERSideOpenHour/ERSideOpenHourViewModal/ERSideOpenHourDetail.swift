@@ -81,7 +81,7 @@ struct Exception: Codable {
     let isRecurringInstance: Bool?
     let identifier: String?
     let sessions: String?
-    let idsHistory: [JSONAny]?
+    let idsHistory: [String]?
     let startDatetimeUTC, timezone: String?
     let createdByType: String?
     let isAllDay: Int?
@@ -143,14 +143,14 @@ struct OpenHourSubmissionResult: Codable {
     let updatedByID, createdByType, recurrence, inTimezone: String?
     let title: String?
     let isRecurring: Int?
-    let deletedAt: JSONNull?
+    let deletedAt: String?
     let updatedByType: String?
-    let period, sessions: JSONNull?
+    let period, sessions: String?
     let eventTypeID: Int?
     let identifier: String?
     let deadlineTimeOnDay: Int?
     let isSessionInstance: Bool?
-    let idsHistory: [JSONAny]?
+    let idsHistory: [String]?
     let endDatetimeUTC, state: String?
     let isAllDay: Int?
     let purposes: [Purpose]?
@@ -159,12 +159,12 @@ struct OpenHourSubmissionResult: Codable {
     let createdBy: CreatedBy?
     let maximumMeetingsPerDay, duration: Int?
     let welcomeDescription: String?
-    let calendars: [JSONAny]?
+    let calendars: [String]?
     let slotDuration: String?
     let locations: [Location]?
-    let parentID: JSONNull?
+    let parentID: String?
     let timezone, createdByID: String?
-    let parentType: JSONNull?
+    let parentType: String?
     let deadlineDaysBefore: Int?
     let startDatetime, createdAt: String?
     let isSlotInstance: Bool?

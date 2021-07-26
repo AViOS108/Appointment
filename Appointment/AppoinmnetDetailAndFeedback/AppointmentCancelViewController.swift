@@ -67,9 +67,9 @@ class AppointmentCancelViewController: UIViewController,UIGestureRecognizerDeleg
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         
         UILabel.labelUIHandling(label: lblCancel, text: "Cancel Schedule", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy)
-        
-        UILabel.labelUIHandling(label: lblDesce, text: "Are you sure, you want to cancel this schedule with " + (selectedAppointmentModal?.coach?.name ?? "") + " ?", textColor: ILColor.color(index: 42), isBold: false, fontType: fontHeavy1)
-        
+//        
+//        UILabel.labelUIHandling(label: lblDesce, text: "Are you sure, you want to cancel this schedule with " + (selectedAppointmentModal?.coach?.name ?? "") + " ?", textColor: ILColor.color(index: 42), isBold: false, fontType: fontHeavy1)
+//        
         
         self.viewSeprators.forEach { (viewSeperator) in
             viewSeperator.backgroundColor = ILColor.color(index: 22)

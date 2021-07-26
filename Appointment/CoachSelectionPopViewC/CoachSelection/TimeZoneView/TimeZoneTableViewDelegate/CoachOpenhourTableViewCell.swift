@@ -21,18 +21,30 @@ class CoachOpenhourTableViewCell: UITableViewCell {
     
     func customize()  {
         
-      
+        
         
         if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13), let fontheavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
         {
-            UILabel.labelUIHandling(label: lblTiming, text: GeneralUtility.currentDateDetailType3(emiDate: objModal.startDatetimeUTC!) + " - " + GeneralUtility.currentDateDetailType3(emiDate: objModal.endDatetimeUTC!), textColor:ILColor.color(index: 29) , isBold: false , fontType: fontheavy,   backgroundColor:.clear )
+            UILabel.labelUIHandling(label: lblOpenHour, text: GeneralUtility.currentDateDetailType3(emiDate: objModal.startDatetimeUTC) + " - " + GeneralUtility.currentDateDetailType3(emiDate: objModal.endDatetimeUTC), textColor:ILColor.color(index: 29) , isBold: false , fontType: fontheavy,   backgroundColor:.clear )
             
-            UILabel.labelUIHandling(label: lblOpenHour, text: "Open Hours", textColor:ILColor.color(index: 29) , isBold: false , fontType: fontMedium,   backgroundColor:.clear )
+            var appointmentType = "appointmentType"
+            if let groupSise = objModal?.appointmentConfig.groupSizeLimit
+            {
+                if Int(groupSise) == 1{
+                    appointmentType = "1 on 1 Appointment"
+                }
+                else{
+                    appointmentType =  "Group Appointment"
+                }
+            }
+            UILabel.labelUIHandling(label: lblTiming, text: appointmentType, textColor:ILColor.color(index: 29) , isBold: false , fontType: fontMedium,   backgroundColor:.clear )
+            
             
         }
         
         viewContainer.backgroundColor = ILColor.color(index: 30)
         viewContainer.dropShadowER()
+        
         
     }
     

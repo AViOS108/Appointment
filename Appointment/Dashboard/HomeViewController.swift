@@ -10,7 +10,6 @@ import UIKit
 
 
 enum userType {
-    case ER
     case Student
     case StudentMyAppointment
 
@@ -45,6 +44,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     }
     
     
+    var filterAdded = Dictionary<String,Any>()
     @IBOutlet weak var viewZeroState: UIView!
     @IBOutlet weak var imageViewZeroState: UIImageView!
     @IBOutlet weak var lblZeroState: UILabel!
@@ -67,6 +67,17 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     var tableviewHandlerAppointment = HomeMyAppointmentTableViewController()
     
+    // Search Bar and Horizontal Selection
+    
+    @IBOutlet weak var viewSearchBar: UIView!
+    @IBOutlet weak var nslayutSearchBarHeight: NSLayoutConstraint!
+    var objERFilterTag : [ERFilterTag]?
+      @IBOutlet weak var txtSearchBar: UISearchBar!
+      @IBOutlet weak var btnFilter: UIButton!
+    @IBOutlet weak var viewHorizontalSelection: UIView!
+    @IBOutlet weak var nslayoutHorizSelectionViewHeight: NSLayoutConstraint!
+    @IBOutlet var btnsHorizontalSelection: [UIButton]!
+    @IBOutlet var viewsHorizontalSelection: [UIView]!
     
     
     var dataFeedingModalConst : DashBoardModel?
@@ -75,6 +86,12 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         super.viewDidLoad()
         UserDefaultsDataSource(key: "timeZoneOffset").writeData(TimeZone.current.identifier)
 
+        viewSearchBar.isHidden = true
+        nslayutSearchBarHeight.constant = 0
+        
+        viewHorizontalSelection.isHidden = true
+        nslayoutHorizSelectionViewHeight.constant = 0
+        
         switch userTypeHome {
         case .Student:
             self.callingViewModal(isbackGroundHit: false)
@@ -211,7 +228,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     
     func zeroStateLogic()  {
-        if self.dataFeedingModal?.coaches.count == 0
+        if self.dataFeedingModal?.items.count == 0
         {
             let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
             
@@ -236,7 +253,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         guard self.dataFeedingModal != nil else {
             return
         }
-        for Coach in self.dataFeedingModal!.coaches{
+        for Coach in self.dataFeedingModal!.items{
             if Coach.isSelected{
                 isAnyCoachSelected = true
                 break
@@ -292,10 +309,6 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         }
         tblView.addSubview(refreshControl)
         
-        
-        
-        
-        
         AppUtility.lockOrientation(.all)
         switch userTypeHome {
         case .Student:
@@ -331,46 +344,31 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         self.isCoachSelected()
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-        self.dataFeedingModal = self.dataFeedingModalConst
-        if searchBar.text != ""
-        {
-            let filterdcoahes =  self.dataFeedingModal?.coaches.filter{
-                $0.name.lowercased().contains(searchBar.text!.lowercased())
-            }
-            self.dataFeedingModal?.coaches = filterdcoahes!
-            self.zeroStateLogic()
-            self.reloadTablviewCocahList()
-        }
-        searchBar.resignFirstResponder();
-    }
+   
     
     
     func callingViewModal(isbackGroundHit : Bool)  {
         
-        let param : Dictionary<String, AnyObject> = ["roles":["external_coach","career_coach"]] as Dictionary<String, AnyObject>
+        let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+
+        var param = [ ParamName.PARAMCSRFTOKEN : csrftoken] as [String : AnyObject]
+        if filterAdded.isEmpty{
+            
+        }
+        else{
+            param["filters"] = self.filterAdded as AnyObject
+        }
+        
         
         dashBoardViewModal.viewController = self
         dashBoardViewModal.isbackGroundHit = isbackGroundHit
         dashBoardViewModal.fetchCall(params: param,success: { (dashboardModel) in
             self.dataFeedingModal = dashboardModel
             self.refreshControl.endRefreshing()
-
-            var sectionHeaderI = [sectionHead]()
-            let section1 = sectionHead.init(name: "Select all Coaches", id:"career_coach", selectAll: false, seeAll: false)
-            sectionHeaderI.append(section1);
-            
-            let section2 = sectionHead.init(name: "Select all Alumni", id:"external_coach", selectAll: false, seeAll: false)
-            sectionHeaderI.append(section2);
-            self.dataFeedingModal?.sectionHeader = sectionHeaderI
             self.dataFeedingModalConst = self.dataFeedingModal;
             self.zeroStateLogic()
             self.customization()
-            
-            
-            
         }) { (error, errorCode) in
-            
             
         }
     }
@@ -380,14 +378,14 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     func customization()  {
         switch userTypeHome {
-        case .ER:
-            break
+     
         case .Student:
             let myView = Bundle.loadView(fromNib: "HorizontalCalender", withType: HorizontalCalender.self)
             myView.frame = CGRect.init(x: 0, y: 0, width: viewHeader.frame.width, height: viewHeader.frame.height);
             viewHeader.addSubview(myView);
             myView.enumHeadType = .student
             myView.customize()
+
         default:
             break
         }
@@ -395,7 +393,20 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         tblView.register(UINib.init(nibName: "CoachListingTableViewCell", bundle: nil), forCellReuseIdentifier: "CoachListingTableViewCell")
         let headerNib = UINib.init(nibName: "HeaderSectionCoach", bundle: Bundle.main)
         tblView.register(headerNib, forHeaderFooterViewReuseIdentifier: "HeaderSectionCoach")
+        viewSearchBar.isHidden = false
+        nslayutSearchBarHeight.constant = 50
         tableviewHandler.customization()
+        btnFilter.setImage(UIImage.init(named: "noun_filter_"), for: .normal);
+        viewSearchBar.backgroundColor = .white
+        txtSearchBar.barTintColor = UIColor.clear
+        txtSearchBar.backgroundColor = UIColor.clear
+        txtSearchBar.isTranslucent = true
+        txtSearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+        txtSearchBar.placeholder = "Type name or headline"
+        txtSearchBar.backgroundColor = .clear
+        txtSearchBar.delegate = self
+        
+
     }
     
     
@@ -403,198 +414,18 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
 }
 
-extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCoachDelegate{
+extension HomeViewController : CoachListingTableViewCellDelegate{
+ 
     
-    func withSeeAll(modal: sectionHead, seeMore: Bool)  {
-        
-        let index =    self.dataFeedingModal?.sectionHeader?.firstIndex(where: {$0.id == modal.id})
-        
-        var selectedHeader =   self.dataFeedingModal?.sectionHeader!.filter{
-            $0.id == modal.id
-            }[0];
-        let selectedHeaderI = selectedHeader;
-        
-        let selectedCoach =   self.dataFeedingModal?.coaches.filter{
-            $0.roleMachineName.rawValue == modal.id
-        };
-        
-        if selectedHeaderI!.selectAll {
-            var coachArr = [Coach]()
-            for var coaches in selectedCoach!{
-                coaches.isSelected = false
-                coachArr.append(coaches);
-            }
-            self.dataFeedingModal?.coaches.removeAll(where: {
-                $0.roleMachineName.rawValue == modal.id
-                
-            })
-            self.dataFeedingModal?.coaches.append(contentsOf: coachArr);
-        }
-        else
-        {
-            var coachArr = [Coach]()
-            for var coaches in selectedCoach!{
-                coaches.isSelected = true
-                coachArr.append(coaches);
-            }
-            self.dataFeedingModal?.coaches.removeAll(where: {
-                $0.roleMachineName.rawValue == modal.id
-                
-            });
-            self.dataFeedingModal?.coaches.append(contentsOf: coachArr);
-        }
-        selectedHeader?.selectAll = !selectedHeaderI!.selectAll
-        
-        self.dataFeedingModal?.sectionHeader?.remove(at: index!)
-        self.dataFeedingModal?.sectionHeader?.insert(selectedHeader!, at: index!)
-        self.zeroStateLogic()
-        isCoachSelected()
-        self.reloadTablviewCocahList()
-        
-        
-        
-    }
-    
-    func withSeeLess(modal: sectionHead, seeMore: Bool)  {
-        let index =    self.dataFeedingModal?.sectionHeader?.firstIndex(where: {$0.id == modal.id})
-        var selectedHeader =   self.dataFeedingModal?.sectionHeader!.filter{
-            $0.id == modal.id
-            }[0];
-        let selectedHeaderI = selectedHeader;
-        
-        let selectedCoach =   self.dataFeedingModal?.coaches.filter{
-            $0.roleMachineName.rawValue == modal.id
-        }.prefix(2);
-        
-        if selectedHeaderI!.selectAll {
-            var coachArr = [Coach]()
-            for var coaches in selectedCoach!{
-                coaches.isSelected = false
-                coachArr.append(coaches);
-            }
-            
-            
-            var array =   self.dataFeedingModal?.coaches.filter{
-                $0.roleMachineName.rawValue == modal.id
-            }
-            
-            let range = 0...1
-            array!.removeSubrange(range)
-            array?.insert(contentsOf: coachArr, at: 0)
-            
-            self.dataFeedingModal?.coaches.removeAll(where: {
-                $0.roleMachineName.rawValue == modal.id
-                
-            })
-            
-            self.dataFeedingModal?.coaches.insert(contentsOf: array!, at: 0)
-        }
-        else
-        {
-            var coachArr = [Coach]()
-            for var coaches in selectedCoach!{
-                coaches.isSelected = true
-                coachArr.append(coaches);
-            }
-            
-            var array =   self.dataFeedingModal?.coaches.filter{
-                $0.roleMachineName.rawValue == modal.id
-            }
-            let range = 0...1
-            array!.removeSubrange(range)
-            array?.insert(contentsOf: coachArr, at: 0)
-            self.dataFeedingModal?.coaches.removeAll(where: {
-                $0.roleMachineName.rawValue == modal.id
-                
-            })
-            self.dataFeedingModal?.coaches.insert(contentsOf: array!, at: 0)
-        }
-        selectedHeader?.selectAll = !selectedHeaderI!.selectAll
-        self.dataFeedingModal?.sectionHeader?.remove(at: index!)
-        self.dataFeedingModal?.sectionHeader?.insert(selectedHeader!, at: index!)
-        self.zeroStateLogic()
-        isCoachSelected()
-        self.reloadTablviewCocahList()
-        
-    }
-    
-    func changeModal(modal: sectionHead, seeMore: Bool) {
-        
-        if modal.id == "-10" || modal.id == "-09"{
-            // MY APPOINTMENT LOGIC
-            let index =    self.dataFeedingAppointmentModal?.sectionHeader?.firstIndex(where: {$0.id == modal.id})
-            var selectedHeader =   self.dataFeedingAppointmentModal?.sectionHeader!.filter{
-                $0.id == modal.id
-                }[0];
-            var selectedHeaderI = selectedHeader;
-            selectedHeaderI!.seeAll = !selectedHeader!.seeAll
-            self.dataFeedingAppointmentModal?.sectionHeader?.remove(at: index ?? 0)
-            self.dataFeedingAppointmentModal?.sectionHeader?.insert(selectedHeaderI!, at: index ?? 0)
-            self.zeroStateLogicAppointment()
-            tableviewHandlerAppointment.customizaTionMyApointment()
-            
-        }
-        else{
-            
-            
-            let index =    self.dataFeedingModal?.sectionHeader?.firstIndex(where: {$0.id == modal.id})
-            var selectedHeader =   self.dataFeedingModal?.sectionHeader!.filter{
-                $0.id == modal.id
-                }[0];
-            let selectedHeaderI = selectedHeader;
-            
-            if seeMore{
-                selectedHeader?.seeAll = !selectedHeaderI!.seeAll
-                self.dataFeedingModal?.sectionHeader?.remove(at: index!)
-                self.dataFeedingModal?.sectionHeader?.insert(selectedHeader!, at: index!)
-                self.zeroStateLogic()
-                isCoachSelected()
-                self.reloadTablviewCocahList()
-                
-            }
-            else
-            {
-                
-                if (self.dataFeedingModal?.coaches.filter({$0.roleMachineName.rawValue == modal.id}).count ?? 0) <= 0{
-                    return
-                }
-                
-                
-                
-                if selectedHeaderI!.seeAll{
-                    self.withSeeAll(modal: modal, seeMore: seeMore)
-                }
-                else
-                {
-                    if (self.dataFeedingModal?.coaches.count)! < 2
-                    {
-                        self.withSeeAll(modal: modal, seeMore: seeMore)
-                    }
-                    else{
-                        self.withSeeLess(modal: modal, seeMore: seeMore)
-                    }
-                    
-                }
-            }
-        }
-    }
-    
-    
-    func changeModal(modal:Coach,seeMore:Bool ){
-        let index = self.dataFeedingModal?.coaches.firstIndex(where: {$0.id == modal.id})
-        var selectedCoach =   self.dataFeedingModal?.coaches.filter{
+    func changeModal(modal:Item){
+        let index = self.dataFeedingModal?.items.firstIndex(where: {$0.id == modal.id})
+        var selectedCoach =   self.dataFeedingModal?.items.filter{
             $0.id == modal.id
             }[0];
         let selectedCoachI = selectedCoach;
-        if seeMore {
-            selectedCoach?.isExpanded = !selectedCoachI!.isExpanded
-        }
-        else
-        {
-            selectedCoach?.isSelected = !selectedCoachI!.isSelected
-        }
-        self.dataFeedingModal?.coaches.remove(at: index!)
-        self.dataFeedingModal?.coaches.insert(selectedCoach!, at: index!)
+        selectedCoach?.isSelected = !selectedCoachI!.isSelected
+        self.dataFeedingModal?.items.remove(at: index!)
+        self.dataFeedingModal?.items.insert(selectedCoach!, at: index!)
         self.zeroStateLogic()
         isCoachSelected()
         self.reloadTablviewCocahList()
@@ -605,7 +436,7 @@ extension HomeViewController : CoachListingTableViewCellDelegate,HeaderSectionCo
         
     }
     
-    func scheduleAppoinment(modal: Coach) {
+    func scheduleAppoinment(modal: Item) {
         self.redirection(redirectionType: .coachSelection)
         
     }
@@ -618,7 +449,7 @@ extension HomeViewController : HomeViewcontrollerRedirection{
     
     func selectedModal() -> DashBoardModel?  {
         
-        if (self.dataFeedingModal?.coaches.count ?? 0) > 0 {
+        if (self.dataFeedingModal?.items.count ?? 0) > 0 {
             
         }
         else{
@@ -626,26 +457,9 @@ extension HomeViewController : HomeViewcontrollerRedirection{
         }
         
         var selectedModal = self.dataFeedingModal;
-        var coachesI = [Coach]()
-        var index = 0;
-        
-        let coachSelected = self.dataFeedingModal?.coaches.filter({$0.isSelected == true})
-        
-        for var coaches in coachSelected!
-        {
-            if index == 0{
-                coaches.isExpanded = true
-            }
-            else
-            {
-                coaches.isExpanded = false
-                
-            }
-            coachesI.append(coaches)
-            index += 1
-        }
-        selectedModal?.coaches.removeAll()
-        selectedModal?.coaches.append(contentsOf: coachesI)
+        let coachSelected = (self.dataFeedingModal?.items.filter({$0.isSelected == true}))!
+        selectedModal?.items.removeAll()
+        selectedModal?.items.append(contentsOf: coachSelected)
         return selectedModal!
     }
     
@@ -785,12 +599,6 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
         self.refreshControl.endRefreshing()
         
         self.dataFeedingAppointmentModal = dataAppoinmentModal
-        var sectionHeaderI = [sectionHead]()
-        let section1 = sectionHead.init(name: "Upcoming Appointments", id:"-09", selectAll: false, seeAll: false)
-        sectionHeaderI.append(section1);
-        let section2 = sectionHead.init(name: "Past Appointments", id:"-10", selectAll: false, seeAll: false)
-        sectionHeaderI.append(section2);
-        self.dataFeedingAppointmentModal?.sectionHeader = sectionHeaderI
         self.dataFeedingAppointmentModalConst = self.dataFeedingAppointmentModal;
         self.zeroStateLogicAppointment()
         self.customizationAppointment()
@@ -834,6 +642,27 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
         let headerNib = UINib.init(nibName: "HeaderSectionCoach", bundle: Bundle.main)
         tblView.register(headerNib, forHeaderFooterViewReuseIdentifier: "HeaderSectionCoach")
         tableviewHandlerAppointment.customizaTionMyApointment()
+        viewHorizontalSelection.isHidden = false
+        nslayoutHorizSelectionViewHeight.constant = 50
+        viewHorizontalSelection.backgroundColor = .white
+        let btnTitleNames = ["Upcoming","Pending","Past"]
+        var index = 0;
+        btnsHorizontalSelection.forEach { (btn) in
+            btn.setTitle(btnTitleNames[index], for: .normal)
+            index = index + 1;
+        }
+         index = 0;
+        viewsHorizontalSelection.forEach { (view) in
+            if index == 0{
+                view.isHidden = false
+            }
+            else{
+                view.isHidden = true
+
+            }
+            
+        }
+        
     }
     
     
@@ -853,6 +682,120 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
 }
 
 
+// MARK: Search and Filter
 
+extension HomeViewController : ERFilterViewControllerDelegate {
+    func passFilter(selectedFilter: [ERFilterTag]?) {
 
+        self.objERFilterTag = selectedFilter
+        if let tags = self.objERFilterTag{
+            self.filterAdded = Dictionary<String,Any>()
+            
+            
+            for filter in tags{
+                if  filter.id == 1 {
+                    let roles =       filter.objTagValue?.filter({
+                        $0.isSelected == true
+                    })
+                    if (roles?.count ?? 0) > 0 {
+                        var roleID = [String]()
+                        for selectedTag in roles!{
+                            roleID.append(selectedTag.machineName)
+                        }
+                        self.filterAdded["roles"] = roleID
+                    }
+                }
+                else if filter.id == 2{
+                    let industries =       filter.objTagValue?.filter({
+                        $0.isSelected == true
+                    })
+                    if (industries?.count ?? 0) > 0 {
+                        var industriesSelected = [Dictionary<String,Any>]()
+                        for selectedTag in industries!{
+                            var dicIndustries = Dictionary<String,Any>()
+                            dicIndustries = ["display_name": selectedTag.tagValueText,"id":selectedTag.id]
+                            industriesSelected.append(dicIndustries)
+                        }
+                        self.filterAdded["industries"] = industriesSelected
+                    }
+                }
+                else if filter.id == 3{
+                    let expertise =       filter.objTagValue?.filter({
+                        $0.isSelected == true
+                    })
+                    if (expertise?.count ?? 0) > 0 {
+                        var expertisesSelected = [Dictionary<String,Any>]()
+                        for selectedTag in expertise!{
+                            var dicexpertise = Dictionary<String,Any>()
+                            dicexpertise = ["display_name": selectedTag.tagValueText,"id":selectedTag.id]
+                            expertisesSelected.append(dicexpertise)
+                        }
+                        self.filterAdded["expertise"] = expertisesSelected
+                    }
+                }
+                else if filter.id == 4{
+                    let clubs =       filter.objTagValue?.filter({
+                        $0.isSelected == true
+                    })
+                    if (clubs?.count ?? 0) > 0 {
+                        var clubIDs = [Int]()
+                        for selectedTag in clubs!{
+                            clubIDs.append(selectedTag.id)
+                        }
+                        self.filterAdded["clubs"] = clubIDs
+                    }
+                }
+            }
+        }
+        self.callingViewModal(isbackGroundHit: false)
+
+    }
+    
+    
+    @IBAction func btnFilterTapped(_ sender: Any) {
+        txtSearchBar.text = ""
+        let objERFilterViewController = ERFilterViewController.init(nibName: "ERFilterViewController", bundle: nil)
+        objERFilterViewController.modalPresentationStyle = .overFullScreen
+        objERFilterViewController.objERFilterTag = self.objERFilterTag
+        objERFilterViewController.delegate = self
+        objERFilterViewController.objFilterTypeView = .Student
+        self.navigationController?.pushViewController(objERFilterViewController, animated: false)
+        
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        
+        if searchBar.tag == 10001 {
+            
+            self.dataFeedingModal = self.dataFeedingModalConst
+            if searchBar.text != ""
+            {
+                let filteredItems =  self.dataFeedingModal?.items.filter{
+                    return   ( $0.name.lowercased().contains(searchBar.text!.lowercased())
+                                || $0.coachInfo.headline!.lowercased().contains(searchBar.text!.lowercased()))
+                }
+                self.dataFeedingModal?.items = filteredItems!
+                self.zeroStateLogic()
+                self.reloadTablviewCocahList()
+            }
+            searchBar.resignFirstResponder();
+        }
+        searchBar.resignFirstResponder();
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.tag == 10001 {
+            
+            if searchText == "" {
+                self.dataFeedingModal = self.dataFeedingModalConst
+                self.reloadTablviewCocahList()
+                searchBar.resignFirstResponder();
+            }
+            
+        }
+        
+    }
+    
+}
 

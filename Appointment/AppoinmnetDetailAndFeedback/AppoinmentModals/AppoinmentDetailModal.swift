@@ -30,11 +30,11 @@ struct AppoinmentDetailModal: Codable {
     let updatedByID, updatedByType: String?
     let type: TypeClass?
     let participants: [Participant]?
-    let calendars: [JSONAny]?
+    let calendars: [String]?
     let attachmentsPublic: [AttachmentsPublic]?
     let locationsUniversityRoom, identifier: String?
     let isRecurringInstance, isSessionInstance, isSlotInstance: Bool?
-    let idsHistory: [JSONAny]?
+    let idsHistory: [String]?
     let createdBy: WelcomeCreatedBy?
     let startDatetime, endDatetime, inTimezone: String?
     let purposes: [Purpose]?

@@ -12,25 +12,25 @@ struct FeedBackModal: Codable {
     let title, welcomeDescription, timezone, startDatetimeUTC: String?
     let endDatetimeUTC: String?
     let duration, isAllDay: Int?
-    let recurrence: JSONNull?
+    let recurrence: String?
     let isRecurring: Int?
-    let sessions: JSONNull?
+    let sessions: String?
     let state, createdAt: String?
-    let deletedAt: JSONNull?
+    let deletedAt: String?
     let lastChangedAt, createdByID, createdByType: String?
-    let parentID, parentType: JSONNull?
+    let parentID, parentType: String?
     let updatedByID, updatedByType: String?
     let type: TypeClass?
     let locations: [Location]?
     let participants: [Participant]?
-    let calendars: [JSONAny]?
+    let calendars: [String]?
     let appointmentIsCompleted: Int?
     let locationsUniversityRoom, identifier: String?
     let isRecurringInstance, isSessionInstance, isSlotInstance: Bool?
-    let idsHistory: [JSONAny]?
+    let idsHistory: [String]?
     let createdBy: CreatedBy?
     let startDatetime, endDatetime, inTimezone: String?
-    let purposes: [JSONAny]?
+    let purposes: [String]?
 
     enum CodingKeys: String, CodingKey {
         case id
