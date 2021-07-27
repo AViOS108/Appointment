@@ -31,6 +31,7 @@ class CoachImageOverlayCiCollectionViewCell: UICollectionViewCell {
             viewSelected.isHidden = true
 //            nslayoutConstraintBottom.constant = 0
 
+
         }
         else{
             //        viewSelected.isHidden = !coachModal.isExpanded
@@ -87,7 +88,6 @@ class CoachImageOverlayCiCollectionViewCell: UICollectionViewCell {
             {
                 self.lblInitial.isHidden = true
                 self.viewImage?.isHidden = false
-                
             }
             if coachModal.isTappedForOpenHour{
                 viewSelected.isHidden = false

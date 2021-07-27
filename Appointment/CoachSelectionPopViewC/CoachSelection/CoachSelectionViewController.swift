@@ -53,6 +53,8 @@ class CoachSelectionViewController: SuperViewController {
         GeneralUtility.customeNavigationBarWithBack(viewController: self,title:"Schedule");
         UserDefaultsDataSource(key: "timeZoneOffset").writeData(TimeZone.current.identifier)
         lblCoachName.text = ""
+        // Do any additional setup after loading the view.
+ 
         otherApiHit()
         if (calenderModal != nil){
             
@@ -203,7 +205,6 @@ class CoachSelectionViewController: SuperViewController {
     
     
     func makeModelInSyncWithSelected(){
-        
         if selectedDataFeedingModal?.items.count ?? 0 > 0{
             var selectedFirst = selectedDataFeedingModal?.items[0]
             selectedFirst?.isTappedForOpenHour = true
@@ -253,6 +254,10 @@ class CoachSelectionViewController: SuperViewController {
     
 }
 extension CoachSelectionViewController:CoachAluminiSelectionTableViewCellDelegate,CoachAluminiViewControllerDelegate{
+    func changeModal(modal: Item, row: Int) {
+        
+    }
+    
     
     func syncSelectedModal(){
         let coachSelected = self.dataFeedingModal?.items.filter({$0.isSelected == true})
@@ -273,40 +278,7 @@ extension CoachSelectionViewController:CoachAluminiSelectionTableViewCellDelegat
         selectedDataFeedingModal?.items.append(contentsOf: coachTemp);
     }
     
-    func changeModal(modal: Item, row: Int) {
-        _ = self.dataFeedingModal;
-//        if row == 0
-//        {
-//            var coachArr = [Coach]()
-//            let selectedCoach =   self.dataFeedingModal?.items
-//            for var coaches in selectedCoach!{
-//                if coaches.roleMachineName.rawValue == modal.roleMachineName.rawValue{
-//                    coaches.isSelected = !modal.isSelected
-//                }
-//                   coachArr.append(coaches);
-//
-//            }
-//            self.dataFeedingModal?.coaches.removeAll()
-//            self.dataFeedingModal?.coaches.append(contentsOf: coachArr);
-//        }
-//        else
-//        {
-//            let index = self.dataFeedingModal?.coaches.firstIndex(where: {$0.id == modal.id})
-//            var selectedCoach =   self.dataFeedingModal?.coaches.filter{
-//                $0.id == modal.id
-//                }[0];
-//            let selectedCoachI = selectedCoach;
-//            selectedCoach?.isSelected = !selectedCoachI!.isSelected
-//
-//            self.dataFeedingModal?.coaches.remove(at: index!)
-//            self.dataFeedingModal?.coaches.insert(selectedCoach!, at: index!)
-//        }
-        
-       
-            syncSelectedModal()
-            coachAluminiViewController.customize()
-    }
-    
+  
     func reloadCollectionView()
     {
         if selectedDataFeedingModal != nil && self.selectedDataFeedingModal?.items.count != 0{

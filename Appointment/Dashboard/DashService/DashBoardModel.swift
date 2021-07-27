@@ -39,7 +39,6 @@ struct Item: Codable {
     let coachInfo: CoachInfo
     var isSelected : Bool = false
     var isTappedForOpenHour = false
-
     enum CodingKeys: String, CodingKey {
         case id, name, email
         case profilePicURL = "profile_pic_url"
