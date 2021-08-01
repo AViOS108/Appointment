@@ -56,10 +56,8 @@ class CoachSelectionViewModal {
         let param = [
             ParamName.PARAMFILTERSEL : [
                 "states" : ["confirmed"],
-                "from"  : "2021-07-20 11:32:24",
-                    //previousDate(strDate: dateStirng) + " 23:59:00",
-                "to" : "2021-08-07 23:59:59",
-                    //dateStirng + " 23:59:00",
+                "from"  : previousDate(strDate: dateStirng) + " 23:59:00",
+                "to" : dateStirng + " 23:59:00",
                 "coach_ids":arrCreatedBy,
                 "timezone":"utc",
                 "skip": skip
@@ -128,6 +126,11 @@ class CoachSelectionViewModal {
     func formingDataModal()  {
         self.activityIndicator?.hide()
         if let objcarrerCoachModal = carrerCoachModal{
+            
+            var filterOpenHour = objcarrerCoachModal.results?.filter({ $0.appointmentConfig.requestApprovalType == ""
+            })
+            
+            
             delegate.completeModal(coachOpenHourModal: objcarrerCoachModal)
         }
     }

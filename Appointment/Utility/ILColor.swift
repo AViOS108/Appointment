@@ -254,7 +254,9 @@ import UIKit
         else if index == 58 {
             return UIColor.init(red: 5/255, green: 145/255, blue: 102/255, alpha: 1.0)
         }
-        
+        else if index == 59 {
+            return UIColor.init(red: 57/255, green: 57/255, blue: 57/255, alpha: 1.0)
+        }
         
         return UIColor.clear
     }

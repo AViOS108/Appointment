@@ -26,12 +26,7 @@ class PaddedTextField: UITextField {
 }
 
 class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
-    
-    
     @IBOutlet weak var btnFirstIndex: UIButton!
-    
-    
-   
     @IBOutlet weak var viewSelectedContainer: UIView!
     @IBOutlet weak var lblHeader: UILabel!
     @IBOutlet weak var viewTextfield: UIView!
@@ -39,7 +34,7 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
     @IBOutlet weak var lblNoResultFound: UILabel!
     var delegate: changeModalConfirmationPopUpDelegate!
     var viewController : UIView!
-    var viewControllerI : UIViewController!
+    var viewControllerI : CoachConfirmationPopUpSecondViewC!
     var isAPiHIt : Bool!
     var tblview : UITableView!
     
@@ -57,12 +52,13 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
     
     
     @IBAction func btnFirstIndexTapped(_ sender: UIButton) {
+        
         var searchViewController = SearchViewController.init(nibName: "SearchViewController", bundle: nil)
         searchViewController.modalPresentationStyle = .overFullScreen
         searchViewController.maxHeight = 200;
         let frameI =
             sender.superview?.convert(sender.frame, to: nil)
-        
+            
         var placeholder = "Select"
         if indexPath.row == 4{
             placeholder = "Type minimum 2 characters to search"
@@ -73,21 +69,22 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         }
         
         searchViewController.placeholder = placeholder;
-        
         var changedFrame = frameI
+
+        var changeYaxis = 100 - (changedFrame?.origin.y)! ?? 0;
         
         if frameI!.origin.y > self.viewControllerI.view.frame.height/2{
-            
-            tblview.contentOffset = CGPoint.init(x: tblview.contentOffset.x, y: tblview.contentOffset.y + 300)
-            changedFrame = CGRect.init(x: (changedFrame?.origin.x)!, y: ((changedFrame?.origin.y)! - 300), width: (changedFrame?.size.width)!, height: (changedFrame?.size.height)!)
+            viewControllerI.viewOuter.frame = CGRect.init(x:  viewControllerI.viewOuter.frame.origin.x, y: changeYaxis, width: viewControllerI.viewOuter.frame.width, height: viewControllerI.viewOuter.frame.height)
+
+            changedFrame = CGRect.init(x: (changedFrame?.origin.x)!, y: 100, width: (changedFrame?.size.width)!, height: (changedFrame?.size.height)!)
         }
         else if frameI!.origin.y > self.viewControllerI.view.frame.height/3{
-            tblview.contentOffset = CGPoint.init(x: tblview.contentOffset.x, y: tblview.contentOffset.y + 200)
-            changedFrame = CGRect.init(x: (changedFrame?.origin.x)!, y: ((changedFrame?.origin.y)! - 200), width: (changedFrame?.size.width)!, height: (changedFrame?.size.height)!)
+            
+            viewControllerI.viewOuter.frame = CGRect.init(x:  viewControllerI.viewOuter.frame.origin.x, y: changeYaxis, width: viewControllerI.viewOuter.frame.width, height: viewControllerI.viewOuter.frame.height)
+            
+            changedFrame = CGRect.init(x: (changedFrame?.origin.x)!, y: 100, width: (changedFrame?.size.width)!, height: (changedFrame?.size.height)!)
         }
-        
-        
-        
+
         searchViewController.arrNameSurvey = self.arrNameSurvey.filter({$0.isSelected == false})
         searchViewController.txtfieldRect = changedFrame
         searchViewController.isAPiHIt = isAPiHIt

@@ -38,7 +38,7 @@ struct OpenHourCoachModalResult: Codable {
       let startDatetimeUTC, endDatetimeUTC: String
       let parentID: Int?
       let createdByID: Int
-      let purposes: [Purpose]
+      let purposes: [PurposeNewAPI]
       let timezone: String
       let recurrence: String?
       let location: String

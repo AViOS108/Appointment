@@ -61,14 +61,11 @@ class CoachListingTableViewCell: UITableViewCell {
         else{
             
             self.viewContainer.isHidden = false
-            self.lblNoCoach.isHidden = true
             
             
             let strHeader = NSMutableAttributedString.init()
             
             let radius =  (Int)(lblImageView.frame.height)/2
-            
-            
             if let urlImage = URL.init(string: self.coachModal?.profilePicURL ?? "") {
                 self.imgView
                     .setImageWith(urlImage, placeholderImage: UIImage.init(named: "Placeeholderimage"))
@@ -85,8 +82,6 @@ class CoachListingTableViewCell: UITableViewCell {
                 
             }
             
-          
-            
             
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
                 
@@ -95,7 +90,21 @@ class CoachListingTableViewCell: UITableViewCell {
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
                 let nextLine1 = NSAttributedString.init(string: "\n")
                 
-                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "coachType", _returnType: String.self)
+                var roles = ""
+                var index = 0
+                for role in self.coachModal!.roles{
+                    roles.append(role.displayName ?? "")
+                    index = index + 1;
+                    if self.coachModal!.roles.count > 1{
+                        if index == self.coachModal?.roles.count{
+                        }
+                        else{
+                            roles.append(", ")
+                        }
+                    }
+                }
+               
+                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: roles, _returnType: String.self)
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
                 
                 let strDesc = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.coachModal?.coachInfo.summary, _returnType: String.self)

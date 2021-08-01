@@ -34,7 +34,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
     
     @IBAction func btnViewDetailTapped(_ sender: Any) {
        delegate.redirectAppoinment(openMOdal: self.appointmentModal, isFeedback: 2)
-
+        
        
         
     }

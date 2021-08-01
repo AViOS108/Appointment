@@ -354,7 +354,7 @@ class Urls {
         if isStudent ?? true
         {
             
-            return "\(typeEvent1)students/appointments/" + id
+            return "\(typeEvent2)students/appointments/" + id
             
         }
         else

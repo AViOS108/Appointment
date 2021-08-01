@@ -47,7 +47,6 @@ class CoachSelectionViewController: SuperViewController {
  
     
    
-    var coachAluminiViewController : CoachAluminiViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
         GeneralUtility.customeNavigationBarWithBack(viewController: self,title:"Schedule");
@@ -72,7 +71,6 @@ class CoachSelectionViewController: SuperViewController {
             self.timeZOneArr = timeArr
             self.coachSelectedCheck()
             self.setTimeZoneTextField()
-            self.setTableViewLogic()
             self.formingModal()
             
         }
@@ -213,12 +211,22 @@ class CoachSelectionViewController: SuperViewController {
             
         }
         
-        for var coach in selectedDataFeedingModal!.items{
-            coach.isSelected = true;
-            let index = self.dataFeedingModal?.items.firstIndex(where: {$0.id == coach.id}) ?? 0
-            self.dataFeedingModal?.items.removeAll(where: {$0.id == coach.id })
-            self.dataFeedingModal?.items.insert(coach, at: index)
+        var coachArr = [Item]()
+        for var coach in dataFeedingModal!.items{
+            let selectedCoaches = selectedDataFeedingModal?.items.filter({
+                $0.id == coach.id
+            })
+            if selectedCoaches?.count ?? 0 > 0 {
+                coach.isSelected = true;
+            }
+            else{
+                coach.isSelected = false;
+            }
+            coachArr.append(coach)
         }
+        self.dataFeedingModal?.items.removeAll()
+        self.dataFeedingModal?.items = coachArr;
+        
     }
     
     
@@ -253,11 +261,8 @@ class CoachSelectionViewController: SuperViewController {
     }
     
 }
-extension CoachSelectionViewController:CoachAluminiSelectionTableViewCellDelegate,CoachAluminiViewControllerDelegate{
-    func changeModal(modal: Item, row: Int) {
-        
-    }
-    
+extension CoachSelectionViewController{
+   
     
     func syncSelectedModal(){
         let coachSelected = self.dataFeedingModal?.items.filter({$0.isSelected == true})
@@ -369,7 +374,8 @@ extension CoachSelectionViewController: CoachImageOverlayViewDelegate,ERSideStud
             coachSelectionTableView.results = objOpenHourCoachModal.results?.filter({
                 GeneralUtility.optionalHandling(_param: $0.createdByID, _returnType: Int.self) == coach!.id
             })
-            coachSelectionTableView.customizeTableView()
+            let firstSelected = (self.selectedDataFeedingModal?.items.filter({$0.isTappedForOpenHour})[0])!
+            setTableViewLogic(coachselected:firstSelected)
             if coachSelectionTableView.results?.count == 0{
                 noCoachSelectedView()
             }
@@ -480,11 +486,6 @@ extension CoachSelectionViewController: CalenderViewDelegate{
         currentIndex = end! - start!
         return (end! - start!)
     }
-
-     
-    
-    
-    
 }
 
 //Mark : ViewModalLogic
@@ -499,8 +500,7 @@ extension CoachSelectionViewController:CoachSelectionViewModalDelegate{
             GeneralUtility.optionalHandling(_param: $0.createdByID, _returnType: Int.self) == firstSelected!.id
         })
     
-        
-        coachSelectionTableView.customizeTableView()
+        self.setTableViewLogic(coachselected : firstSelected!)
         if coachSelectionTableView.results?.count == 0{
             noCoachSelectedView()
         }
@@ -530,9 +530,10 @@ extension CoachSelectionViewController:CoachSelectionViewModalDelegate{
 
 
 extension CoachSelectionViewController{
-    func setTableViewLogic()  {
+    func setTableViewLogic(coachselected:Item)  {
         coachSelectionTableView.tblViewList = self.tblViewList
         coachSelectionTableView.viewControllerI = self
+        coachSelectionTableView.selectedCoach = coachselected
         coachSelectionTableView.customizeTableView()
        
     }
@@ -542,41 +543,11 @@ extension CoachSelectionViewController{
 
 // Other APis
 
-extension CoachSelectionViewController:passDataSecondViewDelegate,
+extension CoachSelectionViewController:
 CoachConfirmationPopUpSecondViewCDelegate
 {
     func refreshSelectionView(isBack : Bool, results: OpenHourCoachModalResult!) {
-        if isBack{
-            
-            let coachConfirmation = CoachConfirmationPopUpFirstViewC.init(nibName: "CoachConfirmationPopUpFirstViewC", bundle: nil)
-            coachConfirmation.delegate = self
-            coachConfirmation.dataFeedingModal = self.dataFeedingModal
-            coachConfirmation.results = results
-            coachConfirmation.modalPresentationStyle = .overFullScreen
-            self.present(coachConfirmation, animated: false) {
-                
-            }
-        }
-        else
-        {
             self.formingModal()
-        }
-        
-        
-    }
-    
-    func passData(results: OpenHourCoachModalResult) {
-        
-        let coachConfirmation = CoachConfirmationPopUpSecondViewC.init(nibName: "CoachConfirmationPopUpSecondViewC", bundle: nil)
-        coachConfirmation.resueStudentFunctionI = self.resueStudentFunctionI
-        coachConfirmation.resueStudentIndustryI = self.resueStudentIndustryI
-        coachConfirmation.delegate = self
-        
-        coachConfirmation.results = results
-        coachConfirmation.modalPresentationStyle = .overFullScreen
-        self.present(coachConfirmation, animated: false) {
-            
-        }
     }
     
     func studentHit()

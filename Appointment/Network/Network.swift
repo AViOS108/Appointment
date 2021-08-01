@@ -230,7 +230,6 @@ class Network {
 
         let URL2 = try! URLRequest(url: url, method: .post, headers: ["Authorization" :"Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"])
 
-        
         var params = params
         
         
@@ -240,19 +239,14 @@ class Network {
             
             multipartFormData.append(paramI , withName: "attachments_public[0]", fileName: "filename", mimeType: "text/plain")
           
-            params.removeValue(forKey: "attachments_public")
-
-           
-            
+            params.removeValue(forKey: "attachments_public")            
             for id in  params["user_purpose_ids"] as! Array<String> {
                 
                 multipartFormData.append((id as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "user_purpose_ids[]")
-                
             }
 
             params.removeValue(forKey: "user_purpose_ids")
 
-            
             for (key, value) in params {
                 multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
             }

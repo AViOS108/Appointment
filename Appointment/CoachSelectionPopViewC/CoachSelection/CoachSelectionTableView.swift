@@ -13,6 +13,8 @@ class CoachSelectionTableView: UIView, UITableViewDelegate,UITableViewDataSource
     
     var viewControllerI : CoachSelectionViewController!
     var results: [OpenHourCoachModalResult]?
+    var selectedCoach : Item?
+
     func  customizeTableView()  {
         tblViewList.register(UINib.init(nibName: "CoachOpenhourTableViewCell", bundle: nil), forCellReuseIdentifier: "CoachOpenhourTableViewCell")
 
@@ -40,14 +42,15 @@ class CoachSelectionTableView: UIView, UITableViewDelegate,UITableViewDataSource
         
         self.tblViewList.deselectRow(at: indexPath, animated: false)
         
-        let coachConfirmation = CoachConfirmationPopUpFirstViewC.init(nibName: "CoachConfirmationPopUpFirstViewC", bundle: nil)
-        coachConfirmation.delegate = viewControllerI as? passDataSecondViewDelegate
-        coachConfirmation.dataFeedingModal = viewControllerI.dataFeedingModal
+        let coachConfirmation = CoachConfirmationPopUpSecondViewC.init(nibName: "CoachConfirmationPopUpSecondViewC", bundle: nil)
+        coachConfirmation.resueStudentFunctionI = viewControllerI.resueStudentFunctionI
+        coachConfirmation.resueStudentIndustryI = viewControllerI.resueStudentIndustryI
+        coachConfirmation.delegate = viewControllerI
         coachConfirmation.results = self.results?[indexPath.row]
+        coachConfirmation.selectedCoach = self.selectedCoach
         coachConfirmation.modalPresentationStyle = .overFullScreen
-        viewControllerI.present(coachConfirmation, animated: false) {
-            
-        }
+        viewControllerI.navigationController?.pushViewController(coachConfirmation, animated: false)
+        
         
     }
    

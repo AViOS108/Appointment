@@ -25,51 +25,38 @@ protocol  CoachConfirmationPopUpSecondViewCDelegate{
 
 
 
-class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate {
+class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate {
     
     var delegate : CoachConfirmationPopUpSecondViewCDelegate!
     
     var docUploaded : DocUploadedModal!
     
     @IBOutlet weak var viewContainer: UIView!
+    @IBOutlet weak var viewOuter: UIView!
+
     var resueStudentFunctionI : StudentFunctionSurvey!
     var resueStudentIndustryI : [StudentIndustrySurvey]!
     var searchArrayFunction = [SearchTextFieldItem]()
     var searchArrayIndustry = [SearchTextFieldItem]()
     var searchArrayPurpose = [SearchTextFieldItem]()
+    var selectedCoach : Item?
 
     var searchGlobalCompanies = [SearchTextFieldItem]()
 
     var descriptionText = ""
     var results: OpenHourCoachModalResult!
-    @IBOutlet weak var viewSeperatorVerticale: UIView!
-    
-    @IBOutlet weak var viewBottom: UIView!
+   
     @IBOutlet weak var btnCancel: UIButton!
     @IBAction func btnCancelTapped(_ sender: UIButton) {
-        self.dismiss(animated: false) {
-            
-        }
-    }
-    @IBOutlet weak var viewSeperator: UIView!
+        self.navigationController?.popViewController(animated: false)
 
-    @IBOutlet weak var BtnNext: UIButton!
+    }
+  
+    @IBOutlet weak var btnConfirm: UIButton!
     
-    @IBAction func btnNextTapped(_ sender: UIButton) {
+    @IBAction func btnConfirmTapped(_ sender: UIButton) {
         confirmAppointment()
     
-    }
-    
-    @IBOutlet weak var lblHeader: UILabel!
-    
-    @IBOutlet weak var btnback: UIButton!
-    
-    @IBAction func btnBAckTapped(_ sender: Any) {
-        
-        self.dismiss(animated: false) {
-            self.delegate.refreshSelectionView(isBack: true, results: self.results)
-                   }
-        
     }
     
     var arraYHeader = ["Purpose of the Meeting","Description","Target Functions (Max 3)","Target Industries (Max 3)","Target Companies (Max 3)"]
@@ -78,6 +65,18 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
     
     @IBOutlet weak var tblView: UITableView!
     
+    // Design Changes
+    
+    @IBOutlet weak var lblTimingFrom: UILabel!
+    @IBOutlet weak var lblTimingTo: UILabel!
+    @IBOutlet weak var lblAvailableSlots: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
+    
+
+    @IBOutlet weak var lblImageView: UILabel!
+    @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var lblDescribtion: UILabel!
+
     
     override func viewDidDisappear(_ animated: Bool) {
              AppUtility.lockOrientation(.all)
@@ -108,24 +107,20 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
         docUploaded.isDocUploaded = false
         
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        
-        UILabel.labelUIHandling(label: lblHeader, text: "Confirm Appointment", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy)
-        
-        UIButton.buttonUIHandling(button: btnback, text: "", backgroundColor: .white,  buttonImage: UIImage.init(named: "noun_back_black"))
-        viewSeperator.backgroundColor = ILColor.color(index:19);
-
+      
         // Do any additional setup after loading the view.
     }
     
     
     func modalFormation(){
         
+        var index = 0;
         for purpose in results.purposes{
             let searchItem = SearchTextFieldItem()
-            searchItem.title = purpose.userPurpose?.displayName! as! String
-            searchItem.id  = purpose.userPurposeID
+            searchItem.title = purpose.purposeText ?? ""
+            searchItem.id = index;
             searchArrayPurpose.append(searchItem)
-            
+            index = index + 1;
         }
         
         
@@ -184,44 +179,25 @@ class CoachConfirmationPopUpSecondViewC: UIViewController,UITableViewDelegate,UI
         tblView.delegate = self
         tblView.dataSource = self
         self.viewContainer.cornerRadius = 3;
-        viewSeperatorVerticale.backgroundColor = ILColor.color(index:19);
-        viewBottom.backgroundColor = ILColor.color(index:19);
         let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
 
-        UIButton.buttonUIHandling(button: btnCancel, text: "Cancel", backgroundColor:.white , textColor: ILColor.color(index: 23), fontType: fontMedium)
-        UIButton.buttonUIHandling(button: BtnNext, text: "Submit", backgroundColor:.white , textColor: ILColor.color(index: 23), fontType: fontHeavy)
+        UIButton.buttonUIHandling(button: btnCancel, text: "Cancel", backgroundColor:.white , textColor: ILColor.color(index: 23), fontType: fontHeavy)
+        UIButton.buttonUIHandling(button: btnConfirm, text: "Confirm", backgroundColor:.white , textColor: ILColor.color(index: 23), fontType: fontHeavy)
         
+        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"Schedule");
     }
     
+    @objc override func buttonClicked(sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: false)
+    }
     override func viewDidAppear(_ animated: Bool) {
-        self.view.tag = 19682
-        self.viewContainer.tag = 19683
-        tapGesture()
-        view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
+        self.view.backgroundColor = ILColor.color(index: 22)
+        self.coachInfo()
+        self.customizationTimeSlot()
+        self.customizationLocation()
+
     }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view?.isDescendant(of: self.view) == true  && touch.view?.tag != 19682  {
-                self.view.resignFirstResponder()
-           
-            return false
-        }
-        return true
-    }
-    
-    func tapGesture()  {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        tap.delegate = self
-        self.view.isUserInteractionEnabled = true
-        self.view.addGestureRecognizer(tap)
-    }
-    
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        self.dismiss(animated: false) {
-        }
-    }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row != 1 && indexPath.row != arraYHeader.count{
@@ -305,7 +281,7 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
              self.tblView.reloadData();
         }
         
-        
+        self.viewOuter.frame = CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
        
     }
     
@@ -349,31 +325,20 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
         
         
         self.tblView.reloadData();
+        self.viewOuter.frame = CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+
         
     }
    
     
-    func makeStrForDescription(param: String,array: [SearchTextFieldItem]) -> String {
-        var str = param
-        let selectedFunction = array.filter({$0.isSelected == true})
-        var index = 0;
-        for strFunctionname in selectedFunction{
-            str.append(contentsOf: " ")
-            str.append(contentsOf: strFunctionname.title)
-            index = index + 1;
-            if index == selectedFunction.count{
-                str.append(";")
-                
-            }
-            else{
-                str.append(",")
-                
-            }
+    func makeStrForDescription(array: [SearchTextFieldItem]) -> [String] {
+        let selectedArrayPaased = array.filter({$0.isSelected == true})
+        var arrSelected = [String]()
+        for strFunctionname in selectedArrayPaased{
+            arrSelected.append(strFunctionname.title)
         }
-        if selectedFunction.count == 0{
-            str.append(";")
-        }
-        return str
+      
+        return arrSelected
     }
     
     
@@ -384,30 +349,13 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
         
         
         let selectedPurpose = searchArrayPurpose.filter({$0.isSelected == true})
-
-        
         if selectedPurpose.count == 0 {
             CommonFunctions().showError(title: "Error", message: StringConstants.PURPOSEERROR)
-
             return
         }
         
-        
-        
         var strDescription = ""
-        
-      if  searchArrayFunction.filter({$0.isSelected == true}).count > 0{
-             strDescription.append(contentsOf:self.makeStrForDescription(param: "Functions:", array: searchArrayFunction))
-        }
-        
-       if  searchArrayIndustry.filter({$0.isSelected == true}).count > 0{
-             strDescription.append(contentsOf: self.makeStrForDescription(param: "Industries:", array: searchArrayIndustry))
-       }
-        
-        if  searchGlobalCompanies.filter({$0.isSelected == true}).count > 0{
-                   strDescription.append(contentsOf: self.makeStrForDescription(param: "Companies:", array: searchGlobalCompanies))
-              }
-        
+
         if descriptionText.isEmpty{
             
         }
@@ -429,7 +377,7 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
         var userPurposeId = [String]()
         
         for userID in selectedPurpose{
-            userPurposeId.append("\(userID.id!)")
+            userPurposeId.append(userID.title)
         }
         
        
@@ -441,15 +389,24 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
         var params = [
             "title" : strtitle,
             "in_timezone" : localTimeZoneAbbreviation,
-            "user_purpose_ids": userPurposeId,
+            "purposes": userPurposeId,
             ParamName.PARAMCSRFTOKEN : csrftoken
 
         ]  as [String : Any]
         
-        if strDescription != "" {
-            params["description"] = strDescription
-            
-        }
+      
+        if  searchArrayFunction.filter({$0.isSelected == true}).count > 0{
+            params["target_functions"] =  self.makeStrForDescription(array: searchArrayFunction)
+          }
+        
+        if  searchArrayFunction.filter({$0.isSelected == true}).count > 0{
+            params["target_companies"] =  self.makeStrForDescription(array: searchGlobalCompanies)
+          }
+        
+        if  searchArrayFunction.filter({$0.isSelected == true}).count > 0{
+            params["target_industries"] =  self.makeStrForDescription(array: searchArrayIndustry)
+          }
+        
         
         
         if let doc = docUploaded.docData{
@@ -464,9 +421,8 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
         CoachSelectionService().confirmAppointment(identifier: results.identifier, params: params as Dictionary<String, AnyObject>, { (data) in
             activityIndicator.hide()
             
-            self.dismiss(animated: false) {
-                self.delegate.refreshSelectionView(isBack: false, results: self.results)
-            }
+            self.delegate.refreshSelectionView(isBack: false, results: self.results)
+            self.navigationController?.popViewController(animated: false)
             
 
         }) { (error, errorCode) in
@@ -487,8 +443,169 @@ extension CoachConfirmationPopUpSecondViewC: ConfirmationPopupFileShareTableView
         tblView.reloadData()
         
     }
+
+}
+
+// Design Changes
+extension CoachConfirmationPopUpSecondViewC{
     
+    func customizationTimeSlot(){
+        
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
+        UILabel.labelUIHandling(label: lblAvailableSlots, text: "Available Slots", textColor: ILColor.color(index: 59), isBold: true, fontType: fontHeavy)
+        
+        if let fontMediumI =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14), let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
+        {
+            let strHeader = NSMutableAttributedString.init()
+            let strTiTle = NSAttributedString.init(string: "Start Time"
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 42),NSAttributedString.Key.font : fontMedium]);
+            let nextLine1 = NSAttributedString.init(string: "\n")
+
+            let strTime = NSAttributedString.init(string: GeneralUtility.currentDateDetailType3(emiDate: results.startDatetimeUTC)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 53),NSAttributedString.Key.font : fontMediumI]);
+            
+            
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            strHeader.append(strTiTle)
+            strHeader.append(nextLine1)
+            strHeader.append(strTime)
+            
+            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+            
+            
+            
+            lblTimingFrom.attributedText = strHeader
+        }
+        if let fontMediumI =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14),let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
+        {
+            let strHeader = NSMutableAttributedString.init()
+            let nextLine1 = NSAttributedString.init(string: "\n")
+
+            let strTiTle = NSAttributedString.init(string: "End Time"
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 42),NSAttributedString.Key.font : fontMedium]);
+            let strTime = NSAttributedString.init(string: GeneralUtility.currentDateDetailType3(emiDate: results.endDatetimeUTC)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 53),NSAttributedString.Key.font : fontMediumI]);
+            let para = NSMutableParagraphStyle.init()
+            strHeader.append(strTiTle)
+            strHeader.append(nextLine1)
+            strHeader.append(strTime)
+            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+            lblTimingTo.attributedText = strHeader
+        }
+
+    }
     
+    func customizationLocation(){
+        
+        if   let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12),let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE12)
+        {
+            let strHeader = NSMutableAttributedString.init()
+            let nextLine1 = NSAttributedString.init(string: "\n")
+            
+            let strTiTle = NSAttributedString.init(string: "Location/ Meeting Link"
+                                                   , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 59),NSAttributedString.Key.font : fontHeavy]);
+            let strlocation = NSAttributedString.init(string: self.results.location
+                                                      , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
+            let para = NSMutableParagraphStyle.init()
+            strHeader.append(strTiTle)
+            strHeader.append(nextLine1)
+            strHeader.append(strlocation)
+            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+            lblLocation.attributedText = strHeader
+        }
+        
+    }
+    
+    func coachInfo(){
+        
+        let radius =  (Int)(lblImageView.frame.height)/2
+        if let urlImage = URL.init(string: self.selectedCoach?.profilePicURL ?? "") {
+            self.imgView
+                .setImageWith(urlImage, placeholderImage: UIImage.init(named: "Placeeholderimage"))
+            
+            self.imgView?.cornerRadius = CGFloat(radius)
+            imgView?.clipsToBounds = true
+            //                self.imgView.layer.borderColor = UIColor.black.cgColor
+            //                self.imgView.layer.borderWidth = 1
+            self.imgView?.layer.masksToBounds = true;
+        }
+        else{
+            self.imgView.image = UIImage.init(named: "Placeeholderimage");
+            //            self.imgView.contentMode = .scaleAspectFit;
+            
+        }
+        if self.selectedCoach?.profilePicURL == nil ||
+            GeneralUtility.optionalHandling(_param: self.selectedCoach?.profilePicURL?.isBlank, _returnType: Bool.self)
+        {
+            
+            self.imgView?.isHidden = true
+            self.lblImageView.isHidden = false
+            
+            var stringImg = GeneralUtility.startNameCharacter(stringName: self.selectedCoach?.name ?? " ")
+            if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
+            {
+                
+                UILabel.labelUIHandling(label: lblImageView, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
+                lblImageView.textAlignment = .center
+                lblImageView.layer.borderColor = UIColor.black.cgColor
+            }
+            
+            
+        }
+        else
+        {
+            self.lblImageView.isHidden = true
+            self.imgView?.isHidden = false
+            
+        }
+        
+        let strHeader = NSMutableAttributedString.init()
+        
+        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+        
+        {
+            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.selectedCoach?.name, _returnType: String.self)
+                                                   , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
+            let nextLine1 = NSAttributedString.init(string: "\n")
+            
+            var roles = ""
+            var index = 0
+            for role in self.selectedCoach!.roles{
+                roles.append(role.displayName ?? "")
+                index = index + 1;
+                if self.selectedCoach!.roles.count > 1{
+                    if index == self.selectedCoach?.roles.count{
+                    }
+                    else{
+                        roles.append(" etc")
+                        break
+                    }
+                }
+            }
+            
+            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: roles, _returnType: String.self)
+                                                  , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
+            
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            para.lineSpacing = 4
+            
+            strHeader.append(strTiTle)
+            
+            strHeader.append(nextLine1)
+            strHeader.append(strType)
+         
+            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+            lblDescribtion.attributedText = strHeader
+        }
+        
+        
+        
+        
+    }
     
     
 }
+
+
