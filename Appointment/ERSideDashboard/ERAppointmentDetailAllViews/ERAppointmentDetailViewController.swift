@@ -33,6 +33,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
         appoinmentViewModal.delegate = self
        
         
+        
         appoinmentViewModal.detailType = index
         appoinmentViewModal.viewModalCustomized();
         // Do any additional setup after loading the view.

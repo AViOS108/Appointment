@@ -119,7 +119,7 @@ class StringConstants{
     static let ERRDUPLICATETIMEDATE = "Please enter both the date"
     static let ERRDUPLICATETIMESLOTSELECTED = "Please select atleast one time slot"
 
-    static let ERRCOMMENTCANCELDECLINEAPPO = "Please type comment"
+    static let ERRCOMMENTCANCELDECLINEAPPO = "Please enter comment"
 
 
     

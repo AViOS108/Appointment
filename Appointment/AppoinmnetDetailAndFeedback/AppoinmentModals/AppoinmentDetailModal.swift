@@ -217,6 +217,7 @@ struct AppoinmentDetailModalNew: Codable {
     let title, type: String?
     let coachDetails: CoachDetails?
     let startDatetime, endDatetime, inTimezone: String?
+    var coachDetailApi: CoachDetailApi?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -236,6 +237,43 @@ struct AppoinmentDetailModalNew: Codable {
         case inTimezone = "in_timezone"
     }
 }
+
+// MARK: - Coach Detail
+
+struct CoachDetailApi: Codable {
+    let id: Int
+    let name, email: String
+    let communityID: Int
+    let profilePicURL: String?
+    let isDeleted, allowRequestsEmailNotifications: Int
+    let createdDate, lastUpdatedDate: String
+    let roles: [Role]
+    let assignedBenchmarks: [AssignedBenchmark]
+    let coachInfo: CoachInfo
+    let tags, appointmentTags, expertise, industryFocuses: [String]
+    let publications, educations, experiences, clubs: [String]
+    let permissions: [String: Bool]
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, email
+        case communityID = "community_id"
+        case profilePicURL = "profile_pic_url"
+        case isDeleted = "is_deleted"
+        case allowRequestsEmailNotifications = "allow_requests_email_notifications"
+        case createdDate = "created_date"
+        case lastUpdatedDate = "last_updated_date"
+        case roles
+        case assignedBenchmarks = "assigned_benchmarks"
+        case coachInfo = "coach_info"
+        case tags
+        case appointmentTags = "appointment_tags"
+        case expertise
+        case industryFocuses = "industry_focuses"
+        case publications, educations, experiences, clubs, permissions
+    }
+}
+
+
 
 
 // MARK: - Nextstep

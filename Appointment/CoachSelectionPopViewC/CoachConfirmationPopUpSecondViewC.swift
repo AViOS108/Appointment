@@ -206,7 +206,7 @@ class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate
             cell.delegate = self
             cell.arrNameSurvey = self.makeModal(indexpath: indexPath)
             cell.tblview = self.tblView
-            cell.viewController = self.tblView
+//            cell.viewController = self.tblView
             if indexPath.row == 4{
                 cell.isAPiHIt = true
             }

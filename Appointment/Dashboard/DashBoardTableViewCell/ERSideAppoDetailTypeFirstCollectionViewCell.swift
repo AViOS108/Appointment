@@ -133,22 +133,63 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
         
         let strHeader = NSMutableAttributedString.init()
         
-        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook = UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE13){
-            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.requestDetail.studentDetails?.name, _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
-            let nextLine1 = NSAttributedString.init(string: "\n")
-            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.requestDetail.studentDetails?.benchmarkName, _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
-            let para = NSMutableParagraphStyle.init()
-            //            para.alignment = .center
-            para.lineSpacing = 1
-            strHeader.append(strTiTle)
-            strHeader.append(nextLine1)
-            strHeader.append(strType)
-            strHeader.append(nextLine1)
-            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-            lblName.attributedText = strHeader
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true{
+            var roles = ""
+            var index = 0
+            for role in self.appoinmentDetailModalObj!.coachDetailApi!.roles{
+                roles.append(role.displayName ?? "")
+                index = index + 1;
+                if self.appoinmentDetailModalObj!.coachDetailApi!.roles.count > 1{
+                    if index == self.appoinmentDetailModalObj!.coachDetailApi!.roles.count{
+                    }
+                    else{
+                        roles.append(", ")
+                    }
+                }
+            }
+            
+            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook = UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE13){
+                let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.appoinmentDetailModalObj!.coachDetailApi?.name, _returnType: String.self)
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
+                let nextLine1 = NSAttributedString.init(string: "\n")
+                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: roles, _returnType: String.self)
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
+                let para = NSMutableParagraphStyle.init()
+                //            para.alignment = .center
+                para.lineSpacing = 1
+                strHeader.append(strTiTle)
+                strHeader.append(nextLine1)
+                strHeader.append(strType)
+                strHeader.append(nextLine1)
+                strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+                lblName.attributedText = strHeader
+            }
         }
+        else{
+            
+            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook = UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE13){
+                let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.requestDetail.studentDetails?.name, _returnType: String.self)
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
+                let nextLine1 = NSAttributedString.init(string: "\n")
+                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.requestDetail.studentDetails?.benchmarkName, _returnType: String.self)
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
+                let para = NSMutableParagraphStyle.init()
+                //            para.alignment = .center
+                para.lineSpacing = 1
+                strHeader.append(strTiTle)
+                strHeader.append(nextLine1)
+                strHeader.append(strType)
+                strHeader.append(nextLine1)
+                strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+                lblName.attributedText = strHeader
+            }
+            
+        }
+        
+      
+        
+       
     }
     
     func descriptionLogic() -> NSAttributedString{

@@ -338,7 +338,7 @@ class Urls {
     }
     
     func openHourCCList() -> String {
-        return "\(typeEvent2)students/open-hour/list"
+        return "\(typeEvent2)students/appointments/list"
         
     }
     
@@ -366,13 +366,30 @@ class Urls {
     }
     
     
+    func coachDetail(id:String) -> String {
+        
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true
+        {
+            
+            return "\(type9)student/career_services/coach-details/" + id
+            
+        }
+        else
+        {
+            return "\(type9)student/career_services/coach-details/" + id
+
+        }
+        
+    }
+    
     func nextStepAppointment(id:String) -> String {
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         if isStudent ?? true
         {
-            return "\(typeEvent1)students/appointment-next-steps"
-
+            return "\(typeEvent2)students/appointments/ " + id + "/next-steps"
         }
         else
         {
@@ -386,7 +403,7 @@ class Urls {
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         if isStudent ?? true
         {
-            return "\(typeEvent2)api/v1/student/notes/list"
+            return "\(Urls.runningEnvNotes)api/v1/student/notes/list?filters[attachable_entities][0][entity_id]=\(id)&filters[attachable_entities][0][entity_type]=appointment"
             
         }
         else
@@ -541,7 +558,16 @@ class Urls {
        }
     func erSideAppointmentDandC(id: String,idIndex: Int) -> String{
         if idIndex == 1{
-            return "\(typeEvent2)community/appointments/" + "\(id)" + "/cancel"
+            
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+            if isStudent ?? true
+            {
+                return "\(typeEvent2)students/appointments/" + "\(id)" + "/cancel"
+            }
+            else
+            {
+                return "\(typeEvent2)community/appointments/" + "\(id)" + "/cancel"
+            }
         }
         else{
             return "\(typeEvent2)community/appointments/requests/" + "\(id)" + "/reject"

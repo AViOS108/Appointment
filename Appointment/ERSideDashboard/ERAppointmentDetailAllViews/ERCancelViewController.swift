@@ -107,7 +107,20 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     
     func customize() {
         
-        let stringImg = GeneralUtility.startNameCharacter(stringName: self.results.requests![seletectedIndex].studentDetails?.name ?? "")
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        var name = "", coachDetail = ""
+        if isStudent ?? true{
+            name = self.results.coachDetails?.name ?? ""
+        }
+        else{
+            name = self.results.requests![seletectedIndex].studentDetails?.name ?? ""
+            coachDetail = self.results.requests![seletectedIndex].studentDetails?.benchmarkName ?? ""
+
+            
+        }
+        
+        let stringImg = GeneralUtility.startNameCharacter(stringName: name)
         
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
         {
@@ -124,17 +137,22 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             
         {
-            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.requests![seletectedIndex].studentDetails?.name, _returnType: String.self)
+            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: name, _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
             let nextLine1 = NSAttributedString.init(string: "\n")
-            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.results.requests![seletectedIndex].studentDetails?.benchmarkName, _returnType: String.self)
+            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: coachDetail, _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
             para.lineSpacing = 4
             strHeader.append(strTiTle)
-            strHeader.append(nextLine1)
-            strHeader.append(strType)
+            if coachDetail.isEmpty{
+                
+            }
+            else{
+                strHeader.append(nextLine1)
+                strHeader.append(strType)
+            }
             strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
             lblCoachName.attributedText = strHeader
         }

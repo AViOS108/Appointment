@@ -29,10 +29,10 @@ class CoachImageOverlayView: UIView, UICollectionViewDataSource,UICollectionView
     func customize()
     {
         
-        if viewcontrollerI.selectedDataFeedingModal?.items.count == 0{
-            return;
-        }
-        
+//        if viewcontrollerI.selectedDataFeedingModal?.items.count == 0{
+//            return;
+//        }
+//        
         
         viewCollection.dataSource = self
         viewCollection.delegate = self

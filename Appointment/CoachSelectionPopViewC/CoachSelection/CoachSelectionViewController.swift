@@ -51,7 +51,6 @@ class CoachSelectionViewController: SuperViewController {
         super.viewDidLoad()
         GeneralUtility.customeNavigationBarWithBack(viewController: self,title:"Schedule");
         UserDefaultsDataSource(key: "timeZoneOffset").writeData(TimeZone.current.identifier)
-        lblCoachName.text = ""
         // Do any additional setup after loading the view.
  
         otherApiHit()
@@ -80,7 +79,9 @@ class CoachSelectionViewController: SuperViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.view.backgroundColor = ILColor.color(index: 22)
-        
+        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+
+        UILabel.labelUIHandling(label: lblCoachName, text: "", textColor: ILColor.color(index: 29), isBold: false, fontType: fontHeavy1)
        
         btnLeft.setImage(UIImage.init(named: "Left_arrow"), for: .normal)
         btnRight.setImage(UIImage.init(named: "right_arrow"), for: .normal)
@@ -107,16 +108,15 @@ class CoachSelectionViewController: SuperViewController {
         {
             noCoachSelectedChanges()
             self.customizationLabel()
+            self.collectionViewDataFeed()
+
         }
-        
-        
-        
     }
     
     func  noCoachSelectedChanges()  {
         
-        nslayoutConstraintHeightCoachSelectionView.constant = 0
-        self.viewHorizontalCoachSelection.isHidden = true
+//        nslayoutConstraintHeightCoachSelectionView.constant = 0
+//        self.viewHorizontalCoachSelection.isHidden = true
         self.noOpenHour.isHidden = false
         imgViewNoOpenHour.image = UIImage.init(named: "noopenhour")
         
@@ -124,19 +124,20 @@ class CoachSelectionViewController: SuperViewController {
         UILabel.labelUIHandling(label: lblNoOpenHour, text: "No Open hours", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy1)
         self.tblViewList.isHidden = true
         lblheader.text = ""
+
     }
     
     
-    func noCoachSelectedView(){
-        self.noOpenHour.isHidden = false
-        imgViewNoOpenHour.image = UIImage.init(named: "noopenhour")
-        
-        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        UILabel.labelUIHandling(label: lblNoOpenHour, text: "No Open hours", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy1)
-        self.tblViewList.isHidden = true
-        lblheader.text = ""
-        
-    }
+//    func noCoachSelectedView(){
+//        self.noOpenHour.isHidden = false
+//        imgViewNoOpenHour.image = UIImage.init(named: "noopenhour")
+//
+//        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+//        UILabel.labelUIHandling(label: lblNoOpenHour, text: "No Open hours", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy1)
+//        self.tblViewList.isHidden = true
+//        lblheader.text = ""
+//
+//    }
     func CoachSelectedView(){
         self.noOpenHour.isHidden = true
         self.tblViewList.isHidden = false
@@ -208,6 +209,7 @@ class CoachSelectionViewController: SuperViewController {
             selectedFirst?.isTappedForOpenHour = true
             selectedDataFeedingModal?.items.remove(at: 0)
             selectedDataFeedingModal?.items.insert(selectedFirst!, at: 0)
+            self.lblCoachName.text = selectedFirst?.name.capitalized
             
         }
         
@@ -361,6 +363,8 @@ extension CoachSelectionViewController: CoachImageOverlayViewDelegate,ERSideStud
             {
                 if itemI.id == coach?.id{
                     itemI.isTappedForOpenHour = true
+                    self.lblCoachName.text = itemI.name.capitalized
+
                 }
                 else{
                     itemI.isTappedForOpenHour = false
@@ -377,7 +381,7 @@ extension CoachSelectionViewController: CoachImageOverlayViewDelegate,ERSideStud
             let firstSelected = (self.selectedDataFeedingModal?.items.filter({$0.isTappedForOpenHour})[0])!
             setTableViewLogic(coachselected:firstSelected)
             if coachSelectionTableView.results?.count == 0{
-                noCoachSelectedView()
+                noCoachSelectedChanges()
             }
             else{
                 CoachSelectedView()
@@ -496,13 +500,16 @@ extension CoachSelectionViewController:CoachSelectionViewModalDelegate{
             
         objOpenHourCoachModal = coachOpenHourModal
         let firstSelected = self.selectedDataFeedingModal?.items.filter({$0.isTappedForOpenHour})[0]
+        
+        self.lblCoachName.text = firstSelected?.name.capitalized
+
         coachSelectionTableView.results = objOpenHourCoachModal.results?.filter({
             GeneralUtility.optionalHandling(_param: $0.createdByID, _returnType: Int.self) == firstSelected!.id
         })
     
         self.setTableViewLogic(coachselected : firstSelected!)
         if coachSelectionTableView.results?.count == 0{
-            noCoachSelectedView()
+            noCoachSelectedChanges()
         }
         else{
             CoachSelectedView()

@@ -57,13 +57,12 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     
     var dashBoardViewModal = DashBoardViewModel()
     var dashBoardViewStudentApVModal = DashBoardStudentAppointmentVM()
-    var selectedAppointmentModal : OpenHourCoachModalResult?
     
     var refreshControl = UIRefreshControl()
-
+    var selectedAppointmentModal : ERSideAppointmentModalNewResult!
     
-    var dataFeedingAppointmentModal :OpenHourCoachModal?
-    var dataFeedingAppointmentModalConst :OpenHourCoachModal?
+    var dataFeedingAppointmentModal :ERSideAppointmentModalNew?
+    var dataFeedingAppointmentModalConst :ERSideAppointmentModalNew?
     
     var tableviewHandlerAppointment = HomeMyAppointmentTableViewController()
     
@@ -79,6 +78,35 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     @IBOutlet var btnsHorizontalSelection: [UIButton]!
     @IBOutlet var viewsHorizontalSelection: [UIView]!
     
+    var selectedHorizontal : Int = 1;
+    @IBAction func btnHorizontalSelectionTapped(_ sender: UIButton) {
+        
+        selectedHorizontal = sender.tag
+        tableviewHandlerAppointment.customizaTionMyApointment()
+
+        btnsHorizontalSelection.forEach { (btn) in
+            if btn.tag == sender.tag{
+                btn.setTitleColor(ILColor.color(index: 23), for: .normal)
+            }
+            else{
+                btn.setTitleColor(ILColor.color(index: 42), for: .normal)
+            }
+
+        }
+        viewsHorizontalSelection.forEach { (view) in
+            if view.tag == sender.tag{
+                view.isHidden = false
+                view.backgroundColor = ILColor.color(index: 23)
+            }
+            else{
+                view.isHidden = true
+            }
+            
+        }
+        
+        
+      
+    }
     
     var dataFeedingModalConst : DashBoardModel?
     var tableviewHandler = HomeTableView()
@@ -202,6 +230,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         let frame = sender.convert(sender.frame, from:AppDelegate.getDelegate().window)
          viewCalender = CalenderViewController.init(nibName: "CalenderViewController", bundle: nil)
         viewCalender.viewControllerI = self
+        viewCalender.index = 1;
         viewCalender.pointSign = CGPoint.init(x: abs(frame.origin.x) + abs(frame.size.width/2), y: abs(frame.origin.y) + abs(frame.size.height/2) + 10 )
         viewCalender.modalPresentationStyle = .overFullScreen
         self.present(viewCalender, animated: false) {
@@ -499,7 +528,13 @@ extension HomeViewController: CalenderViewDelegate,feedbackViewControllerDelegat
 
 
 
-extension HomeViewController{
+extension HomeViewController: ERCancelViewControllerDelegate {
+    
+    func refreshTableView() {
+        refreshControlAPi()
+    }
+    
+    
     func redirection(redirectionType : RedirectionType)  {
         switch redirectionType {
         case .about:
@@ -525,7 +560,6 @@ extension HomeViewController{
             let objFeedbackViewController = FeedbackViewController.init(nibName: "FeedbackViewController", bundle: nil)
             
             objFeedbackViewController.delegate = self
-            objFeedbackViewController.selectedAppointmentModal = selectedAppointmentModal
             
             objFeedbackViewController.modalPresentationStyle = .overFullScreen
             self.present(objFeedbackViewController, animated: false, completion: nil)
@@ -534,21 +568,23 @@ extension HomeViewController{
             break
         case .appointmentDetail:
             
-            let appoinmentDetailViewController = AppointmentDetailViewController.init(nibName: "AppointmentDetailViewController", bundle: nil)
             
-            appoinmentDetailViewController.selectedAppointmentModal = selectedAppointmentModal
-            self.navigationController?.pushViewController(appoinmentDetailViewController, animated: false)
+            let objERAppointmentDetailViewController = ERAppointmentDetailViewController.init(nibName: "ERAppointmentDetailViewController", bundle: nil)
+            objERAppointmentDetailViewController.selectedResult =  self.selectedAppointmentModal;
+            objERAppointmentDetailViewController.index = selectedHorizontal + 1
+            self.navigationController?.pushViewController(objERAppointmentDetailViewController, animated: false)
             
             
             break
             
         case .cancelAppoinment:
             
-            let appoinmentCancelViewController = AppointmentCancelViewController.init(nibName: "AppointmentCancelViewController", bundle: nil)
-            appoinmentCancelViewController.selectedAppointmentModal = selectedAppointmentModal
-            appoinmentCancelViewController.delegate = self
-            appoinmentCancelViewController.modalPresentationStyle = .overFullScreen
-            self.present(appoinmentCancelViewController, animated: false, completion: nil)
+            let objERCancelViewController = ERCancelViewController.init(nibName: "ERCancelViewController", bundle: nil)
+            objERCancelViewController.modalPresentationStyle = .overFullScreen
+            objERCancelViewController.results = self.selectedAppointmentModal
+            objERCancelViewController.viewType = .cancel
+            objERCancelViewController.delegate = self
+            self.navigationController?.pushViewController(objERCancelViewController, animated: false)
             
             break
             
@@ -565,17 +601,7 @@ extension HomeViewController{
 // ALL STUDENT APPOINMENT LOGIC
 
 extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppointmentTableViewCellDelegate,EditNotesViewControllerDelegate{
-    func refreshApi() {
-                dashBoardViewStudentApVModal.customizeVM();
-    }
-    
-    
-    // 1 : - Feedback
-    // 2 :- View Detail
-    // 3:- Cancel
-    
-    
-    func redirectAppoinment(openMOdal: OpenHourCoachModalResult, isFeedback: Int) {
+    func redirectAppoinment(openMOdal: ERSideAppointmentModalNewResult, isFeedback: Int) {
         selectedAppointmentModal = openMOdal;
         if isFeedback == 1{
             self.redirection(redirectionType: .feedback)
@@ -588,16 +614,26 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
         else {
             self.redirection(redirectionType: .cancelAppoinment)
         }
-        
+    }
+    
+    func refreshApi() {
+                dashBoardViewStudentApVModal.customizeVM();
     }
     
     
+    // 1 : - Feedback
+    // 2 :- View Detail
+    // 3:- Cancel
     
     
-    func sentDataViewController(dataAppoinmentModal: OpenHourCoachModal) {
+  
+    
+    
+    
+    
+    func sentDataViewController(dataAppoinmentModal: ERSideAppointmentModalNew ) {
         
         self.refreshControl.endRefreshing()
-        
         self.dataFeedingAppointmentModal = dataAppoinmentModal
         self.dataFeedingAppointmentModalConst = self.dataFeedingAppointmentModal;
         self.zeroStateLogicAppointment()
@@ -641,20 +677,26 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
         
         let headerNib = UINib.init(nibName: "HeaderSectionCoach", bundle: Bundle.main)
         tblView.register(headerNib, forHeaderFooterViewReuseIdentifier: "HeaderSectionCoach")
+
         tableviewHandlerAppointment.customizaTionMyApointment()
         viewHorizontalSelection.isHidden = false
         nslayoutHorizSelectionViewHeight.constant = 50
         viewHorizontalSelection.backgroundColor = .white
         let btnTitleNames = ["Upcoming","Pending","Past"]
-        var index = 0;
         btnsHorizontalSelection.forEach { (btn) in
-            btn.setTitle(btnTitleNames[index], for: .normal)
-            index = index + 1;
+            btn.setTitle(btnTitleNames[btn.tag-1], for: .normal)
+            if btn.tag == selectedHorizontal{
+                btn.setTitleColor(ILColor.color(index: 23), for: .normal)
+            }
+            else{
+                btn.setTitleColor(ILColor.color(index: 42), for: .normal)
+            }
+
         }
-         index = 0;
         viewsHorizontalSelection.forEach { (view) in
-            if index == 0{
+            if view.tag == selectedHorizontal{
                 view.isHidden = false
+                view.backgroundColor = ILColor.color(index: 23)
             }
             else{
                 view.isHidden = true
@@ -664,6 +706,8 @@ extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppo
         }
         
     }
+    
+    
     
     
     

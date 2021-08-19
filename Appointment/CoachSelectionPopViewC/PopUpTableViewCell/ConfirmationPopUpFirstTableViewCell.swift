@@ -33,7 +33,7 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
     @IBOutlet weak var txtField: PaddedTextField!
     @IBOutlet weak var lblNoResultFound: UILabel!
     var delegate: changeModalConfirmationPopUpDelegate!
-    var viewController : UIView!
+//    var viewController : UIView!
     var viewControllerI : CoachConfirmationPopUpSecondViewC!
     var isAPiHIt : Bool!
     var tblview : UITableView!
@@ -71,7 +71,7 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         searchViewController.placeholder = placeholder;
         var changedFrame = frameI
 
-        var changeYaxis = 100 - (changedFrame?.origin.y)! ?? 0;
+        var changeYaxis = 164 - (changedFrame?.origin.y)! ?? 0;
         
         if frameI!.origin.y > self.viewControllerI.view.frame.height/2{
             viewControllerI.viewOuter.frame = CGRect.init(x:  viewControllerI.viewOuter.frame.origin.x, y: changeYaxis, width: viewControllerI.viewOuter.frame.width, height: viewControllerI.viewOuter.frame.height)

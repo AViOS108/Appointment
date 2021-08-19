@@ -123,6 +123,7 @@ class ERAppoDetailSecondTableViewCell: UITableViewCell {
             strHeader.append(strMeetingValue)
             strHeader.append(nextLine1)
             
+            
             strHeader.append(imageLocation)
             strHeader.append(imageSpaceHorizontal)
             strHeader.append(strLocationText)

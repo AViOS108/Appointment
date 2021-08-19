@@ -11,8 +11,8 @@ import UIKit
 class HomeMyAppointmentTableViewController: UITableViewController {
 
     var viewControllerI : HomeViewController!
-    var noPastAppo = false,noUpcommingAppo = false
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,24 +25,6 @@ class HomeMyAppointmentTableViewController: UITableViewController {
         self.tableView.backgroundColor = .clear
         viewControllerI.tblView.dataSource = self
         viewControllerI.tblView.delegate = self
-        if viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == false}).count == 0
-        {
-            noUpcommingAppo = true
-        }
-        else
-        {
-            noUpcommingAppo = false
-            
-        }
-        
-        if viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == true}).count == 0
-        {
-            noPastAppo = true
-        }
-        else{
-            noPastAppo = false
-            
-        }
         viewControllerI.tblView.reloadData()
     }
     
@@ -56,50 +38,31 @@ class HomeMyAppointmentTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DashBoardAppointmentTableViewCell", for: indexPath) as! DashBoardAppointmentTableViewCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.delegate = viewControllerI as? DashBoardAppointmentTableViewCellDelegate
-        if indexPath.section == 0
-        {
-            if noUpcommingAppo {
-                
-            }
-            else
-            {
-                cell.appointmentModal = viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == false})[indexPath.row]
-                
-                
-                
-            }
-            cell.customize(noAppoinment: noUpcommingAppo, text: "No Appointment found!")
-            
-            
-        }
-        else{
-            
-            if noPastAppo {
-                
-            }
-            else
-            {
-                cell.appointmentModal = viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.isPastAppointment == true})[indexPath.row]
-            }
-            cell.customize(noAppoinment: noPastAppo, text: "No Appointment found!")
-            
-            
-        }
+        cell.appointmentModal = viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.typeERSide == viewControllerI.selectedHorizontal})[indexPath.row]
+        cell.customize(noAppoinment: false, text: "No cancel")
+
         return cell
     }
         
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return viewControllerI.dataFeedingAppointmentModal?.results?.count ?? 0
+        return viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.typeERSide == viewControllerI.selectedHorizontal}).count ?? 0
+        
+        
 
     }
         
         
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewControllerI.redirectAppoinment(openMOdal: (viewControllerI.dataFeedingAppointmentModal?.results?[indexPath.row])!, isFeedback: 2)
+
+    }
+    
     
         
         
     override func numberOfSections(in tableView: UITableView) -> Int{
-            return 2
+            return 1
         }
         
  

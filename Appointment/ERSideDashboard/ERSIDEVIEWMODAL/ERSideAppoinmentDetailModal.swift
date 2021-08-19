@@ -61,68 +61,87 @@ class ERSideAppoinmentDetailModal{
     func appoinmentDetail()
     {
         
-        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
         
         var    param : [String : AnyObject]!
         
-        if detailType == 2{
-            // Upcoming
-            
-            let states = ["accepted","auto_accepted"]
-            param = [
-                ParamName.PARAMFILTERSEL : [
-                    "states" : ["confirmed"],
-                    "has_request":
-                        ["states": states],
-                    "with_request":
-                        ["states":states
-                        ],
-                    "timezone":localTimeZoneAbbreviation,
-                    "from": GeneralUtility.todayDate() as AnyObject,
-                ],
-                ParamName.PARAMINTIMEZONEEL :"utc",
-            ] as [String : AnyObject]
-        }
-        else if detailType == 3{
-           // Pending
-            let states = ["accepted","pending","auto_accepted","rejected"]
-            param = [
-                ParamName.PARAMFILTERSEL : [
-                    "states" : ["pending"],
-                    "has_request":
-                        ["states": states],
-                    "with_request":
-                        ["states":states
-                        ],
-                    "timezone":localTimeZoneAbbreviation,
-                    "from": GeneralUtility.todayDate() as AnyObject,
-                ],
-                ParamName.PARAMINTIMEZONEEL :"utc",
+        
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        var idSelected = 0;
+        if isStudent ?? true{
+            var localTimeZoneIndemtifier: String { return TimeZone.current.identifier}
+            idSelected = selectedResult.id ?? 0
+            param = [ ParamName.PARAMINTIMEZONEEL :localTimeZoneIndemtifier
             ] as [String : AnyObject]
         }
         else{
-            //Past
-            
-            let states = ["accepted","auto_accepted"]
-            param = [
-                ParamName.PARAMFILTERSEL : [
-                    "states" : ["confirmed"],
-                    "has_request":
-                        ["states": states],
-                    "with_request":
-                        ["states":states
-                        ],
-                    "timezone":localTimeZoneAbbreviation,
-                    "from": GeneralUtility.todayDate() as AnyObject,
-                ],
-                ParamName.PARAMINTIMEZONEEL :"utc",
-            ] as [String : AnyObject]
-        }
+            var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+
+            idSelected = selectedResult.id ?? 0
+
+            if detailType == 2{
+                // Upcoming
+                
+                let states = ["accepted","auto_accepted"]
+                param = [
+                    ParamName.PARAMFILTERSEL : [
+                        "states" : ["confirmed"],
+                        "has_request":
+                            ["states": states],
+                        "with_request":
+                            ["states":states
+                            ],
+                        "timezone":localTimeZoneAbbreviation,
+                        "from": GeneralUtility.todayDate() as AnyObject,
+                    ],
+                    ParamName.PARAMINTIMEZONEEL :"utc",
+                ] as [String : AnyObject]
+            }
+            else if detailType == 3{
+                // Pending
+                let states = ["accepted","pending","auto_accepted","rejected"]
+                param = [
+                    ParamName.PARAMFILTERSEL : [
+                        "states" : ["pending"],
+                        "has_request":
+                            ["states": states],
+                        "with_request":
+                            ["states":states
+                            ],
+                        "timezone":localTimeZoneAbbreviation,
+                        "from": GeneralUtility.todayDate() as AnyObject,
+                    ],
+                    ParamName.PARAMINTIMEZONEEL :"utc",
+                ] as [String : AnyObject]
+            }
+            else{
+                //Past
+                
+                let states = ["accepted","auto_accepted"]
+                param = [
+                    ParamName.PARAMFILTERSEL : [
+                        "states" : ["confirmed"],
+                        "has_request":
+                            ["states": states],
+                        "with_request":
+                            ["states":states
+                            ],
+                        "timezone":localTimeZoneAbbreviation,
+                        "from": GeneralUtility.todayDate() as AnyObject,
+                    ],
+                    ParamName.PARAMINTIMEZONEEL :"utc",
+                ] as [String : AnyObject]
+            }                 }
+        
+        
+        
         
         
         
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
-        Network().makeApiEventGetRequest(true, url: Urls().confirmAppointment(id: String(describing: selectedResult.id ?? 0)) , methodType: .get, params: param, header: headers, completion: { (jsonData) in
+     
+        
+        Network().makeApiEventGetRequest(true, url: Urls().confirmAppointment(id: String(describing: idSelected)) , methodType: .get, params: param, header: headers, completion: { (jsonData) in
             do {
                 
                 self.appoinmentDetailModalObj = try
@@ -130,7 +149,42 @@ class ERSideAppoinmentDetailModal{
             } catch  {
                 print(error)
             }
+            
+            if isStudent ?? true{
+                self.coachDetailApi(coachId: self.appoinmentDetailModalObj?.coachID ?? 0)
+            }
+            else{
+                
+                self.dispatchGroup.leave()
+
+            }
+            
+            
+            
+        }) { (error, errorCode) in
             self.dispatchGroup.leave()
+            
+        }
+        
+    }
+    
+    
+    func coachDetailApi (coachId : Int){
+        
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+     
+        
+        Network().makeApiEventGetRequest(true, url: Urls().coachDetail(id: String(describing: coachId)) , methodType: .get, params: ["":"" as AnyObject], header: headers, completion: { (jsonData) in
+            do {
+                
+                self.appoinmentDetailModalObj?.coachDetailApi = try
+                    JSONDecoder().decode(CoachDetailApi.self, from: jsonData)
+            } catch  {
+                print(error)
+            }
+            self.dispatchGroup.leave()
+
+            
             
             
         }) { (error, errorCode) in
@@ -153,8 +207,16 @@ class ERSideAppoinmentDetailModal{
                     ["0","1"],
             ],
             ] as [String : AnyObject]
-        
-        Network().makeApiEventGetRequest(true, url: Urls().nextStepAppointment(id: String(describing: selectedResult.id ?? 0)), methodType: .get, params: param, header: headers, completion: { (jsonData) in
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+
+        var idSelected = 0;
+        if isStudent ?? true{
+            idSelected = selectedResult.id ?? 0
+        }
+        else{
+            idSelected = selectedResult.id ?? 0
+        }
+        Network().makeApiEventGetRequest(true, url: Urls().nextStepAppointment(id: String(describing: idSelected ?? 0)), methodType: .get, params: param, header: headers, completion: { (jsonData) in
             do {
                 
                 self.nextModalObj = try
@@ -178,7 +240,16 @@ class ERSideAppoinmentDetailModal{
         
         
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)","Content-Type" : "application/json"]
-        Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id:String(describing: selectedResult.id ?? 0)), methodType: .get, params: ["":"" as AnyObject] as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+
+        var idSelected = 0;
+        if isStudent ?? true{
+            idSelected = selectedResult.id ?? 0
+        }
+        else{
+            idSelected = selectedResult.id ?? 0
+        }
+        Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id:String(describing: idSelected)), methodType: .get, params: ["":"" as AnyObject] as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
             do {
                 self.noteModalObj = try
                     JSONDecoder().decode(NotesModalNew.self, from: jsonData)

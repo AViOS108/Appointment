@@ -324,7 +324,7 @@ extension CalenderView:CalenderCollectionViewCellDelegate
          self.viewCollection.reloadData()
         viewControllerI!.dismiss(animated: false) {
                 }
-        delegate.dateSelected(calenderModal: calenderIndexSelected, index: index!);
+        delegate.dateSelected(calenderModal: calenderIndexSelected, index: self.index!);
         
     }
     

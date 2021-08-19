@@ -236,16 +236,41 @@ class Network {
         Alamofire.upload(multipartFormData: { (multipartFormData) in
 
             let paramI = (params["attachments_public"] as! Array<Data>)[0]
-            
-            multipartFormData.append(paramI , withName: "attachments_public[0]", fileName: "filename", mimeType: "text/plain")
-          
-            params.removeValue(forKey: "attachments_public")            
-            for id in  params["user_purpose_ids"] as! Array<String> {
-                
-                multipartFormData.append((id as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "user_purpose_ids[]")
-            }
 
-            params.removeValue(forKey: "user_purpose_ids")
+            multipartFormData.append(paramI , withName: "files[]", fileName: "filename", mimeType: "text/plain")
+            params.removeValue(forKey: "attachments_public")
+            
+            if let industries = params["target_industries"] {
+                for id in  industries as! Array<String> {
+
+                    multipartFormData.append((id as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "target_industries[]")
+                }
+                params.removeValue(forKey: "target_industries")
+            }
+                    
+            if let function = params["target_functions"] {
+                for id in  function as! Array<String> {
+
+                    multipartFormData.append((id as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "target_functions[]")
+                }
+                params.removeValue(forKey: "target_functions")
+            }
+            
+            if let companies = params["target_companies"] {
+                for id in  params["target_companies"] as! Array<String> {
+
+                    multipartFormData.append((id as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "target_companies[]")
+                }
+                params.removeValue(forKey: "target_companies")
+            }
+            if let companies = params["purposes"] {
+                for id in  params["purposes"] as! Array<String> {
+
+                    multipartFormData.append((id as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "purposes[]")
+                }
+                params.removeValue(forKey: "purposes")
+            }
+           
 
             for (key, value) in params {
                 multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)

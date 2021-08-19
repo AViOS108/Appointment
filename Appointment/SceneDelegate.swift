@@ -45,6 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 let viewcontrollerSlider = SliderViewController.init(nibName: "SliderViewController", bundle: nil);
 //                print(erSideTabbar.viewControllers![0])
 //                viewcontrollerSlider.delegateRedirection = erSideTabbar.viewControllers?[0] as? HomeViewcontrollerRedirection;
+                viewcontrollerSlider.delegateRedirection = viewcontrollerHome.item1;
 
                 let navigationControllerS = UINavigationController.init(rootViewController: viewcontrollerSlider)
                 

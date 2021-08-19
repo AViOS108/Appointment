@@ -13,7 +13,7 @@ import CoreData
 
 protocol DashBoardStudentAppointmentVMDelegate {
     
-    func sentDataViewController(dataAppoinmentModal : OpenHourCoachModal)
+    func sentDataViewController(dataAppoinmentModal : ERSideAppointmentModalNew)
 
 }
 
@@ -29,11 +29,10 @@ class DashBoardStudentAppointmentVM {
     var isbackGroundHit = false;
     
     
-    var objOpenHourCoachModal1 : OpenHourCoachModal?
-    var objOpenHourCoachModal2 : OpenHourCoachModal?
-//    var objOpenHourCoachModal3 : OpenHourCoachModal?
-//    var objOpenHourCoachModal4 : OpenHourCoachModal?
-
+    var objOpenHourCoachModal1 : ERSideAppointmentModalNew?
+    var objOpenHourCoachModal2 : ERSideAppointmentModalNew?
+    var objOpenHourCoachModal3 : ERSideAppointmentModalNew?
+    var objOpenHourCoachModal4 : ERSideAppointmentModalNew?
 
     
     func customizeVM(){
@@ -64,7 +63,10 @@ class DashBoardStudentAppointmentVM {
         fetchAllPointMent(index: 1)
         dispatchGroup.enter()
         fetchAllPointMent(index: 2)
-
+        dispatchGroup.enter()
+        fetchAllPointMent(index: 3)
+        dispatchGroup.enter()
+        fetchAllPointMent(index: 4)
         
         dispatchGroup.notify(queue: .main) {
             if !self.isbackGroundHit{
@@ -124,41 +126,54 @@ class DashBoardStudentAppointmentVM {
     
     func parameter(index : Int) -> Dictionary<String,AnyObject> {
         
-        var arrCreatedBy = Array<Dictionary<String,AnyObject>>()
+        var arrCreatedBy = Array<Int>()
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         _ = dateFormatter.string(from: Date())
         for coach in dashBoardModal.items{
-            let dictionary = [
-                "entity_type":"community_user",
-                "entity_id": "\(coach.id)"
-                
-                ] as [String : AnyObject]
-            arrCreatedBy.append(dictionary)
+            arrCreatedBy.append(coach.id)
         }
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
         var localTimeZoneAbbreviation: String { return TimeZone.current.identifier }
-        
-   
-        var states = [String]();
+        var states = [String](), has_request = [String](),with_request = [String]() ;
         
         if index == 1{
-            states = ["accepted_by_community_user","auto_accepted","requested_by_student_user"]
+            states = ["confirmed","pending"]
+            has_request = ["auto_accepted","accepted"]
+            with_request = ["auto_accepted","accepted"]
         }
-       
         else if index == 2{
-             states = ["rejected_by_community_user"]
+             states = ["pending"]
+            has_request = ["pending"]
+            with_request = ["pending"]
         }
-       
+        else if index == 3{
+             states = ["pending","confirmed","cancelled"]
+            has_request = ["rejected"]
+            with_request = ["rejected","auto_accepted","accepted"]
+        }
+        else if index == 4{
+            states = ["pending","confirmed"]
+           has_request = ["pending","auto_accepted","accepted"]
+           with_request = ["pending","auto_accepted","accepted"]
+       }
         
         
         
         var param = [
             ParamName.PARAMFILTERSEL : [
                 "states" : states,
-                "created_by":arrCreatedBy,
-                "timezone":localTimeZoneAbbreviation
+                "coach_ids":arrCreatedBy,
+                "timezone":localTimeZoneAbbreviation,
+                "has_request":[
+                    "states" : has_request
+                ],
+                "with_request":[
+                    "states" : with_request
+                ],
+                
+               
             ],
             ParamName.PARAMINTIMEZONEEL :localTimeZoneAbbreviation,
             ParamName.PARAMCSRFTOKEN : csrftoken
@@ -166,10 +181,50 @@ class DashBoardStudentAppointmentVM {
             ] as [String : AnyObject]
         
         
-        if index != 2{
-            param["from"] = GeneralUtility.todayDate() as AnyObject
+        if index == 1{
+            
+            var filter  :[String : AnyObject]{
+                get {
+                    return param[ ParamName.PARAMFILTERSEL] as! [String : AnyObject]
+                }
+                set {
+                    param[ ParamName.PARAMFILTERSEL] = newValue as AnyObject
+                }
+            }
+            filter["from"] = GeneralUtility.todayDate() as AnyObject
+            param[ ParamName.PARAMFILTERSEL] = filter as AnyObject?
+            
+        }
+        else if index == 2{
+            var filter  :[String : AnyObject]{
+                get {
+                    return param[ ParamName.PARAMFILTERSEL] as! [String : AnyObject]
+                }
+                set {
+                    param[ ParamName.PARAMFILTERSEL] = newValue as AnyObject
+                }
+            }
+            filter["from"] = GeneralUtility.todayDate() as AnyObject
+            param[ ParamName.PARAMFILTERSEL] = filter as AnyObject?
 
         }
+        else if index == 3{
+
+        }
+        else if index == 4{
+            var filter  :[String : AnyObject]{
+                get {
+                    return param[ ParamName.PARAMFILTERSEL] as! [String : AnyObject]
+                }
+                set {
+                    param[ ParamName.PARAMFILTERSEL] = newValue as AnyObject
+                }
+            }
+            filter["to"] = GeneralUtility.todayDate() as AnyObject
+            param[ ParamName.PARAMFILTERSEL] = filter as AnyObject?
+
+       }
+    
         return param
     }
     
@@ -188,15 +243,25 @@ class DashBoardStudentAppointmentVM {
                 
                 if index == 1{
                     self.objOpenHourCoachModal1 = try
-                                      JSONDecoder().decode(OpenHourCoachModal.self, from: jsonData)
+                                      JSONDecoder().decode(ERSideAppointmentModalNew.self, from: jsonData)
                                   self.dispatchGroup.leave()
                 }
                 else if index == 2{
                     self.objOpenHourCoachModal2 = try
-                                      JSONDecoder().decode(OpenHourCoachModal.self, from: jsonData)
+                                      JSONDecoder().decode(ERSideAppointmentModalNew.self, from: jsonData)
                                   self.dispatchGroup.leave()
                 }
                 
+                else if index == 3{
+                    self.objOpenHourCoachModal3 = try
+                                      JSONDecoder().decode(ERSideAppointmentModalNew.self, from: jsonData)
+                                  self.dispatchGroup.leave()
+                }
+                else if index == 4{
+                    self.objOpenHourCoachModal4 = try
+                                      JSONDecoder().decode(ERSideAppointmentModalNew.self, from: jsonData)
+                                  self.dispatchGroup.leave()
+                }
                 
                 
             } catch   {
@@ -212,43 +277,63 @@ class DashBoardStudentAppointmentVM {
         
     }
     
-    func outputResult() -> OpenHourCoachModal?  {
+    func outputResult() -> ERSideAppointmentModalNew?  {
         
-        var appointmentLocal = OpenHourCoachModal()
+        var appointmentLocal = ERSideAppointmentModalNew()
         
-        if self.objOpenHourCoachModal1 != nil &&  self.objOpenHourCoachModal2 != nil {
+        
+        if self.objOpenHourCoachModal1 != nil &&  self.objOpenHourCoachModal2 != nil && self.objOpenHourCoachModal3 != nil &&  self.objOpenHourCoachModal4 != nil{
             
-            self.objOpenHourCoachModal1?.results?.append(contentsOf: (self.objOpenHourCoachModal2?.results)!)
         }
-            
+        
         else
         {
             return nil
         }
-    
         
-        appointmentLocal = self.objOpenHourCoachModal1!
+        appointmentLocal.total = (self.objOpenHourCoachModal1!.total ?? 0) + (self.objOpenHourCoachModal2!.total  ?? 0) + (self.objOpenHourCoachModal3!.total  ?? 0) 
+            
+        appointmentLocal.total =  appointmentLocal.total!  + (self.objOpenHourCoachModal4!.total  ?? 0)
         
+        appointmentLocal.results = [ERSideAppointmentModalNewResult]()
         
-        var appointmentModalResult = [OpenHourCoachModalResult]()
-        for var result in appointmentLocal.results!{
-            result.isPastAppointment = GeneralUtility.isPastDate(date: result.endDatetimeUTC)
-//            result.isFeedbackEnabled = GeneralUtility.isFeedbackEnable(particpant: (result.participants)!)
-            let coach = self.dashBoardModal.items.filter({$0.id == result.createdByID})[0]
-//            result.coach = coach
-            appointmentModalResult.append(result)
+        for var objApointment in self.objOpenHourCoachModal1!.results!{
+            
+            objApointment.typeERSide = 1
+            appointmentLocal.results?.append(objApointment);
+            
         }
-        var apointmentFinalModal = appointmentLocal;
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        appointmentModalResult =   appointmentModalResult.sorted(
-            by: { formatter.date(from: $0.startDatetimeUTC ?? "") ?? Date()  > formatter.date(from: $1.startDatetimeUTC ?? "") ?? Date()
-        })
+        for var objApointment in self.objOpenHourCoachModal2!.results!{
+            
+            objApointment.typeERSide = 2
+            appointmentLocal.results?.append(objApointment);
+            
+        }
         
-        apointmentFinalModal.results?.removeAll()
-        apointmentFinalModal.results?.append(contentsOf: appointmentModalResult);
-         return apointmentFinalModal
+        for var objApointment in self.objOpenHourCoachModal4!.results!{
+            
+            objApointment.typeERSide = 3
+            appointmentLocal.results?.append(objApointment);
+            
+        }
+        
+        
+        for var objApointment in self.objOpenHourCoachModal3!.results!{
+            if  GeneralUtility.isPastDate(date: objApointment.endDatetimeUTC!){
+                objApointment.typeERSide = 3
+
+            }
+            else{
+                objApointment.typeERSide = 1
+
+            }
+            appointmentLocal.results?.append(objApointment);
+            
+        }
+        
+     
+        return appointmentLocal
         
     }
     

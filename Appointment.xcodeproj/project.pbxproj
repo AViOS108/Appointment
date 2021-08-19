@@ -252,8 +252,6 @@
 		1A89E7F725679D0200A34C0F /* ERSideMyAppoinmentTableVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A89E7F625679D0200A34C0F /* ERSideMyAppoinmentTableVCViewController.swift */; };
 		1A8B502F251A07D000111C77 /* AppointmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B502D251A07D000111C77 /* AppointmentDetailViewController.swift */; };
 		1A8B5030251A07D000111C77 /* AppointmentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B502E251A07D000111C77 /* AppointmentDetailViewController.xib */; };
-		1A8B5033251A07E500111C77 /* AppointmentFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5031251A07E500111C77 /* AppointmentFeedbackViewController.swift */; };
-		1A8B5034251A07E500111C77 /* AppointmentFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B5032251A07E500111C77 /* AppointmentFeedbackViewController.xib */; };
 		1A8B5036251A1E4A00111C77 /* AppoinmentdetailViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5035251A1E4A00111C77 /* AppoinmentdetailViewModal.swift */; };
 		1A8B5039251A368A00111C77 /* AppoinmentDetailModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5038251A368A00111C77 /* AppoinmentDetailModal.swift */; };
 		1A8B503D251B640A00111C77 /* NotesAppointmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B503B251B640A00111C77 /* NotesAppointmentTableViewCell.swift */; };
@@ -594,8 +592,6 @@
 		1A89E7F625679D0200A34C0F /* ERSideMyAppoinmentTableVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideMyAppoinmentTableVCViewController.swift; sourceTree = "<group>"; };
 		1A8B502D251A07D000111C77 /* AppointmentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentDetailViewController.swift; sourceTree = "<group>"; };
 		1A8B502E251A07D000111C77 /* AppointmentDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppointmentDetailViewController.xib; sourceTree = "<group>"; };
-		1A8B5031251A07E500111C77 /* AppointmentFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentFeedbackViewController.swift; sourceTree = "<group>"; };
-		1A8B5032251A07E500111C77 /* AppointmentFeedbackViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppointmentFeedbackViewController.xib; sourceTree = "<group>"; };
 		1A8B5035251A1E4A00111C77 /* AppoinmentdetailViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppoinmentdetailViewModal.swift; sourceTree = "<group>"; };
 		1A8B5038251A368A00111C77 /* AppoinmentDetailModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppoinmentDetailModal.swift; sourceTree = "<group>"; };
 		1A8B503B251B640A00111C77 /* NotesAppointmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesAppointmentTableViewCell.swift; sourceTree = "<group>"; };
@@ -1261,8 +1257,6 @@
 				1A8B5037251A367800111C77 /* AppoinmentModals */,
 				1A8B502D251A07D000111C77 /* AppointmentDetailViewController.swift */,
 				1A8B502E251A07D000111C77 /* AppointmentDetailViewController.xib */,
-				1A8B5031251A07E500111C77 /* AppointmentFeedbackViewController.swift */,
-				1A8B5032251A07E500111C77 /* AppointmentFeedbackViewController.xib */,
 				1A8B5035251A1E4A00111C77 /* AppoinmentdetailViewModal.swift */,
 				1A8B5045251C73E400111C77 /* NotesCollectionViewlayout.swift */,
 				1A79151B25383C7900BC0AA7 /* FeedbackViewController.swift */,
@@ -1559,7 +1553,6 @@
 				1A78314924F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib in Resources */,
 				1A85BE96258B9EF400E72A3A /* ERFilterViewController.xib in Resources */,
 				1A0053AB251761180065C63E /* DashBoardAppointmentTableViewCell.xib in Resources */,
-				1A8B5034251A07E500111C77 /* AppointmentFeedbackViewController.xib in Resources */,
 				1AB459A02577619200E3671C /* ERSideOpenCreateEditVC.xib in Resources */,
 				1A6CAFA1251E006A000C9887 /* NextStepCollectionViewCell.xib in Resources */,
 				1A78315724F8D3D20054AAF8 /* CoachListingTableViewCell.xib in Resources */,
@@ -1973,7 +1966,6 @@
 				1A5470A624B5D264005F1058 /* Network.swift in Sources */,
 				1A5470F924B5D2AE005F1058 /* Extensions.swift in Sources */,
 				1AA87583261446AE004493A8 /* ERStudentOverlayView.swift in Sources */,
-				1A8B5033251A07E500111C77 /* AppointmentFeedbackViewController.swift in Sources */,
 				1AD10E9726145BBA007F6115 /* ERStudentOverlayCollectionViewCell.swift in Sources */,
 				1A656FA5255A78FF00570C98 /* ErSideCalenderCollectionViewCell.swift in Sources */,
 				1AD257C6253DABE5004E622A /* FeedBackModal.swift in Sources */,
