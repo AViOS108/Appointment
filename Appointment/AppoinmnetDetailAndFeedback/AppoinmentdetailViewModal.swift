@@ -284,7 +284,7 @@ class AppoinmentdetailViewModal{
     
     
     
-    func postFeedback(selectedAppointmentModal : OpenHourCoachModalResult?,objFeedBackMOdal:feedbackModal)   {
+    func postFeedback(selectedAppointmentModal : ERSideAppointmentModalNewResult?,objFeedBackMOdal:feedbackModal)   {
           
           let params = [
             "comments" : objFeedBackMOdal.comments ?? "",
@@ -297,7 +297,7 @@ class AppoinmentdetailViewModal{
         
           let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
           
-        Network().makeApiEventRequest(true, url: Urls().feedBack(id: selectedAppointmentModal?.identifier ?? ""), methodType: .post, params: params, header: headers, completion: { (data) in
+        Network().makeApiEventRequest(true, url: Urls().feedBack(id: "\(selectedAppointmentModal?.id ?? 0)"), methodType: .post, params: params, header: headers, completion: { (data) in
             do {
                 _ = try
                     JSONDecoder().decode(FeedBackModal.self, from: data)

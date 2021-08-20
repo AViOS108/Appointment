@@ -31,17 +31,9 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     @IBOutlet weak var txtView: UITextView!
     @IBOutlet weak var lblImageView: UILabel!
     @IBOutlet weak var imgView: UIImageView!
-    
     var delegate : feedbackViewControllerDelegate!
-    
-    @IBOutlet weak var lblHeader: UILabel!
-    
     @IBOutlet weak var lblCoachName: UILabel!
-    
-    @IBOutlet weak var lblCoachType: UILabel!
-    
     @IBOutlet weak var lblOverallExp: UILabel!
-    
     @IBOutlet var btnOverallExpGrp: [UIButton]!
     
     var coach_helpfulness: Int = -1
@@ -60,22 +52,14 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
             else{
                 btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
             }
-            
         }
-        
     }
     
     @IBOutlet weak var lblCoachPrecise: UILabel!
-    
-    
     @IBOutlet var btnCoachPreciseGrp: [UIButton]!
-    
-    
     @IBOutlet var viewSeperators: [UIView]!
     
     var contentSize : CGSize!
-    
-    
     @IBAction func btnCoachPreTapped(_ sender: UIButton) {
         coach_expertise = sender.tag
         self.btnCoachPreciseGrp.forEach { (btn) in
@@ -91,11 +75,8 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         
     }
     
-    
     @IBOutlet weak var lblHelpFulness: UILabel!
-    
     @IBOutlet var btnHelpFulnessGrp: [UIButton]!
-    
     @IBAction func btnHelpFulTapped(_ sender: UIButton) {
         coach_helpfulness = sender.tag
         self.btnHelpFulnessGrp.forEach { (btn) in
@@ -109,28 +90,11 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         }
         
     }
-    
-    
     @IBOutlet weak var viewContainer: UIView!
-    
     @IBOutlet weak var viewInner: UIView!
-    
     @IBOutlet weak var viewScroll: UIScrollView!
-    
     @IBOutlet weak var viewOuter: UIView!
     var activityIndicator: ActivityIndicatorView?
-    
-    
-    
-    
-    @IBOutlet weak var btnCancel: UIButton!
-    
-    @IBAction func btnCancelTapped(_ sender: Any) {
-        
-        self.dismiss(animated: false) {
-            
-        }
-    }
     
     
     @IBOutlet weak var btnSubmit: UIButton!
@@ -170,6 +134,8 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
                 CommonFunctions().showError(title: "", message: "Successfully Submitted")
 
                 self.delegate.feedbackSucessFullySent();
+                self.navigationController?.popViewController(animated: false)
+
             }
             
             
@@ -190,22 +156,37 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         // Do any additional setup after loading the view.
     }
     
-    var selectedAppointmentModal : OpenHourCoachModalResult?
+    var selectedAppointmentModal :  ERSideAppointmentModalNewResult?
     
     
     override func viewDidAppear(_ animated: Bool) {
-        self.view.tag = 19682
-        self.viewInner.tag = 19683
-        tapGesture()
-        view.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
-        viewInner.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.2)
+     
+        view.backgroundColor = .white
+        viewInner.backgroundColor = .white
         viewContainer.backgroundColor = .white
-        viewContainer.cornerRadius = 3;
-        
+        self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 2.0)
         self.customization()
+        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Leave a Feedback for this session")
         
     }
     
+    func shadowWithCorner(viewContainer : UIView,cornerRadius: CGFloat)
+       {
+           // corner radius
+           viewContainer.layer.cornerRadius = cornerRadius
+           // border
+           viewContainer.layer.borderWidth = 1.0
+           viewContainer.layer.borderColor = ILColor.color(index: 27).cgColor
+           // shadow
+           viewContainer.layer.shadowColor = ILColor.color(index: 27).cgColor
+           viewContainer.layer.shadowOffset = CGSize(width: 3, height: 3)
+           viewContainer.layer.shadowOpacity = 0.7
+           viewContainer.layer.shadowRadius = 4.0
+       }
+    
+    @objc override func buttonClicked(sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: false)
+    }
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view?.isDescendant(of: self.view) == true  && touch.view?.tag != 19682  {
             self.view.resignFirstResponder()
@@ -215,49 +196,26 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         return true
     }
     
-    func tapGesture()  {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
-        tap.delegate = self
-        self.viewInner.isUserInteractionEnabled = true
-        self.viewInner.addGestureRecognizer(tap)
-    }
-    
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        self.dismiss(animated: false) {
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
     func customization()  {
-//
-//        let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
-//
-//
-//
-//        txtView.backgroundColor = ILColor.color(index: 22)
-//        txtView.autocorrectionType = .no
-//        txtView.spellCheckingType = .no
-//        txtView.font = fontMedium
-//        txtView.delegate = self
-//        txtView.layer.borderWidth = 1;
-//        txtView.layer.borderColor = ILColor.color(index: 22).cgColor
-//        txtView.text = "Your notes here"
-//        txtView.textColor = .lightGray
-//        self.addInputAccessoryForTextView(textVIew: txtView )
-//
-//
-//
-//
-//        let radius =  (Int)(lblImageView.frame.height)/2
+
+        let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
+
+        txtView.backgroundColor = ILColor.color(index: 22)
+        txtView.autocorrectionType = .no
+        txtView.spellCheckingType = .no
+        txtView.font = fontMedium
+        txtView.delegate = self
+        txtView.layer.borderWidth = 1;
+        txtView.layer.borderColor = ILColor.color(index: 22).cgColor
+        txtView.text = "Your notes here"
+        txtView.textColor = .lightGray
+        self.addInputAccessoryForTextView(textVIew: txtView )
+
+
+
+
+        let radius =  (Int)(lblImageView.frame.height)/2
 //        if let urlImage = URL.init(string: self.selectedAppointmentModal?.coach?.profilePicURL ?? "") {
 //            self.imgView
 //                .setImageWith(urlImage, placeholderImage: UIImage.init(named: "Placeeholderimage"))
@@ -273,24 +231,24 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
 //            //            self.imgView.contentMode = .scaleAspectFit;
 //
 //        }
-//
+
 //        if self.selectedAppointmentModal?.coach?.profilePicURL == nil ||
 //            GeneralUtility.optionalHandling(_param: self.selectedAppointmentModal?.coach?.profilePicURL?.isBlank, _returnType: Bool.self)
 //        {
-//
-//            self.imgView?.isHidden = true
-//            self.lblImageView.isHidden = false
-//
-//            let stringImg = GeneralUtility.startNameCharacter(stringName: self.selectedAppointmentModal?.coach?.name ?? " ")
-//            if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
-//            {
-//
-//                UILabel.labelUIHandling(label: lblImageView, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
-//                lblImageView.textAlignment = .center
-//                lblImageView.layer.borderColor = UIColor.black.cgColor
-//            }
-//
-//
+
+            self.imgView?.isHidden = true
+            self.lblImageView.isHidden = false
+
+        let stringImg = GeneralUtility.startNameCharacter(stringName: self.selectedAppointmentModal?.coachDetails?.name ?? " ")
+            if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
+            {
+
+                UILabel.labelUIHandling(label: lblImageView, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
+                lblImageView.textAlignment = .center
+                lblImageView.layer.borderColor = UIColor.black.cgColor
+            }
+
+
 //        }
 //        else
 //        {
@@ -298,60 +256,42 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
 //            self.imgView?.isHidden = false
 //
 //        }
-//
-//
-//        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-//        let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-//
-//
-//        self.textWithAstrikMark(lblSpecific: lblOverallExp, text: "Overall Experience for the sessions")
-//        self.textWithAstrikMark(lblSpecific: lblCoachPrecise, text: "Coach’s precision and helpfulness")
-//        self.textWithAstrikMark(lblSpecific: lblHelpFulness, text: "Helpfulness due to coach’s area of expertise")
-//
-//
-//
-//        UILabel.labelUIHandling(label: lblHeader, text: "Fill Feedback for this session", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
-//
-//        UILabel.labelUIHandling(label: lblCoachName, text: selectedAppointmentModal?.coach?.name ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
-//        UILabel.labelUIHandling(label: lblCoachType, text: selectedAppointmentModal?.coach?.headline ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontBook)
-//
-//
-//        UILabel.labelUIHandling(label: lbltxtView, text: "Additional Comments", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
-//
-//
-//
-//        UIButton.buttonUIHandling(button: btnCancel, text: "Cancel", backgroundColor: .white, textColor: ILColor.color(index: 23), cornerRadius: 3, borderColor:  ILColor.color(index: 23), borderWidth: 1, fontType: fontMedium)
-//
-//        UIButton.buttonUIHandling(button: btnSubmit, text: "Submit", backgroundColor: ILColor.color(index: 23) , textColor: .white, cornerRadius: 3, fontType: fontHeavy)
-//        //noun_Star_nonselect
-//
-//        //        noun_Star_select
-//
-//        viewSeperators.forEach { (viewSep) in
-//            viewSep.backgroundColor = ILColor.color(index: 22)
-//        }
-//        var index = 1
-//        self.btnOverallExpGrp.forEach { (btn) in
-//            btn.tag = index
-//            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
-//            index = index + 1
-//        }
-//        index = 1
-//        self.btnHelpFulnessGrp.forEach { (btn) in
-//            btn.tag = index
-//            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
-//            index = index + 1
-//        }
-//        index = 1
-//        self.btnCoachPreciseGrp.forEach { (btn) in
-//            btn.tag = index
-//            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
-//            index = index + 1
-//        }
-//
-//
-//        contentSize = CGSize.init(width: self.viewScroll.contentSize.width, height: self.viewScroll.contentSize.height)
-//
+
+
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+        let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+
+
+        self.textWithAstrikMark(lblSpecific: lblOverallExp, text: "Overall Experience for the sessions")
+        self.textWithAstrikMark(lblSpecific: lblCoachPrecise, text: "Coach’s precision and helpfulness")
+        self.textWithAstrikMark(lblSpecific: lblHelpFulness, text: "Helpfulness due to coach’s area of expertise")
+
+        UILabel.labelUIHandling(label: lblCoachName, text: self.selectedAppointmentModal?.coachDetails?.name ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
+
+        UILabel.labelUIHandling(label: lbltxtView, text: "Additional Comments", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
+        UIButton.buttonUIHandling(button: btnSubmit, text: "Submit", backgroundColor: ILColor.color(index: 23) , textColor: .white, cornerRadius: 3, fontType: fontHeavy)
+        viewSeperators.forEach { (viewSep) in
+            viewSep.backgroundColor = ILColor.color(index: 22)
+        }
+        var index = 1
+        self.btnOverallExpGrp.forEach { (btn) in
+            btn.tag = index
+            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+            index = index + 1
+        }
+        index = 1
+        self.btnHelpFulnessGrp.forEach { (btn) in
+            btn.tag = index
+            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+            index = index + 1
+        }
+        index = 1
+        self.btnCoachPreciseGrp.forEach { (btn) in
+            btn.tag = index
+            btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+            index = index + 1
+        }
+        contentSize = CGSize.init(width: self.viewScroll.contentSize.width, height: self.viewScroll.contentSize.height)
    }
     
     
@@ -374,9 +314,6 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     }
     
     
-    
-    
-    
     func textViewDidBeginEditing(_ textView: UITextView)
     {
         if (textView.text == "Your notes here" && textView.textColor == .lightGray)
@@ -385,10 +322,9 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
             textView.textColor = .black
         }
         
-        self.viewScroll.contentSize = CGSize.init(width: contentSize.width, height:contentSize.height + 150);
-        
-        
-        textView.becomeFirstResponder() //Optional
+        self.viewScroll.setContentOffset(CGPoint.init(x: 0, y: 150), animated: false)
+
+        textView.becomeFirstResponder()
     }
     func textViewDidEndEditing(_ textView: UITextView)
     {
@@ -402,7 +338,7 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     
     override func actnResignKeyboard() {
         
-        self.viewScroll.contentSize = CGSize.init(width: contentSize.width, height:contentSize.height );
+        self.viewScroll.setContentOffset(CGPoint.init(x: 0, y: 0), animated: false)
 
         
         txtView.resignFirstResponder()

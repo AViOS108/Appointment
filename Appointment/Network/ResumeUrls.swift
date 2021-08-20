@@ -531,7 +531,15 @@ class Urls {
     
     func feedBack(id: String)-> String{
         
-        return "\(typeEvent1)students/appointment-slots/\(id)/feedback"
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true
+        {
+            return "\(typeEvent2)students/appointments/\(id)/feedback"
+        }
+        else
+        {
+            return "\(typeEvent1)students/appointment-slots/\(id)/feedback"
+        }
         
     }
     
