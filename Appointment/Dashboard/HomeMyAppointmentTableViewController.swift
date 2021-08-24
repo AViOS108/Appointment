@@ -28,10 +28,6 @@ class HomeMyAppointmentTableViewController: UITableViewController {
         viewControllerI.tblView.reloadData()
     }
     
-    
-    
-
-        
         
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         

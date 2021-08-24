@@ -11,29 +11,26 @@ import UIKit
 
 protocol NoteCollectionViewCellDelegate {
     
-    func editDeleteFunctionality(objModel : NotesModalNewResult?,isMyNotes: Bool?,isDeleted:Bool )
+    func editDeleteFunctionality(objModel : NotesModalNewResult?,isDeleted:Bool )
     
 }
 
 
 class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
   
-    var mynotes : Bool?
-
     var delegate : NoteCollectionViewCellDelegate!
     
     @IBOutlet weak var btnDelete: UIButton!
-    var objNoteViewType : noteViewType!
 
    
     @IBAction func btnDeleteTappped(_ sender: Any) {
-        delegate.editDeleteFunctionality(objModel: noteResultModal, isMyNotes: mynotes, isDeleted: true)
+        delegate.editDeleteFunctionality(objModel: noteResultModal, isDeleted: true)
         
         
     }
     
     @IBAction func btnEditTapped(_ sender: Any) {
-        delegate.editDeleteFunctionality(objModel: noteResultModal, isMyNotes: mynotes, isDeleted: false)
+        delegate.editDeleteFunctionality(objModel: noteResultModal,  isDeleted: false)
 
         
     }
@@ -47,6 +44,9 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
     @IBOutlet weak var lblDescription: UILabel!
     
     var noteResultModal: NotesModalNewResult?
+    
+    var noteResultModalStudent: NotesResult?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -81,28 +81,19 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
 
         }
         else{
-            
             viewContainer.isHidden = false
             lblNoNotes.isHidden = true
-            
-            if self.objNoteViewType == .erType {
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+            if isStudent ?? true {
+                studentSidedateAndButtonLogic()
+                lblDescription.attributedText =   studentSideDescription()
+            }
+            else
+            {
                 coachdateAndButtonLogic()
                 lblDescription.attributedText =   coachSideDescription()
             }
-            else{
-                
-            }
-            
-            
-            
         }
-        
-        if !(mynotes ?? true){
-         
-            
-        }
-        
-        
         
     }
     
@@ -144,6 +135,27 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         
     }
     
+    
+    func studentSidedateAndButtonLogic(){
+        let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+        let componentDay = GeneralUtility.dateComponent(date: self.noteResultModalStudent?.createdAt ?? "", component: .weekday)
+        let date = GeneralUtility.currentDateDetailType4(emiDate: self.noteResultModalStudent?.createdAt ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy")
+        
+        
+        let timeText = "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " + date;
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
+        UILabel.labelUIHandling(label: lblNotesTime, text: timeText, textColor: ILColor.color(index: 38), isBold: false, fontType: fontHeavy)
+        btnEdit.isUserInteractionEnabled = true
+        btnEdit.isEnabled = true
+        
+        btnEdit.setImage(UIImage.init(named: "noun_edit_648236"), for: .normal)
+        btnDelete.setImage(UIImage.init(named: "noun_Delete_2899273"), for: .normal)
+        
+        btnDelete.isUserInteractionEnabled = true
+        btnDelete.isEnabled = true
+    }
+    
+    
     func coachdateAndButtonLogic(){
         let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
         let componentDay = GeneralUtility.dateComponent(date: self.noteResultModal?.createdAt ?? "", component: .weekday)
@@ -163,7 +175,42 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         btnDelete.isEnabled = true
     }
     
-    
+    func studentSideDescription() -> NSAttributedString{
+        let strHeader = NSMutableAttributedString.init()
+        if  let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE12), let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
+            
+        {
+            let strSharedWith = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Shared with : ", _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:39),NSAttributedString.Key.font : fontMedium]);
+            let nextLine1 = NSAttributedString.init(string: "\n")
+            
+            let strSharedInfo = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "My notes", _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 23),NSAttributedString.Key.font : fontMedium]);
+           
+         
+            
+            let data = Data((self.noteResultModalStudent?.data?.utf8)!)
+            
+            var strDescription : NSAttributedString!
+            if let dataAttrubute = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                strDescription = dataAttrubute
+            }
+            
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            para.lineSpacing = 2
+            strHeader.append(strSharedWith)
+            strHeader.append(nextLine1)
+            strHeader.append(strSharedInfo)
+            strHeader.append(nextLine1)
+
+            strHeader.append(strDescription)
+
+            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+            
+        }
+        return strHeader
+    }
     func coachSideDescription() -> NSAttributedString{
         let strHeader = NSMutableAttributedString.init()
         if  let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE12), let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)

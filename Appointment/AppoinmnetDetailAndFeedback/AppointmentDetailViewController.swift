@@ -148,7 +148,7 @@ extension AppointmentDetailViewController : NotesAppointmentTableViewCellDelegat
        }
     
     
-    func editDeleteFunctionality(objModel : NotesModalNewResult?, isMyNotes: Bool?,isDeleted:Bool) {
+    func editDeleteFunctionality(objModel : NotesModalNewResult?, isDeleted:Bool) {
         if isDeleted{
             let objAppointment = AppoinmentdetailViewModal()
             activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.DeletingNotes)

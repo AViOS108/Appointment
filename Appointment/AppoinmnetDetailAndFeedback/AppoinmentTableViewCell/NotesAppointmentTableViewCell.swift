@@ -13,16 +13,9 @@ protocol NotesAppointmentTableViewCellDelegate {
     func addEditNotes(isEdit:Bool)
 }
 
-enum noteViewType {
-    case studentType
-    case erType
-}
-
-
 class NotesAppointmentTableViewCell: TableviewCellSuperClass,UITextViewDelegate {
     
     var activityIndicator: ActivityIndicatorView?
-    var objNoteViewType : noteViewType!
     @IBOutlet weak var viewMyNotes: UIView!
     var viewController : UIViewController!
     @IBOutlet weak var lblMyNotes: UILabel!
@@ -58,7 +51,14 @@ class NotesAppointmentTableViewCell: TableviewCellSuperClass,UITextViewDelegate 
     
     func myNotesCustomization()  {
         viewCollectionMyNotes.register(UINib.init(nibName: "NoteCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NoteCollectionViewCell")
-        viewCollectionMyNotes.noteModalObj = appoinmentDetailAllModalObj?.noteModalObj;
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true {
+            viewCollectionMyNotes.noteModalObjStudent = appoinmentDetailAllModalObj?.noteModalObjStudent;
+        }
+        else
+        {
+            viewCollectionMyNotes.noteModalObj = appoinmentDetailAllModalObj?.noteModalObj;
+        }
         viewCollectionMyNotes.viewController = viewController
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16)
         let fontHeavyBtn = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
@@ -66,7 +66,6 @@ class NotesAppointmentTableViewCell: TableviewCellSuperClass,UITextViewDelegate 
         UIButton.buttonUIHandling(button: btnMyNotes, text: "Add Notes", backgroundColor: .clear, textColor: ILColor.color(index: 23),fontType: fontHeavyBtn)
         viewMyNotes.backgroundColor = .clear
         UILabel.labelUIHandling(label: lblMyNotes, text: "Notes", textColor: ILColor.color(index: 34), isBold: false,fontType: fontHeavy)
-        viewCollectionMyNotes.objNoteViewType = self.objNoteViewType
         viewCollectionMyNotes.customize()
     }
     

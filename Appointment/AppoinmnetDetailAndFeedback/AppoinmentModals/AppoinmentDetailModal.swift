@@ -240,6 +240,8 @@ struct AppoinmentDetailModalNew: Codable {
 
 // MARK: - Coach Detail
 
+// MARK: - WelcomeElement
+
 struct CoachDetailApi: Codable {
     let id: Int
     let name, email: String
@@ -250,9 +252,9 @@ struct CoachDetailApi: Codable {
     let roles: [Role]
     let assignedBenchmarks: [AssignedBenchmark]
     let coachInfo: CoachInfo
-    let tags, appointmentTags, expertise, industryFocuses: [String]
-    let publications, educations, experiences, clubs: [String]
-    let permissions: [String: Bool]
+  
+//    let publications, educations, experiences, clubs: [String]
+//    let permissions: [String: Bool]
 
     enum CodingKeys: String, CodingKey {
         case id, name, email
@@ -265,11 +267,7 @@ struct CoachDetailApi: Codable {
         case roles
         case assignedBenchmarks = "assigned_benchmarks"
         case coachInfo = "coach_info"
-        case tags
-        case appointmentTags = "appointment_tags"
-        case expertise
-        case industryFocuses = "industry_focuses"
-        case publications, educations, experiences, clubs, permissions
+//        case publications, educations, experiences, clubs, permissions
     }
 }
 
@@ -451,6 +449,8 @@ struct ApooinmentDetailAllNewModal {
     var noteModalObj :   NotesModalNew?
     var coachNoteModalObj :   NotesModalNew?
     var appoinmentDetailModalObj : AppoinmentDetailModalNew?
+    var noteModalObjStudent :  NotesModal?
+
     var status : Int = 0
 }
 

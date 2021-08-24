@@ -389,7 +389,7 @@ class Urls {
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         if isStudent ?? true
         {
-            return "\(typeEvent2)students/appointments/ " + id + "/next-steps"
+            return "\(typeEvent2)students/appointments/" + id + "/next-steps"
         }
         else
         {

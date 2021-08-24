@@ -247,6 +247,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
             btnFeedback.isUserInteractionEnabled = true
             btnFeedback.isEnabled = true
            
+       
             
             if self.appointmentModal.typeERSide == 1{
                 btnFeedback.isHidden = false
@@ -256,7 +257,8 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                 if (appointmentModal.state == "confirmed" && appointmentModal.requests![0].hasAttended == 1)
                 {
                     if let feedback = appointmentModal.requests![0].feedback{
-                        
+                        btnFeedback.isHidden = true
+                        btnCancelAppoHeightConstraints.constant = 0
                     }
                     else{
                         btnFeedback.isHidden = false

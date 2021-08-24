@@ -126,9 +126,20 @@ class AppoinmentdetailViewModal{
         Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id: selectedAppointmentModal?.identifier ?? ""), methodType: .get, params: params as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
             do {
                 
-                self.noteModalObj = try
-                    JSONDecoder().decode(NotesModal.self, from: jsonData)
-            } catch  {
+                
+                let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+                if isStudent ?? true {
+                    
+                
+                }
+                else
+                {
+                    self.noteModalObj = try
+                        JSONDecoder().decode(NotesModal.self, from: jsonData)
+     
+                }
+                
+           } catch  {
                 print(error)
             }
             self.dispatchGroup.leave()

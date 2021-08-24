@@ -23,6 +23,7 @@ class ERSideAppoinmentDetailModal{
     
     var nextModalObj : [NextStepModalNew]?
     var noteModalObj :   NotesModalNew?
+    var noteModalObjStudent :  NotesModal?
     var coachNoteModalObj :   NotesModalNew?
     var appoinmentDetailModalObj : AppoinmentDetailModalNew?
     
@@ -251,8 +252,15 @@ class ERSideAppoinmentDetailModal{
         }
         Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id:String(describing: idSelected)), methodType: .get, params: ["":"" as AnyObject] as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
             do {
-                self.noteModalObj = try
-                    JSONDecoder().decode(NotesModalNew.self, from: jsonData)
+                if isStudent ?? true{
+                    self.noteModalObjStudent = try
+                        JSONDecoder().decode(NotesModal.self, from: jsonData)
+                }
+                else{
+                    self.noteModalObj = try
+                        JSONDecoder().decode(NotesModalNew.self, from: jsonData)
+                }
+
             } catch  {
                 print(error)
             }
@@ -303,24 +311,35 @@ class ERSideAppoinmentDetailModal{
     
     func outputResult(){
         
-          var objApooinmentDetailAllModal = ApooinmentDetailAllNewModal();
+        var objApooinmentDetailAllModal = ApooinmentDetailAllNewModal();
         //            self.appoinmentDetailModalObj?.coach = selectedAppointmentModal?.coach
         //            self.appoinmentDetailModalObj?.parent = selectedAppointmentModal?.parent;
         //
-                    objApooinmentDetailAllModal.nextModalObj = self.nextModalObj
-                    objApooinmentDetailAllModal.noteModalObj = self.noteModalObj
-                    objApooinmentDetailAllModal.coachNoteModalObj = self.coachNoteModalObj
-                    objApooinmentDetailAllModal.appoinmentDetailModalObj = self.appoinmentDetailModalObj
-                    delegate.sendAppoinmentData(appoinmentDetailModalObj: objApooinmentDetailAllModal, isSucess: true)
+        objApooinmentDetailAllModal.nextModalObj = self.nextModalObj
+        objApooinmentDetailAllModal.coachNoteModalObj = self.coachNoteModalObj
+        objApooinmentDetailAllModal.appoinmentDetailModalObj = self.appoinmentDetailModalObj
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+
+        if isStudent ?? true
+        {
+            objApooinmentDetailAllModal.noteModalObjStudent = self.noteModalObjStudent
+        }
+        else{
+            objApooinmentDetailAllModal.noteModalObj = self.noteModalObj
             
+        }
+        
+        
+        delegate.sendAppoinmentData(appoinmentDetailModalObj: objApooinmentDetailAllModal, isSucess: true)
+        
         return
         
         
         if let _ = self.nextModalObj , let _ = self.noteModalObj , let _ = self.coachNoteModalObj , let _ = self.appoinmentDetailModalObj{
             var objApooinmentDetailAllModal = ApooinmentDetailAllNewModal();
-//            self.appoinmentDetailModalObj?.coach = selectedAppointmentModal?.coach
-//            self.appoinmentDetailModalObj?.parent = selectedAppointmentModal?.parent;
-//
+            //            self.appoinmentDetailModalObj?.coach = selectedAppointmentModal?.coach
+            //            self.appoinmentDetailModalObj?.parent = selectedAppointmentModal?.parent;
+            //
             objApooinmentDetailAllModal.nextModalObj = self.nextModalObj
             objApooinmentDetailAllModal.noteModalObj = self.noteModalObj
             objApooinmentDetailAllModal.coachNoteModalObj = self.coachNoteModalObj

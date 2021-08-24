@@ -15,9 +15,7 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
 
     var viewController : UIViewController!
     var noteModalObj :   NotesModalNew?
-    var objNoteViewType : noteViewType!
-
-    var mynotes : Bool?
+    var noteModalObjStudent :  NotesModal?
     
     var isNotes = false
     
@@ -40,12 +38,27 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
         self.collectionViewLayout = NotesCollectionViewlayout()
         self.dataSource = self
         self.delegate = self
-        if noteModalObj?.results?.count == 0{
-            isNotes = true
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true {
+            if noteModalObjStudent?.results?.count == 0{
+                isNotes = true
+            }
+            else{
+                isNotes = false
+            }
         }
         else{
-            isNotes = false
+            if noteModalObj?.results?.count == 0{
+                isNotes = true
+            }
+            else{
+                isNotes = false
+            }
+
         }
+        
+        
+       
         if let layout = self.collectionViewLayout as? NotesCollectionViewlayout {
             layout.cache = []
             layout.contentHeight = 0
@@ -61,7 +74,16 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
             return 1
         }
         else{
-            return noteModalObj?.results?.count ?? 0
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+            if isStudent ?? true {
+                return noteModalObjStudent?.results?.count ?? 0
+            }
+            else{
+                return noteModalObj?.results?.count ?? 0
+
+            }
+            
+           
         }
 }
      
@@ -71,14 +93,19 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NoteCollectionViewCell", for: indexPath as IndexPath) as! NoteCollectionViewCell
         
         cell.delegate = viewController as! NoteCollectionViewCellDelegate
-        cell.objNoteViewType = self.objNoteViewType
-        cell.mynotes = self.mynotes;
+
         if isNotes{
              cell.customization(noNotes: isNotes)
         }
         else{
-            cell.noteResultModal = self.noteModalObj?.results?[indexPath.row];
-                  cell.customization(noNotes: isNotes)
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+            if isStudent ?? true {
+                cell.noteResultModalStudent = self.noteModalObjStudent?.results?[indexPath.row];
+            }
+            else{
+                cell.noteResultModal = self.noteModalObj?.results?[indexPath.row];
+            }
+                cell.customization(noNotes: isNotes)
         }
       
        return cell
@@ -107,20 +134,38 @@ extension NoteCollectionView: NotesCollectionViewlayoutDelegate {
     let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
     label.font = fontBook
     let cell : NoteCollectionViewCell = NoteCollectionViewCell()
-    cell.objNoteViewType = self.objNoteViewType
     if isNotes{
         label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
-
     }
     else{
-        cell.noteResultModal = self.noteModalObj?.results?[indexPath.row];
-        if self.noteModalObj?.results?.count ?? 0 > 0{
-            label.attributedText = cell.coachSideDescription();
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? true {
+            cell.noteResultModalStudent = self.noteModalObjStudent?.results?[indexPath.row];
+            if self.noteModalObjStudent?.results?.count ?? 0 > 0{
+                label.attributedText = cell.studentSideDescription();
+            }
+            else
+            {
+                label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
+            }
+            
         }
-        else
-        {
-            label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
+        else{
+            cell.noteResultModal = self.noteModalObj?.results?[indexPath.row];
+            
+            
+            if self.noteModalObj?.results?.count ?? 0 > 0{
+                label.attributedText = cell.coachSideDescription();
+            }
+            else
+            {
+                label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
+            }
+
         }
+        
+       
     }
     //    label.attributedText = attributedText
     label.sizeToFit()

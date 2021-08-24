@@ -118,7 +118,6 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                 // upcoming
                 let cell = tableView.dequeueReusableCell(withIdentifier: "NotesAppointmentTableViewCell", for: indexPath) as! NotesAppointmentTableViewCell
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
-                cell.objNoteViewType = .erType
                 cell.appoinmentDetailAllModalObj = self.appoinmentDetailAllModalObj
                 cell.viewController = self
                 cell.delegate = self
@@ -131,7 +130,6 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                 // pending
                 let cell = tableView.dequeueReusableCell(withIdentifier: "NotesAppointmentTableViewCell", for: indexPath) as! NotesAppointmentTableViewCell
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
-                cell.objNoteViewType = .erType
                 cell.appoinmentDetailAllModalObj = self.appoinmentDetailAllModalObj
                 cell.viewController = self
                 cell.delegate = self
@@ -183,7 +181,6 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                 // past
                 let cell = tableView.dequeueReusableCell(withIdentifier: "NotesAppointmentTableViewCell", for: indexPath) as! NotesAppointmentTableViewCell
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
-                cell.objNoteViewType = .erType
                 cell.appoinmentDetailAllModalObj = self.appoinmentDetailAllModalObj
                 cell.viewController = self
                 cell.delegate = self
@@ -253,6 +250,8 @@ extension ERAppointmentDetailViewController : ERSideAppoinmentDetailModalDeletga
 import MessageUI
 
 extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDelegate,NoteCollectionViewCellDelegate,EditNotesViewControllerDelegate,ERAddNotesViewControllerDelegate,NextStepAppointmentTableViewCelldelegate,ERUpdateStatusAddNextStepViewControllerDelegate,ERSideFIrstTypeCollectionViewDelegate,ERCancelViewControllerDelegate,MFMailComposeViewControllerDelegate{
+   
+    
     func sendEmail() {
         if MFMailComposeViewController.canSendMail() {
                let mail = MFMailComposeViewController()
@@ -422,7 +421,7 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
     
     
     
-    func editDeleteFunctionality(objModel : NotesModalNewResult?, isMyNotes: Bool?,isDeleted:Bool) {
+    func editDeleteFunctionality(objModel : NotesModalNewResult?, isDeleted:Bool) {
         if isDeleted{
             deleteNotesLOgic(objModel: objModel)
         }
