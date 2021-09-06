@@ -15,6 +15,8 @@ import Foundation
 protocol ERSideAppoinmentDetailModalDeletgate {
 
     func sendAppoinmentData(appoinmentDetailModalObj:ApooinmentDetailAllNewModal?, isSucess: Bool )
+    func sendFinaliszeStatus(isSucess: Bool )
+
     
 }
 
@@ -24,7 +26,7 @@ class ERSideAppoinmentDetailModal{
     var nextModalObj : [NextStepModalNew]?
     var noteModalObj :   NotesModalNew?
     var noteModalObjStudent :  NotesModal?
-    var coachNoteModalObj :   NotesModalNew?
+    var coachNoteModalObj :   NotesModal?
     var appoinmentDetailModalObj : AppoinmentDetailModalNew?
     
     var callbackVC: ((_ suceess: Bool) -> Void)?
@@ -44,10 +46,15 @@ class ERSideAppoinmentDetailModal{
         self.nextStepDetail()
         dispatchGroup.enter()
         self.mynotesDetail()
-    
-//        dispatchGroup.enter()
-//        self.coachNotesDetail()
-//
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false{
+            dispatchGroup.enter()
+            self.coachNotesDetail()
+        }
+        else
+        {
+            
+        }
         
         dispatchGroup.notify(queue: .main) {
             self.outputResult()
@@ -69,7 +76,7 @@ class ERSideAppoinmentDetailModal{
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         var idSelected = 0;
-        if isStudent ?? true{
+        if isStudent ?? false{
             var localTimeZoneIndemtifier: String { return TimeZone.current.identifier}
             idSelected = selectedResult.id ?? 0
             param = [ ParamName.PARAMINTIMEZONEEL :localTimeZoneIndemtifier
@@ -211,7 +218,7 @@ class ERSideAppoinmentDetailModal{
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
 
         var idSelected = 0;
-        if isStudent ?? true{
+        if isStudent ?? false{
             idSelected = selectedResult.id ?? 0
         }
         else{
@@ -239,18 +246,32 @@ class ERSideAppoinmentDetailModal{
     func mynotesDetail(){
        
         
+        var arrCreatedBy = Array<Dictionary<String,AnyObject>>()
+        let dictionary = [
+            "entity_type":"appointment",
+            "entity_id": String(describing: selectedResult.id ?? 0)
+            
+            ] as [String : AnyObject]
+        arrCreatedBy.append(dictionary)
+        
+        let params = [
+            
+            ParamName.PARAMFILTERSEL :["attachable_entities[0]" :arrCreatedBy,
+                                       "is_shared" : 0
+            ]
+        ]
         
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)","Content-Type" : "application/json"]
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
 
         var idSelected = 0;
-        if isStudent ?? true{
+        if isStudent ?? false{
             idSelected = selectedResult.id ?? 0
         }
         else{
             idSelected = selectedResult.id ?? 0
         }
-        Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id:String(describing: idSelected)), methodType: .get, params: ["":"" as AnyObject] as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
+        Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id:String(describing: idSelected), isShared: "0"), methodType: .get, params: ["":""] as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
             do {
                 if isStudent ?? true{
                     self.noteModalObjStudent = try
@@ -276,7 +297,7 @@ class ERSideAppoinmentDetailModal{
     func coachNotesDetail()  {
         var arrCreatedBy = Array<Dictionary<String,AnyObject>>()
         let dictionary = [
-            "entity_type":"event",
+            "entity_type":"appointment",
             "entity_id": String(describing: selectedResult.id ?? 0)
             
             ] as [String : AnyObject]
@@ -289,11 +310,11 @@ class ERSideAppoinmentDetailModal{
             ]
         ]
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
-        Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id: String(describing: selectedResult.id ?? 0)), methodType: .get, params: params as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
+        Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id: String(describing: selectedResult.id ?? 0), isShared: "1"), methodType: .get, params: ["" :""] as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
             do {
                 
                 self.coachNoteModalObj = try
-                    JSONDecoder().decode(NotesModalNew.self, from: jsonData)
+                    JSONDecoder().decode(NotesModal.self, from: jsonData)
             } catch  {
                 print(error)
             }
@@ -316,41 +337,48 @@ class ERSideAppoinmentDetailModal{
         //            self.appoinmentDetailModalObj?.parent = selectedAppointmentModal?.parent;
         //
         objApooinmentDetailAllModal.nextModalObj = self.nextModalObj
-        objApooinmentDetailAllModal.coachNoteModalObj = self.coachNoteModalObj
+//        objApooinmentDetailAllModal.coachNoteModalObj = self.coachNoteModalObj
         objApooinmentDetailAllModal.appoinmentDetailModalObj = self.appoinmentDetailModalObj
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
 
-        if isStudent ?? true
+        if isStudent ?? false
         {
-            objApooinmentDetailAllModal.noteModalObjStudent = self.noteModalObjStudent
+            var allNoteModalStudent = NotesModal()
+            if self.noteModalObjStudent != nil && self.noteModalObjStudent?.results?.count ?? 0 > 0{
+                var objNotesResult = [NotesResult]()
+                for result in self.noteModalObjStudent!.results! {
+                    var resultNote = result
+                    resultNote.isShared = 0
+                    objNotesResult.append(resultNote);
+                }
+                allNoteModalStudent.results = objNotesResult
+            }
+            if self.coachNoteModalObj != nil && self.coachNoteModalObj?.results?.count ?? 0 > 0{
+                var objNotesResult = [NotesResult]()
+
+                for result in self.coachNoteModalObj!.results! {
+                    var resultNote = result
+                    resultNote.isShared = 1
+                    objNotesResult.append(resultNote);
+                }
+                
+                if allNoteModalStudent.results != nil{
+                    allNoteModalStudent.results?.append(contentsOf: objNotesResult)
+                }
+                else{
+                    allNoteModalStudent.results = objNotesResult
+                }
+            }
+            
+            
+            objApooinmentDetailAllModal.noteModalObjStudent = allNoteModalStudent
         }
         else{
             objApooinmentDetailAllModal.noteModalObj = self.noteModalObj
             
         }
-        
-        
         delegate.sendAppoinmentData(appoinmentDetailModalObj: objApooinmentDetailAllModal, isSucess: true)
         
-        return
-        
-        
-        if let _ = self.nextModalObj , let _ = self.noteModalObj , let _ = self.coachNoteModalObj , let _ = self.appoinmentDetailModalObj{
-            var objApooinmentDetailAllModal = ApooinmentDetailAllNewModal();
-            //            self.appoinmentDetailModalObj?.coach = selectedAppointmentModal?.coach
-            //            self.appoinmentDetailModalObj?.parent = selectedAppointmentModal?.parent;
-            //
-            objApooinmentDetailAllModal.nextModalObj = self.nextModalObj
-            objApooinmentDetailAllModal.noteModalObj = self.noteModalObj
-            objApooinmentDetailAllModal.coachNoteModalObj = self.coachNoteModalObj
-            objApooinmentDetailAllModal.appoinmentDetailModalObj = self.appoinmentDetailModalObj
-            delegate.sendAppoinmentData(appoinmentDetailModalObj: objApooinmentDetailAllModal, isSucess: true)
-            
-        }
-        else{
-            delegate.sendAppoinmentData(appoinmentDetailModalObj: nil, isSucess: false)
-            
-        }
         
     }
     
@@ -434,9 +462,8 @@ class ERSideAppoinmentDetailModal{
           
         Network().makeApiEventRequest(true, url: Urls().feedBack(id: selectedAppointmentModal?.identifier ?? ""), methodType: .post, params: params, header: headers, completion: { (data) in
             do {
-                _ = try
-                    JSONDecoder().decode(FeedBackModal.self, from: data)
-                self.callbackVC!(true)
+              
+                
                 
             } catch  {
                 CommonFunctions().showError(title: "", message: ErrorMessages.SomethingWentWrong.rawValue)
@@ -449,4 +476,35 @@ class ERSideAppoinmentDetailModal{
           }
           
       }
+    
+    
+    func finaliseApi(selectedAppointmentid : Int)   {
+          
+          let params = [
+            "_method": "post",
+            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as? String
+              ] as [String : AnyObject]
+        
+        
+          let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+          
+        Network().makeApiEventRequest(true, url: Urls().finalize(id: "\(selectedAppointmentid)"), methodType: .post, params: params, header: headers, completion: { (data) in
+            do {
+                self.delegate.sendFinaliszeStatus(isSucess: true)
+                
+            } catch  {
+                CommonFunctions().showError(title: "", message: ErrorMessages.SomethingWentWrong.rawValue)
+                self.delegate.sendFinaliszeStatus(isSucess: false)
+            }
+            
+        }) { (error, errorCode) in
+            
+              CommonFunctions().showError(title: "", message: error)
+            self.delegate.sendFinaliszeStatus(isSucess: false)
+          }
+          
+      }
+    
+    
+    
 }

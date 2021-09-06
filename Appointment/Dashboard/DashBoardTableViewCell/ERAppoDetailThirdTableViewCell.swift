@@ -15,9 +15,22 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
     @IBOutlet weak var nslayoutViewRatingHeight: NSLayoutConstraint!
     var viewController : UIViewController!
     var appoinmentDetailModalObj : AppoinmentDetailModalNew?
-    
+    var selectedAppointmentModal : ERSideAppointmentModalNewResult!
+
     @IBOutlet weak var viewRating: UIView!
     @IBOutlet var btnCoachPreciseGrp: [UIButton]!
+    
+    @IBOutlet weak var btnViewFeedback: UIButton!
+    @IBAction func btnViewFeedbackTapped(_ sender: Any) {
+        
+        let objFeedbackViewController = FeedbackViewController.init(nibName: "FeedbackViewController", bundle: nil)
+        objFeedbackViewController.delegate = viewController as? feedbackViewControllerDelegate
+        objFeedbackViewController.selectedAppointmentModal = self.selectedAppointmentModal;
+        objFeedbackViewController.appoinmentDetailModalObj = self.appoinmentDetailModalObj
+        objFeedbackViewController.modalPresentationStyle = .overFullScreen
+        viewController.navigationController?.pushViewController(objFeedbackViewController, animated: false)
+    }
+    
     @IBAction func btnCoachPreTapped(_ sender: UIButton) {
         //        coach_expertise = sender.tag
 //        self.btnCoachPreciseGrp.forEach { (btn) in
@@ -51,8 +64,32 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
         viewContainer.backgroundColor = .white
     }
     func customization(){
+        
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        
+        var feedbackText = ""
+        
+        if isStudent ?? false {
+            
+            
+            btnViewFeedback.isHidden = false
+            let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
+
+            UIButton.buttonUIHandling(button: btnViewFeedback, text: "View Feedback", backgroundColor: .clear, textColor: ILColor.color(index: 23), fontType: fontHeavy)
+            
+            feedbackText = "Feedback"
+        }
+        else
+        {
+            feedbackText = "Candidate’s Feedback"
+            btnViewFeedback.isHidden = true
+        }
+        
+        
+        
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
-        UILabel.labelUIHandling(label: lblCandidateText, text: "Candidate’s Feedback", textColor: ILColor.color(index: 34), isBold: false, fontType: fontHeavy)
+        UILabel.labelUIHandling(label: lblCandidateText, text: feedbackText, textColor: ILColor.color(index: 34), isBold: false, fontType: fontHeavy)
         self.viewRating.backgroundColor = .white
         if self.appoinmentDetailModalObj?.requests?.count ?? 0 > 0{
             if self.appoinmentDetailModalObj?.requests?[0].feedback != nil{

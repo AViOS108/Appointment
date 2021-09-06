@@ -224,7 +224,7 @@ class Urls {
     func uploadProfilePicture() -> String{
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true
+        if isStudent ?? false
         {
             return "\(type1)profile/photo"
         }
@@ -237,7 +237,7 @@ class Urls {
     func updateProfileNew() -> String{
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true
+        if isStudent ?? false
         {
             return "\(type1)users/me"
         }
@@ -306,7 +306,7 @@ class Urls {
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
         
         
-        if isStudent ?? true
+        if isStudent ?? false
         {
             return "\(type2)feedback/resume/networks"
             
@@ -323,7 +323,7 @@ class Urls {
     func timezoneList() -> String {
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true
+        if isStudent ?? false
         {
             return "\(typeEvent1)students/events/timezones"
         }
@@ -342,6 +342,11 @@ class Urls {
         
     }
     
+    func openHourCCList2() -> String {
+        return "\(typeEvent2)students/open-hour/list"
+        
+    }
+    
     func openHourECList() -> String {
         return "\(typeEvent1)students/external-appointment-slots"
         
@@ -351,7 +356,7 @@ class Urls {
         
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true
+        if isStudent ?? false
         {
             
             return "\(typeEvent2)students/appointments/" + id
@@ -370,7 +375,7 @@ class Urls {
         
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true
+        if isStudent ?? false
         {
             
             return "\(type9)student/career_services/coach-details/" + id
@@ -387,7 +392,7 @@ class Urls {
     func nextStepAppointment(id:String) -> String {
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true
+        if isStudent ?? false
         {
             return "\(typeEvent2)students/appointments/" + id + "/next-steps"
         }
@@ -398,17 +403,16 @@ class Urls {
         }
     }
     
-    func notesAppointment(id:String) -> String {
+    func notesAppointment(id:String,isShared:String) -> String {
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true
+        if isStudent ?? false
         {
-            return "\(Urls.runningEnvNotes)api/v1/student/notes/list?filters[attachable_entities][0][entity_id]=\(id)&filters[attachable_entities][0][entity_type]=appointment"
-            
+            return "\(Urls.runningEnvNotes)api/v1/student/notes/list?filters[attachable_entities][0][entity_id]=\(id)&filters[attachable_entities][0][entity_type]=appointment&filters[is_shared]=\(isShared)"
         }
         else
         {
-            return "\(Urls.runningEnvNotes)api/v1/community/notes/list?filters[attachable_entities][0][entity_id]=\(id)&filters[attachable_entities][0][entity_type]=appointment"
+            return "\(Urls.runningEnvNotes)api/v1/community/notes/list?filters[attachable_entities][0][entity_id]=\(id)&filters[attachable_entities][0][entity_type]=appointment&filters[is_shared]=\(isShared)"
         }
         
     }
@@ -448,7 +452,7 @@ class Urls {
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         
         
-        if isStudent ?? true
+        if isStudent ?? false
         {
             return "\(typeEvent1)students/events/\(id)/check-in/token"
             
@@ -463,7 +467,7 @@ class Urls {
     
     func checkInTokenERSide() -> String {
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true
+        if isStudent ?? false
         {
             return ""
             
@@ -491,7 +495,7 @@ class Urls {
     func saveNotes()-> String{
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-              if isStudent ?? true
+              if isStudent ?? false
               {
                   return "\(Urls.runningEnvNotes)api/v1/student/notes"
               }
@@ -502,11 +506,17 @@ class Urls {
               }
     }
     
+    func studentEditNotes(id:String)-> String{
+        return "\(Urls.runningEnvNotes)api/v1/student/notes/" + "\(id)"
+            
+    }
+    
+    
     func deletesNotes(id: String)-> String{
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
 
-        if isStudent ?? true
+        if isStudent ?? false
         {
             return "\(Urls.runningEnvNotes)api/v1/student/notes/" + id
 
@@ -532,7 +542,7 @@ class Urls {
     func feedBack(id: String)-> String{
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true
+        if isStudent ?? false
         {
             return "\(typeEvent2)students/appointments/\(id)/feedback"
         }
@@ -543,6 +553,13 @@ class Urls {
         
     }
     
+    
+    func finalize(id: String)-> String{
+        
+      
+            return "\(typeEvent2)community/appointments/\(id)/finalize"
+        
+    }
     
     
     func erSideAppointment() -> String{
@@ -568,7 +585,7 @@ class Urls {
         if idIndex == 1{
             
             let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-            if isStudent ?? true
+            if isStudent ?? false
             {
                 return "\(typeEvent2)students/appointments/" + "\(id)" + "/cancel"
             }

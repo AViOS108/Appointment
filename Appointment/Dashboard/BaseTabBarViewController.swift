@@ -68,7 +68,7 @@ UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregro
         
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true {
+        if isStudent ?? false {
             let icon1 = UITabBarItem(title: "Schedule", image: UIImage(named: "Scheedule_light"), selectedImage: UIImage(named: "Schedule"))
             let icon2 = UITabBarItem(title: "My Appointments", image: UIImage(named: "My_Appointment"), selectedImage: UIImage(named: "My_Appoinntment_2"))
             

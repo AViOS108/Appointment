@@ -20,6 +20,18 @@ class CoachSelectionService {
                failure(error,errorCode)
            }
        }
+    
+    
+    func openHourCarrerCoachListApi2(params: Dictionary<String, AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+           
+           let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+           Network().makeApiEventRequest(true, url: Urls().openHourCCList2(), methodType: .post, params: params, header: headers, completion: { (data) in
+               success(data)
+           }) { (error, errorCode) in
+               failure(error,errorCode)
+           }
+       }
+    
        
     func openHourExternalListApi(params: Dictionary<String, AnyObject>,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
         

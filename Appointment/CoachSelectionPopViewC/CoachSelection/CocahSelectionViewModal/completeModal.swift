@@ -56,7 +56,8 @@ class CoachSelectionViewModal {
         let param = [
             ParamName.PARAMFILTERSEL : [
                 "states" : ["confirmed"],
-                "from"  : previousDate(strDate: dateStirng) + " 23:59:00",
+                "from"  :
+                    previousDate(strDate: dateStirng) + " 23:59:00",
                 "to" : dateStirng + " 23:59:00",
                 "coach_ids":arrCreatedBy,
                 "timezone":"utc",
@@ -81,7 +82,7 @@ class CoachSelectionViewModal {
     
     func openHourCarrerCoach(params: Dictionary<String,AnyObject>)
     {
-        CoachSelectionService().openHourCarrerCoachListApi(params: params, { (jsonData) in
+        CoachSelectionService().openHourCarrerCoachListApi2(params: params, { (jsonData) in
             do {
                 let carrerCoachLocal = try
                     JSONDecoder().decode(OpenHourCoachModal.self, from: jsonData)

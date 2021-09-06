@@ -35,7 +35,8 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     @IBOutlet weak var lblCoachName: UILabel!
     @IBOutlet weak var lblOverallExp: UILabel!
     @IBOutlet var btnOverallExpGrp: [UIButton]!
-    
+    var appoinmentDetailModalObj : AppoinmentDetailModalNew?
+
     var coach_helpfulness: Int = -1
     var coach_expertise: Int = -1
     var overall_experience: Int = -1
@@ -125,7 +126,7 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
              objFeedBackMOdal.comments = txtView.text
         }
         
-        let objAppointment = AppoinmentdetailViewModal()
+        let objAppointment = AppoinmentUtilityVM()
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FeedbackNotes)
         objAppointment.callbackVC = {
             (success:Bool) in
@@ -167,6 +168,49 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 2.0)
         self.customization()
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Leave a Feedback for this session")
+        
+        
+        if self.appoinmentDetailModalObj != nil{
+            
+            var coachExpertise = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.coachExpertise ?? "0")
+            var overallExperience = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.overallExperience ?? "0")
+            var coachHelpfulness = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.coachHelpfulness ?? "0")
+
+            self.btnSubmit.isHidden = true
+            
+            self.btnCoachPreciseGrp.forEach { (btn) in
+                btn.isUserInteractionEnabled = false
+                if btn.tag <= coachExpertise!{
+                    btn.setImage(UIImage.init(named: "noun_Star_select"), for: .normal)
+                }
+                else{
+                    btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+                }
+                
+            }
+            self.btnHelpFulnessGrp.forEach { (btn) in
+                btn.isUserInteractionEnabled = false
+                if btn.tag <= coachHelpfulness!{
+                    btn.setImage(UIImage.init(named: "noun_Star_select"), for: .normal)
+                }
+                else{
+                    btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+                }
+            }
+            self.btnOverallExpGrp.forEach { (btn) in
+                btn.isUserInteractionEnabled = false
+                if btn.tag <= overallExperience!{
+                    btn.setImage(UIImage.init(named: "noun_Star_select"), for: .normal)
+                }
+                else{
+                    btn.setImage(UIImage.init(named: "noun_Star_nonselect"), for: .normal)
+                }
+            }
+            txtView.text = self.appoinmentDetailModalObj?.requests?[0].feedback?.comments
+            txtView.isUserInteractionEnabled = false
+            
+        }
+        
         
     }
     

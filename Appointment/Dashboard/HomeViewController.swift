@@ -134,10 +134,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
             break;
         }
         
-        
         self.view.backgroundColor = ILColor.color(index: 41)
-        
-       
         // Do any additional setup after loading the view.
     }
     
@@ -593,7 +590,7 @@ extension HomeViewController: ERCancelViewControllerDelegate {
 
 // ALL STUDENT APPOINMENT LOGIC
 
-extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppointmentTableViewCellDelegate,EditNotesViewControllerDelegate{
+extension HomeViewController:DashBoardStudentAppointmentVMDelegate,DashBoardAppointmentTableViewCellDelegate{
     func redirectAppoinment(openMOdal: ERSideAppointmentModalNewResult, isFeedback: Int) {
         selectedAppointmentModal = openMOdal;
         if isFeedback == 1{

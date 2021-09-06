@@ -52,9 +52,15 @@ class ERNotesTextViewTableViewCell: TableviewCellSuperClass, UITextViewDelegate 
         txtView.delegate = self
         txtView.layer.borderWidth = 1;
         txtView.layer.borderColor = ILColor.color(index: 22).cgColor
-        
-        UILabel.labelUIHandling(label: lblText, text: "Share this note with", textColor: ILColor.color(index: 23), isBold: false, fontType: fontMedium)
-        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            lblText.isHidden = true
+        }
+        else
+        {
+            lblText.isHidden = false
+            UILabel.labelUIHandling(label: lblText, text: "Share this note with", textColor: ILColor.color(index: 23), isBold: false, fontType: fontMedium)
+        }
     }
     
     

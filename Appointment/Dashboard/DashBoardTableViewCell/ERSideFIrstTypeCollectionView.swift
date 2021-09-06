@@ -88,7 +88,16 @@ extension ERSideFIrstTypeCollectionView :ERAppoDetailFirstCollectionViewLayoutDe
         label.attributedText = cell.descriptionLogic()
         //    label.attributedText = attributedText
         label.sizeToFit()
-        return 285.0
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            return 245.0
+        }
+        else
+        {
+            return 285.0
+        }
+        
       
     }
     

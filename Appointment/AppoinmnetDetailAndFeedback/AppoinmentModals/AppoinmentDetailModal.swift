@@ -153,7 +153,7 @@ struct NotesModal: Codable {
 struct NotesResult: Codable {
     let id: Int?
     var data, createdAt, updatedAt: String?
-
+    var isShared = 0
     enum CodingKeys: String, CodingKey {
         case id, data
         case createdAt = "created_at"

@@ -87,17 +87,27 @@ class NextStepCollectionViewCell: UICollectionViewCell {
         UILabel.labelUIHandling(label: lblDate, text: dueDateComp, textColor: ILColor.color(index: 38), isBold: false, fontType: fontMedium)
           let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
         
-        if self.nextModalObj?.isCompleted == 1{
-            UIButton.buttonUIHandling(button: btnCompletionStatus, text: " Completed", backgroundColor: .clear, textColor: ILColor.color(index: 58),  buttonImage: UIImage.init(named: "completedNextStep"), fontType: fontHeavy)
-            btnCompletionStatus.isUserInteractionEnabled = false
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+       
+        if isStudent ?? false {
+
+            btnCompletionStatus.isHidden = true
         }
-        else{
-            btnCompletionStatus.isUserInteractionEnabled = true
-            UIButton.buttonUIHandling(button: btnCompletionStatus, text: " Mark as complete", backgroundColor: .clear, textColor: ILColor.color(index: 23),  buttonImage: UIImage.init(named: "tick-marknextstep"), fontType: fontHeavy)
+        else
+        {
+            btnCompletionStatus.isHidden = false
+            if self.nextModalObj?.isCompleted == 1{
+                UIButton.buttonUIHandling(button: btnCompletionStatus, text: " Completed", backgroundColor: .clear, textColor: ILColor.color(index: 58),  buttonImage: UIImage.init(named: "completedNextStep"), fontType: fontHeavy)
+                btnCompletionStatus.isUserInteractionEnabled = false
+            }
+            else{
+                btnCompletionStatus.isUserInteractionEnabled = true
+                UIButton.buttonUIHandling(button: btnCompletionStatus, text: " Mark as complete", backgroundColor: .clear, textColor: ILColor.color(index: 23),  buttonImage: UIImage.init(named: "tick-marknextstep"), fontType: fontHeavy)
+
+            }
 
         }
         
-      
         
     }
     

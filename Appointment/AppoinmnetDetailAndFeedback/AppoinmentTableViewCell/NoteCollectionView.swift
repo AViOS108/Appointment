@@ -39,7 +39,7 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
         self.dataSource = self
         self.delegate = self
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true {
+        if isStudent ?? false {
             if noteModalObjStudent?.results?.count == 0{
                 isNotes = true
             }
@@ -75,7 +75,7 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
         }
         else{
             let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-            if isStudent ?? true {
+            if isStudent ?? false {
                 return noteModalObjStudent?.results?.count ?? 0
             }
             else{
@@ -99,7 +99,7 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
         }
         else{
             let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-            if isStudent ?? true {
+            if isStudent ?? false {
                 cell.noteResultModalStudent = self.noteModalObjStudent?.results?[indexPath.row];
             }
             else{
@@ -140,7 +140,7 @@ extension NoteCollectionView: NotesCollectionViewlayoutDelegate {
     else{
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true {
+        if isStudent ?? false {
             cell.noteResultModalStudent = self.noteModalObjStudent?.results?[indexPath.row];
             if self.noteModalObjStudent?.results?.count ?? 0 > 0{
                 label.attributedText = cell.studentSideDescription();

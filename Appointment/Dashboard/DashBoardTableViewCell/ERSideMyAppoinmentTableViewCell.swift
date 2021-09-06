@@ -205,9 +205,6 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
             viewUpdateStatus.isHidden = true
             nslayoutAcceptDeclineViewHeight.constant = 46
             viewAcceptDecline.isHidden = false
-            btnAccept.isHidden = false
-            btnDecline.isHidden = false
-            btnViewResume.isHidden = false
             UIButton.buttonUIHandling(button: btnViewResume, text: " View Resume", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "resumeView"),fontType:fontMedium)
             btnViewResume.isUserInteractionEnabled = true
 
@@ -215,67 +212,128 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
                 if GeneralUtility.isPastDate(date: self.results.endDatetime!){
                     UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:.white , textColor: ILColor.color(index: 34),buttonImage:UIImage.init(named: ""),fontType:fontMedium)
                     btnAccept.setImage(nil, for: .normal)
+                    btnAccept.setImage(UIImage.init(named: "cancel"), for: .normal)
+
                     btnAccept.isUserInteractionEnabled = false
                 }
                 else{
                     let arrRequest = results.requests
                     if arrRequest?.count ?? 0 > 1 {
-                        UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "move-arrows"),fontType:fontMedium)
+                        UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontMedium)
+                        btnAccept.setImage(UIImage.init(named: "move-arrows"), for: .normal)
+
                         btnAccept.isUserInteractionEnabled = true
 
                     }
                     else{
                         if arrRequest?[0].state == "pending"{
                             UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:.white ,textColor: ILColor.color(index: 34),fontType:fontMedium)
-                            btnAccept.setImage(nil, for: .normal)
+//                            btnAccept.setImage(nil, for: .normal)
+                            btnAccept.setImage(UIImage.init(named: "cancel"), for: .normal)
                             btnAccept.isUserInteractionEnabled = false
 
                         }
                         else if arrRequest?[0].state == "accepted" || arrRequest?[0].state == "auto_accepted"{
-                            UIButton.buttonUIHandling(button: btnAccept, text: "Accepted", backgroundColor:.white ,textColor: ILColor.color(index: 58),fontType:fontMedium)
-                            btnAccept.setImage(nil, for: .normal)
-                            btnAccept.isUserInteractionEnabled = false
+                            
+                            if Int (results.appointmentConfig?.groupSizeLimit ?? "0")! > 1 {
+                                
+                                UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontMedium)
+                                btnAccept.setImage(UIImage.init(named: "move-arrows"), for: .normal)
+
+                                btnAccept.isUserInteractionEnabled = true
+                                
+                            }
+                            else{
+                                UIButton.buttonUIHandling(button: btnAccept, text: "Accepted", backgroundColor:.white ,textColor: ILColor.color(index: 58),fontType:fontMedium)
+                                btnAccept.setImage(nil, for: .normal)
+                                btnAccept.isUserInteractionEnabled = false
+                            }
 
                         }
                         else  {
-                            UIButton.buttonUIHandling(button: btnAccept, text: "Decline", backgroundColor:.white ,textColor: ILColor.color(index: 57),fontType:fontMedium)
-                            btnAccept.setImage(nil, for: .normal)
-                            btnAccept.isUserInteractionEnabled = false
+                            
+                            if Int (results.appointmentConfig?.groupSizeLimit ?? "0")! > 1 {
+                                
+                                UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontMedium)
+                                btnAccept.setImage(UIImage.init(named: "move-arrows"), for: .normal)
+
+                                btnAccept.isUserInteractionEnabled = true
+                                
+                            }
+                            else{
+                                UIButton.buttonUIHandling(button: btnAccept, text: "Decline", backgroundColor:.white ,textColor: ILColor.color(index: 57),fontType:fontMedium)
+                                btnAccept.setImage(nil, for: .normal)
+                                btnAccept.isUserInteractionEnabled = false
+                            }
 
                         }
                     }
                 }
                 btnDecline.isUserInteractionEnabled = false
                 btnDecline.isHidden = true
+                btnAccept.isHidden = false
             }
             else{
                 if results.requests?.count ?? 0 > 1 {
-                    UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "move-arrows"),fontType:fontMedium)
+                    UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontMedium)
                     btnAccept.isUserInteractionEnabled = true
+                    btnAccept.isHidden = false
                     btnDecline.isHidden = true
-                    btnDecline.isUserInteractionEnabled = true
+                    btnDecline.isUserInteractionEnabled = false
+                    btnAccept.setImage(UIImage.init(named: "move-arrows"), for: .normal)
 
                 }
                 else{
                     let arrRequest = results.requests
                     if arrRequest?[0].state == "pending"{
-                        UIButton.buttonUIHandling(button: btnAccept, text: " Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "accept-circular-button-outline"),fontType:fontMedium)
-                        UIButton.buttonUIHandling(button: btnDecline, text: " Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),buttonImage:UIImage.init(named: "cancel"),fontType:fontMedium)
                         btnAccept.isUserInteractionEnabled = true
+                        btnAccept.isHidden = false
                         btnDecline.isUserInteractionEnabled = true
+                        btnDecline.isHidden = false
+                        btnAccept.semanticContentAttribute = .forceLeftToRight
+                        btnDecline.semanticContentAttribute = .forceLeftToRight
+                        btnAccept.setImage(UIImage.init(named: "accept-circular-button-outline"), for: .normal)
+                        btnDecline.setImage(UIImage.init(named: "cancel"), for: .normal)
 
+                        UIButton.buttonUIHandling(button: btnAccept, text: " Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontMedium)
+                        UIButton.buttonUIHandling(button: btnDecline, text: " Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontMedium)
+                      
+
+                      
                     }
                     else if arrRequest?[0].state == "accepted" || arrRequest?[0].state == "auto_accepted" {
-                        UIButton.buttonUIHandling(button: btnAccept, text: "Accepted", backgroundColor:.white ,textColor: ILColor.color(index: 58),fontType:fontMedium)
-                        btnAccept.setImage(nil, for: .normal)
+                        
+                        if Int (results.appointmentConfig?.groupSizeLimit ?? "0")! > 1 {
+                            
+                            UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontMedium)
+                            btnAccept.setImage(UIImage.init(named: "move-arrows"), for: .normal)
+
+                            
+                        }
+                        else{
+                            
+                            UIButton.buttonUIHandling(button: btnAccept, text: "Accepted", backgroundColor:.white ,textColor: ILColor.color(index: 58),fontType:fontMedium)
+                            
+                            btnAccept.setImage(nil, for: .normal)
+                        }
+                        btnAccept.isHidden = false
                         btnDecline.isHidden = true
                         btnAccept.isUserInteractionEnabled = false
                         btnDecline.isUserInteractionEnabled = false
 
                     }
                     else  {
-                        UIButton.buttonUIHandling(button: btnAccept, text: "Decline", backgroundColor:.white ,textColor: ILColor.color(index: 57),fontType:fontMedium)
-                        btnAccept.setImage(nil, for: .normal)
+                        if Int (results.appointmentConfig?.groupSizeLimit ?? "0")! > 1 {
+                            
+                            UIButton.buttonUIHandling(button: btnAccept, text: " Take Action", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontMedium)
+                            btnAccept.setImage(UIImage.init(named: "move-arrows"), for: .normal)
+                        }
+                        
+                        else{
+                            UIButton.buttonUIHandling(button: btnAccept, text: "Decline", backgroundColor:.white ,textColor: ILColor.color(index: 57),fontType:fontMedium)
+                            btnAccept.setImage(nil, for: .normal)
+                        }
+                        btnAccept.isHidden = false
                         btnDecline.isHidden = true
                         btnAccept.isUserInteractionEnabled = false
                         btnDecline.isUserInteractionEnabled = false

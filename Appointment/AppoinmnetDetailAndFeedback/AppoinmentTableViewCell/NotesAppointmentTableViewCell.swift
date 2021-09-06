@@ -52,7 +52,7 @@ class NotesAppointmentTableViewCell: TableviewCellSuperClass,UITextViewDelegate 
     func myNotesCustomization()  {
         viewCollectionMyNotes.register(UINib.init(nibName: "NoteCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NoteCollectionViewCell")
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true {
+        if isStudent ?? false {
             viewCollectionMyNotes.noteModalObjStudent = appoinmentDetailAllModalObj?.noteModalObjStudent;
         }
         else

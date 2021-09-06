@@ -318,18 +318,39 @@ class ERSideAppointmentService {
         
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
         var url = ""
-        if noteModelResult != nil{
-            url = Urls().erSideEditNotes(id: String( noteModelResult?.id ?? 0))
-        }
-        else{
-            url = Urls().erSideSubmitNotes()
-        }
+       
+            if noteModelResult != nil{
+                url = Urls().erSideEditNotes(id: String( noteModelResult?.id ?? 0))
+            }
+            else{
+                url = Urls().erSideSubmitNotes()
+            }
+       
         Network().makeApiStudentList(true, url: url, methodType: .post, params: params, header: headers, completion: { (data) in
             success(data)
         }) { (error, errorCode) in
             failure(error,errorCode)
         }
     }
+    
+    
+    func studentSideSubmitNotes(params: Dictionary<String, AnyObject> ,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ,noteModelResult : NotesResult?) {
+        
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+        var url = ""
+            if noteModelResult != nil{
+                url = Urls().studentEditNotes(id: String( noteModelResult?.id ?? 0))
+            }
+            else{
+                url = Urls().saveNotes()
+            }
+        Network().makeApiStudentList(true, url: url, methodType: .post, params: params, header: headers, completion: { (data) in
+            success(data)
+        }) { (error, errorCode) in
+            failure(error,errorCode)
+        }
+    }
+    
     
     
     func erSideStandardResponse(_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){

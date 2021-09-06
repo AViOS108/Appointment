@@ -325,7 +325,7 @@ ERSideMyAppoinmentTableViewCellDelegate{
 //Mark : Clickable logics
 
 
-extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
+extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate,ERAppointmentDetailViewControllerDeleagte {
     
     func refreshTableView() {
         self.resetDataModal()
@@ -336,6 +336,8 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate {
         
         let objERAppointmentDetailViewController = ERAppointmentDetailViewController.init(nibName: "ERAppointmentDetailViewController", bundle: nil)
         objERAppointmentDetailViewController.selectedResult =  self.selectedResult;
+        objERAppointmentDetailViewController.viewController = self
+        objERAppointmentDetailViewController.delegate = self
         objERAppointmentDetailViewController.index = selected
         self.navigationController?.pushViewController(objERAppointmentDetailViewController, animated: false)
         

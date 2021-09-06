@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,9 +23,9 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Hcy-H1-dFl">
                     <rect key="frame" x="0.0" y="44" width="414" height="754"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGK-Qv-4NU">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGK-Qv-4NU">
                     <rect key="frame" x="107" y="806" width="200" height="46"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="fvl-et-bcK"/>
@@ -35,7 +36,8 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Hcy-H1-dFl" secondAttribute="trailing" id="2vO-Dj-gJi"/>
                 <constraint firstItem="QGK-Qv-4NU" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.483092" id="BS9-jF-yU1"/>
@@ -43,10 +45,14 @@
                 <constraint firstItem="Hcy-H1-dFl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="WFd-vp-wc9"/>
                 <constraint firstItem="QGK-Qv-4NU" firstAttribute="top" secondItem="Hcy-H1-dFl" secondAttribute="bottom" constant="8" id="aMU-si-7XE"/>
                 <constraint firstItem="Hcy-H1-dFl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bY8-gm-DaI"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="QGK-Qv-4NU" secondAttribute="bottom" constant="10" id="iYx-C7-eUu"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="QGK-Qv-4NU" secondAttribute="bottom" priority="1" constant="10" id="iYx-C7-eUu"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="105.80357142857143"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

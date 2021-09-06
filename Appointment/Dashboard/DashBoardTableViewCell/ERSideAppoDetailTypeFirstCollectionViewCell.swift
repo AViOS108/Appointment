@@ -81,6 +81,18 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
     func customization()
     {
         self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 10)
+       
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            nslayoutConstraintViewButtonHeight.constant = 0
+            viewbuttonContainer.isHidden = true
+        }
+        else
+        {
+            nslayoutConstraintViewButtonHeight.constant = 40
+            viewbuttonContainer.isHidden = false
+        }
+        
         requestDetail = self.appoinmentDetailModalObj?.requests![indexPathRow];
         buttonArrowLogic()
         nameIntialandImageLogic()
@@ -134,7 +146,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
         let strHeader = NSMutableAttributedString.init()
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-        if isStudent ?? true{
+        if isStudent ?? false{
             var roles = ""
             var index = 0
             for role in self.appoinmentDetailModalObj!.coachDetailApi!.roles{
@@ -291,7 +303,6 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
                     UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:.white , textColor: ILColor.color(index: 34),buttonImage:UIImage.init(named: ""),fontType:fontMedium)
                     btnAccept.setImage(nil, for: .normal)
                     btnAccept.isUserInteractionEnabled = false
-
  
                 }
                 else{
@@ -320,7 +331,6 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
             else{
                 if requestDetail.state == "pending"{
                     UIButton.buttonUIHandling(button: btnAccept, text: " Accept", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23), buttonImage:UIImage.init(named: "accept-circular-button-outline"),fontType:fontMedium)
-                    
                     UIButton.buttonUIHandling(button: btnDecline, text: " Decline", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),buttonImage:UIImage.init(named: "cancel"),fontType:fontMedium)
                     btnDecline.isHidden = false
 
@@ -339,10 +349,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
                     btnAccept.isUserInteractionEnabled = false
 
                 }
-                
             }
-            
-            
             // pending
         }
         else if index == 2{

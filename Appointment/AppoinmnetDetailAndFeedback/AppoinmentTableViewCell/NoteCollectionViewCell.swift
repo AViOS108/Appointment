@@ -11,7 +11,7 @@ import UIKit
 
 protocol NoteCollectionViewCellDelegate {
     
-    func editDeleteFunctionality(objModel : NotesModalNewResult?,isDeleted:Bool )
+    func editDeleteFunctionality(objModel : NotesModalNewResult?,objNotesResult : NotesResult? , isDeleted:Bool )
     
 }
 
@@ -24,14 +24,33 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
 
    
     @IBAction func btnDeleteTappped(_ sender: Any) {
-        delegate.editDeleteFunctionality(objModel: noteResultModal, isDeleted: true)
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            
+            delegate.editDeleteFunctionality(objModel: nil, objNotesResult: noteResultModalStudent,  isDeleted: true)
+        }
+        else
+        {
+            delegate.editDeleteFunctionality(objModel: noteResultModal, objNotesResult: nil, isDeleted: true)
+
+        }
         
         
     }
     
     @IBAction func btnEditTapped(_ sender: Any) {
-        delegate.editDeleteFunctionality(objModel: noteResultModal,  isDeleted: false)
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            
+            delegate.editDeleteFunctionality(objModel: nil, objNotesResult: noteResultModalStudent,  isDeleted: false)
 
+        }
+        else
+        {
+            delegate.editDeleteFunctionality(objModel: noteResultModal, objNotesResult: nil,  isDeleted: false)
+
+        }
         
     }
     
@@ -84,7 +103,7 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
             viewContainer.isHidden = false
             lblNoNotes.isHidden = true
             let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
-            if isStudent ?? true {
+            if isStudent ?? false {
                 studentSidedateAndButtonLogic()
                 lblDescription.attributedText =   studentSideDescription()
             }
@@ -153,6 +172,17 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         
         btnDelete.isUserInteractionEnabled = true
         btnDelete.isEnabled = true
+        
+        if  self.noteResultModalStudent?.isShared == 0 {
+            btnDelete.isHidden = false
+            btnEdit.isHidden = false
+        }
+        else
+        {
+            btnDelete.isHidden = true
+            btnEdit.isHidden = true
+            
+        }
     }
     
     
@@ -168,6 +198,7 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         btnEdit.isUserInteractionEnabled = true
         btnEdit.isEnabled = true
         
+    
         btnEdit.setImage(UIImage.init(named: "noun_edit_648236"), for: .normal)
         btnDelete.setImage(UIImage.init(named: "noun_Delete_2899273"), for: .normal)
         
@@ -180,15 +211,25 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
         if  let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE12), let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
             
         {
-            let strSharedWith = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Shared with : ", _returnType: String.self)
+            let strSharedWith = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Shared by: ", _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:39),NSAttributedString.Key.font : fontMedium]);
             let nextLine1 = NSAttributedString.init(string: "\n")
             
-            let strSharedInfo = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "My notes", _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 23),NSAttributedString.Key.font : fontMedium]);
-           
-         
+            var notestext  = "" , colorForeGround : UIColor!
             
+            if  self.noteResultModalStudent?.isShared == 0 {
+                notestext = "My notes"
+                colorForeGround = ILColor.color(index: 39)
+            }
+            else{
+                notestext = "Community Member"
+                colorForeGround = ILColor.color(index: 23)
+
+            }
+            
+            let strSharedInfo = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: notestext, _returnType: String.self)
+                                                        , attributes: [NSAttributedString.Key.foregroundColor : colorForeGround!,NSAttributedString.Key.font : fontMedium]);
+           
             let data = Data((self.noteResultModalStudent?.data?.utf8)!)
             
             var strDescription : NSAttributedString!
@@ -199,8 +240,14 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
             para.lineSpacing = 2
-            strHeader.append(strSharedWith)
-            strHeader.append(nextLine1)
+            if  self.noteResultModalStudent?.isShared == 0 {
+            }
+            else{
+                strHeader.append(strSharedWith)
+                strHeader.append(nextLine1)
+            }
+            
+           
             strHeader.append(strSharedInfo)
             strHeader.append(nextLine1)
 

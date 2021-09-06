@@ -56,7 +56,14 @@ class NextStepAppointmentTableViewCell: UITableViewCell {
         self.viewContainer.backgroundColor = .clear
         
         UIButton.buttonUIHandling(button: btnAddNextStep, text: "Add Next Steps", backgroundColor: .clear, textColor: ILColor.color(index: 23),fontType: fontHeavyBtn)
-
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            btnAddNextStep.isHidden = true
+        }
+        else
+        {
+            btnAddNextStep.isHidden = false
+        }
 //       self.shadowWithCorner(viewContainer: viewContainer, cornerRadius: 3)
     }
     

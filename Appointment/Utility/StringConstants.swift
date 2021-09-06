@@ -80,7 +80,8 @@ class StringConstants{
 
     static let SubmittingDandCOpenHour = "Submitting Request... "
 
-    
+    static let FINALIZINDAPPOINMENT = "Finalizsing Appointment... "
+
     
     static let DeletingOpenHour = "Deleting Open Hour... "
 

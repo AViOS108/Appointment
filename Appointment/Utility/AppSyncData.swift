@@ -41,7 +41,7 @@ class AppDataSync {
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
 
         
-        if isStudent ?? true
+        if isStudent ?? false
         {
             LoginService().sync({ (_) in
                 

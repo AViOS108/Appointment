@@ -512,21 +512,22 @@ class GeneralUtility {
         return dateFormatter.string(from: date)
     }
     
+  
     
     public  class func   isPastDate(date : String) -> Bool {
-        let dateFormatter = DateFormatter()
+        let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = dateFormatter.date(from: date)
-        if date! < Date(){
-            return true
-        }
-        else{
-            
-        }
-        return false
+        dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        let selectedDate = dateFormatter.date(from: date)
+        let now = Date()
+        if (selectedDate! < now) {
+                 return true
+             } else {
+                 return false
+             }
     }
     
-    
+
     public  class func   isPastDateDifferentDateFormater(date : String) -> Bool {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

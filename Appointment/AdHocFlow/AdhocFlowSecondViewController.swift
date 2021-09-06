@@ -15,8 +15,7 @@ class AdhocFlowSecondViewController: SuperViewController {
     
     @IBOutlet weak var viewOuter: UIView!
     var objOpenHourModalSubmit : openHourModalSubmit!
-
-    var cloussreI : ((_ a:Int,_ b:Int) -> ())?
+    
     
     @IBOutlet weak var viewHeader: UIView!
     @IBOutlet weak var viewInner: UIView!
@@ -38,9 +37,7 @@ class AdhocFlowSecondViewController: SuperViewController {
             submitAdhocAppointment()
         }
         
-//        self.cloussre(2,3)
-        guard let cb = cloussreI else {return}
-        cb(3,4)
+//   
     }
     
     

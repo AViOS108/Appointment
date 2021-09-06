@@ -28,6 +28,8 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
     var delegate : ERAddNotesViewControllerDelegate!
     var appoinmentDetailModalObj : AppoinmentDetailModalNew?
     var noteModelResult : NotesModalNewResult!
+    var noteModelResultStudent : NotesResult!
+
     var textViewStr : String = ""
     
     var objERSideRoleSpecificUserModal : ERSideRoleSpecificUserModal!
@@ -40,7 +42,7 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
     let pickerView = UIPickerView()
 
     
-    func callApi()   {
+    func callApiErSide()   {
         
         
         var activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.SubmittingDandCOpenHour)
@@ -131,9 +133,77 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
     }
     
     
+    func callApiStudentSide()   {
+        
+        
+        var activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.SubmittingDandCOpenHour)
+        
+        var arrEntities = Array<Dictionary<String,AnyObject>>()
+        
+        let entitesObj1 = ["entity_id": "\(self.appoinmentDetailModalObj?.id ?? 0)",
+                           "entity_type":"appointment"
+            ] as [String : AnyObject]
+        
+        arrEntities.append(entitesObj1)
+
+    
+        var method = ""
+        switch viewType {
+        case .AddNew:
+            method = "post"
+            break
+        case .editNotes:
+            method = "put"
+            break
+        default:
+            break
+        }
+        
+        let params = [
+            "_method" : method,
+            "data":textViewStr ,
+            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String,
+            "entities":arrEntities
+            
+            ] as Dictionary<String,AnyObject>
+        
+        
+        if noteModelResultStudent != nil{
+            ERSideAppointmentService().studentSideSubmitNotes(params:params, { (data) in
+                activityIndicator.hide()
+                self.delegate.refreshTableView()
+                self.navigationController?.popViewController(animated: false)
+            }, failure: { (error, errorCode) in
+                activityIndicator.hide()
+
+            }, noteModelResult: self.noteModelResultStudent)
+        }
+        else
+        {
+            ERSideAppointmentService().studentSideSubmitNotes(params:params, { (data) in
+                activityIndicator.hide()
+                self.delegate.refreshTableView()
+                self.navigationController?.popViewController(animated: false)
+            }, failure: { (error, errorCode) in
+                activityIndicator.hide()
+
+            }, noteModelResult: nil)
+        }
+         
+    }
+    
     @IBOutlet weak var btnSubmit: UIButton!
     @IBAction func btnSubmitTapped(_ sender: Any) {
-        callApi()
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            callApiStudentSide()
+
+        }
+        else
+        {
+            callApiErSide()
+        }
+       
         
     }
     
@@ -142,8 +212,19 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
         super.viewDidLoad()
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"Add Notes");
 
-        callViewModal()
-        setNeedSearchTextField()
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            createStudentSpeecificLogic()
+            self.assignTblViewDataSource()
+
+        }
+        else
+        {
+            callViewModal()
+            setNeedSearchTextField()
+        }
+        
+      
         // Do any additional setup after loading the view.
     }
     
@@ -243,6 +324,25 @@ class ERAddNotesViewController: SuperViewController,UITextViewDelegate {
             break;
         case .editNotes:
             let data = self.noteModelResult?.data
+            textViewStr = data ?? ""
+            
+            break;
+      
+        case .none:
+            break
+        }
+
+    }
+    
+    
+    
+    func createStudentSpeecificLogic(){
+            
+        switch viewType {
+        case .AddNew:
+            break;
+        case .editNotes:
+            let data = self.noteModelResultStudent?.data
             textViewStr = data ?? ""
             
             break;
@@ -385,12 +485,23 @@ extension ERAddNotesViewController: UITableViewDelegate,UITableViewDataSource,ER
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if objERSideRoleSpecificUserModal != nil && objERSideRoleSpecificUserModal.items?.count ?? 0 > 0{
-            return objERSideRoleSpecificUserModal.items!.count + 4
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            return 1
         }
-        else {
-            return 0
+        else
+        {
+            if objERSideRoleSpecificUserModal != nil && objERSideRoleSpecificUserModal.items?.count ?? 0 > 0{
+                return objERSideRoleSpecificUserModal.items!.count + 4
+
+            }
+            else {
+                return 0
+            }
+            
         }
+        
            
     }
     

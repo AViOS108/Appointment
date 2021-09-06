@@ -157,10 +157,7 @@ class AdhocFlowFirstViewController: SuperViewController,UIPickerViewDelegate,UIP
         if validatingForm(){
             let objAdhocFlowSecondViewController = AdhocFlowSecondViewController.init(nibName: "AdhocFlowSecondViewController", bundle: nil)
             objAdhocFlowSecondViewController.objOpenHourModalSubmit = self.formingModal()
-            objAdhocFlowSecondViewController.cloussreI = {
-                (a:Int,b:Int) in
-                print(a,b)
-            }
+         
             objAdhocFlowSecondViewController.dateSelected = self.dateSelected
             self.navigationController?.pushViewController(objAdhocFlowSecondViewController, animated: false)
         }

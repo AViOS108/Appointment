@@ -69,11 +69,18 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         switch viewType {
         case .decline:
             apiHitINdex = 2;
+            self.declineApi(apiHitINdex: apiHitINdex)
+
         case .cancel :
             apiHitINdex = 1
+            self.cancelApi(apiHitINdex: apiHitINdex)
         default:
             break
         }
+     
+    }
+    
+    func cancelApi(apiHitINdex : Int){
         let activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.SubmittingDandCOpenHour)
         let params = [
             "_method" : "post",
@@ -92,7 +99,27 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
 
         }
         
+    }
+    
+    func  declineApi(apiHitINdex : Int)  {
+        let activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.SubmittingDandCOpenHour)
+        let params = [
+            "_method" : "post",
+            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String,
+            "cancellation_reason" :txtView.text ?? "",
+            "appointment_id": results.id
+            ] as Dictionary<String,AnyObject>
         
+        
+        ERSideAppointmentService().erSideAppointemntDandC(params: params, id: String(describing: results.coachID ?? 0), idIndex: apiHitINdex, { (jsonData) in
+            activityIndicator.hide()
+            self.delegate.refreshTableView()
+            GeneralUtility.alertViewPopOutViewController(title: "Success", message: " Appointment Cancelled Successfully !!!", viewController: self, buttons: ["Ok"])
+                       
+        }) { (error, errorCode) in
+            activityIndicator.hide()
+
+        }
         
     }
     
@@ -110,7 +137,7 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         var name = "", coachDetail = ""
-        if isStudent ?? true{
+        if isStudent ?? false{
             name = self.results.coachDetails?.name ?? ""
         }
         else{
