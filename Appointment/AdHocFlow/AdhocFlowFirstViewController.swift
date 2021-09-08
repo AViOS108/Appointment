@@ -28,8 +28,8 @@ class AdhocFlowFirstViewController: SuperViewController,UIPickerViewDelegate,UIP
             
             
             
-            let startime = GeneralUtility.currentDateDetailType4(emiDate: view.txtStartTime.text!, fromDateF: "hh:mm a", toDateFormate: "hh:mm")
-            let endTime = GeneralUtility.currentDateDetailType4(emiDate: view.txtEndTime.text!, fromDateF: "hh:mm a", toDateFormate: "hh:mm")
+            let startime = GeneralUtility.currentDateDetailType4(emiDate: view.txtStartTime.text!, fromDateF: "hh:mm a", toDateFormate: "HH:mm")
+            let endTime = GeneralUtility.currentDateDetailType4(emiDate: view.txtEndTime.text!, fromDateF: "hh:mm a", toDateFormate: "HH:mm")
             
             let completeStartdate = dateI + " " + startime + ":00"
             let completeendDate = dateI + " " + endTime + ":00"

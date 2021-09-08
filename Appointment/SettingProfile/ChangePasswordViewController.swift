@@ -60,7 +60,13 @@ class ChangePasswordViewController: SuperViewController,UITextFieldDelegate {
                txtConfirmPassword.shake()
            }else{
                activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: "Updating your password")
-               let params = ["old_password": txtOldPassword.text!,                         "new_password" : txtNewPassword.text!]
+            let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+            let params = [
+                "_method":"post",
+                "old_password": txtOldPassword.text!,
+                "password" : txtNewPassword.text!,
+                ParamName.PARAMCSRFTOKEN : csrftoken]
+            
                UserInfoService().updatePasswordCall(params: params as Dictionary<String, AnyObject>,{ response in
                    CommonFunctions().showSuccess(title: "Success", message: "Password updated successfully")
                    GoogleAnalyticsUtility().logEvent(GoogleAnalyticsEvent(category: "Settings", action: "Change Password", label: "Success"))

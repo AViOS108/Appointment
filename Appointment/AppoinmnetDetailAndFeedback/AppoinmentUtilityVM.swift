@@ -99,7 +99,7 @@ class AppoinmentUtilityVM{
     
     
     
-    func postFeedback(selectedAppointmentModal : ERSideAppointmentModalNewResult?,objFeedBackMOdal:feedbackModal)   {
+    func postFeedback(selectedAppointmentModal : AppoinmentDetailModalNew?,objFeedBackMOdal:feedbackModal)   {
           
           let params = [
             "comments" : objFeedBackMOdal.comments ?? "",

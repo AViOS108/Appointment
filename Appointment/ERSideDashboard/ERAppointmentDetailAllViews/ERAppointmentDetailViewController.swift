@@ -18,6 +18,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
     var viewController : UIViewController?
     var delegate : ERAppointmentDetailViewControllerDeleagte?
 
+    var selectedRow : Int?
     @IBAction func btnFinalAppoinmentTapped(_ sender: Any) {
         var objERSideAppoinmentDetailModal = ERSideAppoinmentDetailModal()
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FINALIZINDAPPOINMENT)
@@ -48,11 +49,9 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
         
         self.view.backgroundColor = ILColor.color(index: 22)
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
-        appoinmentViewModal.selectedResult = self.selectedResult
+        appoinmentViewModal.selectedResultID = self.selectedResult.id
         appoinmentViewModal.delegate = self
-       
-        
-        
+               
         appoinmentViewModal.detailType = index
         appoinmentViewModal.viewModalCustomized();
         // Do any additional setup after loading the view.
@@ -82,7 +81,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                 // upcoming
             }
             else if index == 3{
-                if Int (selectedResult.appointmentConfig?.groupSizeLimit ?? "0")! > 1 {
+                if Int (self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.appointmentConfig?.groupSizeLimit ?? "0")! > 1 {
                     self.finalizeButtonLogicForGroupAppo()
                 }
                 else
@@ -106,16 +105,17 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
 
         btnFinalAppoinment.isHidden = false
         let fontheavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
-        var requestPending =  self.selectedResult.requests?.filter({ $0.state == "pending" })
-        if  requestPending?.count == self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.requests?.count {
-            UIButton.buttonUIHandling(button: btnFinalAppoinment, text: "Finalise Appointment", backgroundColor: ILColor.color(index: 61), textColor: .white, cornerRadius: 3, fontType: fontheavy)
-            btnFinalAppoinment.isUserInteractionEnabled = false
-
-        }
-        else{
+        
+        let requestAccepted =  self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.requests?.filter({ $0.state == "accepted" })
+        if  requestAccepted?.count ?? 0 > 0 {
             UIButton.buttonUIHandling(button: btnFinalAppoinment, text: "Finalise Appointment", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3, fontType: fontheavy)
             btnFinalAppoinment.isUserInteractionEnabled = true
 
+          
+        }
+        else{
+            UIButton.buttonUIHandling(button: btnFinalAppoinment, text: "Finalise Appointment", backgroundColor: ILColor.color(index: 61), textColor: .white, cornerRadius: 3, fontType: fontheavy)
+            btnFinalAppoinment.isUserInteractionEnabled = false
         }
     }
     
@@ -207,7 +207,6 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                     let cell = tableView.dequeueReusableCell(withIdentifier: "ERAppoDetailThirdTableViewCell", for: indexPath) as! ERAppoDetailThirdTableViewCell
                     cell.selectionStyle = UITableViewCell.SelectionStyle.none
                     cell.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj
-                    cell.selectedAppointmentModal = self.selectedResult
                     cell.viewController = self
                     cell.customization()
                     cell.layoutIfNeeded()
@@ -287,7 +286,6 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ERAppoDetailThirdTableViewCell", for: indexPath) as! ERAppoDetailThirdTableViewCell
                 cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 cell.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj
-                cell.selectedAppointmentModal = self.selectedResult
                 cell.viewController = self
                 cell.customization()
                 cell.layoutIfNeeded()
@@ -321,12 +319,13 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                 return 2 // pending
             }
             else{
-                if let feedback = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.requests?[0].feedback{
-                    return 5 // past
-                }
-                else{
-                    return 4 // past
-                }
+                return 5
+//                if let feedback = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.requests?[0].feedback{
+//                    return 5 // past
+//                }
+//                else{
+//                    return 4 // past
+//                }
             }
         }
         else{
@@ -380,6 +379,7 @@ extension ERAppointmentDetailViewController : ERSideAppoinmentDetailModalDeletga
 import MessageUI
 
 extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDelegate,NoteCollectionViewCellDelegate,ERAddNotesViewControllerDelegate,NextStepAppointmentTableViewCelldelegate,ERUpdateStatusAddNextStepViewControllerDelegate,ERSideFIrstTypeCollectionViewDelegate,ERCancelViewControllerDelegate,MFMailComposeViewControllerDelegate{
+  
    
    
     
@@ -423,7 +423,10 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
         }
     }
     
-    func acceptDeclineApi(isAccept: Bool) {
+    func acceptDeclineApi(isAccept: Bool, selectedRow: Int) {
+        
+        self.selectedRow = selectedRow
+     
         if isAccept{
             acceptCustomize()
         }
@@ -438,24 +441,25 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
         let params = [
             "_method" : "post",
             "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String,
-            "appointment_id": selectedResult.id ?? "0"
+            "appointment_id": selectedResult.id
         ] as Dictionary<String,AnyObject>
         
         let activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.AcceptOpenHour)
-        ERSideAppointmentService().erSideAppointemntAccept(params: params, id: String(describing: selectedResult.requests?[0].id ?? 0) , { (jsonData) in
+        ERSideAppointmentService().erSideAppointemntAccept(params: params, id:  self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.requests![selectedRow!].id ?? 0   , { (jsonData) in
             activityIndicator.hide()
             GeneralUtility.alertView(title: "", message: "Accepted".localized(), viewController: self, buttons: ["Ok"]);
 
-            if Int (self.selectedResult.appointmentConfig?.groupSizeLimit ?? "0")! > 1 {
-                if let delegateI = self.delegate{
-                    self.delegate?.refreshTableView()
-                }
-                self.navigationController?.popViewController(animated: true)
-                
+            if Int (self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.appointmentConfig?.groupSizeLimit ?? "0")! > 1 {
+                self.refreshTableView()
             }
             else
             {
-                self.refreshTableView()
+                if let delegateI = self.delegate{
+                    delegateI.refreshTableView()
+                }
+                self.navigationController?.popViewController(animated: true)
+                
+                
             }
             
         }) { (error, errorCode) in
@@ -477,6 +481,7 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
         let objERCancelViewController = ERCancelViewController.init(nibName: "ERCancelViewController", bundle: nil)
         objERCancelViewController.modalPresentationStyle = .overFullScreen
         objERCancelViewController.results = self.selectedResult
+        objERCancelViewController.seletectedIndex = selectedRow!
         objERCancelViewController.viewType = .decline
         objERCancelViewController.delegate = self
         self.navigationController?.pushViewController(objERCancelViewController, animated: false)
@@ -498,8 +503,7 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
     
     func refreshTableView() {
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
-        appoinmentViewModal.selectedResult = self.selectedResult
-        appoinmentViewModal.delegate = self
+     
         appoinmentViewModal.viewModalCustomized();
     }
     

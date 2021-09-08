@@ -12,23 +12,12 @@ class ERSideAppointmentTableViewCell: UITableViewCell {
 
     @IBAction func btnViewDetailTapped(_ sender: Any) {
         
-        
-        let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
-        let navigationController = UINavigationController.init(rootViewController: objERSideOpenHourListVC)
-        objERSideOpenHourListVC.dateSelected = self.dateSelected
-        viewControllerI.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
-        
-        
-//        let erSideOHDetail = ERSideOHDetailViewController.init(nibName: "ERSideOHDetailViewController", bundle: nil)
-//
-////        erSideOHDetail.identifier = self.objERSideAppointmentModalResult?.identifier
-//        erSideOHDetail.viewControllerType = 1
-//        erSideOHDetail.delegate = viewControllerI as! ErSideOpenHourTCDelegate
-//
-//        erSideOHDetail.viewControllerI = viewControllerI
-//        erSideOHDetail.modalPresentationStyle = .overFullScreen
-//        erSideOHDetail.dateSelected = self.dateSelected
-//        viewControllerI.navigationController?.pushViewController(erSideOHDetail, animated: false)
+        let objERAppointmentDetailViewController = ERAppointmentDetailViewController.init(nibName: "ERAppointmentDetailViewController", bundle: nil)
+        objERAppointmentDetailViewController.selectedResult =  self.objERSideAppointmentModalResult;
+        objERAppointmentDetailViewController.viewController = viewControllerI
+//        objERAppointmentDetailViewController.delegate = viewControllerI as! ERAppointmentDetailViewControllerDeleagte
+        objERAppointmentDetailViewController.index = 2
+        viewControllerI.navigationController?.pushViewController(objERAppointmentDetailViewController, animated: false)
     }
     @IBOutlet weak var viewouter: UIView!
     var dateSelected : Date!

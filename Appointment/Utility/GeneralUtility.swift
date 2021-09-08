@@ -263,7 +263,7 @@ class GeneralUtility {
         calenderButton.contentMode = .scaleAspectFit
         //        searchButton.backgroundColor = .red
         calenderButton.addTarget(viewController, action: #selector(SuperViewController.calenderClicked(sender:)), for: .touchUpInside)
-        calenderButton.setImage(UIImage.init(named: "Calendar"), for: .normal)
+        calenderButton.setImage(UIImage.init(named: "printImage"), for: .normal)
         let calender =  UIBarButtonItem(customView: calenderButton)
         viewController.navigationItem.rightBarButtonItems = [calender];
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);

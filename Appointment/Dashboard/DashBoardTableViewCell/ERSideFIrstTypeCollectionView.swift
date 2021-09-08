@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ERSideFIrstTypeCollectionViewDelegate {
-    func acceptDeclineApi(isAccept : Bool)
+    func acceptDeclineApi(isAccept : Bool, selectedRow : Int)
     func sendEmail()
 
 }
@@ -108,12 +108,13 @@ extension ERSideFIrstTypeCollectionView :ERAppoDetailFirstCollectionViewLayoutDe
 }
 
 extension ERSideFIrstTypeCollectionView : ERSideAppoDetailTypeFirstCollectionViewCellDelegate {
+    
     func sendEmail() {
         delegateI.sendEmail()
     }
     
-    func acceptDeclineApi(isAccept: Bool) {
-        delegateI.acceptDeclineApi(isAccept: isAccept)
+    func acceptDeclineApi(isAccept: Bool, selectedRow : Int) {
+        delegateI.acceptDeclineApi(isAccept: isAccept, selectedRow : selectedRow)
     }
     func moveCollectionView(backward: Bool) {
         if backward {

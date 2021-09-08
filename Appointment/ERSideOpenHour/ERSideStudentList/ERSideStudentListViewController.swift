@@ -501,50 +501,19 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
         
         if searchBar.text != ""
         {
-            if isSearchEnabled {
-                
-            }
-            else{
-                self.objStudentDetailModalCopy = self.objStudentDetailModal
-            }
-            
-            isSearchEnabled = true
-            
-            
-            let arrItems =     self.objStudentDetailModalCopy?.items?.filter({
-                
-                let primaryEmail = $0.email!.primary?.lowercased() ?? ""
-                let secondaryEmail = $0.email!.secondary?.lowercased() ?? ""
-                
-                let firstName = $0.firstName?.lowercased() ?? ""
-                let lastName  = $0.lastName?.lowercased() ?? ""
-                
-                
-                return ( (firstName.contains(searchBar.text!.lowercased())) || (lastName.contains(searchBar.text!.lowercased())) || (primaryEmail.contains(searchBar.text!.lowercased()))  || (secondaryEmail.contains(searchBar.text!.lowercased()) || (firstName + lastName).contains(searchBar.text!.lowercased())  || (firstName + " " + lastName).contains(searchBar.text!.lowercased()))
-                    
-                    
-                    
-                )
-            })
-            self.objStudentDetailModal?.items = arrItems ;
-            tblView.reloadData()
-            searchBar.resignFirstResponder();
-            
+            makeFilterModal()
+            callViewModal()
         }
-        
-        
+        txtSearchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             
             isSearchEnabled = false
-            
-            self.objStudentDetailModal = self.objStudentDetailModalCopy
-            
-            self.allStudentSelectedImage()
-            
-            tblView.reloadData()
+            makeFilterModal()
+            callViewModal()
+            txtSearchBar.resignFirstResponder()
             
         }
         
@@ -602,40 +571,52 @@ extension ERSideStudentListViewController{
         
         var benchMark = Array<Int>()
         var tag = Array <Dictionary<String,AnyObject>>()
-        for objERFlter in self.objERFilterTag!{
+        if let objTags  = self.objERFilterTag{
+            for objERFlter in self.objERFilterTag!{
+                
+                if objERFlter.id == -999{
+                    
+                    let selectedBenchMarkArr =  objERFlter.objTagValue?.filter({ $0.isSelected == true
+                    })
+                    if (selectedBenchMarkArr?.count ?? 0) > 0{
+                        for selectedBench in selectedBenchMarkArr!{
+                            benchMark.append(selectedBench.eRFilterid!)
+                        }
+                    }
+                    
+                }
+                else{
+                    let selectedTagArr =    objERFlter.objTagValue?.filter({$0.isSelected == true})
+                    if (selectedTagArr?.count ?? 0) > 0 {
+                        var tagSelected = [String]()
+                        for selectedTag in selectedTagArr!{
+                            tagSelected.append(selectedTag.tagValueText!)
+                        }
+                        let category  = ["category" : objERFlter.category ?? "",
+                                         "values" : tagSelected] as [String : AnyObject]
+                        tag.append(category);
+                    }
+                }
+            }
+            if benchMark.count > 0 {
+                filterAdded["benchmarks"] = benchMark as AnyObject
+            }
+            if !tag.isEmpty {
+                filterAdded["tags"] = tag as AnyObject
+            }
             
-            if objERFlter.id == -999{
-                
-                let selectedBenchMarkArr =  objERFlter.objTagValue?.filter({ $0.isSelected == true
-                })
-                if (selectedBenchMarkArr?.count ?? 0) > 0{
-                    for selectedBench in selectedBenchMarkArr!{
-                        benchMark.append(selectedBench.eRFilterid!)
-                    }
-                }
-                
-            }
-            else{
-                let selectedTagArr =    objERFlter.objTagValue?.filter({$0.isSelected == true})
-                if (selectedTagArr?.count ?? 0) > 0 {
-                    var tagSelected = [String]()
-                    for selectedTag in selectedTagArr!{
-                        tagSelected.append(selectedTag.tagValueText!)
-                    }
-                    let category  = ["category" : objERFlter.category ?? "",
-                                     "values" : tagSelected] as [String : AnyObject]
-                    tag.append(category);
-                }
+        }
+     
+        if txtSearchBar.text?.isEmpty ?? true{
+            if filterAdded["name_email"] != nil{
+                filterAdded.removeValue(forKey: "name_email")
             }
         }
-        if benchMark.count > 0 {
-            filterAdded["benchmarks"] = benchMark as AnyObject
-        }
-        if !tag.isEmpty {
-            filterAdded["tags"] = tag as AnyObject
+        else{
+            filterAdded["name_email"] = txtSearchBar.text as AnyObject?
         }
         
-        if benchMark.count == 0 && tag.isEmpty{
+        if benchMark.count == 0 && tag.isEmpty && (txtSearchBar.text?.isEmpty ?? true) {
             filterAdded = Dictionary<String,AnyObject>()
         }
         

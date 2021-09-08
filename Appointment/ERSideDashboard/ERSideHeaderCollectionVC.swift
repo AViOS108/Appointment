@@ -106,24 +106,35 @@ class ERSideHeaderCollectionVC: UICollectionView,UICollectionViewDelegateFlowLay
             
             let componentIII = Date().get(.day,.month,.year)
             
-            if componentII.year! >= componentIII.year!{
-                if componentII.month! >= componentIII.month!{
-                    if componentII.day! >= componentIII.day!{
+            if componentII.year! > componentIII.year!{
+                calenderMo.isClickable = true
+                
+            }
+            else if componentII.year! == componentIII.year!{
+                
+                if componentII.month! > componentIII.month!{
+                    calenderMo.isClickable = true
+
+                }
+                else if componentII.month == componentIII.month{
+                    
+                    if componentII.day! > componentIII.day!{
                         calenderMo.isClickable = true
-                        
+                    }
+                    else if componentI.day! == componentIII.day!{
+                        calenderMo.isClickable = true
                     }
                     else{
                         calenderMo.isClickable = false
-                        
+
                     }
-                    
-                } else{
+                }
+                else{
                     calenderMo.isClickable = false
                 }
-                
-            } else{
+            }
+            else{
                 calenderMo.isClickable = false
-                
             }
             
             if componentI.day == componentII.day && componentI.month == componentII.month && componentI.year == componentII.year{

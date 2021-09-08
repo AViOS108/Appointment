@@ -556,7 +556,6 @@ extension HomeViewController: ERCancelViewControllerDelegate {
         case .feedback:
             let objFeedbackViewController = FeedbackViewController.init(nibName: "FeedbackViewController", bundle: nil)
             objFeedbackViewController.delegate = self
-            objFeedbackViewController.selectedAppointmentModal = self.selectedAppointmentModal;
             objFeedbackViewController.modalPresentationStyle = .overFullScreen
             self.navigationController?.pushViewController(objFeedbackViewController, animated: false)
             break

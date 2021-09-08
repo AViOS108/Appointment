@@ -939,8 +939,8 @@ extension ERSideOpenCreateEditVC
             
 
             
-            let startime = GeneralUtility.currentDateDetailType4(emiDate: view.txtStartTime.text!, fromDateF: "hh:mm a", toDateFormate: "hh:mm")
-            let endTime = GeneralUtility.currentDateDetailType4(emiDate: view.txtEndTime.text!, fromDateF: "hh:mm a", toDateFormate: "hh:mm")
+            let startime = GeneralUtility.currentDateDetailType4(emiDate: view.txtStartTime.text!, fromDateF: "hh:mm a", toDateFormate: "HH:mm")
+            let endTime = GeneralUtility.currentDateDetailType4(emiDate: view.txtEndTime.text!, fromDateF: "hh:mm a", toDateFormate: "HH:mm")
             
             let completeStartdate = dateI + " " + startime + ":00"
             let completeendDate = dateI + " " + endTime + ":00"
@@ -965,8 +965,8 @@ extension ERSideOpenCreateEditVC
         
         var stringTimeSlot = Array<Dictionary<String,String>>()
         for strtime in selectedDuplicateSlot{
-            let dictionary = ["start_datetime" : dateStart + " " + GeneralUtility.currentDateDetailType4(emiDate: strtime.timeStart, fromDateF: "hh:mm a", toDateFormate: "hh:mm:ss") ,
-                              "end_datetime" :  dateStart + " " + GeneralUtility.currentDateDetailType4(emiDate: strtime.timeEnd, fromDateF: "hh:mm a", toDateFormate: "hh:mm:ss") ]
+            let dictionary = ["start_datetime" : dateStart + " " + GeneralUtility.currentDateDetailType4(emiDate: strtime.timeStart, fromDateF: "hh:mm a", toDateFormate: "HH:mm:ss") ,
+                              "end_datetime" :  dateStart + " " + GeneralUtility.currentDateDetailType4(emiDate: strtime.timeEnd, fromDateF: "hh:mm a", toDateFormate: "HH:mm:ss") ]
             stringTimeSlot.append(dictionary)
         }
        return stringTimeSlot

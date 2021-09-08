@@ -201,7 +201,7 @@ class Urls {
     }
     
     func updatePassword() -> String {
-        return "\(type1)profile/password"
+        return "\(ErLoginType1)password/change"
     }
     
     func getPaymentDetails() -> String{
@@ -572,7 +572,7 @@ class Urls {
            
        }
     
-    func erSideAppointmentAccept(id: String) -> String{
+    func erSideAppointmentAccept(id: Int) -> String{
            return "\(typeEvent2)community/appointments/requests/" + "\(id)" + "/accept"
            
        }

@@ -35,7 +35,7 @@ class ERSideAppoinmentDetailModal{
     var delegate : ERSideAppoinmentDetailModalDeletgate!
     
     let dispatchGroup = DispatchGroup()
-    var selectedResult : ERSideAppointmentModalNewResult!
+    var selectedResultID : Int!
 
     
     func viewModalCustomized(){
@@ -78,14 +78,14 @@ class ERSideAppoinmentDetailModal{
         var idSelected = 0;
         if isStudent ?? false{
             var localTimeZoneIndemtifier: String { return TimeZone.current.identifier}
-            idSelected = selectedResult.id ?? 0
+            idSelected = selectedResultID ?? 0
             param = [ ParamName.PARAMINTIMEZONEEL :localTimeZoneIndemtifier
             ] as [String : AnyObject]
         }
         else{
             var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
 
-            idSelected = selectedResult.id ?? 0
+            idSelected = selectedResultID ?? 0
 
             if detailType == 2{
                 // Upcoming
@@ -210,7 +210,7 @@ class ERSideAppoinmentDetailModal{
         
         let  param = [
             ParamName.PARAMFILTERSEL : [
-                "appointment_ids" : [String(describing: selectedResult.id ?? 0)],
+                "appointment_ids" : [String(describing: selectedResultID ?? 0)],
                 "is_completed":
                     ["0","1"],
             ],
@@ -219,10 +219,10 @@ class ERSideAppoinmentDetailModal{
 
         var idSelected = 0;
         if isStudent ?? false{
-            idSelected = selectedResult.id ?? 0
+            idSelected = selectedResultID ?? 0
         }
         else{
-            idSelected = selectedResult.id ?? 0
+            idSelected = selectedResultID ?? 0
         }
         Network().makeApiEventGetRequest(true, url: Urls().nextStepAppointment(id: String(describing: idSelected ?? 0)), methodType: .get, params: param, header: headers, completion: { (jsonData) in
             do {
@@ -249,7 +249,7 @@ class ERSideAppoinmentDetailModal{
         var arrCreatedBy = Array<Dictionary<String,AnyObject>>()
         let dictionary = [
             "entity_type":"appointment",
-            "entity_id": String(describing: selectedResult.id ?? 0)
+            "entity_id": String(describing: selectedResultID ?? 0)
             
             ] as [String : AnyObject]
         arrCreatedBy.append(dictionary)
@@ -266,10 +266,10 @@ class ERSideAppoinmentDetailModal{
 
         var idSelected = 0;
         if isStudent ?? false{
-            idSelected = selectedResult.id ?? 0
+            idSelected = selectedResultID ?? 0
         }
         else{
-            idSelected = selectedResult.id ?? 0
+            idSelected = selectedResultID ?? 0
         }
         Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id:String(describing: idSelected), isShared: "0"), methodType: .get, params: ["":""] as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
             do {
@@ -298,7 +298,7 @@ class ERSideAppoinmentDetailModal{
         var arrCreatedBy = Array<Dictionary<String,AnyObject>>()
         let dictionary = [
             "entity_type":"appointment",
-            "entity_id": String(describing: selectedResult.id ?? 0)
+            "entity_id": String(describing: selectedResultID ?? 0)
             
             ] as [String : AnyObject]
         arrCreatedBy.append(dictionary)
@@ -310,7 +310,7 @@ class ERSideAppoinmentDetailModal{
             ]
         ]
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
-        Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id: String(describing: selectedResult.id ?? 0), isShared: "1"), methodType: .get, params: ["" :""] as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
+        Network().makeApiEventGetRequest(true, url: Urls().notesAppointment(id: String(describing: selectedResultID ?? 0), isShared: "1"), methodType: .get, params: ["" :""] as  Dictionary<String, AnyObject>, header: headers, completion: { (jsonData) in
             do {
                 
                 self.coachNoteModalObj = try
@@ -444,38 +444,6 @@ class ERSideAppoinmentDetailModal{
     }
     
     
-    
-    
-    
-    func postFeedback(selectedAppointmentModal : OpenHourCoachModalResult?,objFeedBackMOdal:feedbackModal)   {
-          
-          let params = [
-            "comments" : objFeedBackMOdal.comments ?? "",
-            "coach_helpfulness" : "\(objFeedBackMOdal.coach_helpfulness ?? 0)" ,
-            "coach_expertise": "\(objFeedBackMOdal.coach_expertise ?? 0)" ,
-            "overall_experience" : "\(objFeedBackMOdal.overall_experience ?? 0)" ,
-            "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as? String
-              ] as [String : AnyObject]
-        
-        
-          let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
-          
-        Network().makeApiEventRequest(true, url: Urls().feedBack(id: selectedAppointmentModal?.identifier ?? ""), methodType: .post, params: params, header: headers, completion: { (data) in
-            do {
-              
-                
-                
-            } catch  {
-                CommonFunctions().showError(title: "", message: ErrorMessages.SomethingWentWrong.rawValue)
-                self.callbackVC!(false)
-            }
-            
-        }) { (error, errorCode) in
-              CommonFunctions().showError(title: "", message: error)
-              self.callbackVC!(false)
-          }
-          
-      }
     
     
     func finaliseApi(selectedAppointmentid : Int)   {

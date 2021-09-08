@@ -210,6 +210,20 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             
             if case let .integer(score) = self.objERSideResumeListModalItem.rpLatestResumeScore {
                 UILabel.labelUIHandling(label: lblLatestScore , text: "\(score)", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy3)
+                
+                if self.objERSideResumeListModalItem.rpLatestResumeScoreType == "Yellow"{
+                    lblLatestScore.textColor = ILColor.color(index: 60)
+                }
+                else if self.objERSideResumeListModalItem.rpLatestResumeScoreType == "Green"{
+                    lblLatestScore.textColor = ILColor.color(index: 58)
+
+                }
+                else{
+                    lblLatestScore.textColor = ILColor.color(index: 33)
+
+                }
+                
+                
             }
             UIButton.buttonUIHandling(button: btnLatestUploadView, text: "View", backgroundColor: .clear,textColor: ILColor.color(index: 23),fontType: fontMedium)
             btnLatestDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
@@ -244,6 +258,18 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             
             if case let .integer(score) = self.objERSideResumeListModalItem.rpHighestScoredResumeScore {
                 UILabel.labelUIHandling(label: lblHighestScore , text: "\(score)", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy3)
+                if self.objERSideResumeListModalItem.rpHighestScoredResumeScoreType == "Yellow"{
+                    lblHighestScore.textColor = ILColor.color(index: 60)
+                }
+                else if self.objERSideResumeListModalItem.rpHighestScoredResumeScoreType == "Green"{
+                    lblHighestScore.textColor = ILColor.color(index: 58)
+
+                }
+                else{
+                    lblHighestScore.textColor = ILColor.color(index: 33)
+
+                }
+                
             }
             
             btnHighestDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
@@ -274,6 +300,15 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             
             if case let .integer(score) = self.objERSideResumeListModalItem.rpFirstResumeScore {
                 UILabel.labelUIHandling(label: lblApprovedScore , text: "\(score)", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy3)
+                if self.objERSideResumeListModalItem.rpFirstResumeScoreType == "Yellow"{
+                    lblApprovedScore.textColor = ILColor.color(index: 60)
+                }
+                else if self.objERSideResumeListModalItem.rpFirstResumeScoreType == "Green"{
+                    lblApprovedScore.textColor = ILColor.color(index: 58)
+                }
+                else{
+                    lblApprovedScore.textColor = ILColor.color(index: 33)
+                }
             }
             
             btnApprovedUploadView.isHidden = false

@@ -250,8 +250,6 @@ extension ERUpdateStatusAddNextStepViewController:UIPickerViewDelegate,UIPickerV
             CommonFunctions().showError(title: "Error", message: StringConstants.ERRADDNEXTSTEPDATETIME)
             return false
         }
-        
-        
         return true
     }
     

@@ -351,7 +351,7 @@ extension ERSideMyAppointmentVC : ERCancelViewControllerDelegate,ERAppointmentDe
         ] as Dictionary<String,AnyObject>
         
         let activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.AcceptOpenHour)
-        ERSideAppointmentService().erSideAppointemntAccept(params: params, id: String(describing: selectedResult.requests?[0].id ?? 0) , { (jsonData) in
+        ERSideAppointmentService().erSideAppointemntAccept(params: params, id: selectedResult.requests?[0].id ?? 0, { (jsonData) in
             activityIndicator.hide()
            
             GeneralUtility.alertView(title: "", message: "Accepted".localized(), viewController: self, buttons: ["Ok"]);

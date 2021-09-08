@@ -264,7 +264,7 @@ class ERHomeViewModal {
                 ParamName.PARAMINTIMEZONEEL :"utc",
                 ParamName.PARAMCSRFTOKEN : csrftoken,
                 ParamName.PARAMMETHODKEY : "post",
-                ParamName.PARAMFILTERSTAKEEL: 10,
+                ParamName.PARAMFILTERSTAKEEL: 50,
                 ParamName.PARAMFILTERSSKIPEL: skip,
                 ParamName.PARAMSORTEL :[
                     ParamName.PARAMFIELDEL : "created_at",
@@ -415,7 +415,7 @@ class ERHomeViewModal {
                         ["states":states
                     ],
                     "timezone":"utc",
-                    "to": "2021-03-30 11:26:34",
+                    "to": GeneralUtility.todayDate() as AnyObject,
                     
                 ],
                 ParamName.PARAMINTIMEZONEEL :"utc",

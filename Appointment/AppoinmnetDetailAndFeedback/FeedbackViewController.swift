@@ -147,7 +147,7 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
             }
         }
     
-        objAppointment.postFeedback(selectedAppointmentModal: selectedAppointmentModal, objFeedBackMOdal: objFeedBackMOdal)
+        objAppointment.postFeedback(selectedAppointmentModal: appoinmentDetailModalObj, objFeedBackMOdal: objFeedBackMOdal)
         
     }
     
@@ -157,7 +157,6 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         // Do any additional setup after loading the view.
     }
     
-    var selectedAppointmentModal :  ERSideAppointmentModalNewResult?
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -283,7 +282,7 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
             self.imgView?.isHidden = true
             self.lblImageView.isHidden = false
 
-        let stringImg = GeneralUtility.startNameCharacter(stringName: self.selectedAppointmentModal?.coachDetails?.name ?? " ")
+        let stringImg = GeneralUtility.startNameCharacter(stringName: self.appoinmentDetailModalObj?.coachDetails?.name ?? " ")
             if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
             {
 
@@ -310,7 +309,7 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         self.textWithAstrikMark(lblSpecific: lblCoachPrecise, text: "Coach’s precision and helpfulness")
         self.textWithAstrikMark(lblSpecific: lblHelpFulness, text: "Helpfulness due to coach’s area of expertise")
 
-        UILabel.labelUIHandling(label: lblCoachName, text: self.selectedAppointmentModal?.coachDetails?.name ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
+        UILabel.labelUIHandling(label: lblCoachName, text: self.appoinmentDetailModalObj?.coachDetails?.name ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
 
         UILabel.labelUIHandling(label: lbltxtView, text: "Additional Comments", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
         UIButton.buttonUIHandling(button: btnSubmit, text: "Submit", backgroundColor: ILColor.color(index: 23) , textColor: .white, cornerRadius: 3, fontType: fontHeavy)

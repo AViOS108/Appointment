@@ -11,7 +11,7 @@ import UIKit
 
 protocol ERSideAppoDetailTypeFirstCollectionViewCellDelegate {
     func moveCollectionView(backward :Bool)
-    func acceptDeclineApi(isAccept : Bool)
+    func acceptDeclineApi(isAccept : Bool,selectedRow : Int)
     func sendEmail()
 
 }
@@ -56,7 +56,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
     
     @IBAction func btnAcceptTapped(_ sender: Any) {
         if index == 3{
-            delegate.acceptDeclineApi(isAccept: true)
+            delegate.acceptDeclineApi(isAccept: true, selectedRow: indexPathRow)
         }
         else{
             delegate.sendEmail()
@@ -64,7 +64,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
         
     }
     @IBAction func btnDeclineTapped(_ sender: Any) {
-        delegate.acceptDeclineApi(isAccept: false)
+        delegate.acceptDeclineApi(isAccept: false, selectedRow: indexPathRow)
 
     }
     

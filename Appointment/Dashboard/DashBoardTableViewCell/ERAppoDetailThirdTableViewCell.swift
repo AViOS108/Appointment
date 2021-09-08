@@ -25,7 +25,6 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
         
         let objFeedbackViewController = FeedbackViewController.init(nibName: "FeedbackViewController", bundle: nil)
         objFeedbackViewController.delegate = viewController as? feedbackViewControllerDelegate
-        objFeedbackViewController.selectedAppointmentModal = self.selectedAppointmentModal;
         objFeedbackViewController.appoinmentDetailModalObj = self.appoinmentDetailModalObj
         objFeedbackViewController.modalPresentationStyle = .overFullScreen
         viewController.navigationController?.pushViewController(objFeedbackViewController, animated: false)

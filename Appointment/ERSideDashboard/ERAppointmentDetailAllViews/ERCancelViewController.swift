@@ -111,10 +111,15 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
             ] as Dictionary<String,AnyObject>
         
         
-        ERSideAppointmentService().erSideAppointemntDandC(params: params, id: String(describing: results.coachID ?? 0), idIndex: apiHitINdex, { (jsonData) in
+        ERSideAppointmentService().erSideAppointemntDandC(params: params, id: String(describing: results.requests?[self.seletectedIndex].id ?? 0), idIndex: apiHitINdex, { (jsonData) in
             activityIndicator.hide()
+            
             self.delegate.refreshTableView()
-            GeneralUtility.alertViewPopOutViewController(title: "Success", message: " Appointment Cancelled Successfully !!!", viewController: self, buttons: ["Ok"])
+            GeneralUtility.alertViewWithClousre(title: "Success", message: " Appointment Declined Successfully !!!", viewController: self, buttons: ["Ok"]) {
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+            
                        
         }) { (error, errorCode) in
             activityIndicator.hide()
@@ -122,8 +127,6 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         }
         
     }
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

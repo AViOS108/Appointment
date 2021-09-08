@@ -11,7 +11,7 @@ import Foundation
 class ERSideAppointmentService {
     
     
-    func erSideAppointemntAccept(params: Dictionary<String, AnyObject>,id : String,  _ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
+    func erSideAppointemntAccept(params: Dictionary<String, AnyObject>,id : Int,  _ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ) {
           
           let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
           

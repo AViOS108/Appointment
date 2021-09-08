@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -19,7 +20,7 @@
         <!--Profile View Controller-->
         <scene sceneID="Gyr-bZ-eBz">
             <objects>
-                <viewController storyboardIdentifier="ProfileViewController" id="n6v-sx-CcW" customClass="ProfileViewController" customModule="EWent" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="n6v-sx-CcW" customClass="ProfileViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9UC-kM-He4" userLabel="ViewOuter">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -97,7 +98,7 @@
                                                             <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="18"/>
                                                         </variation>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tID-vi-zgc">
+                                                    <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tID-vi-zgc">
                                                         <rect key="frame" x="982" y="9" width="32" height="32"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="32" id="ShG-Nz-B9W"/>
@@ -191,7 +192,7 @@
                                                             <constraint firstItem="Xzo-1j-qIb" firstAttribute="leading" secondItem="GiX-xf-Phc" secondAttribute="leading" id="kwJ-AL-FOZ"/>
                                                         </constraints>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SkU-i6-5oZ">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SkU-i6-5oZ">
                                                         <rect key="frame" x="840" y="100" width="72" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="SLf-l8-I3Y"/>
@@ -212,7 +213,7 @@
                                                             <action selector="cancelButtonTapped:" destination="n6v-sx-CcW" eventType="touchUpInside" id="bd9-XT-Pm8"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvb-A6-uzS">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvb-A6-uzS">
                                                         <rect key="frame" x="932" y="100" width="72" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="nYR-ap-ggB"/>
@@ -270,7 +271,7 @@
                                                             <constraint firstAttribute="width" constant="18" id="bll-Gx-Nxp"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOr-ju-yLH">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOr-ju-yLH">
                                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="40"/>
                                                         <connections>
                                                             <action selector="changePasswordButtonTapped:" destination="n6v-sx-CcW" eventType="touchUpInside" id="MRX-JF-iIh"/>
@@ -320,6 +321,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="TOb-ty-ucp"/>
                         <color key="backgroundColor" red="0.93333333330000001" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="TOb-ty-ucp" firstAttribute="bottom" secondItem="RST-kP-wEf" secondAttribute="bottom" id="5Nz-SZ-BFr"/>
@@ -331,7 +333,6 @@
                             <constraint firstItem="RST-kP-wEf" firstAttribute="leading" secondItem="TOb-ty-ucp" secondAttribute="leading" id="YqA-L0-CkR"/>
                             <constraint firstItem="RST-kP-wEf" firstAttribute="trailing" secondItem="TOb-ty-ucp" secondAttribute="trailing" id="tfe-mH-ugc"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="TOb-ty-ucp"/>
                     </view>
                     <connections>
                         <outlet property="addImageButton" destination="2Za-Ho-uyn" id="vNn-uD-rVh"/>
@@ -353,23 +354,23 @@
         <!--Profile Picture View Controller-->
         <scene sceneID="uob-Cu-Mxg">
             <objects>
-                <viewController id="rXR-v6-YOC" customClass="ProfilePictureViewController" customModule="EWent" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rXR-v6-YOC" customClass="ProfilePictureViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mvA-oQ-gve">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="1007"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="byN-Q6-8XP">
-                                <rect key="frame" x="0.0" y="0.0" width="712" height="1007"/>
+                                <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="jN7-Zi-Ajo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="byN-Q6-8XP" firstAttribute="leading" secondItem="jN7-Zi-Ajo" secondAttribute="leading" id="EYw-xp-uy0"/>
                             <constraint firstItem="byN-Q6-8XP" firstAttribute="top" secondItem="jN7-Zi-Ajo" secondAttribute="top" id="PF4-JJ-RaD"/>
                             <constraint firstItem="byN-Q6-8XP" firstAttribute="trailing" secondItem="jN7-Zi-Ajo" secondAttribute="trailing" id="a6K-WJ-3Bu"/>
                             <constraint firstItem="byN-Q6-8XP" firstAttribute="bottom" secondItem="jN7-Zi-Ajo" secondAttribute="bottom" id="m5B-SH-pxb"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="jN7-Zi-Ajo"/>
                     </view>
                     <navigationItem key="navigationItem" id="rD4-dL-2Ig"/>
                     <connections>
@@ -383,19 +384,19 @@
         <!--Change Password View Controller-->
         <scene sceneID="72e-ns-OBx">
             <objects>
-                <viewController id="WLa-nC-0wh" customClass="ChangePasswordViewController" customModule="EWent" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="WLa-nC-0wh" customClass="ChangePasswordViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zof-FY-ZXs">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="1007"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJr-P2-P9E">
-                                <rect key="frame" x="0.0" y="0.0" width="712" height="1007"/>
+                                <rect key="frame" x="0.0" y="0.0" width="704" height="995.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fiJ-1P-MMW">
-                                        <rect key="frame" x="0.0" y="20" width="712" height="40"/>
+                                        <rect key="frame" x="0.0" y="20" width="704" height="40"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Old Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KQI-tL-b4q" customClass="CustomUITextField" customModule="Resume" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="1" width="632" height="39"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Old Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KQI-tL-b4q" customClass="CustomUITextField" customModule="Appointment" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="1" width="624" height="39"/>
                                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 <userDefinedRuntimeAttributes>
@@ -410,8 +411,8 @@
                                                     <outlet property="delegate" destination="WLa-nC-0wh" id="dgE-Ug-pHu"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JSj-PH-63b">
-                                                <rect key="frame" x="652" y="0.0" width="50" height="40"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JSj-PH-63b">
+                                                <rect key="frame" x="644" y="0.0" width="50" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="czI-R1-VV6"/>
                                                     <constraint firstAttribute="width" constant="50" id="erP-3N-U4f"/>
@@ -441,10 +442,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dNi-S6-7iQ">
-                                        <rect key="frame" x="0.0" y="70" width="712" height="40"/>
+                                        <rect key="frame" x="0.0" y="70" width="704" height="40"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oS7-rn-1rS" customClass="CustomUITextField" customModule="Resume" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="0.0" width="632" height="40"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oS7-rn-1rS" customClass="CustomUITextField" customModule="Appointment" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="0.0" width="624" height="40"/>
                                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 <userDefinedRuntimeAttributes>
@@ -459,8 +460,8 @@
                                                     <outlet property="delegate" destination="WLa-nC-0wh" id="v2m-Yo-lJf"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT2-bT-yPh">
-                                                <rect key="frame" x="652" y="0.0" width="50" height="40"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uT2-bT-yPh">
+                                                <rect key="frame" x="644" y="0.0" width="50" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="6sc-3g-Dhc"/>
                                                     <constraint firstAttribute="height" constant="40" id="T9a-WG-4ay"/>
@@ -490,10 +491,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d4X-xh-cMo">
-                                        <rect key="frame" x="0.0" y="120" width="712" height="40"/>
+                                        <rect key="frame" x="0.0" y="120" width="704" height="40"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="33V-co-b5f" customClass="CustomUITextField" customModule="Resume" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="0.0" width="632" height="40"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="33V-co-b5f" customClass="CustomUITextField" customModule="Appointment" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="0.0" width="624" height="40"/>
                                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 <userDefinedRuntimeAttributes>
@@ -508,8 +509,8 @@
                                                     <outlet property="delegate" destination="WLa-nC-0wh" id="Uc9-zz-BJT"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8Q-1z-Vdz">
-                                                <rect key="frame" x="652" y="0.0" width="50" height="40"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8Q-1z-Vdz">
+                                                <rect key="frame" x="644" y="0.0" width="50" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="hNe-fH-Vlt"/>
                                                     <constraint firstAttribute="height" constant="40" id="yq4-ah-eqm"/>
@@ -539,7 +540,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password should contain at least 8 characters, one uppercase character, one lowercase character, one number." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCQ-QF-nsm">
-                                        <rect key="frame" x="10" y="182" width="692" height="35"/>
+                                        <rect key="frame" x="10" y="182" width="684" height="35"/>
                                         <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="13"/>
                                         <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -569,6 +570,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="FPe-nM-Eep"/>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="PJr-P2-P9E" firstAttribute="top" secondItem="FPe-nM-Eep" secondAttribute="top" id="G5y-En-C7E"/>
@@ -580,7 +582,6 @@
                             <constraint firstItem="PJr-P2-P9E" firstAttribute="leading" secondItem="FPe-nM-Eep" secondAttribute="leading" id="rcP-gS-3ya"/>
                             <constraint firstItem="PJr-P2-P9E" firstAttribute="leading" secondItem="FPe-nM-Eep" secondAttribute="leading" id="ucG-GN-JJW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="FPe-nM-Eep"/>
                     </view>
                     <navigationItem key="navigationItem" id="EaC-Un-OQ3"/>
                     <connections>
@@ -598,5 +599,8 @@
     <resources>
         <image name="Disclosure" width="128" height="128"/>
         <image name="edit" width="32" height="32"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
