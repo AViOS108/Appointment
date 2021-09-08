@@ -442,7 +442,9 @@ extension ERSideHomeViewController:UIGestureRecognizerDelegate{
         
         UILabel.labelUIHandling(label: lblAddHOc, text: " Add Ad hoc Appointment ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
         imgViewAddHOc.image = UIImage.init(named: "Adhoc")
-        imgViewAddHOc.contentMode = .scaleToFill
+        imgViewAddHOc.contentMode = .center
+        imgViewAddHOc.backgroundColor = .white
+        imgViewAddHOc.layer.cornerRadius =  (imgViewDuplicate.frame.width/2)
 
         
         lblNextDuplicate.textAlignment = .center
@@ -450,10 +452,17 @@ extension ERSideHomeViewController:UIGestureRecognizerDelegate{
         lblAddHOc.textAlignment = .center
 
         imgViewSetOpen.image = UIImage.init(named: "appoinmentHour")
-        imgViewSetOpen.contentMode = .scaleToFill
-        imgViewDuplicate.image = UIImage.init(named: "duplicate")
+        imgViewSetOpen.contentMode = .center
+        imgViewSetOpen.backgroundColor = .white
+        imgViewSetOpen.layer.cornerRadius =  (imgViewDuplicate.frame.width/2)
+
+
+
+        imgViewDuplicate.image = UIImage.init(named: "duplicatenew")
+        imgViewDuplicate.backgroundColor = .white
+        imgViewDuplicate.layer.cornerRadius =  (imgViewDuplicate.frame.width/2)
         viewContainer.backgroundColor = .clear
-        imgViewDuplicate.contentMode = .scaleToFill
+        imgViewDuplicate.contentMode = .center
 
         lblNextDuplicate.backgroundColor = ILColor.color(index: 25)
         lblSetOpen.backgroundColor = ILColor.color(index: 25)

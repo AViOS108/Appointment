@@ -227,7 +227,7 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             }
             UIButton.buttonUIHandling(button: btnLatestUploadView, text: "View", backgroundColor: .clear,textColor: ILColor.color(index: 23),fontType: fontMedium)
             btnLatestDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
-            btnLatestDownloadPrint.setImage(UIImage.init(named: "printImage"), for: .normal)
+            btnLatestDownloadPrint.setImage(UIImage.init(named: "printImageBlue"), for: .normal)
             btnLatestUploadView.isHidden = false
             
             btnLatestDownload.alpha = 1
@@ -242,7 +242,7 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             UILabel.labelUIHandling(label: lblLatestUploadResume, text: "N/A", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
             btnLatestUploadView.isHidden = true
             btnLatestDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
-            btnLatestDownloadPrint.setImage(UIImage.init(named: "printImage"), for: .normal)
+            btnLatestDownloadPrint.setImage(UIImage.init(named: "printImageBlue"), for: .normal)
             btnLatestDownload.alpha = 0.6
             btnLatestDownloadPrint.alpha = 0.6
             
@@ -273,7 +273,7 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             }
             
             btnHighestDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
-            btnHighestDownloadPrint.setImage(UIImage.init(named: "printImage"), for: .normal)
+            btnHighestDownloadPrint.setImage(UIImage.init(named: "printImageBlue"), for: .normal)
             btnHighestDownload.alpha = 1
             btnHighestDownloadPrint.alpha = 1
             btnHighestDownload.isUserInteractionEnabled = true
@@ -286,7 +286,7 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             UILabel.labelUIHandling(label: lblHighestUploadResume, text: "N/A", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
             btnHighestUploadView.isHidden = true
             btnHighestDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
-            btnHighestDownloadPrint.setImage(UIImage.init(named: "printImage"), for: .normal)
+            btnHighestDownloadPrint.setImage(UIImage.init(named: "printImageBlue"), for: .normal)
             btnHighestDownload.alpha = 0.6
             btnHighestDownloadPrint.alpha = 0.6
             btnHighestDownload.isUserInteractionEnabled = false
@@ -313,7 +313,7 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             
             btnApprovedUploadView.isHidden = false
             btnApprovedDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
-            btnApprovedDownloadPrint.setImage(UIImage.init(named: "printImage"), for: .normal)
+            btnApprovedDownloadPrint.setImage(UIImage.init(named: "printImageBlue"), for: .normal)
             btnApprovedDownload.alpha = 1
             btnApprovedDownloadPrint.alpha = 1
             btnApprovedDownload.isUserInteractionEnabled = true
@@ -325,7 +325,7 @@ class ERSideResumeListTableViewCell: UITableViewCell {
             UILabel.labelUIHandling(label: lblApprovedScore, text: "N/A", textColor: ILColor.color(index: 53), isBold: false, fontType: fontHeavy2)
             UILabel.labelUIHandling(label: lblApprovedUploadResume, text: "N/A", textColor: ILColor.color(index: 53), isBold: false, fontType: fontMedium)
             btnApprovedDownload.setImage(UIImage.init(named: "downloadImage"), for: .normal)
-            btnApprovedDownloadPrint.setImage(UIImage.init(named: "printImage"), for: .normal)
+            btnApprovedDownloadPrint.setImage(UIImage.init(named: "printImageBlue"), for: .normal)
             btnApprovedUploadView.isHidden = true
             btnApprovedDownload.alpha = 0.6
             btnApprovedDownloadPrint.alpha = 0.6
