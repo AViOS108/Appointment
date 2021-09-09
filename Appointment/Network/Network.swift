@@ -358,10 +358,11 @@ class Network {
     
     func makeApiDownloadFile(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Dictionary<String,Any>) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
         
+        let downloadedURL =   URL.init(string: url)
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
             var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             // the name of the file here I kept is yourFileName with appended extension
-               documentsURL.appendPathComponent("yourFileName"+".pdf")
+               documentsURL.appendPathComponent((downloadedURL?.lastPathComponent ?? "Resume"))
                return (documentsURL, [.removePreviousFile])
         }
         if(!addHeader){

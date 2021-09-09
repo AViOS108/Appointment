@@ -266,6 +266,10 @@ import UIKit
             //yellow
             return UIColor.init(red: 227/255, green: 227/255, blue: 227/255, alpha: 1.0)
         }
+        else if index == 62 {
+            //yellow
+            return UIColor.init(red: 0/255, green: 13/255, blue: 18/255, alpha: 1.0)
+        }
         return UIColor.clear
     }
 }

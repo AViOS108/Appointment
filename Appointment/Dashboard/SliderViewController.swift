@@ -21,8 +21,8 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
     
     @IBOutlet weak var viewInfo: UIView!
     @IBOutlet weak var tblview: UITableView!
-    var arrImage = ["my event black","my event black","my event black","Logout"];
-    var arrName = ["Profile", "My Event","History","Logout"];
+    var arrImage = ["user","noun_schedule_3370222","noun_schedule_694983","noun_logout_1153738-2"];
+    var arrName = ["Profile", "Scheduled Appointments","Set Advising Appointment Hour","Logout"];
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
@@ -90,12 +90,19 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
             firstName = fn as! String
         }
 
+        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
+        let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
         if let lastName = UserDefaults.standard.object(forKey: "lastName") {
-            nameLabel.text = "\(firstName) \(lastName)"
+            
+                UILabel.labelUIHandling(label: nameLabel, text: "\(firstName) \(lastName)", textColor: ILColor.color(index: 62), isBold: false, fontType: fontHeavy)
+            
         }else{
             nameLabel.text = "\(firstName)"
+            UILabel.labelUIHandling(label: nameLabel, text: "\(firstName)", textColor: ILColor.color(index: 62), isBold: false, fontType: fontHeavy)
+
         }
-        emailLabel.text = UserDefaults.standard.object(forKey: "userEmail") as? String
+
+        UILabel.labelUIHandling(label: emailLabel, text: UserDefaults.standard.object(forKey: "userEmail") as? String ?? "", textColor: ILColor.color(index: 62), isBold: false, fontType: fontBook)
 
         activityIndicator.startAnimating()
         if let profUrl = profileUrl, let url = URL(string: profUrl) {
@@ -146,9 +153,9 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
         case 0:
             delegateRedirection.redirectToParticularViewController(type: .profile)
         case 1:
-            delegateRedirection.redirectToParticularViewController(type: .profile)
+            delegateRedirection.redirectToParticularViewController(type: .adhoc)
         case 2:
-            delegateRedirection.redirectToParticularViewController(type: .profile)
+            delegateRedirection.redirectToParticularViewController(type: .setAppo)
         case 3:
             delegateRedirection.redirectToParticularViewController(type: .logOut)
 

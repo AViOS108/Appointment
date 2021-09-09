@@ -113,7 +113,7 @@
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iHe-Pu-0s9">
-                                <rect key="frame" x="304" y="598" width="93" height="130"/>
+                                <rect key="frame" x="309" y="598" width="88" height="130"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5VH-dm-28q">
                                         <rect key="frame" x="2" y="0.0" width="42" height="36.5"/>
@@ -122,14 +122,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appoinmentHour" translatesAutoresizingMaskIntoConstraints="NO" id="ZXS-zc-pNH">
-                                        <rect key="frame" x="48" y="-4" width="45" height="45"/>
+                                        <rect key="frame" x="48" y="-1.5" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="LxD-5b-fNd"/>
-                                            <constraint firstAttribute="width" constant="45" id="wdY-yd-b5c"/>
+                                            <constraint firstAttribute="height" constant="40" id="LxD-5b-fNd"/>
+                                            <constraint firstAttribute="width" constant="40" id="wdY-yd-b5c"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="21n-j7-N7G">
-                                        <rect key="frame" x="0.0" y="0.0" width="93" height="36.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="88" height="36.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <action selector="btnAdHocTapped:" destination="E44-M0-R4Q" eventType="touchUpInside" id="UEz-Gx-vkw"/>
@@ -143,14 +143,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="duplicate" translatesAutoresizingMaskIntoConstraints="NO" id="wKA-W5-Qac">
-                                        <rect key="frame" x="48" y="42.5" width="45" height="45"/>
+                                        <rect key="frame" x="48" y="45" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="45" id="d4a-jO-X6A"/>
-                                            <constraint firstAttribute="height" constant="45" id="vEw-xM-Yrl"/>
+                                            <constraint firstAttribute="width" constant="40" id="d4a-jO-X6A"/>
+                                            <constraint firstAttribute="height" constant="40" id="vEw-xM-Yrl"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJx-FW-4ST">
-                                        <rect key="frame" x="1" y="46.5" width="91" height="37"/>
+                                        <rect key="frame" x="1" y="46.5" width="86" height="37"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <action selector="btnSetOpenHourTaped:" destination="HgY-kr-2M1" eventType="touchUpInside" id="BBt-qr-j20"/>
@@ -164,14 +164,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="duplicate" translatesAutoresizingMaskIntoConstraints="NO" id="SY7-4X-xPI">
-                                        <rect key="frame" x="48" y="89" width="45" height="45"/>
+                                        <rect key="frame" x="48" y="91.5" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="5jD-bx-DgP"/>
-                                            <constraint firstAttribute="width" constant="45" id="gjG-se-ZK9"/>
+                                            <constraint firstAttribute="height" constant="40" id="5jD-bx-DgP"/>
+                                            <constraint firstAttribute="width" constant="40" id="gjG-se-ZK9"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yg9-oO-72y">
-                                        <rect key="frame" x="1" y="93.5" width="91" height="36.5"/>
+                                        <rect key="frame" x="1" y="93.5" width="86" height="36.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <action selector="btnDuplicateTapped:" destination="HgY-kr-2M1" eventType="touchUpInside" id="PBa-Nw-XBU"/>

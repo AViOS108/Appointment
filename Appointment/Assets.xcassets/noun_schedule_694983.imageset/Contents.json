@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Profile@2x-1.png",
+      "filename" : "noun_schedule_694983.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Profile@2x.png",
+      "filename" : "noun_schedule_694983@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Profile@3x.png",
+      "filename" : "noun_schedule_694983@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

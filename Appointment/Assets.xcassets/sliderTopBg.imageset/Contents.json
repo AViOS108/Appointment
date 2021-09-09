@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Profile@2x-1.png",
+      "filename" : "sliderTopBg.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Profile@2x.png",
+      "filename" : "sliderTopBg@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Profile@3x.png",
+      "filename" : "sliderTopBg@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

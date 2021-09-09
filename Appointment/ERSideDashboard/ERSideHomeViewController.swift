@@ -395,6 +395,19 @@ extension ERSideHomeViewController : ERHomeViewModalVMDelegate,ERSideHeaderColle
             let wvc = UIStoryboard.profileView()
             self.navigationController?.pushViewController(wvc, animated: true)
             break
+            
+        case .adhoc:
+            let objAdhocFlowFirstViewController = AdhocFlowFirstViewController.init(nibName: "AdhocFlowFirstViewController", bundle: nil)
+            objAdhocFlowFirstViewController.dateSelected = self.dateSelected
+            self.navigationController?.pushViewController(objAdhocFlowFirstViewController, animated: false)
+            break
+            
+        case .setAppo:
+            let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
+            let navigationController = UINavigationController.init(rootViewController: objERSideOpenHourListVC)
+            self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
+            break
+            
         default:
             break;
         }
