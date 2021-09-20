@@ -46,7 +46,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
         else{
             if (appointmentModal.state == "confirmed" && appointmentModal.requests![0].hasAttended == 1)
             {
-                if let feedback = appointmentModal.requests![0].feedback{
+                if appointmentModal.requests![0].feedback != nil{
                     
                 }
                 else{
@@ -80,7 +80,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
 
             } else if (appointmentModal.typeERSide ==  1) {
                
-                if  GeneralUtility.isPastDate(date: appointmentModal.startDatetime!) && !GeneralUtility.isPastDate(date: appointmentModal.endDatetime!) {
+                if  GeneralUtility.isPastDate(date: appointmentModal.startDatetimeUTC!) && !GeneralUtility.isPastDate(date: appointmentModal.endDatetimeUTC!) {
                     
                     UILabel.labelUIHandling(label: lblStatus, text: "Ongoing", textColor:ILColor.color(index: 14) , isBold: false, fontType: fontMedium)
 
@@ -96,7 +96,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                   }
             else if (appointmentModal.typeERSide == 2) {
                 
-                    if (GeneralUtility.isPastDate(date: appointmentModal.startDatetime!)) {
+                    if (GeneralUtility.isPastDate(date: appointmentModal.startDatetimeUTC!)) {
                         UILabel.labelUIHandling(label: lblStatus, text: "Request Expired", textColor:ILColor.color(index: 12) , isBold: false, fontType: fontMedium)
                     } else if (appointmentModal.requests?[0].state == "pending") {
                         UILabel.labelUIHandling(label: lblStatus, text: "Pending", textColor:ILColor.color(index: 60) , isBold: false, fontType: fontMedium)
@@ -247,30 +247,50 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
             btnFeedback.isUserInteractionEnabled = true
             btnFeedback.isEnabled = true
            
-       
-            
-            if self.appointmentModal.typeERSide == 1{
-                btnFeedback.isHidden = false
-                btnCancelAppoHeightConstraints.constant = 30
-            }
-            else{
-                if (appointmentModal.state == "confirmed" && appointmentModal.requests![0].hasAttended == 1)
-                {
-                    if let feedback = appointmentModal.requests![0].feedback{
+            if (appointmentModal.requests?[0].state == "rejected") {
+                btnFeedback.isHidden = true
+                btnCancelAppoHeightConstraints.constant = 0
+
+           }
+            else
+            {
+                if self.appointmentModal.typeERSide == 1{
+                    
+                    if  GeneralUtility.isPastDate(date: appointmentModal.startDatetimeUTC!) && !GeneralUtility.isPastDate(date: appointmentModal.endDatetimeUTC!) {
+                        
+                        btnFeedback.isHidden = true
+                        btnCancelAppoHeightConstraints.constant = 0
+         
+                    }
+                    else
+                    {
+                        btnFeedback.isHidden = false
+                        btnCancelAppoHeightConstraints.constant = 30
+
+                    }
+                    
+                }
+                else{
+                    if (appointmentModal.state == "confirmed" && appointmentModal.requests![0].hasAttended == 1)
+                    {
+                        if let feedback = appointmentModal.requests![0].feedback{
+                            btnFeedback.isHidden = true
+                            btnCancelAppoHeightConstraints.constant = 0
+                        }
+                        else{
+                            btnFeedback.isHidden = false
+                            btnCancelAppoHeightConstraints.constant = 30
+                            UIButton.buttonUIHandling(button: btnFeedback, text: "Leave a Feedback", backgroundColor:.clear ,textColor: ILColor.color(index: 23),fontType:fontHeavy2)
+                        }
+                    }
+                    else{
                         btnFeedback.isHidden = true
                         btnCancelAppoHeightConstraints.constant = 0
                     }
-                    else{
-                        btnFeedback.isHidden = false
-                        btnCancelAppoHeightConstraints.constant = 30
-                        UIButton.buttonUIHandling(button: btnFeedback, text: "Leave a Feedback", backgroundColor:.clear ,textColor: ILColor.color(index: 23),fontType:fontHeavy2)
-                    }
-                }
-                else{
-                    btnFeedback.isHidden = true
-                    btnCancelAppoHeightConstraints.constant = 0
                 }
             }
+            
+           
 
             let monthI   = ["Jan","Feb","Mar","Apr","May","Jun","July","Aug","Sep","Oct","Nov","Dec"]
 

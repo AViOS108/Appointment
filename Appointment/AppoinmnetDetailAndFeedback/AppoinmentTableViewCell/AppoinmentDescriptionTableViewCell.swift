@@ -161,7 +161,11 @@ class AppoinmentDescriptionTableViewCell: UITableViewCell {
                 
             }
                    
-            
+            let image5Attachment = NSTextAttachment()
+            image5Attachment.image = UIImage(named: "")
+            image5Attachment.bounds = CGRect.init(x: 0, y: -5, width: 12, height: 1)
+            // wrap the attachment in its own attributed string so we can append it
+            let imageSpaceHorizontal = NSAttributedString(attachment: image5Attachment)
             
             let image1Attachment = NSTextAttachment()
             image1Attachment.image = UIImage(named: "Zoom")

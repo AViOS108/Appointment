@@ -265,8 +265,55 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
         }
     }
 
+    func uploadImageToServerStudent(image: UIImage){
+        addActivityIndicator(show: true)
+        let data = image.jpegData(compressionQuality: 0.50) as NSData?
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaultsDataSource(key: "accessToken").readData()!)",
+                                                  "Content-Type": "multipart/form-data" ]
+        let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+        let param = ["_method":"patch",
+                     ParamName.PARAMCSRFTOKEN : csrftoken]
+        
+       
+        Alamofire.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(data! as Data, withName: "profile_pic", fileName: "image.jpg", mimeType: "image/jpeg")
+            for (key, value) in param {
+                multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+            }
+            
+            
+        },to: Urls().uploadProfilePicture(),method: .post,
+          headers: headers){ (result) in
+            switch result {
+            case .success(let upload, _, _):
+                upload.uploadProgress(closure: { (progress) in
+                    
+                })
+                upload.responseJSON { response in
+                    switch response.result {
+                    case .success(let value):
+                        let responseJSON = JSON(value)
+                        UserDefaultsDataSource(key: "userProfile").writeData(responseJSON["message"].string)
+                        self.setProfilePicture()
+
+
+                    case .failure(let error):
+                        if LogoutHandler.shouldLogout(errorCode: error._code){
+                            LogoutHandler.invalidateCurrentUser()
+                        }
+                        CommonFunctions().showError(title: "Error", message: Network().errorMsgFailure(error._code))
+                    }
+                }
+            case .failure(let encodingError):
+                if LogoutHandler.shouldLogout(errorCode: encodingError._code){
+                    LogoutHandler.invalidateCurrentUser()
+                }
+                CommonFunctions().showError(title: "Error", message: Network().errorMsgFailure(encodingError._code))
+            }
+        }
+    }
     
-    func uploadImageToServer(image: UIImage){
+    func uploadImageToServerER(image: UIImage){
         addActivityIndicator(show: true)
         let data = image.jpegData(compressionQuality: 0.50) as NSData?
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaultsDataSource(key: "accessToken").readData()!)",
@@ -310,6 +357,19 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
                 }
                 CommonFunctions().showError(title: "Error", message: Network().errorMsgFailure(encodingError._code))
             }
+        }
+    }
+    
+    
+    func uploadImageToServer(image: UIImage){
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            self.uploadImageToServerStudent(image: image)
+            
+        }
+        else
+        {
+            self.uploadImageToServerER(image: image)
         }
     }
     

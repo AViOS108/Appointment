@@ -21,8 +21,8 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
     
     @IBOutlet weak var viewInfo: UIView!
     @IBOutlet weak var tblview: UITableView!
-    var arrImage = ["user","noun_schedule_3370222","noun_schedule_694983","noun_logout_1153738-2"];
-    var arrName = ["Profile", "Scheduled Appointments","Set Advising Appointment Hour","Logout"];
+    var arrImage = [String]();
+    var arrName = [String]();
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
@@ -53,6 +53,20 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
         tblview.separatorStyle = .none
         
         self.profileUpdate()
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            arrImage = ["user","noun_schedule_3370222","noun_logout_1153738-2"];
+             arrName = ["Profile", "Scheduled Appointments","Logout"];
+        }
+        else
+        {
+            arrImage = ["user","noun_schedule_3370222","noun_schedule_694983","noun_logout_1153738-2"];
+             arrName = ["Profile", "Scheduled Appointments","Set Advising Appointment Hour","Logout"];
+        }
+        tblview.reloadData()
+
+        
     }
     
     func createBezierPath() {
@@ -153,9 +167,27 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
         case 0:
             delegateRedirection.redirectToParticularViewController(type: .profile)
         case 1:
-            delegateRedirection.redirectToParticularViewController(type: .adhoc)
+            
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+            if isStudent ?? false {
+                delegateRedirection.redirectToParticularViewController(type: .coachSelection)
+            }
+            else
+            {
+                delegateRedirection.redirectToParticularViewController(type: .adhoc)
+            }
+            
         case 2:
-            delegateRedirection.redirectToParticularViewController(type: .setAppo)
+            
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+            if isStudent ?? false {
+                delegateRedirection.redirectToParticularViewController(type: .logOut)
+            }
+            else
+            {
+                delegateRedirection.redirectToParticularViewController(type: .setAppo)
+            }
+            
         case 3:
             delegateRedirection.redirectToParticularViewController(type: .logOut)
 

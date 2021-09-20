@@ -169,11 +169,11 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Leave a Feedback for this session")
         
         
-        if self.appoinmentDetailModalObj != nil{
-            
-            var coachExpertise = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.coachExpertise ?? "0")
-            var overallExperience = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.overallExperience ?? "0")
-            var coachHelpfulness = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.coachHelpfulness ?? "0")
+        if self.appoinmentDetailModalObj?.requests?[0].feedback != nil{
+
+            let coachExpertise = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.coachExpertise ?? "0")
+            let overallExperience = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.overallExperience ?? "0")
+            let coachHelpfulness = Int(self.appoinmentDetailModalObj?.requests?[0].feedback?.coachHelpfulness ?? "0")
 
             self.btnSubmit.isHidden = true
             
@@ -302,7 +302,7 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
 
 
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+        _ =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
 
 
         self.textWithAstrikMark(lblSpecific: lblOverallExp, text: "Overall Experience for the sessions")

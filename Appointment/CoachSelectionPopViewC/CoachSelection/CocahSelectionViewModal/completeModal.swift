@@ -136,4 +136,23 @@ class CoachSelectionViewModal {
         }
     }
     
+    
+    func modalConverion(objERSideAppointmentModalNewResult : ERSideAppointmentModalNewResult) -> AppoinmentDetailModalNew{
+        
+        var objAppoinmentDetailModalNew = AppoinmentDetailModalNew.init(id: objERSideAppointmentModalNewResult.id, startDatetimeUTC: objERSideAppointmentModalNewResult.startDatetimeUTC, endDatetimeUTC: objERSideAppointmentModalNewResult.endDatetimeUTC, timezone: objERSideAppointmentModalNewResult.timezone, location: objERSideAppointmentModalNewResult.location, locationType: objERSideAppointmentModalNewResult.locationType, state: objERSideAppointmentModalNewResult.state, coachID: objERSideAppointmentModalNewResult.coachID, cancellationReason: objERSideAppointmentModalNewResult.cancellationReason, requests: nil, nextsteps: nil, appointmentConfig: objERSideAppointmentModalNewResult.appointmentConfig, title: objERSideAppointmentModalNewResult.title, type: objERSideAppointmentModalNewResult.type, coachDetails: objERSideAppointmentModalNewResult.coachDetails, startDatetime: objERSideAppointmentModalNewResult.startDatetime, endDatetime: objERSideAppointmentModalNewResult.endDatetime, inTimezone: objERSideAppointmentModalNewResult.timezone, coachDetailApi: nil)
+        
+        var requestArr = [RequestER]()
+        if objERSideAppointmentModalNewResult.requests != nil && objERSideAppointmentModalNewResult.requests?.count ?? 0 > 0{
+            var request = objERSideAppointmentModalNewResult.requests?[0]
+            
+            var objRequest : RequestER  =  RequestER.init(state: request?.state, attachmentInfo: request?.attachmentInfo, id: request?.id, targetIndustries: request?.targetIndustries, studentID: request?.studentID, purposes: nil, createdByID: request?.createdByID, reason: request?.reason, targetFunctions: request?.targetIndustries, additionalComments: request?.additionalComments, createdByType: request?.createdByType, hasAttended: request?.hasAttended, studentDetails: request?.studentDetails, appointmentID:  request?.appointmentID, targetCompanies:  request?.targetCompanies, feedback: request?.feedback)
+            requestArr.append(objRequest)
+            objAppoinmentDetailModalNew.requests = requestArr
+        }
+                
+        return objAppoinmentDetailModalNew
+    }
+    
+    
+    
 }

@@ -210,6 +210,9 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         
     }
     
+    
+    
+    
     override  func calenderClicked(sender: UIButton) {
         
         switch userTypeHome {
@@ -498,6 +501,19 @@ extension HomeViewController : HomeViewcontrollerRedirection{
                         let wvc = UIStoryboard.profileView()
                         self.navigationController?.pushViewController(wvc, animated: true)
             break
+            
+        case .coachSelection:
+        
+        self.redirection(redirectionType: .coachSelection)
+
+        break
+            
+        case .logOut:
+            GeneralUtility.alertViewLogout(title: "".localized(), message: "LOGOUT".localized(), viewController: self, buttons: ["Cancel","Ok"]);
+            break
+            
+            
+            
         case .about:
             break
         default:
@@ -558,6 +574,8 @@ extension HomeViewController: ERCancelViewControllerDelegate {
         case .feedback:
             let objFeedbackViewController = FeedbackViewController.init(nibName: "FeedbackViewController", bundle: nil)
             objFeedbackViewController.delegate = self
+            objFeedbackViewController.appoinmentDetailModalObj =   CoachSelectionViewModal().modalConverion(objERSideAppointmentModalNewResult: self.selectedAppointmentModal)
+
             objFeedbackViewController.modalPresentationStyle = .overFullScreen
             self.navigationController?.pushViewController(objFeedbackViewController, animated: false)
             break

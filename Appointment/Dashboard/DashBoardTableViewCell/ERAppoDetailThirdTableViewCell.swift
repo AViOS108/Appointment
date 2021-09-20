@@ -23,11 +23,22 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
     @IBOutlet weak var btnViewFeedback: UIButton!
     @IBAction func btnViewFeedbackTapped(_ sender: Any) {
         
-        let objFeedbackViewController = FeedbackViewController.init(nibName: "FeedbackViewController", bundle: nil)
-        objFeedbackViewController.delegate = viewController as? feedbackViewControllerDelegate
-        objFeedbackViewController.appoinmentDetailModalObj = self.appoinmentDetailModalObj
-        objFeedbackViewController.modalPresentationStyle = .overFullScreen
-        viewController.navigationController?.pushViewController(objFeedbackViewController, animated: false)
+        if self.appoinmentDetailModalObj?.requests?[0].feedback != nil{
+            let objFeedbackViewController = FeedbackViewController.init(nibName: "FeedbackViewController", bundle: nil)
+            objFeedbackViewController.delegate = viewController as? feedbackViewControllerDelegate
+            objFeedbackViewController.appoinmentDetailModalObj = self.appoinmentDetailModalObj
+            objFeedbackViewController.modalPresentationStyle = .overFullScreen
+            viewController.navigationController?.pushViewController(objFeedbackViewController, animated: false)
+        }
+        else{
+            
+            let objFeedbackViewController = FeedbackViewController.init(nibName: "FeedbackViewController", bundle: nil)
+            objFeedbackViewController.delegate = viewController as? feedbackViewControllerDelegate
+            objFeedbackViewController.appoinmentDetailModalObj = self.appoinmentDetailModalObj
+
+            objFeedbackViewController.modalPresentationStyle = .overFullScreen
+            viewController.navigationController?.pushViewController(objFeedbackViewController, animated: false)
+        }
     }
     
     @IBAction func btnCoachPreTapped(_ sender: UIButton) {
@@ -74,8 +85,15 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
             
             btnViewFeedback.isHidden = false
             let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
+            if self.appoinmentDetailModalObj?.requests?[0].feedback != nil{
+                UIButton.buttonUIHandling(button: btnViewFeedback, text: "View Feedback", backgroundColor: .clear, textColor: ILColor.color(index: 23), fontType: fontHeavy)
 
-            UIButton.buttonUIHandling(button: btnViewFeedback, text: "View Feedback", backgroundColor: .clear, textColor: ILColor.color(index: 23), fontType: fontHeavy)
+            }
+            else
+            {
+                UIButton.buttonUIHandling(button: btnViewFeedback, text: "Leave a Feedback", backgroundColor: .clear, textColor: ILColor.color(index: 23), fontType: fontHeavy)
+
+            }
             
             feedbackText = "Feedback"
         }

@@ -124,15 +124,7 @@ class GeneralUtility {
         calenderButton.setImage(UIImage.init(named: "Calendar"), for: .normal)
         let calender =  UIBarButtonItem(customView: calenderButton)
         
-        
-        
-        let logOutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
-        logOutButton.contentMode = .scaleAspectFit
-        //        searchButton.backgroundColor = .red
-        logOutButton.addTarget(viewController, action: #selector(SuperViewController.logout(sender:)), for: .touchUpInside)
-        logOutButton.setImage(UIImage.init(named: "logout-xxl"), for: .normal)
-        let logOut =  UIBarButtonItem(customView: logOutButton)
-        
+
         
         
         let hamburger = UIButton(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
@@ -152,7 +144,7 @@ class GeneralUtility {
         
         viewController.navigationController?.navigationBar.topItem?.titleView = nil  ;
         
-        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([logOut,calender], animated: true)
+        viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([calender], animated: true)
         viewController.navigationController?.navigationBar.topItem?.title = title;
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
