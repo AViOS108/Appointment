@@ -427,7 +427,7 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
             
             self.delegate.refreshSelectionView(isBack: false, results: self.results)
             
-            GeneralUtility.alertViewPopTooneViewController(title: "Success", message: "Adhoc Appointment Created Successfully !!!", viewController: self, buttons: ["Ok"])
+            GeneralUtility.alertViewPopTooneViewController(title: "Success", message: "Appointment Confirmed !!!", viewController: self, buttons: ["Ok"])
 
             
             
