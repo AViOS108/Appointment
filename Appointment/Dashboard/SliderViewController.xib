@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -51,11 +51,11 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yoQ-Na-Apg">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="224"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JCR-D3-A77">
-                                    <rect key="frame" x="69" y="164" width="337" height="52"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="JCR-D3-A77">
+                                    <rect key="frame" x="88" y="162" width="318" height="43"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jon Doe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cmp-G2-UFX">
-                                            <rect key="frame" x="0.0" y="0.0" width="337" height="25"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jon Doe" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cmp-G2-UFX">
+                                            <rect key="frame" x="0.0" y="0.0" width="318" height="25"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="uBL-2p-PvE"/>
@@ -68,7 +68,7 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jon.doe@vmock.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2S5-EV-N8B">
-                                            <rect key="frame" x="0.0" y="33" width="337" height="19"/>
+                                            <rect key="frame" x="0.0" y="24" width="318" height="19"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -81,20 +81,20 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </stackView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfileBG" translatesAutoresizingMaskIntoConstraints="NO" id="zVs-ZS-ddL">
-                                    <rect key="frame" x="8" y="180" width="55" height="55"/>
+                                    <rect key="frame" x="8" y="162" width="72" height="72"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="55" id="RIE-3g-6Xo"/>
-                                        <constraint firstAttribute="height" constant="55" id="ewM-f5-xPz"/>
+                                        <constraint firstAttribute="width" constant="72" id="RIE-3g-6Xo"/>
+                                        <constraint firstAttribute="height" constant="72" id="ewM-f5-xPz"/>
                                     </constraints>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="JCR-D3-A77" secondAttribute="trailing" constant="8" id="9ub-it-6yH"/>
-                                <constraint firstItem="JCR-D3-A77" firstAttribute="leading" secondItem="zVs-ZS-ddL" secondAttribute="trailing" constant="6" id="ElQ-6Y-qAc"/>
+                                <constraint firstItem="zVs-ZS-ddL" firstAttribute="top" secondItem="JCR-D3-A77" secondAttribute="top" id="BF9-j6-7Xi"/>
+                                <constraint firstItem="JCR-D3-A77" firstAttribute="leading" secondItem="zVs-ZS-ddL" secondAttribute="trailing" constant="8" id="ElQ-6Y-qAc"/>
                                 <constraint firstItem="zVs-ZS-ddL" firstAttribute="leading" secondItem="yoQ-Na-Apg" secondAttribute="leading" constant="8" id="Yxf-C3-8UA"/>
-                                <constraint firstAttribute="bottom" secondItem="JCR-D3-A77" secondAttribute="bottom" constant="8" id="kFB-ov-hMP"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -105,7 +105,7 @@
                         <constraint firstAttribute="trailing" secondItem="yoQ-Na-Apg" secondAttribute="trailing" id="DcI-wa-9XR"/>
                         <constraint firstItem="cJc-mN-GAO" firstAttribute="top" secondItem="CfB-4s-6pp" secondAttribute="top" id="HjT-Do-wAR"/>
                         <constraint firstItem="yoQ-Na-Apg" firstAttribute="centerY" secondItem="CfB-4s-6pp" secondAttribute="centerY" id="RFa-J2-px5"/>
-                        <constraint firstItem="zVs-ZS-ddL" firstAttribute="bottom" secondItem="cJc-mN-GAO" secondAttribute="bottom" constant="11" id="Zru-rG-baf"/>
+                        <constraint firstItem="zVs-ZS-ddL" firstAttribute="bottom" secondItem="cJc-mN-GAO" secondAttribute="bottom" constant="10" id="Zru-rG-baf"/>
                         <constraint firstItem="yoQ-Na-Apg" firstAttribute="leading" secondItem="CfB-4s-6pp" secondAttribute="leading" id="akJ-hY-AfY"/>
                         <constraint firstAttribute="trailing" secondItem="cJc-mN-GAO" secondAttribute="trailing" id="cBw-Ze-N4R"/>
                         <constraint firstItem="cJc-mN-GAO" firstAttribute="leading" secondItem="CfB-4s-6pp" secondAttribute="leading" id="d6p-66-kYX"/>

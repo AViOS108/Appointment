@@ -80,7 +80,7 @@ class NextStepCollectionViewCell: UICollectionViewCell {
     func dueDateAndButtonLogic() {
        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE11)
         let dueDate =
-            GeneralUtility.currentDateDetailType4(emiDate: self.nextModalObj?.dueDatetime ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy")
+            GeneralUtility.currentDateDetailType4(emiDate: self.nextModalObj?.dueDatetime ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM, yyyy")
         
         let dueDateComp = "Due Date: " + dueDate;
         

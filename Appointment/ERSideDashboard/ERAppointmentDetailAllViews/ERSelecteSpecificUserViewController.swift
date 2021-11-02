@@ -15,9 +15,28 @@ protocol ERSelecteSpecificUserViewControllerDelegate {
 
 class ERSelecteSpecificUserViewController: SuperViewController {
     
+    @IBAction func btnClearTapped(_ sender: Any) {
+        
+        let arrStudentListView = self.objERSideNotesSpecificUserModal!.items!
+        var index = 0
+        for var objStudentDetailModalItem in arrStudentListView{
+            self.objERSideNotesSpecificUserModalSelected?.items?.append(objStudentDetailModalItem)
+            objStudentDetailModalItem.isSelected = false
+            self.objERSideNotesSpecificUserModal?.items?.remove(at: index);
+            self.objERSideNotesSpecificUserModal?.items?.insert(objStudentDetailModalItem, at: index)
+            index = index + 1;
+        }
+        self.objERSideNotesSpecificUserModalSelected = ERSideNotesSpecificUserModal.init(items: [ERSideNotesSpecificUserModalItem](), total: 0)
+        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Specific User", numberStudent: "0")
+
+        self.tblView.reloadData()
+        
+    }
+    @IBOutlet weak var btnClear: UIButton!
     @IBOutlet weak var viewSearch: UIView!
     var activityIndicator: ActivityIndicatorView?
     
+    @IBOutlet weak var viewOuter: UIView!
     @IBOutlet weak var btnSelectAll: UIButton!
     
     var delegate : ERSelecteSpecificUserViewControllerDelegate!
@@ -66,7 +85,6 @@ class ERSelecteSpecificUserViewController: SuperViewController {
         
         tblView.register(UINib.init(nibName: "ERSideSpecificUserTableViewCell", bundle: nil), forCellReuseIdentifier: "ERSideSpecificUserTableViewCell")
         btnAddStudent.isHidden = true
-        
         if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         {
             UILabel.labelUIHandling(label: lblSelectAll, text: "Select all", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)
@@ -76,9 +94,13 @@ class ERSelecteSpecificUserViewController: SuperViewController {
         txtSearchBar.isTranslucent = true
         txtSearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         
-        txtSearchBar.placeholder = "Search Student"
+        txtSearchBar.placeholder = "Search and click to select users"
         txtSearchBar.backgroundColor = .clear
         self.customization();
+        viewSearch.isHidden = true
+        viewOuter.isHidden = true
+        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
+        UIButton.buttonUIHandling(button: btnClear, text: "Clear", backgroundColor: .clear, textColor: ILColor.color(index: 39),  fontType: fontMedium)
         callViewModal()
         // Do any additional setup after loading the view.
     }
@@ -96,14 +118,14 @@ class ERSelecteSpecificUserViewController: SuperViewController {
         if let selected = self.objERSideNotesSpecificUserModalSelected{
            let selectedCount = selected.items?.count ?? 0
             if selectedCount > 0 {
-                GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "\(selectedCount)")
+                GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Specific User", numberStudent: "\(selectedCount)")
             }
             else{
-                GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "0")
+                GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Specific User", numberStudent: "0")
             }
         }
         else{
-            GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "0")
+            GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Specific User", numberStudent: "0")
         }
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16)
         UIButton.buttonUIHandling(button: btnAddStudent, text: "Add", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3, fontType: fontHeavy)
@@ -144,6 +166,11 @@ class ERSelecteSpecificUserViewController: SuperViewController {
         tblView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        viewOuter.cornerRadius = 3.0
+        viewOuter.backgroundColor = .white
+    }
+    
     func callViewModal(){
         activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
         
@@ -163,6 +190,8 @@ class ERSelecteSpecificUserViewController: SuperViewController {
                 self.objERSideNotesSpecificUserModal = try JSONDecoder().decode(ERSideNotesSpecificUserModal    .self, from: data)
                 self.modalRedefine();
                 self.assignTblViewDataSource()
+                self.viewSearch.isHidden = false
+                self.viewOuter.isHidden = false
             } catch  {
                 CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
                 
@@ -175,15 +204,7 @@ class ERSelecteSpecificUserViewController: SuperViewController {
     }
     
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+   
     
 }
 
@@ -215,7 +236,7 @@ extension ERSelecteSpecificUserViewController: ERSideSpecificUserTableViewCellDe
         }
         
         
-        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "\(self.objERSideNotesSpecificUserModalSelected.items?.count ?? 0)")
+        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Specific User", numberStudent: "\(self.objERSideNotesSpecificUserModalSelected.items?.count ?? 0)")
 //        delegate.sendselectedUser(objERSideNotesSpecificUserModalSelected: objERSideNotesSpecificUserModalSelected)
 
         
@@ -238,14 +259,14 @@ extension ERSelecteSpecificUserViewController: ERSideSpecificUserTableViewCellDe
         if let selected = self.objERSideNotesSpecificUserModalSelected{
                          let selectedCount = selected.items?.count ?? 0
                           if selectedCount > 0 {
-                              GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "\(selectedCount)")
+                              GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Specific User", numberStudent: "\(selectedCount)")
                           }
                           else{
-                              GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "0")
+                              GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Specific User", numberStudent: "0")
                           }
                       }
                       else{
-                          GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select User", numberStudent: "0")
+                          GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Specific User", numberStudent: "0")
                       }
         
     }

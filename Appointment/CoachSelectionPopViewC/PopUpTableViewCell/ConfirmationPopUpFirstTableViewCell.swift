@@ -60,7 +60,7 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
             sender.superview?.convert(sender.frame, to: nil)
             
         var placeholder = "Select"
-        if indexPath.row == 4{
+        if indexPath.row == 5{
             placeholder = "Type minimum 2 characters to search"
         }
         else
@@ -88,7 +88,7 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         searchViewController.arrNameSurvey = self.arrNameSurvey.filter({$0.isSelected == false})
         searchViewController.txtfieldRect = changedFrame
         searchViewController.isAPiHIt = isAPiHIt
-        if self.indexPath.row == 0{
+        if self.indexPath.row == 1{
             searchViewController.showWithoutText = true
         }
         else{
@@ -112,7 +112,7 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         
         var placeholder = "Select"
-        if indexPath.row == 4{
+        if indexPath.row == 5{
             placeholder = "Type minimum 2 characters to search"
         }
         else
@@ -137,14 +137,14 @@ class ConfirmationPopUpFirstTableViewCell: UITableViewCell {
         
         if let fontNextMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
                {
-                   let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: arraYHeader[indexPath.row], _returnType: String.self)
+                   let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: arraYHeader[indexPath.row - 1], _returnType: String.self)
                        , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontNextMedium]);
                    let strType = NSAttributedString.init(string: " ⃰"
                     , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontNextMedium]);
                    let para = NSMutableParagraphStyle.init()
                    //            para.alignment = .center
                    strHeader.append(strTiTle)
-                if indexPath.row == 0{
+                if indexPath.row == 1{
                      strHeader.append(strType)
                 }
                   

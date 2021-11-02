@@ -64,6 +64,8 @@ class ConfirmationPopUpSecondTableViewCell: TableviewCellSuperClass,UITextViewDe
         txtDescription.delegate = self
         txtDescription.layer.borderWidth = 1;
         txtDescription.layer.borderColor = ILColor.color(index: 22).cgColor
+        txtDescription.text = "Enter Description"
+        txtDescription.textColor = .lightGray
         
     }
     

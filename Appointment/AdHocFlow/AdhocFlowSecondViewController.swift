@@ -59,6 +59,16 @@ class AdhocFlowSecondViewController: SuperViewController {
             CommonFunctions().showError(title: "Error", message: StringConstants.LOCATIONERROR)
                                 return false
         }
+        if txtLocationType.text == "Meeting URL"{
+            if   GeneralUtility.verifyUrl(urlString: txtDefaultLocation.text){
+                
+            }
+            else{
+                CommonFunctions().showError(title: "Error", message: StringConstants.URLERROR)
+                                    return false
+            }
+        }
+        
         return true
     }
     
@@ -66,13 +76,25 @@ class AdhocFlowSecondViewController: SuperViewController {
     
     
     @IBAction func btnStudentSelectTapped(_ sender: Any) {
-        let objERSideStudentListViewController = ERSideStudentListViewController.init(nibName: "ERSideStudentListViewController", bundle: nil)
-        objERSideStudentListViewController.objStudentDetailModal = self.objStudentDetailModalI
-        objERSideStudentListViewController.objStudentDetailModalSelected = self.objStudentDetailModalSelected
-        objERSideStudentListViewController.delegate = self
-        objERSideStudentListViewController.objStudentListType = .One2OneType
         
-        self.navigationController?.pushViewController(objERSideStudentListViewController, animated: false)
+        if self.objOpenHourModalSubmit.open_hours_appointment_approval_process == "1"{
+            let objERSideStudentListViewController = ERSideStudentListViewController.init(nibName: "ERSideStudentListViewController", bundle: nil)
+            objERSideStudentListViewController.objStudentDetailModal = self.objStudentDetailModalI
+            objERSideStudentListViewController.objStudentDetailModalSelected = self.objStudentDetailModalSelected
+            objERSideStudentListViewController.delegate = self
+            objERSideStudentListViewController.objStudentListType = .One2OneType
+            
+            self.navigationController?.pushViewController(objERSideStudentListViewController, animated: false)
+        }
+        else{
+            let objERSideStudentListViewController = ERSideStudentListViewController.init(nibName: "ERSideStudentListViewController", bundle: nil)
+            objERSideStudentListViewController.objStudentDetailModal = self.objStudentDetailModalI
+            objERSideStudentListViewController.objStudentDetailModalSelected = self.objStudentDetailModalSelected
+            objERSideStudentListViewController.delegate = self
+            objERSideStudentListViewController.objStudentListType = .groupType
+            
+            self.navigationController?.pushViewController(objERSideStudentListViewController, animated: false)
+        }
         
     }
     
@@ -116,6 +138,13 @@ class AdhocFlowSecondViewController: SuperViewController {
     
     override func viewDidAppear(_ animated: Bool) {
        registerForKeyboardNotifications()
+        viewOuter.backgroundColor = .white
+        viewOuter.cornerRadius = 3
+        
+        viewHeader.backgroundColor = .white
+        viewHeader.cornerRadius = 3
+        
+        view.backgroundColor = ILColor.color(index: 22)
     }
     override func viewDidDisappear(_ animated: Bool) {
         deRegisterKeyboardNotifications()
@@ -230,8 +259,29 @@ extension AdhocFlowSecondViewController: ERSideADHOCAPISecondVCDelegate, ERSideS
     
     func selectedStudentPrivateHour(objStudentDetailModalSelected: StudentDetailModal) {
         self.objStudentDetailModalSelected = objStudentDetailModalSelected
-        txtStudentSelect.text = ((objStudentDetailModalSelected.items?[0].firstName ?? "")
-            + (objStudentDetailModalSelected.items?[0].lastName ?? ""))
+        
+        if self.objOpenHourModalSubmit.open_hours_appointment_approval_process == "1"{
+            txtStudentSelect.text = ((objStudentDetailModalSelected.items?[0].firstName ?? "")
+                + (objStudentDetailModalSelected.items?[0].lastName ?? ""))
+
+        }
+        else{
+            
+            var count = objStudentDetailModalSelected.items?.count ?? 0
+            if count > 1{
+                txtStudentSelect.text = ((objStudentDetailModalSelected.items?[0].firstName ?? "")
+                    + (objStudentDetailModalSelected.items?[0].lastName ?? "")) + " + " + "\(count - 1)"
+
+            }
+            else{
+                txtStudentSelect.text = ((objStudentDetailModalSelected.items?[0].firstName ?? "")
+                    + (objStudentDetailModalSelected.items?[0].lastName ?? ""))
+
+            }
+            
+
+        }
+        
     }
     
     func sendDataERSideADHOCAPISecondVC(objERSideADHOCAPISecondModal: ERSideADHOCAPISecondModal, isSuccess: Bool) {
@@ -720,16 +770,15 @@ extension AdhocFlowSecondViewController:UIPickerViewDelegate,UIPickerViewDataSou
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        guard let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return true }
+        if textField.tag == 10 {
+            return false
+
+        }
+        else{
+            guard let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return true }
         
-        //           if textField == txtMaximumAppo || textField == txtRepeatCount || textField == txtOccurenceCount{
-        //
-        //               if currentText.count > 4 {
-        //                   return false
-        //               }
-        //
-        //           }
-        return true
+            return true
+        }
     }
     
     

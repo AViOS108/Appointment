@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ERSideResumeListTableViewCellDelegate {
-    func taskProvidedToVC(taskType:ERSideResumeListTaskProvidedBycell,resumeID: Int)
+    func taskProvidedToVC(taskType:ERSideResumeListTaskProvidedBycell,resumeID: Int,name : String)
 }
 
 class ERSideResumeListTableViewCell: UITableViewCell {
@@ -29,7 +29,10 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     @IBAction func btnLatestUploadViewTapped(_ sender: Any) {
         
         if let delegateAssign = delegate {
-            delegateAssign.taskProvidedToVC(taskType: .view, resumeID: objERSideResumeListModalItem.rpLatestResumeID ?? 0);
+            var displayName = (self.objERSideResumeListModalItem?.firstName ?? "") +
+                " " + (self.objERSideResumeListModalItem?.lastName ?? "")
+
+            delegateAssign.taskProvidedToVC(taskType: .view, resumeID: objERSideResumeListModalItem.rpLatestResumeID ?? 0, name: displayName);
 
         }
         
@@ -39,14 +42,19 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     @IBOutlet weak var btnLatestDownload: UIButton!
     @IBAction func btnLatestDownloadTapped(_ sender: Any) {
         if let delegateAssign = delegate {
-            delegateAssign.taskProvidedToVC(taskType: .download, resumeID: objERSideResumeListModalItem.rpLatestResumeID ?? 0);
+            var displayName = (self.objERSideResumeListModalItem?.firstName ?? "") +
+                " " + (self.objERSideResumeListModalItem?.lastName ?? "")
+
+            delegateAssign.taskProvidedToVC(taskType: .download, resumeID: objERSideResumeListModalItem.rpLatestResumeID ?? 0, name: displayName);
 
         }
     }
     @IBOutlet weak var btnLatestDownloadPrint: UIButton!
     @IBAction func btnLatestDownloadPrintTapped(_ sender: Any) {
         if let delegateAssign = delegate {
-            delegateAssign.taskProvidedToVC(taskType: .print, resumeID: objERSideResumeListModalItem.rpLatestResumeID ?? 0);
+            var displayName = (self.objERSideResumeListModalItem?.firstName ?? "") +
+                " " + (self.objERSideResumeListModalItem?.lastName ?? "")
+            delegateAssign.taskProvidedToVC(taskType: .print, resumeID: objERSideResumeListModalItem.rpLatestResumeID ?? 0, name: displayName);
 
         }
     }
@@ -59,7 +67,10 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     @IBOutlet weak var btnHighestUploadView: UIButton!
     @IBAction func btnHighestUploadViewTapped(_ sender: Any) {
         if let delegateAssign = delegate {
-            delegateAssign.taskProvidedToVC(taskType: .view, resumeID: objERSideResumeListModalItem.rpHighestScoredResumeID ?? 0);
+            var displayName = (self.objERSideResumeListModalItem?.firstName ?? "") +
+                " " + (self.objERSideResumeListModalItem?.lastName ?? "")
+
+            delegateAssign.taskProvidedToVC(taskType: .view, resumeID: objERSideResumeListModalItem.rpHighestScoredResumeID ?? 0, name: displayName);
 
         }
     }
@@ -67,14 +78,21 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     @IBOutlet weak var btnHighestDownload: UIButton!
     @IBAction func btnHighestDownloadTapped(_ sender: Any) {
         if let delegateAssign = delegate {
-            delegateAssign.taskProvidedToVC(taskType: .download, resumeID: objERSideResumeListModalItem.rpHighestScoredResumeID ?? 0);
+            var displayName = (self.objERSideResumeListModalItem?.firstName ?? "") +
+                " " + (self.objERSideResumeListModalItem?.lastName ?? "")
+
+
+            delegateAssign.taskProvidedToVC(taskType: .download, resumeID: objERSideResumeListModalItem.rpHighestScoredResumeID ?? 0, name: displayName);
 
         }
     }
     @IBOutlet weak var btnHighestDownloadPrint: UIButton!
     @IBAction func btnHighestDownloadPrintTapped(_ sender: Any) {
         if let delegateAssign = delegate {
-            delegateAssign.taskProvidedToVC(taskType: .print, resumeID: objERSideResumeListModalItem.rpHighestScoredResumeID ?? 0);
+            var displayName = (self.objERSideResumeListModalItem?.firstName ?? "") +
+                " " + (self.objERSideResumeListModalItem?.lastName ?? "")
+
+            delegateAssign.taskProvidedToVC(taskType: .print, resumeID: objERSideResumeListModalItem.rpHighestScoredResumeID ?? 0, name: displayName);
 
         }
     }
@@ -87,7 +105,10 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     @IBOutlet weak var btnApprovedUploadView: UIButton!
     @IBAction func btnApprovedUploadViewTapped(_ sender: Any) {
         if let delegateAssign = delegate {
-            delegateAssign.taskProvidedToVC(taskType: .view, resumeID: objERSideResumeListModalItem.rpFirstResumeID ?? 0);
+            var displayName = (self.objERSideResumeListModalItem?.firstName ?? "") +
+                " " + (self.objERSideResumeListModalItem?.lastName ?? "")
+
+            delegateAssign.taskProvidedToVC(taskType: .view, resumeID: objERSideResumeListModalItem.rpFirstResumeID ?? 0, name: displayName);
 
         }
     }
@@ -95,14 +116,20 @@ class ERSideResumeListTableViewCell: UITableViewCell {
     @IBOutlet weak var btnApprovedDownload: UIButton!
     @IBAction func btnApprovedDownloadTapped(_ sender: Any) {
         if let delegateAssign = delegate {
-            delegateAssign.taskProvidedToVC(taskType: .download, resumeID: objERSideResumeListModalItem.rpFirstResumeID ?? 0);
+            var displayName = (self.objERSideResumeListModalItem?.firstName ?? "") +
+                " " + (self.objERSideResumeListModalItem?.lastName ?? "")
+
+            delegateAssign.taskProvidedToVC(taskType: .download, resumeID: objERSideResumeListModalItem.rpFirstResumeID ?? 0, name: displayName);
 
         }
     }
     @IBOutlet weak var btnApprovedDownloadPrint: UIButton!
     @IBAction func btnApprovedDownloadPrintTapped(_ sender: Any) {
         if let delegateAssign = delegate {
-            delegateAssign.taskProvidedToVC(taskType: .print, resumeID: objERSideResumeListModalItem.rpFirstResumeID ?? 0);
+            var displayName = (self.objERSideResumeListModalItem?.firstName ?? "") +
+                " " + (self.objERSideResumeListModalItem?.lastName ?? "")
+
+            delegateAssign.taskProvidedToVC(taskType: .print, resumeID: objERSideResumeListModalItem.rpFirstResumeID ?? 0, name: displayName);
 
         }
     }

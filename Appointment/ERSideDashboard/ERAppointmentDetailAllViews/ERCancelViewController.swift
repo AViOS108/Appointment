@@ -196,13 +196,13 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
             let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: " " +  "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +
                 GeneralUtility.startAndEndDateDetail2(startDate: self.results.startDatetimeUTC ?? "", endDate: self.results.endDatetimeUTC ?? "")
                 , _returnType: String.self)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontBook]);
             let nextLine1 = NSAttributedString.init(string: "\n")
             var strLocation = "Not available"
             
             let image1Attachment = NSTextAttachment()
             image1Attachment.image = UIImage(named: "locationAppo")
-            image1Attachment.bounds = CGRect.init(x: 0, y: 0, width: 10, height: 14)
+            image1Attachment.bounds = CGRect.init(x: 0, y: 0, width: 20, height: 20)
             
             let image1Attachment2 = NSTextAttachment()
             image1Attachment2.image = UIImage(named: "calenderAppoList")

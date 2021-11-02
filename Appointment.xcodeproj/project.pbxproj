@@ -268,6 +268,8 @@
 		1A9532DD256FCB9D00EC3D1F /* ErSideOpenHourTC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9532DB256FCB9D00EC3D1F /* ErSideOpenHourTC.xib */; };
 		1A9532E02571242700EC3D1F /* ERSideOHDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9532DE2571242700EC3D1F /* ERSideOHDetailViewController.swift */; };
 		1A9532E12571242700EC3D1F /* ERSideOHDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9532DF2571242700EC3D1F /* ERSideOHDetailViewController.xib */; };
+		1A9CFB9D272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9CFB9B272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.swift */; };
+		1A9CFB9E272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9CFB9C272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.xib */; };
 		1AA87583261446AE004493A8 /* ERStudentOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA87582261446AE004493A8 /* ERStudentOverlayView.swift */; };
 		1AB4599C2574EE4400E3671C /* ERSideOpenHourDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB4599B2574EE4400E3671C /* ERSideOpenHourDetail.swift */; };
 		1AB4599F2577619200E3671C /* ERSideOpenCreateEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB4599D2577619200E3671C /* ERSideOpenCreateEditVC.swift */; };
@@ -602,6 +604,8 @@
 		1A9532DB256FCB9D00EC3D1F /* ErSideOpenHourTC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErSideOpenHourTC.xib; sourceTree = "<group>"; };
 		1A9532DE2571242700EC3D1F /* ERSideOHDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideOHDetailViewController.swift; sourceTree = "<group>"; };
 		1A9532DF2571242700EC3D1F /* ERSideOHDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERSideOHDetailViewController.xib; sourceTree = "<group>"; };
+		1A9CFB9B272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationAvailableSlotTableViewCell.swift; sourceTree = "<group>"; };
+		1A9CFB9C272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfirmationAvailableSlotTableViewCell.xib; sourceTree = "<group>"; };
 		1AA87582261446AE004493A8 /* ERStudentOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERStudentOverlayView.swift; sourceTree = "<group>"; };
 		1AB4599B2574EE4400E3671C /* ERSideOpenHourDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideOpenHourDetail.swift; sourceTree = "<group>"; };
 		1AB4599D2577619200E3671C /* ERSideOpenCreateEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideOpenCreateEditVC.swift; sourceTree = "<group>"; };
@@ -1099,6 +1103,8 @@
 				1A61EFFA250A13E300257CB5 /* ConfirmationPopupFileShareTableViewCell.xib */,
 				1A61EFFD250A3F2B00257CB5 /* SearchViewController.swift */,
 				1A61EFFE250A3F2B00257CB5 /* SearchViewController.xib */,
+				1A9CFB9B272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.swift */,
+				1A9CFB9C272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.xib */,
 			);
 			path = PopUpTableViewCell;
 			sourceTree = "<group>";
@@ -1573,6 +1579,7 @@
 				1AD10EA42615DD9D007F6115 /* ERAppoDetailSecondTableViewCell.xib in Resources */,
 				1A85BE9225891F6B00E72A3A /* ERSideStudentListTableViewCell.xib in Resources */,
 				1A78314B24F8D37F0054AAF8 /* HorizontalCalender.xib in Resources */,
+				1A9CFB9E272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.xib in Resources */,
 				1A6A773F2646F7440022DC27 /* AdhocFlowSecondViewController.xib in Resources */,
 				1A2243002628626200C6F101 /* ERNoteSelectableTypeTableViewCell.xib in Resources */,
 				1A6A773B2643C09D0022DC27 /* AdhocFlowFirstViewController.xib in Resources */,
@@ -1861,6 +1868,7 @@
 				1A044060255E51F500339BBE /* ERSideAppointmentTableViewCell.swift in Sources */,
 				1AEB679A24EFE048006F9C05 /* CalenderViewController.swift in Sources */,
 				1A54708824B5D242005F1058 /* AccountDetailsServices.swift in Sources */,
+				1A9CFB9D272A774000E2B24B /* ConfirmationAvailableSlotTableViewCell.swift in Sources */,
 				1A5470D824B5D2AE005F1058 /* SearchTextField.swift in Sources */,
 				1A54711324B5E2E0005F1058 /* UIDate.swift in Sources */,
 				1A54706924B5D241005F1058 /* SocialLoginViewController.swift in Sources */,

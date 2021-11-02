@@ -13,6 +13,35 @@
 
  
 
+
+
+struct ERSideParticipantModal: Codable {
+    let results: [ERSideParticipantModalResult]
+    let total: Int
+}
+
+// MARK: - Result
+struct ERSideParticipantModalResult: Codable {
+    let id: Int
+    let firstName, lastName: String
+    let email: Email
+    let invitationID: Int
+    let benchmark: Benchmark
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case email
+        case invitationID = "invitation_id"
+        case benchmark
+    }
+}
+
+
+
+
+
 struct  ERSidePurposeDetailNewModal: Codable {
     let purposeText: String?
     let id: Int?

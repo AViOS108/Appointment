@@ -133,7 +133,7 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
         tblVIew.delegate = self
         tblVIew.dataSource = self
         tblVIew.reloadData()
-        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"My Appointments");
+        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"Appointment Details");
     }
     
     override func buttonClicked(sender: UIBarButtonItem) {
@@ -383,11 +383,12 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
    
    
     
-    func sendEmail() {
+    func sendEmail(email :String)
+ {
         if MFMailComposeViewController.canSendMail() {
                let mail = MFMailComposeViewController()
                mail.mailComposeDelegate = self
-               mail.setToRecipients([])
+               mail.setToRecipients([email])
                mail.setMessageBody("", isHTML: true)
                present(mail, animated: true)
            } else {

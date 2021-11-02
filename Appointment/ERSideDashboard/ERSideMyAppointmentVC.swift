@@ -36,6 +36,8 @@ ERSideMyAppoinmentTableViewCellDelegate{
            
            UIView.animate(withDuration: 0.25, animations: {
                       self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+               self.viewContainer.isHidden = true
+
                   })
            
            let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
@@ -53,6 +55,8 @@ ERSideMyAppoinmentTableViewCellDelegate{
      @IBAction func btnAdHocTapped(_ sender: Any) {
         UIView.animate(withDuration: 0.25, animations: {
             self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+            self.viewContainer.isHidden = true
+
         })
      
         
@@ -68,6 +72,8 @@ ERSideMyAppoinmentTableViewCellDelegate{
     @IBAction func btnDuplicateTapped(_ sender: Any) {
         UIView.animate(withDuration: 0.25, animations: {
             self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+            self.viewContainer.isHidden = true
+
         })
         
         let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
@@ -92,7 +98,7 @@ ERSideMyAppoinmentTableViewCellDelegate{
                            options: [],
                            animations: {
                             
-                            self.nslayoutConstrintFloatingHeight.constant = 130
+                            self.nslayoutConstrintFloatingHeight.constant = 174
                             self.viewContainer.layoutIfNeeded()
                             
                             //Do all animations here
@@ -104,6 +110,7 @@ ERSideMyAppoinmentTableViewCellDelegate{
         else{
             UIView.animate(withDuration: 0.25, animations: {
                 self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+                
             })
             UIView.animate(withDuration:0.9,
                            delay: 0,

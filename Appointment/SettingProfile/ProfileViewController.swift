@@ -27,6 +27,7 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
        @IBOutlet weak var lastNameTextField: UITextField!
        @IBOutlet weak var addImageButton: UIButton!
        @IBOutlet weak var editButton: UIButton!
+    
        @IBOutlet weak var firstNameContainerview: UIView!
        @IBOutlet weak var lastNameContainerview: UIView!
        

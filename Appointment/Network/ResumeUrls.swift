@@ -610,6 +610,12 @@ class Urls {
     }
     
     
+    func erSideOpenHourParticpant(id: String) -> String{
+        return "\(typeEvent2)community/open-hour/" + "\(id)" + "/participants"
+        
+    }
+    
+    
     func erSideOPenHourDelete(id: String,isDeleteAllcoocurence : String) -> String{
         return "\(typeEvent2)community/open-hour/" + "\(id)?delete_all_occurences=\(isDeleteAllcoocurence)"
         

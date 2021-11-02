@@ -259,16 +259,25 @@ import UIKit
         }
         
         else if index == 60 {
-            //yellow
             return UIColor.init(red: 250/255, green: 183/255, blue: 30/255, alpha: 1.0)
         }
         else if index == 61 {
-            //yellow
             return UIColor.init(red: 227/255, green: 227/255, blue: 227/255, alpha: 1.0)
         }
         else if index == 62 {
-            //yellow
             return UIColor.init(red: 0/255, green: 13/255, blue: 18/255, alpha: 1.0)
+        }
+        else if index == 63 {
+            //grayish
+            return UIColor.init(red: 77/255, green: 77/255, blue: 77/255, alpha: 1.0)
+        }
+        else if index == 64 {
+            //grayish
+            return UIColor.init(red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
+        }
+          else if index == 65 {
+            //grayish
+            return UIColor.init(red: 0/255, green: 162/255, blue: 227/255, alpha: 1.0)
         }
         return UIColor.clear
     }

@@ -127,13 +127,6 @@ class AppoinmentUtilityVM{
               CommonFunctions().showError(title: "", message: error)
               self.callbackVC!(false)
           }
-          
       }
-    
-    
-    
-    
-    
-    
     
 }

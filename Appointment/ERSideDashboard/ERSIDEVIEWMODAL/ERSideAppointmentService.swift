@@ -113,6 +113,24 @@ class ERSideAppointmentService {
         
     }
     
+    
+    func erSideparticipantApi(params: Dictionary<String, AnyObject>,id: String,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
+        
+        let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
+        
+        Network().makeApiEventGetRequest(true, url: Urls().erSideOpenHourParticpant(id:id ), methodType: .post, params: params, header: headers, completion: { (jsonData) in
+            success(jsonData)
+            
+        }) { (error, errorCode) in
+            failure(error,errorCode)
+            
+        }
+        
+    }
+    
+    
+    
+    
     func erSideOPenHourDeleteApi(param: Dictionary<String,AnyObject>,deleteAll : String,id : String, _ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void ){
           
           let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]

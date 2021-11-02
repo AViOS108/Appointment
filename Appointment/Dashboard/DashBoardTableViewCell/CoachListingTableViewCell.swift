@@ -11,14 +11,32 @@ import AFNetworking
 
  
 protocol CoachListingTableViewCellDelegate {
-    func changeModal(modal:Item )
+    func changeModal(modal:Item,seemore : Bool )
     func scheduleAppoinment(modal:Item)
+}
+
+
+class cutomeTextView : UITextView{
+    
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return false
+    }
+    
+    
+    override var canBecomeFirstResponder: Bool{
+        return false
+    }
 }
 
 
 
 
-class CoachListingTableViewCell: UITableViewCell {
+
+
+class CoachListingTableViewCell: UITableViewCell,UITextViewDelegate {
+    
+    @IBOutlet var txtView: cutomeTextView!
+
     
     @IBOutlet weak var lblImageView: UILabel!
     @IBOutlet weak var imgView: UIImageView!
@@ -82,51 +100,7 @@ class CoachListingTableViewCell: UITableViewCell {
                 
             }
             
-            
-            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-                
-            {
-                let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.coachModal?.name, _returnType: String.self)
-                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
-                let nextLine1 = NSAttributedString.init(string: "\n")
-                
-                var roles = ""
-                var index = 0
-                for role in self.coachModal!.roles{
-                    roles.append(role.displayName ?? "")
-                    index = index + 1;
-                    if self.coachModal!.roles.count > 1{
-                        if index == self.coachModal?.roles.count{
-                        }
-                        else{
-                            roles.append(", ")
-                        }
-                    }
-                }
-               
-                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: roles, _returnType: String.self)
-                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
-                
-                let strDesc = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.coachModal?.coachInfo.summary, _returnType: String.self)
-                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
-                
-                let para = NSMutableParagraphStyle.init()
-                //            para.alignment = .center
-                para.lineSpacing = 4
-                
-                strHeader.append(strTiTle)
-                
-                strHeader.append(nextLine1)
-                strHeader.append(strType)
-                
-                if GeneralUtility.optionalHandling(_param: self.coachModal?.coachInfo.summary, _returnType: String.self) != ""{
-                    strHeader.append(nextLine1)
-                    strHeader.append(strDesc)
-                    
-                }
-                strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-                lblDescribtion.attributedText = strHeader
-            }
+            textViewKYC()
             
             
             if self.coachModal?.profilePicURL == nil ||
@@ -136,7 +110,7 @@ class CoachListingTableViewCell: UITableViewCell {
                 self.imgView?.isHidden = true
                 self.lblImageView.isHidden = false
                 
-                var stringImg = GeneralUtility.startNameCharacter(stringName: self.coachModal?.name ?? " ")
+                let stringImg = GeneralUtility.startNameCharacter(stringName: self.coachModal?.name ?? " ")
                 if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
                 {
                     
@@ -191,8 +165,133 @@ class CoachListingTableViewCell: UITableViewCell {
         
     }
     
+    
+    
+    func textViewKYC()  {
+        
+        
+        let strHeader = NSMutableAttributedString.init()
+        
+        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+            
+        {
+            let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.coachModal?.name, _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
+            let nextLine1 = NSAttributedString.init(string: "\n")
+            
+            var roles = ""
+            var index = 0
+            for role in self.coachModal!.roles{
+                roles.append(role.displayName ?? "")
+                index = index + 1;
+                if self.coachModal!.roles.count > 1{
+                    if index == self.coachModal?.roles.count{
+                    }
+                    else{
+                        roles.append(", ")
+                    }
+                }
+            }
+           
+            let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: roles, _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
+            var description = self.coachModal?.coachInfo.summary
+            
+            
+            if self.coachModal?.coachInfo.summary?.count ?? 0 > 100 {
+                
+                if self.coachModal?.isSeeMoreSelected == true {
+                   
+                }
+                else{
+                    if self.coachModal?.coachInfo.summary?.count ?? 0 > 100 {
+                        description = String(self.coachModal?.coachInfo.summary?.prefix(100) ?? "")
+                    }
+                }
+            }
+            
+            
+            let strDesc = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param:description , _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
+            
+            let strMore = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param:" see more" , _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 23),NSAttributedString.Key.font : fontBook]);
+
+            let strLess = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param:" see less" , _returnType: String.self)
+                                                  , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 23),NSAttributedString.Key.font : fontBook,  ]);
+            
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            para.lineSpacing = 4
+            
+            strHeader.append(strTiTle)
+            
+            strHeader.append(nextLine1)
+            strHeader.append(strType)
+            
+            if GeneralUtility.optionalHandling(_param: self.coachModal?.coachInfo.summary, _returnType: String.self) != ""{
+                strHeader.append(nextLine1)
+                strHeader.append(strDesc)
+                
+            }
+            if self.coachModal?.coachInfo.summary?.count ?? 0 > 100 {
+                
+                if self.coachModal?.isSeeMoreSelected == true {
+                    strHeader.append(strLess)
+                    var targetRange = NSMakeRange(strTiTle.length + nextLine1.length + strType.length + nextLine1.length + strDesc.length , strLess.length);
+                    strHeader.addAttribute(NSAttributedString.Key.link, value: NSURL(string: "") as Any, range: targetRange)
+
+                    
+                    strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+                    
+                }
+                else{
+                    strHeader.append(strMore)
+                    var targetRange = NSMakeRange(strTiTle.length + nextLine1.length + strType.length + nextLine1.length + strDesc.length , strMore.length);
+                    strHeader.addAttribute(NSAttributedString.Key.link, value: NSURL(string: "") as Any, range: targetRange)
+
+                    
+                    strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+
+                }
+            }
+          
+
+            
+            txtView.attributedText = strHeader
+            txtView.delegate = self;
+            txtView.isUserInteractionEnabled = true
+            txtView.isEditable = false
+            txtView.isSelectable = true
+
+            
+        }
+        
+      
+    }
+    
+    
+    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool
+    {
+        if self.coachModal?.coachInfo.summary?.count ?? 0 > 100 {
+            
+            if self.coachModal?.isSeeMoreSelected == true {
+                delegate?.changeModal(modal: self.coachModal!, seemore: true)
+
+            }
+            else{
+                delegate?.changeModal(modal: self.coachModal!, seemore: true)
+
+            }
+        }
+
+        return true
+    }
+    
+   
+    
     @IBAction func coachSelectedTapped(_ sender: Any) {
-        delegate?.changeModal(modal: self.coachModal!)
+        delegate?.changeModal(modal: self.coachModal!, seemore: false)
     }
     @IBAction func scheduleAppointmentTapped(_ sender: Any) {
         delegate?.scheduleAppoinment(modal: self.coachModal!)

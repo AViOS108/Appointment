@@ -57,12 +57,31 @@ class BaseTabBarViewController: UITabBarController, UITabBarControllerDelegate {
 //        self.tabBar.itemPositioning = .cent ;
         
         
-UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 3)], for: .selected)
-        if let fontDate = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13){
-            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 14),NSAttributedString.Key.font: fontDate],
+
+       
+        
+        if #available(iOS 15.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = ILColor.color(index: 23)
+            if let fontDate = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13){
+                appearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor : ILColor.color(index: 14), .font :  fontDate]
+                appearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor : ILColor.color(index: 3), .font :  fontDate]
+                
+                appearance.inlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor : ILColor.color(index: 14), .font :  fontDate]
+                appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor : ILColor.color(index: 14), .font :  fontDate]
+                
+                appearance.inlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor : ILColor.color(index: 3), .font :  fontDate]
+                appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor : ILColor.color(index: 3), .font :  fontDate]
+
+
+
+            }
+            self.tabBar.standardAppearance = appearance
+            tabBar.scrollEdgeAppearance = tabBar.standardAppearance
+
+        } else {
             
-                                                        for: .normal)
-            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 3),NSAttributedString.Key.font: fontDate], for: .selected)
             
         }
         
@@ -86,6 +105,14 @@ UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregro
                
             item2!.tabBarItem = icon2
             item1!.tabBarItem = icon1
+        }
+        
+        if let fontDate = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13){
+            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 14),NSAttributedString.Key.font: fontDate],
+
+                                                             for: .normal)
+            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ILColor.color(index: 3),NSAttributedString.Key.font: fontDate], for: .selected)
+
         }
         
         let controllers = [item1,item2]  //array of the root view controllers displayed by the tab bar interface

@@ -76,6 +76,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     
     @IBOutlet weak var btmDateSelected: UIButton!
     
+    @IBOutlet weak var lblMultiText: UILabel!
     
     
     @IBAction func btmDateSelectedTapped(_ sender: UIButton) {
@@ -94,7 +95,20 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     var objOpenHourModalSubmit : openHourModalSubmit!
     func dateSelected(calenderModal: CalenderModal,index : Int) {
         
-        let dateInRequiredFormate =     GeneralUtility.currentDateDetailType4(emiDate: calenderModal.StrDate!, fromDateF: "yyyy-MM-dd", toDateFormate: "dd/MM/yyyy")
+      
+        let dateInRequiredFormate =     GeneralUtility.currentDateDetailType4(emiDate:calenderModal.StrDate! , fromDateF: "yyyy-MM-dd", toDateFormate: "dd MMM, yyyy")
+       
+        
+        let dateISelectedStr = GeneralUtility.currentDateDetailType4(emiDate:calenderModal.StrDate! , fromDateF: "yyyy-MM-dd", toDateFormate: "yyyy-MM-dd HH:mm:ss")
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateConverted = dateFormatter.date(from: dateISelectedStr)
+        self.dateSelected = dateConverted
+        let dateFormatterI = DateFormatter()
+        dateFormatterI.dateFormat = "dd MMM YYYY"
+        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatterI.string(from: self.dateSelected))
+
         
         switch self.objviewTypeOpenHour {
         case .setOpenHour:
@@ -215,7 +229,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     
     //Recurrence
     
-    var endsOnTapped = 2;
+    var endsOnTapped = -1;
     var isRecurrenceEnable = false
     @IBOutlet weak var viewRecurrence: UIView!
     
@@ -306,7 +320,7 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
             
             break;
         case .editOpenHour:
-            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Edit advising Appointment hour")
             break;
         default:
             break;
@@ -394,17 +408,17 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
         if txtDateSelected.text!.isEmpty  && txtDateDuplicateto.text!.isEmpty {
             self.txtPurpose.isUserInteractionEnabled = false
             self.txtPurpose.isEnabled = false
-            self.txtPurpose.alpha = 0.6
+            self.txtPurpose.alpha = 0.4
             self.txtTimeZone.isUserInteractionEnabled = false
             self.txtTimeZone.isEnabled = false
-            self.txtTimeZone.alpha = 0.6
+            self.txtTimeZone.alpha = 0.4
             btnPurpose.isUserInteractionEnabled = false
             btnPurpose.isEnabled = false
             btnTimeZone.isUserInteractionEnabled = false
             btnTimeZone.isEnabled = false
-            lblPurpose.alpha = 0.6
-            lblTimeZone.alpha = 0.6;
-            lblTimingFrom.alpha = 0.6
+            lblPurpose.alpha = 0.4
+            lblTimeZone.alpha = 0.4;
+            lblTimingFrom.alpha = 0.4
         }
         else{
             self.txtPurpose.isUserInteractionEnabled = true
@@ -730,7 +744,7 @@ extension ERSideOpenCreateEditVC
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let dateConverted = dateFormatter.string(from: self.dateSelected)
             
-            let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:dateConverted , fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd/MM/yyyy")
+            let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:dateConverted , fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM, yyyy")
             txtDateSelected.text = dateSelectedValue
             break
         case .duplicateSetHour:
@@ -840,6 +854,7 @@ extension ERSideOpenCreateEditVC
                 
                 strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
                 lblDate.attributedText = strHeader
+                lblDate.alpha = 0.4
             }
             let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
             txtDateSelected.backgroundColor = ILColor.color(index: 48)
@@ -872,8 +887,8 @@ extension ERSideOpenCreateEditVC
             btmDateSelected.isUserInteractionEnabled = false
             btmDateSelected.isEnabled = false
             
-            txtDateSelected.alpha = 0.6
-            btmDateSelected.alpha = 0.6
+            txtDateSelected.alpha = 0.4
+            btmDateSelected.alpha = 0.4
             
             break
             
@@ -1186,6 +1201,14 @@ extension ERSideOpenCreateEditVC
                     }
                     
                 }
+                
+                if endsOnTapped == -1 {
+                    CommonFunctions().showError(title: "Error", message: "Please select one of the option of Ends on ")
+                    return false
+
+                }
+                
+                
                 
             }
             
@@ -1710,39 +1733,94 @@ extension ERSideOpenCreateEditVC: TimeZoneViewControllerDelegate{
     
     
     func customizeTimeZone()  {
-        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
-        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        {
-            let strHeader = NSMutableAttributedString.init()
-            let strTiTle = NSAttributedString.init(string: "TimeZone"
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-            let strType = NSAttributedString.init(string: "  ⃰"
-                , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
-            let para = NSMutableParagraphStyle.init()
-            //            para.alignment = .center
-            strHeader.append(strTiTle)
-            strHeader.append(strType)
+        
+        
+        switch objviewTypeOpenHour{
             
-            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-            lblTimeZone.attributedText = strHeader
-        }
-        
-        var selectedTextZone : String = ""
-        for timeZone in self.timeZOneArr{
-            if timeZone.offset == GeneralUtility().currentOffset() && timeZone.identifier == GeneralUtility().getCurrentTimeZone(){
-                selectedTextZone = timeZone.displayName!
-                break
+        case .editOpenHour :
+            
+            let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
+            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+            {
+                let strHeader = NSMutableAttributedString.init()
+                let strTiTle = NSAttributedString.init(string: "TimeZone"
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
+                let strType = NSAttributedString.init(string: "  ⃰"
+                    , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
+                let para = NSMutableParagraphStyle.init()
+                //            para.alignment = .center
+                strHeader.append(strTiTle)
+                strHeader.append(strType)
+                
+                strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+                lblTimeZone.attributedText = strHeader
             }
+            
+            var selectedTextZone : String = ""
+            for timeZone in self.timeZOneArr{
+                if timeZone.offset == GeneralUtility().currentOffset() && timeZone.identifier == GeneralUtility().getCurrentTimeZone(){
+                    selectedTextZone = timeZone.displayName!
+                    break
+                }
+            }
+            self.txtTimeZone.backgroundColor = ILColor.color(index: 48)
+            self.txtTimeZone.text = selectedTextZone
+            self.txtTimeZone.font = fontHeavy1
+            self.txtTimeZone.layer.borderColor = ILColor.color(index: 27).cgColor
+            self.txtTimeZone.layer.borderWidth = 1;
+            self.txtTimeZone.layer.cornerRadius = 3;
+            self.txtTimeZone.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
+            
+            self.txtTimeZone.alpha = 0.4
+            lblTimeZone.alpha = 0.4
+            self.txtTimeZone.isUserInteractionEnabled = false
+            btnTimeZone.isUserInteractionEnabled = false
+            txtTimeZone.rightViewMode = .always;
+            
+            break;
+            
+        default :
+            
+            let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
+            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+            {
+                let strHeader = NSMutableAttributedString.init()
+                let strTiTle = NSAttributedString.init(string: "TimeZone"
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
+                let strType = NSAttributedString.init(string: "  ⃰"
+                    , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
+                let para = NSMutableParagraphStyle.init()
+                //            para.alignment = .center
+                strHeader.append(strTiTle)
+                strHeader.append(strType)
+                
+                strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+                lblTimeZone.attributedText = strHeader
+            }
+            
+            var selectedTextZone : String = ""
+            for timeZone in self.timeZOneArr{
+                if timeZone.offset == GeneralUtility().currentOffset() && timeZone.identifier == GeneralUtility().getCurrentTimeZone(){
+                    selectedTextZone = timeZone.displayName!
+                    break
+                }
+            }
+            self.txtTimeZone.backgroundColor = ILColor.color(index: 48)
+            self.txtTimeZone.text = selectedTextZone
+            self.txtTimeZone.font = fontHeavy1
+            self.txtTimeZone.layer.borderColor = ILColor.color(index: 27).cgColor
+            self.txtTimeZone.layer.borderWidth = 1;
+            self.txtTimeZone.layer.cornerRadius = 3;
+            self.txtTimeZone.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
+            self.txtTimeZone.isUserInteractionEnabled = true
+            btnTimeZone.isUserInteractionEnabled = true
+
+            txtTimeZone.rightViewMode = .always;
+            break
+            
         }
-        self.txtTimeZone.backgroundColor = ILColor.color(index: 48)
-        self.txtTimeZone.text = selectedTextZone
-        self.txtTimeZone.font = fontHeavy1
-        self.txtTimeZone.layer.borderColor = ILColor.color(index: 27).cgColor
-        self.txtTimeZone.layer.borderWidth = 1;
-        self.txtTimeZone.layer.cornerRadius = 3;
-        self.txtTimeZone.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
         
-        txtTimeZone.rightViewMode = .always;
+      
         
         
     }
@@ -1816,24 +1894,58 @@ extension ERSideOpenCreateEditVC{
     
     func customizSlotDuration(){
         
-        customAfterEndsOcc()
-        pickerViewSetUp(txtInput: txtSlotDuration, tag: 191)
         
-        let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        UILabel.labelUIHandling(label: lblSlot, text: "Appointment Duration", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy1)
-        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
-        txtSlotDuration.backgroundColor = ILColor.color(index: 48)
-        self.txtSlotDuration.font = fontMedium
-        self.txtSlotDuration.layer.borderColor = ILColor.color(index: 27).cgColor
-        self.txtSlotDuration.layer.borderWidth = 1;
-        self.txtSlotDuration.layer.cornerRadius = 3;
-        self.txtSlotDuration.placeholder = "Slot Duration"
-        self.txtSlotDuration.text = "30 mins"
-        
-        
-        self.txtSlotDuration.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
-        txtSlotDuration.rightViewMode = .always;
+        switch objviewTypeOpenHour{
+            
+        case .editOpenHour :
+            customAfterEndsOcc()
+            pickerViewSetUp(txtInput: txtSlotDuration, tag: 191)
+            
+            let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+            UILabel.labelUIHandling(label: lblSlot, text: "Appointment Duration", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy1)
+            let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
+            txtSlotDuration.backgroundColor = ILColor.color(index: 48)
+            self.txtSlotDuration.font = fontMedium
+            self.txtSlotDuration.layer.borderColor = ILColor.color(index: 27).cgColor
+            self.txtSlotDuration.layer.borderWidth = 1;
+            self.txtSlotDuration.layer.cornerRadius = 3;
+            self.txtSlotDuration.placeholder = "Slot Duration"
+            self.txtSlotDuration.text = "30 mins"
+            
+            lblSlot.alpha = 0.4
+            txtSlotDuration.alpha = 0.4
+            txtSlotDuration.isUserInteractionEnabled = false
+            
+            self.txtSlotDuration.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
+            txtSlotDuration.rightViewMode = .always;
 
+            break
+            
+        default :
+            
+            customAfterEndsOcc()
+            pickerViewSetUp(txtInput: txtSlotDuration, tag: 191)
+            
+            let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+            UILabel.labelUIHandling(label: lblSlot, text: "Appointment Duration", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy1)
+            let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
+            txtSlotDuration.backgroundColor = ILColor.color(index: 48)
+            self.txtSlotDuration.font = fontMedium
+            self.txtSlotDuration.layer.borderColor = ILColor.color(index: 27).cgColor
+            self.txtSlotDuration.layer.borderWidth = 1;
+            self.txtSlotDuration.layer.cornerRadius = 3;
+            self.txtSlotDuration.placeholder = "Slot Duration"
+            self.txtSlotDuration.text = "30 mins"
+            
+            
+            self.txtSlotDuration.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
+            txtSlotDuration.rightViewMode = .always;
+
+            
+            break
+        }
+        
+       
         
     }
     
@@ -1927,7 +2039,6 @@ extension ERSideOpenCreateEditVC{
 
     
     func customAfterEndsOcc(){
-        endsOnTapped = 2
         btnNeverEnds.setImage(UIImage.init(named: "Radio"), for: .normal);
         btnEndsOnDate.setImage(UIImage.init(named: "Radio"), for: .normal);
         btnAfterEnds.setImage(UIImage.init(named: "Radio_filled"), for: .normal);
@@ -1935,6 +2046,7 @@ extension ERSideOpenCreateEditVC{
     
     
     @IBAction func btnAfterEndsTapped(_ sender: Any) {
+        endsOnTapped = 2
         self.customAfterEndsOcc()
         
     }
@@ -2009,7 +2121,7 @@ extension ERSideOpenCreateEditVC{
         if isRecurrenceEnable {
              btnRecurrenceEnable.setImage(UIImage.init(named: "Check_box_selected"), for: .normal)
             viewRecurrence.isHidden = false
-            nslayoutConstraintRecurrence.constant = 290
+            nslayoutConstraintRecurrence.constant = 358
             
         }
         else{
@@ -2035,6 +2147,23 @@ extension ERSideOpenCreateEditVC{
         case .setOpenHour:
             
             let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+            
+            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+                
+            {
+                let strHeader = NSMutableAttributedString.init()
+                let strText1 = NSAttributedString.init(string: "Customise if you would like to repeat your open hour schedule onto multiple dates."
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:40),NSAttributedString.Key.font : fontBook]);
+                let para = NSMutableParagraphStyle.init()
+                //            para.alignment = .center
+                para.lineSpacing = 4
+                strHeader.append(strText1)
+                strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+                lblMultiText.attributedText = strHeader
+                UIButton.buttonUIHandling(button: btnNext, text: "Next", backgroundColor: .clear, textColor: ILColor.color(index: 23),  fontType: fontHeavy)
+            }
+            
+            
             
             UILabel.labelUIHandling(label: lblRecurrenceLable, text: "Add Recurrence", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy1)
             btnRecurrenceEnable.setImage(UIImage.init(named: "check_box"), for: .normal)
@@ -2127,8 +2256,8 @@ extension ERSideOpenCreateEditVC{
             
             btnRecurrenceEnable.isUserInteractionEnabled = false
             btnRecurrenceEnable.isEnabled = false
-            lblRecurrenceLable.alpha = 0.6
-            btnRecurrenceEnable.alpha = 0.6
+            lblRecurrenceLable.alpha = 0.4
+            btnRecurrenceEnable.alpha = 0.4
 
             
             

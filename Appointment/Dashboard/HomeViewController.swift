@@ -33,6 +33,47 @@ enum RedirectionType {
 
 class HomeViewController: SuperViewController,UISearchBarDelegate {
     
+    @IBOutlet weak var nslayoutMarkAllViewheight: NSLayoutConstraint!
+    @IBOutlet weak var viewMarkAll: UIView!
+    @IBOutlet weak var btnMarkAll: UIButton!
+    var markAllSelected = false
+    @IBAction func btnMarkAllTapped(_ sender: UIButton) {
+        
+    
+        if markAllSelected{
+            
+            let allCoach  = self.dataFeedingModal?.items.map{  dataItem -> Item  in
+                var itemSelected = dataItem
+                itemSelected.isSelected = false
+                return itemSelected
+            }
+            
+            self.dataFeedingModal?.items.removeAll()
+            self.dataFeedingModal?.items.append(contentsOf: allCoach!)
+            self.zeroStateLogic()
+            isCoachSelected()
+            self.reloadTablviewCocahList()
+        }
+        else{
+            
+            let allCoach  = self.dataFeedingModal?.items.map{  dataItem -> Item  in
+                var itemSelected = dataItem
+                itemSelected.isSelected = true
+                return itemSelected
+            }
+            
+            self.dataFeedingModal?.items.removeAll()
+            self.dataFeedingModal?.items.append(contentsOf: allCoach!)
+            self.zeroStateLogic()
+            isCoachSelected()
+            self.reloadTablviewCocahList()
+        }
+        
+        markAllSelected = !markAllSelected
+    }
+    
+    @IBOutlet weak var lblMarkIndividual: UILabel!
+    
     
     var calenderModal: CalenderModal?
     
@@ -115,7 +156,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefaultsDataSource(key: "timeZoneOffset").writeData(TimeZone.current.identifier)
-
+        viewMarkAll.isHidden = true
         viewSearchBar.isHidden = true
         nslayutSearchBarHeight.constant = 0
         
@@ -157,7 +198,6 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
                 
                 if self.viewHeader.subviews.count > 0
                 {
-                    
                     (self.viewHeader.subviews[0] as! HorizontalCalender).backToBasic()
                     (self.viewHeader.subviews[0] as! HorizontalCalender).viewCollection.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
                     
@@ -350,11 +390,21 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
             self.zeroStateLogic()
             self.reloadTablviewCocahList()
             isCoachSelected()
+            let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
+            let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE10)
+            UIButton.buttonUIHandling(button: btnMarkAll, text: "Mark All", backgroundColor: .clear, textColor: ILColor.color(index: 23),fontType: fontMedium)
             
+            UILabel.labelUIHandling(label: lblMarkIndividual, text: "Tap to mark individually", textColor: ILColor.color(index: 42), isBold: false, fontType: fontBook)
+            nslayoutMarkAllViewheight.constant = 60
+
             
             break;
         case .StudentMyAppointment:
             GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"My Appointments");
+            
+            nslayoutMarkAllViewheight.constant = 0
+            viewMarkAll.isHidden = true
+            
             
             break;
             
@@ -397,6 +447,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
             self.dataFeedingModal = dashboardModel
             self.refreshControl.endRefreshing()
             self.dataFeedingModalConst = self.dataFeedingModal;
+            self.viewMarkAll.isHidden = false
             self.zeroStateLogic()
             self.customization()
         }) { (error, errorCode) in
@@ -414,6 +465,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
             let myView = Bundle.loadView(fromNib: "HorizontalCalender", withType: HorizontalCalender.self)
             myView.frame = CGRect.init(x: 0, y: 0, width: viewHeader.frame.width, height: viewHeader.frame.height);
             viewHeader.addSubview(myView);
+            self.viewHeader.cornerRadius = 3;
             myView.enumHeadType = .student
             myView.customize()
 
@@ -433,7 +485,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         txtSearchBar.backgroundColor = UIColor.clear
         txtSearchBar.isTranslucent = true
         txtSearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-        txtSearchBar.placeholder = "Type name or headline"
+        txtSearchBar.placeholder = "Search by Role/Name"
         txtSearchBar.backgroundColor = .clear
         txtSearchBar.delegate = self
         
@@ -446,20 +498,41 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
 }
 
 extension HomeViewController : CoachListingTableViewCellDelegate{
- 
     
-    func changeModal(modal:Item){
-        let index = self.dataFeedingModal?.items.firstIndex(where: {$0.id == modal.id})
-        var selectedCoach =   self.dataFeedingModal?.items.filter{
-            $0.id == modal.id
-            }[0];
-        let selectedCoachI = selectedCoach;
-        selectedCoach?.isSelected = !selectedCoachI!.isSelected
-        self.dataFeedingModal?.items.remove(at: index!)
-        self.dataFeedingModal?.items.insert(selectedCoach!, at: index!)
-        self.zeroStateLogic()
-        isCoachSelected()
-        self.reloadTablviewCocahList()
+    
+    func changeModal(modal: Item, seemore: Bool) {
+        
+        if seemore {
+            
+            let index = self.dataFeedingModal?.items.firstIndex(where: {$0.id == modal.id})
+            var selectedCoach =   self.dataFeedingModal?.items.filter{
+                $0.id == modal.id
+                }[0];
+            let selectedCoachI = selectedCoach;
+            selectedCoach?.isSeeMoreSelected = !selectedCoachI!.isSeeMoreSelected
+            self.dataFeedingModal?.items.remove(at: index!)
+            self.dataFeedingModal?.items.insert(selectedCoach!, at: index!)
+            self.zeroStateLogic()
+            isCoachSelected()
+            self.reloadTablviewCocahList()
+            
+        }
+        else{
+            let index = self.dataFeedingModal?.items.firstIndex(where: {$0.id == modal.id})
+            var selectedCoach =   self.dataFeedingModal?.items.filter{
+                $0.id == modal.id
+                }[0];
+            let selectedCoachI = selectedCoach;
+            selectedCoach?.isSelected = !selectedCoachI!.isSelected
+            self.dataFeedingModal?.items.remove(at: index!)
+            self.dataFeedingModal?.items.insert(selectedCoach!, at: index!)
+            self.zeroStateLogic()
+            isCoachSelected()
+            self.reloadTablviewCocahList()
+            
+        }
+        
+       
     }
     
     func changeBottomBtn(isVisible: Bool)  {

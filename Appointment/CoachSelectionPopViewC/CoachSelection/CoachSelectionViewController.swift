@@ -121,7 +121,7 @@ class CoachSelectionViewController: SuperViewController {
         imgViewNoOpenHour.image = UIImage.init(named: "noopenhour")
         
         let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        UILabel.labelUIHandling(label: lblNoOpenHour, text: "No Open hours", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy1)
+        UILabel.labelUIHandling(label: lblNoOpenHour, text: "No Open hour available for this coach", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy1)
         self.tblViewList.isHidden = true
         lblheader.text = ""
 
@@ -141,7 +141,7 @@ class CoachSelectionViewController: SuperViewController {
     func CoachSelectedView(){
         self.noOpenHour.isHidden = true
         self.tblViewList.isHidden = false
-        let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE16)
+        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE10)
         UILabel.labelUIHandling(label: lblheader, text: "Click on slot to proceed next", textColor:ILColor.color(index: 4) , isBold: false, fontType: fontMedium)
         
     }
@@ -414,7 +414,21 @@ extension CoachSelectionViewController: CoachImageOverlayViewDelegate,ERSideStud
         var itemsArr =  [StudentDetailModalItem]()
 
         for items in objdataFeedingModal.items{
-            var objStudentDetailModalItem = StudentDetailModalItem.init(id: items.id, firstName: items.name, lastName: "", email: nil, invitationID:nil, benchmark: nil, tags: nil)
+            
+            var roles = ""
+            var index = 0
+            for role in items.roles{
+                roles.append(role.displayName ?? "")
+                index = index + 1;
+                if items.roles.count > 1{
+                    if index == items.roles.count{
+                    }
+                    else{
+                        roles.append(", ")
+                    }
+                }
+            }
+            var objStudentDetailModalItem = StudentDetailModalItem.init(id: items.id, firstName: items.name, lastName: "", email: nil, invitationID:nil, benchmark: Benchmark.init(name: roles, id: 1), tags: nil)
             objStudentDetailModalItem.isSelected = items.isSelected;
             itemsArr.append(objStudentDetailModalItem)
         }

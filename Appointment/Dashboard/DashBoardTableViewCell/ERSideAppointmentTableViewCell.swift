@@ -89,7 +89,7 @@ class ERSideAppointmentTableViewCell: UITableViewCell {
             viewContainer.isHidden = true
             lblNoAppoinment.isHidden = false
             
-            UILabel.labelUIHandling(label: lblNoAppoinment, text: "No Appointments available", textColor:ILColor.color(index: 43) , isBold: false, fontType: fontMedium)
+            UILabel.labelUIHandling(label: lblNoAppoinment, text: "No appointment book", textColor:ILColor.color(index: 43) , isBold: false, fontType: fontMedium)
         }
         
         

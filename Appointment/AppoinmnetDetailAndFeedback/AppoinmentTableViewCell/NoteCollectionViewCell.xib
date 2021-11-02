@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,14 +21,14 @@
                         <rect key="frame" x="0.0" y="4" width="291" height="76"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWL-Xa-xYU">
-                                <rect key="frame" x="8" y="8" width="193" height="20"/>
+                                <rect key="frame" x="14" y="8" width="187" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Blj-K3-TD7">
-                                <rect key="frame" x="8" y="34" width="275" height="34"/>
+                                <rect key="frame" x="14" y="34" width="269" height="28"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -57,13 +57,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="Blj-K3-TD7" secondAttribute="bottom" constant="8" id="B8C-L0-Nk6"/>
+                            <constraint firstAttribute="bottom" secondItem="Blj-K3-TD7" secondAttribute="bottom" constant="14" id="B8C-L0-Nk6"/>
                             <constraint firstItem="Blj-K3-TD7" firstAttribute="top" secondItem="bWL-Xa-xYU" secondAttribute="bottom" constant="6" id="BLF-9Z-3f3"/>
                             <constraint firstItem="bWL-Xa-xYU" firstAttribute="top" secondItem="34I-Lm-gmT" secondAttribute="top" constant="8" id="BOq-dW-ysf"/>
                             <constraint firstItem="jwF-el-iIl" firstAttribute="leading" secondItem="bWL-Xa-xYU" secondAttribute="trailing" constant="8" id="LAu-xp-tV9"/>
                             <constraint firstItem="Blj-K3-TD7" firstAttribute="leading" secondItem="bWL-Xa-xYU" secondAttribute="leading" id="PYt-KK-YJB"/>
                             <constraint firstItem="jwF-el-iIl" firstAttribute="centerY" secondItem="bWL-Xa-xYU" secondAttribute="centerY" id="bTQ-Qz-dIQ"/>
-                            <constraint firstItem="bWL-Xa-xYU" firstAttribute="leading" secondItem="34I-Lm-gmT" secondAttribute="leading" constant="8" id="bUs-n3-nnO"/>
+                            <constraint firstItem="bWL-Xa-xYU" firstAttribute="leading" secondItem="34I-Lm-gmT" secondAttribute="leading" constant="14" id="bUs-n3-nnO"/>
                             <constraint firstItem="bFp-04-OEq" firstAttribute="leading" secondItem="jwF-el-iIl" secondAttribute="trailing" constant="10" id="cgd-Ah-ek5"/>
                             <constraint firstItem="bFp-04-OEq" firstAttribute="centerY" secondItem="bWL-Xa-xYU" secondAttribute="centerY" id="g3z-fA-o1F"/>
                             <constraint firstAttribute="trailing" secondItem="Blj-K3-TD7" secondAttribute="trailing" constant="8" id="zQC-xI-n3E"/>
@@ -78,6 +78,7 @@
                     </label>
                 </subviews>
             </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="DxT-9z-WXz" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6Xz-gW-Hqi"/>
@@ -89,7 +90,6 @@
                 <constraint firstAttribute="trailing" secondItem="DxT-9z-WXz" secondAttribute="trailing" id="g97-JR-G2b"/>
                 <constraint firstItem="34I-Lm-gmT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="umY-5E-NjQ"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="291" height="84"/>
             <connections>
                 <outlet property="btnDelete" destination="bFp-04-OEq" id="OOb-RB-sos"/>

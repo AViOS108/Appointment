@@ -109,7 +109,8 @@ class GeneralUtility {
         viewController.navigationController?.navigationBar.topItem?.setRightBarButtonItems([back], animated: true)
         
         viewController.navigationController?.navigationBar.topItem?.leftBarButtonItem = nil
-        
+        GeneralUtility.handlingofiOS15Case(viewController: viewController)
+
         //        let bounds = viewController.navigationController!.navigationBar.bounds
         //        viewController.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 64)
     }
@@ -149,6 +150,8 @@ class GeneralUtility {
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        GeneralUtility.handlingofiOS15Case(viewController: viewController)
+
     }
     
     
@@ -194,6 +197,8 @@ class GeneralUtility {
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        GeneralUtility.handlingofiOS15Case(viewController: viewController)
+
         
     }
     
@@ -225,10 +230,27 @@ class GeneralUtility {
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         viewController.navigationController?.navigationBar.titleTextAttributes = textAttributes
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        GeneralUtility.handlingofiOS15Case(viewController: viewController)
+    
         
-        //        let bounds = viewController.navigationController!.navigationBar.bounds
-        //        viewController.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: bounds.width, height: 64)
-        
+    }
+    
+    class func handlingofiOS15Case(viewController: UIViewController){
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = ILColor.color(index: 8)
+            appearance.titleTextAttributes = [.font:
+                                                UIFont.boldSystemFont(ofSize: 20.0),
+                                              .foregroundColor: UIColor.white]
+            
+            // Customizing our navigation bar
+            viewController.navigationController?.navigationBar.tintColor = .white
+            viewController.navigationController?.navigationBar.standardAppearance = appearance
+            viewController.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     
@@ -250,15 +272,9 @@ class GeneralUtility {
         let back =  UIBarButtonItem(customView: backButton)
         viewController.navigationItem.leftBarButtonItem = back
         
-        
-        let calenderButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 15))
-        calenderButton.contentMode = .scaleAspectFit
-        //        searchButton.backgroundColor = .red
-        calenderButton.addTarget(viewController, action: #selector(SuperViewController.calenderClicked(sender:)), for: .touchUpInside)
-        calenderButton.setImage(UIImage.init(named: "printImage"), for: .normal)
-        let calender =  UIBarButtonItem(customView: calenderButton)
-        viewController.navigationItem.rightBarButtonItems = [calender];
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        GeneralUtility.handlingofiOS15Case(viewController: viewController)
+      
     }
     
     
@@ -290,6 +306,8 @@ class GeneralUtility {
         let calender =  UIBarButtonItem(customView: calenderButton)
         viewController.navigationItem.rightBarButtonItems = [calender];
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        GeneralUtility.handlingofiOS15Case(viewController: viewController)
+
     }
     
     class func customeNavigationBarWithOnlyBack(viewController: UIViewController,title:String){
@@ -308,6 +326,8 @@ class GeneralUtility {
         let back =  UIBarButtonItem(customView: backButton)
         viewController.navigationItem.leftBarButtonItem = back
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        GeneralUtility.handlingofiOS15Case(viewController: viewController)
+
     }
     
     
@@ -330,6 +350,8 @@ class GeneralUtility {
         let addButtonBarButton =  UIBarButtonItem(customView: lblStudentCount)
         viewController.navigationItem.rightBarButtonItems = [addButtonBarButton];
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        GeneralUtility.handlingofiOS15Case(viewController: viewController)
+
     }
     
     class func customeNavigationBarWithTwoButtons(viewController: UIViewController,titleButtonL:String, TittleButtonR: String,titleNavBar: String){
@@ -349,6 +371,8 @@ class GeneralUtility {
 
         viewController.navigationController?.navigationBar.isTranslucent = true
         viewController.navigationController?.navigationBar.barTintColor = ILColor.color(index: 8);
+        GeneralUtility.handlingofiOS15Case(viewController: viewController)
+
         
         
         
@@ -432,6 +456,21 @@ class GeneralUtility {
            }
            viewController.present(alert, animated: true, completion: nil)
        }
+    
+    
+    public  class func  alertViewPopTooneViewController(title : String,message : String,viewController : UIViewController,buttons:[String])  {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        for string in buttons{
+            alert.addAction(UIAlertAction(title: string, style: .default, handler: { action in
+             
+             viewController.navigationController?.popViewController(animated: false)
+             
+             
+            }))
+        }
+        viewController.present(alert, animated: true, completion: nil)
+    }
+ 
     
     public  class func  alertViewPopOutToParticularViewController(title : String,message : String,viewController : UIViewController,buttons:[String],index : Int)  {
               let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -814,6 +853,27 @@ class GeneralUtility {
         return ""
     }
     
+    
+    public  class func   startAndEndDateDetail2WithZ(startDate : String,endDate : String) -> String {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //           let token = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
+        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        if let date = formatter.date(from: startDate), let enddate = formatter.date(from: endDate) {
+            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+            formatter.dateFormat = "hh:mm a"
+            let strTime = formatter.string(from: date)
+            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+            formatter.dateFormat = "hh:mm a z"
+            let endTime = formatter.string(from: enddate)
+            return strTime + " - " + endTime
+            //.lowercased()
+        }
+        return ""
+    }
+    
     public  class func   startAndEndDateDetail3(startDate : String,endDate : String) -> String {
         
         let formatter = DateFormatter()
@@ -980,6 +1040,15 @@ class GeneralUtility {
         let minutes = abs(TimeZone.current.secondsFromGMT()/60) % 60
         let tz_hr = String(format: "%+.2d:%.2d", hours, minutes) // "+hh:mm"
         return "UTC "+tz_hr
+    }
+    
+  class  func verifyUrl (urlString: String?) -> Bool {
+        if let urlString = urlString {
+            if let url = NSURL(string: urlString) {
+                return UIApplication.shared.canOpenURL(url as URL)
+            }
+        }
+        return false
     }
     
     

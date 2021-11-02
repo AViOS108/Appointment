@@ -33,6 +33,8 @@ struct DashBoardModel: Codable {
 // MARK: - Item
 struct Item: Codable {
     let id: Int
+    var isSeeMoreSelected = false
+
     let name, email: String
     let profilePicURL: String?
     let roles: [Role]

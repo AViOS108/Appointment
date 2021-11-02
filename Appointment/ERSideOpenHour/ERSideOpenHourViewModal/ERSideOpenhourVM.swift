@@ -147,6 +147,15 @@ class ERSideOpenHourDetailVM {
         
     }
     
+    func fetchStudentDetail(params: Dictionary<String, AnyObject>, id: String,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void )
+    {
+        ERSideAppointmentService().erSideparticipantApi(params: params, id: id, { (data) in
+            success(data)
+        }) { (error, errorCode) in
+            failure(error, errorCode)
+        }
+    }
+    
     
     func OpenHourDelete(param: Dictionary<String,AnyObject>,deleteAll : String, id: String,_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void )
     {

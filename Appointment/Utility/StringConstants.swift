@@ -97,6 +97,7 @@ class StringConstants{
 
     static let PURPOSEERROR = "Please select atleast one purpose"
     static let LOCATIONERROR = "Please provide your Location"
+    static let URLERROR = "Please provide a valid URL"
 
     static let DEADLINEERROR = "Please provide your Deadlines"
 

@@ -27,6 +27,12 @@ class ErSideHomeTableViewVC: UIViewController,UITableViewDelegate,UITableViewDat
         }
         viewControllerI.tblView.delegate = self
         viewControllerI.tblView.dataSource = self
+        
+        
+        if #available(iOS 15.0, *) {
+            viewControllerI.tblView.sectionHeaderTopPadding = 0.0
+             }
+        
         viewControllerI.tblView.reloadData()
         
     }
@@ -150,4 +156,8 @@ class ErSideHomeTableViewVC: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
+
+    }
 }

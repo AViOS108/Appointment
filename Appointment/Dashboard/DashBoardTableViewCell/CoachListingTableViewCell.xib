@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -40,14 +40,8 @@
                                     <constraint firstAttribute="width" constant="36" id="VJ3-yo-dwF"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxA-Ka-BNv">
-                                <rect key="frame" x="62" y="6.5" width="198" height="23.5"/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehQ-XX-fHC">
-                                <rect key="frame" x="62" y="38" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehQ-XX-fHC">
+                                <rect key="frame" x="56" y="38" width="30" height="30"/>
                                 <connections>
                                     <action selector="scheduleAppointmentTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="F68-Ry-dmo"/>
                                 </connections>
@@ -66,23 +60,34 @@
                                     <action selector="coachSelectedTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="R6V-61-rNf"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ObM-E7-k0q" customClass="cutomeTextView" customModule="Appointment" customModuleProvider="target">
+                                <rect key="frame" x="56" y="7" width="202" height="24"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="KGk-i7-Jjw" id="fhN-k3-WrK"/>
+                                </connections>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ehQ-XX-fHC" firstAttribute="leading" secondItem="dxA-Ka-BNv" secondAttribute="leading" id="6le-J3-GP9"/>
+                            <constraint firstItem="ObM-E7-k0q" firstAttribute="leading" secondItem="ehQ-XX-fHC" secondAttribute="leading" id="0Tl-iI-zEe"/>
                             <constraint firstItem="3Rl-HA-oLs" firstAttribute="trailing" secondItem="Ll6-rM-RKH" secondAttribute="trailing" id="94g-qs-ewK"/>
-                            <constraint firstItem="dxA-Ka-BNv" firstAttribute="top" secondItem="363-hm-Wws" secondAttribute="top" constant="6.5" id="DjZ-yE-vnS"/>
                             <constraint firstItem="Ll6-rM-RKH" firstAttribute="leading" secondItem="363-hm-Wws" secondAttribute="leading" constant="8" id="ERR-Yw-H3u"/>
                             <constraint firstItem="3Rl-HA-oLs" firstAttribute="top" secondItem="Ll6-rM-RKH" secondAttribute="top" id="Hyy-mm-bpz"/>
                             <constraint firstAttribute="bottom" secondItem="ehQ-XX-fHC" secondAttribute="bottom" constant="5" id="J9q-mr-L4f"/>
-                            <constraint firstItem="37z-fR-E00" firstAttribute="leading" secondItem="dxA-Ka-BNv" secondAttribute="trailing" constant="6" id="JYs-yh-KQf"/>
                             <constraint firstAttribute="trailing" secondItem="37z-fR-E00" secondAttribute="trailing" constant="8" id="OXo-py-XWM"/>
+                            <constraint firstItem="37z-fR-E00" firstAttribute="leading" secondItem="ObM-E7-k0q" secondAttribute="trailing" constant="8" id="OsS-hg-Xjh"/>
                             <constraint firstItem="Ll6-rM-RKH" firstAttribute="top" secondItem="363-hm-Wws" secondAttribute="top" constant="7" id="YUe-TW-lzS"/>
-                            <constraint firstItem="dxA-Ka-BNv" firstAttribute="leading" secondItem="Ll6-rM-RKH" secondAttribute="trailing" constant="18" id="d3a-Ce-zuj"/>
-                            <constraint firstItem="ehQ-XX-fHC" firstAttribute="top" secondItem="dxA-Ka-BNv" secondAttribute="bottom" constant="8" id="g6Y-y6-knw"/>
+                            <constraint firstItem="ObM-E7-k0q" firstAttribute="leading" secondItem="3Rl-HA-oLs" secondAttribute="trailing" constant="12" id="ftv-1S-SWu"/>
                             <constraint firstItem="3Rl-HA-oLs" firstAttribute="bottom" secondItem="Ll6-rM-RKH" secondAttribute="bottom" id="m6x-V4-hPy"/>
                             <constraint firstItem="3Rl-HA-oLs" firstAttribute="leading" secondItem="Ll6-rM-RKH" secondAttribute="leading" id="qIW-1g-R2I"/>
                             <constraint firstItem="37z-fR-E00" firstAttribute="top" secondItem="363-hm-Wws" secondAttribute="top" constant="2" id="tO5-Eh-thL"/>
+                            <constraint firstItem="ehQ-XX-fHC" firstAttribute="top" secondItem="ObM-E7-k0q" secondAttribute="bottom" constant="7" id="xwG-7Z-fUD"/>
+                            <constraint firstItem="ObM-E7-k0q" firstAttribute="top" secondItem="363-hm-Wws" secondAttribute="top" constant="7" id="y8u-hK-w2q"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -104,15 +109,18 @@
                 <outlet property="BtnAppointment" destination="ehQ-XX-fHC" id="Vha-OW-R2E"/>
                 <outlet property="btnSelect" destination="37z-fR-E00" id="hGj-yv-R7P"/>
                 <outlet property="imgView" destination="Ll6-rM-RKH" id="LSr-54-NV0"/>
-                <outlet property="lblDescribtion" destination="dxA-Ka-BNv" id="Sh1-tF-MF4"/>
                 <outlet property="lblImageView" destination="3Rl-HA-oLs" id="i3b-xG-AE6"/>
                 <outlet property="lblNoCoach" destination="5qN-Ta-x0H" id="pdC-zK-vbf"/>
+                <outlet property="txtView" destination="ObM-E7-k0q" id="42d-PW-Vcb"/>
                 <outlet property="viewContainer" destination="363-hm-Wws" id="zW1-4J-3DA"/>
             </connections>
             <point key="canvasLocation" x="53.623188405797109" y="88.727678571428569"/>
         </tableViewCell>
     </objects>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

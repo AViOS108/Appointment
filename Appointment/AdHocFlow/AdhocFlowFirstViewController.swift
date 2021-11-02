@@ -63,8 +63,8 @@ class AdhocFlowFirstViewController: SuperViewController,UIPickerViewDelegate,UIP
         
         
         var objOpenHourModalSubmit = openHourModalSubmit()
-        let arrApprovalProcess = ["Automatic Approval","Manual Approval"]
-        let arrApprovalProcessI = ["automatic","manual"]
+        let arrApprovalProcess =  ["1 on 1 Appointment","Group Appointment"]
+        let arrApprovalProcessI = ["1","2"]
         let indexApppProcess = arrApprovalProcess.firstIndex(where: {$0 == txtApointmentType.text})
         objOpenHourModalSubmit.open_hours_appointment_approval_process = arrApprovalProcessI[indexApppProcess ?? 0]
         if isCustomSlotSelected {
@@ -149,7 +149,7 @@ class AdhocFlowFirstViewController: SuperViewController,UIPickerViewDelegate,UIP
         
     }
     @objc override func buttonClicked(sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: false)
         
     }
     
@@ -271,7 +271,14 @@ class AdhocFlowFirstViewController: SuperViewController,UIPickerViewDelegate,UIP
     override func viewWillAppear(_ animated: Bool) {
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Ad hoc Appointment")
 
-    
+        viewOuter.backgroundColor = .white
+        viewOuter.cornerRadius = 3
+        
+        viewHeader.backgroundColor = .white
+        viewHeader.cornerRadius = 3
+        
+        view.backgroundColor = ILColor.color(index: 22)
+        
         
     }
     
@@ -364,29 +371,32 @@ extension AdhocFlowFirstViewController{
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
         {
             let strHeader = NSMutableAttributedString.init()
-            let strTiTle = NSAttributedString.init(string: " Set Date"
+            let strTiTle = NSAttributedString.init(string: "Set Date"
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
             let strType = NSAttributedString.init(string: "  ⃰"
                 , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
             strHeader.append(strTiTle)
-            strHeader.append(strType)
             
             strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
             lblDate.attributedText = strHeader
         }
+      
         let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
         txtDateSelected.backgroundColor = ILColor.color(index: 48)
         self.txtDateSelected.font = fontMedium
-        self.txtDateSelected.layer.cornerRadius = 3;
-        let imageView3 = UIImageView.init(image: UIImage.init(named: "Calendar-1"))
-        imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
-        self.txtDateSelected.leftView = imageView3
-        txtDateSelected.leftViewMode = .always;
-        let fontDateRe = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13)
         self.txtDateSelected.layer.borderColor = ILColor.color(index: 27).cgColor
         self.txtDateSelected.layer.borderWidth = 1;
+        self.txtDateSelected.layer.cornerRadius = 3;
+        let imageView = UIImageView.init(image: UIImage.init(named: "noun_Calendar_2958489"))
+        imageView.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
+        
+        self.txtDateSelected.leftView = imageView
+        txtDateSelected.leftViewMode = .always;
+    
+        
+        let fontDateRe = UIFont(name: "FontRegular".localized(), size: Device.FONTSIZETYPE13)
         
         txtDateSelected.attributedPlaceholder = NSAttributedString(string: "DD/MM/YYYY", attributes: [
             .foregroundColor: ILColor.color(index: 40),
@@ -396,7 +406,7 @@ extension AdhocFlowFirstViewController{
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateConverted = dateFormatter.string(from: self.dateSelected)
         
-        let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:dateConverted , fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd/MM/yyyy")
+        let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:dateConverted , fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM, yyyy")
         txtDateSelected.text = dateSelectedValue
         
     }
@@ -552,16 +562,16 @@ extension AdhocFlowFirstViewController
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        guard let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else { return true }
         
-        //         if  textField == txtRepeatCount || textField == txtOccurenceCount{
-        //
-        //             if currentText.count > 4 {
-        //                 return false
-        //             }
-        //
-        //         }
-        return true
+        if textField.tag == 10 {
+            return true
+        }
+        else{
+            return false
+
+        }
+        
+       
     }
     
     
@@ -614,7 +624,7 @@ extension AdhocFlowFirstViewController
 
 extension AdhocFlowFirstViewController: CalenderViewDelegate{
     func dateSelected(calenderModal: CalenderModal, index: Int) {
-        let dateInRequiredFormate =     GeneralUtility.currentDateDetailType4(emiDate: calenderModal.StrDate!, fromDateF: "yyyy-MM-dd", toDateFormate: "dd/MM/yyyy")
+        let dateInRequiredFormate =     GeneralUtility.currentDateDetailType4(emiDate: calenderModal.StrDate!, fromDateF: "yyyy-MM-dd", toDateFormate: "dd MMM, yyyy")
         txtDateSelected.text = dateInRequiredFormate
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

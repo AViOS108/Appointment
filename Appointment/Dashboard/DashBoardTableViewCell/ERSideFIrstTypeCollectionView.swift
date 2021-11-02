@@ -10,7 +10,7 @@ import UIKit
 
 protocol ERSideFIrstTypeCollectionViewDelegate {
     func acceptDeclineApi(isAccept : Bool, selectedRow : Int)
-    func sendEmail()
+    func sendEmail(email :String)
 
 }
 
@@ -82,16 +82,25 @@ extension ERSideFIrstTypeCollectionView :ERAppoDetailFirstCollectionViewLayoutDe
         label.numberOfLines = 0
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
         label.font = fontBook
+        
+        
+        let label1 = UILabel(frame: CGRect(x: 0, y: 0, width: (viewController.view.frame.width - 48), height: CGFloat.greatestFiniteMagnitude))
+        label1.numberOfLines = 0
+        label1.font = fontBook
+        
+        
         let cell : ERSideAppoDetailTypeFirstCollectionViewCell = ERSideAppoDetailTypeFirstCollectionViewCell()
         cell.indexPathRow = indexPath.row
         cell.requestDetail = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.requests![indexPath.row]
+        cell.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj
+
         label.attributedText = cell.descriptionLogic()
-        //    label.attributedText = attributedText
+        label1.attributedText = cell.nameLogic()
         label.sizeToFit()
-        
+        label1.sizeToFit()
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         if isStudent ?? false {
-            return 245.0
+            return label.frame.height + label1.frame.height
         }
         else
         {
@@ -109,8 +118,9 @@ extension ERSideFIrstTypeCollectionView :ERAppoDetailFirstCollectionViewLayoutDe
 
 extension ERSideFIrstTypeCollectionView : ERSideAppoDetailTypeFirstCollectionViewCellDelegate {
     
-    func sendEmail() {
-        delegateI.sendEmail()
+    func sendEmail(email :String)
+    {
+        delegateI.sendEmail(email: email)
     }
     
     func acceptDeclineApi(isAccept: Bool, selectedRow : Int) {

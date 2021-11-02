@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,19 +21,19 @@
                         <rect key="frame" x="0.0" y="4" width="360" height="90"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nkL-Tu-XR1">
-                                <rect key="frame" x="8" y="8" width="344" height="41"/>
+                                <rect key="frame" x="14" y="8" width="338" height="35"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhq-6E-3SG">
-                                <rect key="frame" x="8" y="53" width="294" height="29"/>
+                                <rect key="frame" x="14" y="47" width="288" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eoU-LY-c37">
-                                <rect key="frame" x="306" y="52.5" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eoU-LY-c37">
+                                <rect key="frame" x="306" y="46.5" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="btnCompletionStatusTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="dsq-0P-Jcu"/>
@@ -42,15 +42,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="fhq-6E-3SG" firstAttribute="leading" secondItem="hkK-eJ-i5E" secondAttribute="leading" constant="8" id="0Ur-tV-FIu"/>
+                            <constraint firstItem="fhq-6E-3SG" firstAttribute="leading" secondItem="hkK-eJ-i5E" secondAttribute="leading" constant="14" id="0Ur-tV-FIu"/>
                             <constraint firstItem="eoU-LY-c37" firstAttribute="centerY" secondItem="fhq-6E-3SG" secondAttribute="centerY" id="7di-kB-GBw"/>
-                            <constraint firstItem="nkL-Tu-XR1" firstAttribute="leading" secondItem="hkK-eJ-i5E" secondAttribute="leading" constant="8" id="G3G-9u-LgB"/>
+                            <constraint firstItem="nkL-Tu-XR1" firstAttribute="leading" secondItem="hkK-eJ-i5E" secondAttribute="leading" constant="14" id="G3G-9u-LgB"/>
                             <constraint firstAttribute="trailing" secondItem="nkL-Tu-XR1" secondAttribute="trailing" constant="8" id="IDW-ft-Sja"/>
                             <constraint firstItem="fhq-6E-3SG" firstAttribute="top" secondItem="nkL-Tu-XR1" secondAttribute="bottom" constant="4" id="Mui-6e-Elf"/>
                             <constraint firstItem="eoU-LY-c37" firstAttribute="top" relation="greaterThanOrEqual" secondItem="nkL-Tu-XR1" secondAttribute="bottom" constant="3.5" id="WxC-eL-9Dq"/>
                             <constraint firstItem="eoU-LY-c37" firstAttribute="leading" secondItem="fhq-6E-3SG" secondAttribute="trailing" constant="4" id="htJ-zQ-fNz"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eoU-LY-c37" secondAttribute="bottom" constant="3" id="lWh-Hy-SLm"/>
-                            <constraint firstAttribute="bottom" secondItem="fhq-6E-3SG" secondAttribute="bottom" constant="8" id="opI-gw-MPS"/>
+                            <constraint firstAttribute="bottom" secondItem="fhq-6E-3SG" secondAttribute="bottom" constant="14" id="opI-gw-MPS"/>
                             <constraint firstAttribute="trailing" secondItem="eoU-LY-c37" secondAttribute="trailing" constant="8" id="tOz-Z1-i6A"/>
                             <constraint firstItem="nkL-Tu-XR1" firstAttribute="top" secondItem="hkK-eJ-i5E" secondAttribute="top" constant="8" id="zIU-uB-E6Y"/>
                         </constraints>
@@ -63,6 +63,7 @@
                     </label>
                 </subviews>
             </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="hkK-eJ-i5E" secondAttribute="trailing" id="GSZ-dj-xfA"/>
@@ -74,7 +75,6 @@
                 <constraint firstItem="ZNR-xj-jkn" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="v5i-3Y-5Wu"/>
                 <constraint firstAttribute="bottom" secondItem="ZNR-xj-jkn" secondAttribute="bottom" id="yxr-cx-gJn"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="360" height="98"/>
             <connections>
                 <outlet property="btnCompletionStatus" destination="eoU-LY-c37" id="xM5-qK-edl"/>

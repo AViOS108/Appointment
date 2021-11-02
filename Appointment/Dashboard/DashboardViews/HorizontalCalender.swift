@@ -74,7 +74,13 @@ class HorizontalCalender: UIView,UICollectionViewDelegate,UICollectionViewDataSo
             studentHeader.append(studentHeaaderObject2)
             nslayoutConstraintViewTopHeight.constant = 0
             self.ViewTop.isHidden = true
-            
+            self.pageControl.isHidden = false
+            if #available(iOS 14.0, *) {
+                pageControl.pageIndicatorTintColor = ILColor.color(index: 61)
+                pageControl.currentPageIndicatorTintColor = ILColor.color(index: 65)
+            } else {
+                // Fallback on earlier versions
+            }
             self.setTimer()
         case .ER:
         self.pageControl.isHidden = true

@@ -17,7 +17,7 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
     var noteModalObj :   NotesModalNew?
     var noteModalObjStudent :  NotesModal?
     
-    var isNotes = false
+    var isNoNotes = false
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -40,20 +40,37 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
         self.delegate = self
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
         if isStudent ?? false {
-            if noteModalObjStudent?.results?.count == 0{
-                isNotes = true
+            
+            if noteModalObjStudent?.results != nil{
+                if  noteModalObjStudent?.results?.count == 0{
+                    isNoNotes = true
+                }
+                else{
+                    isNoNotes = false
+                }
             }
             else{
-                isNotes = false
+                isNoNotes = true
+
             }
+            
         }
         else{
-            if noteModalObj?.results?.count == 0{
-                isNotes = true
+            
+            if noteModalObj?.results != nil{
+                if  noteModalObj?.results?.count == 0{
+                    isNoNotes = true
+                }
+                else{
+                    isNoNotes = false
+                }
             }
             else{
-                isNotes = false
+                isNoNotes = true
+
             }
+            
+          
 
         }
         
@@ -70,7 +87,7 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if isNotes{
+        if isNoNotes{
             return 1
         }
         else{
@@ -94,8 +111,8 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
         
         cell.delegate = viewController as! NoteCollectionViewCellDelegate
 
-        if isNotes{
-             cell.customization(noNotes: isNotes)
+        if isNoNotes{
+             cell.customization(noNotes: isNoNotes)
         }
         else{
             let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
@@ -105,7 +122,7 @@ class NoteCollectionView: UICollectionView,UICollectionViewDataSource,UICollecti
             else{
                 cell.noteResultModal = self.noteModalObj?.results?[indexPath.row];
             }
-                cell.customization(noNotes: isNotes)
+                cell.customization(noNotes: isNoNotes)
         }
       
        return cell
@@ -134,7 +151,7 @@ extension NoteCollectionView: NotesCollectionViewlayoutDelegate {
     let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
     label.font = fontBook
     let cell : NoteCollectionViewCell = NoteCollectionViewCell()
-    if isNotes{
+    if isNoNotes{
         label.text = "TEXT WHICH IS USED TO INCREASE THE HEIGHT OF CELL"
     }
     else{
@@ -169,7 +186,7 @@ extension NoteCollectionView: NotesCollectionViewlayoutDelegate {
     }
     //    label.attributedText = attributedText
     label.sizeToFit()
-    return label.frame.height + 50 //(Please change it if u have changed the constraint of uicolllection cell)
+    return label.frame.height + 56 //(Please change it if u have changed the constraint of uicolllection cell)
     //    return label.frame.height
     
     }

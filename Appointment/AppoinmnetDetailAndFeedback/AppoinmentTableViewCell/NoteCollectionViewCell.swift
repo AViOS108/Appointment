@@ -216,7 +216,8 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
             let nextLine1 = NSAttributedString.init(string: "\n")
             
             var notestext  = "" , colorForeGround : UIColor!
-            
+            let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
+
             if  self.noteResultModalStudent?.isShared == 0 {
                 notestext = "My notes"
                 colorForeGround = ILColor.color(index: 39)
@@ -228,7 +229,7 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
             }
             
             let strSharedInfo = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: notestext, _returnType: String.self)
-                                                        , attributes: [NSAttributedString.Key.foregroundColor : colorForeGround!,NSAttributedString.Key.font : fontMedium]);
+                                                        , attributes: [NSAttributedString.Key.foregroundColor : colorForeGround!,NSAttributedString.Key.font : fontHeavy1]);
            
             let data = Data((self.noteResultModalStudent?.data?.utf8)!)
             
@@ -245,6 +246,8 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
             else{
                 strHeader.append(strSharedWith)
                 strHeader.append(nextLine1)
+                strHeader.append(nextLine1)
+
             }
             
            
@@ -282,12 +285,12 @@ class NoteCollectionViewCell: UICollectionViewCell,UIGestureRecognizerDelegate {
             
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
-            para.lineSpacing = 2
+            para.lineSpacing = 4
             strHeader.append(strSharedWith)
             strHeader.append(nextLine1)
             strHeader.append(strSharedInfo)
             strHeader.append(nextLine1)
-
+            strHeader.append(nextLine1)
             strHeader.append(strDescription)
 
             strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))

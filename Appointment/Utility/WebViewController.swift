@@ -18,6 +18,86 @@ class WebViewController: SuperViewController {
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var printController = UIPrintInteractionController.shared;
+    var activityIndicatorI: ActivityIndicatorView?
+    var resumeID : Int?
+    @IBOutlet weak var printResume: UIButton!
+    @IBOutlet weak var downloadResume: UIButton!
+    @IBOutlet weak var resumePrintViewLayoutconstraint: NSLayoutConstraint!
+    @IBOutlet weak var resumePrintView: UIView!
+  var name : String?
+    
+    @IBAction func printResumeTaped(_ sender: UIButton) {
+        printController.present(animated: false) { (interactionVC, bool, erro) in
+        }
+    }
+    
+    @IBAction func downloadResumeTaped(_ sender: UIButton) {
+        if let resumeID = resumeID {
+            apitHitForDownloadResume(resumeID: resumeID)
+        }
+    }
+    
+    
+    
+    
+    func apitHitForDownloadResume(resumeID: Int){
+        
+        activityIndicatorI = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
+        
+        ERSideAppointmentService().erSideResumeView(resumeId: resumeID,{ (data) in
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    self.downloadResume(url: json["\(resumeID)"] as! String)
+                   }
+                
+            } catch  {
+                CommonFunctions().showError(title: "Error", message: ErrorMessages.SomethingWentWrong.rawValue)
+            }
+            
+            
+        }) {
+            (error, errorCode) in
+            self.activityIndicatorI?.hide()
+        };
+        
+    }
+    
+    func downloadResume(url:String){
+        
+        ERSideAppointmentService().erSideDownloadResume(url: url) { (data) in
+            self.activityIndicatorI?.hide()
+            let destinationFileUrl  = data["destinationUrl"] as! URL;
+            
+            do {
+                
+                let documentsUrl:URL =  (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first as URL?)!
+                do {
+                    let contents  = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                    for indexx in 0..<contents.count {
+                        if contents[indexx].lastPathComponent == destinationFileUrl.lastPathComponent {
+                            let activityViewController = UIActivityViewController(activityItems: [contents[indexx]], applicationActivities: nil)
+                            self.present(activityViewController, animated: true, completion: nil)
+                        }
+                    }
+                }
+                catch (let err) {
+                    print("error: \(err)")
+                }
+            } catch (let writeError) {
+                print("Error creating a file \(destinationFileUrl) : \(writeError)")
+            }
+            
+            
+        } failure: { (error, errorCode) in
+            self.activityIndicatorI?.hide()
+
+        }
+
+        
+       
+    }
+    
+    
     var isResumeWebView = false
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +113,20 @@ class WebViewController: SuperViewController {
         webview.load(request)
         activityIndicator.hidesWhenStopped = true
         if isResumeWebView{
-            GeneralUtility.customeNavigationBarWithBackAndPrint(viewController: self, title: "Print Resume")
-
+            GeneralUtility.customeNavigationBarWithBackAndPrint(viewController: self, title: "Resume - " + (name ?? "") )
+//            resumePrintView.isHidden = false
+            resumePrintViewLayoutconstraint.constant = 128;
+            resumePrintView.backgroundColor = .clear
+            let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
+            UIButton.buttonUIHandling(button: printResume, text: " Print Resume", backgroundColor: .clear, textColor: ILColor.color(index: 23),  buttonImage: UIImage.init(named: "printImageBlue"), fontType: fontHeavy)
+            UIButton.buttonUIHandling(button: downloadResume, text: " Download Resume", backgroundColor: .clear, textColor: ILColor.color(index: 23),  buttonImage: UIImage.init(named: "downloadImage"), fontType: fontHeavy)
+            
         }
     }
+    
+    
+    
+    
     
     @objc override func buttonClicked(sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
@@ -66,10 +156,7 @@ class WebViewController: SuperViewController {
         }
     }
     
-    func printTapped(){
-       
-    }
-    
+   
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -96,7 +183,12 @@ extension WebViewController : WKNavigationDelegate,WKUIDelegate{
         if activityIndicator != nil{
             activityIndicator.startAnimating()
 
-        }    }
+        }
+        if isResumeWebView{
+            resumePrintView.isHidden = false
+        }
+
+    }
     
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

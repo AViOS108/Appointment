@@ -305,9 +305,9 @@ class FeedbackViewController: SuperViewController,UIGestureRecognizerDelegate,UI
         _ =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
 
 
-        self.textWithAstrikMark(lblSpecific: lblOverallExp, text: "Overall Experience for the sessions")
-        self.textWithAstrikMark(lblSpecific: lblCoachPrecise, text: "Coach’s precision and helpfulness")
-        self.textWithAstrikMark(lblSpecific: lblHelpFulness, text: "Helpfulness due to coach’s area of expertise")
+        self.textWithAstrikMark(lblSpecific: lblOverallExp, text: "1. Overall Experience for the sessions")
+        self.textWithAstrikMark(lblSpecific: lblCoachPrecise, text: "2. Coach’s precision and helpfulness")
+        self.textWithAstrikMark(lblSpecific: lblHelpFulness, text: "3. Helpfulness due to coach’s area of expertise")
 
         UILabel.labelUIHandling(label: lblCoachName, text: self.appoinmentDetailModalObj?.coachDetails?.name ?? "", textColor: ILColor.color(index: 40), isBold: false,  fontType: fontHeavy)
 

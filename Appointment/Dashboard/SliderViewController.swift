@@ -49,7 +49,7 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
     override func viewDidAppear(_ animated: Bool) {
        
         self.view.backgroundColor = .white
-        self.createBezierPath()
+//        self.createBezierPath()
         tblview.separatorStyle = .none
         
         self.profileUpdate()
@@ -69,6 +69,8 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
         
     }
     
+    
+  
     func createBezierPath() {
         
         if path == nil
@@ -119,20 +121,22 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
         UILabel.labelUIHandling(label: emailLabel, text: UserDefaults.standard.object(forKey: "userEmail") as? String ?? "", textColor: ILColor.color(index: 62), isBold: false, fontType: fontBook)
 
         activityIndicator.startAnimating()
+        profilePictureImageView.cornerRadius = profilePictureImageView .frame.width / 2
+        
         if let profUrl = profileUrl, let url = URL(string: profUrl) {
-
-//            profilePictureImageView.setImageWith(URLRequest.init(url: url), placeholderImage: #imageLiteral(resourceName: "avatar"), success: { (urlrequest, respone, image) in
-//                self.profilePictureImageView.image = image;
-//
-//            }) { (urlrequest, respone, error) in
-//
-//            }
-
+            profilePictureImageView.setImageWith(URLRequest.init(url: url), placeholderImage:  UIImage.init(named: "ProfileBG")) { urlrest, response, image in
+                self.profilePictureImageView.image = image
+            } failure: { urlrest, response, error in
+                
+            }
+           
         }else{
-//            self.profilePictureImageView.image = #imageLiteral(resourceName: "avatar")
+            self.profilePictureImageView.image = UIImage.init(named: "ProfileBG")
             self.activityIndicator.stopAnimating()
         }
     }
+  
+    
     
     
     

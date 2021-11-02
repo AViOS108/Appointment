@@ -50,7 +50,7 @@ class HomeMyAppointmentTableViewController: UITableViewController {
         
         
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewControllerI.redirectAppoinment(openMOdal: (viewControllerI.dataFeedingAppointmentModal?.results?[indexPath.row])!, isFeedback: 2)
+        viewControllerI.redirectAppoinment(openMOdal:  (viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.typeERSide == viewControllerI.selectedHorizontal})[indexPath.row])!, isFeedback: 2)
 
     }
     

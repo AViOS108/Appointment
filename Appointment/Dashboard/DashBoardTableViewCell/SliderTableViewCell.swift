@@ -27,7 +27,7 @@ class SliderTableViewCell: UITableViewCell {
         
         if let FontDemiBold = UIFont(name: "FontDemiBold".localized(), size: Device.FONTSIZETYPE13)
         {
-            UILabel.labelUIHandling(label: lblSlider, text: txtSlider, textColor: ILColor.color(index: 4), isBold: false, fontType: FontDemiBold)
+            UILabel.labelUIHandling(label: lblSlider, text: txtSlider, textColor: ILColor.color(index: 63), isBold: false, fontType: FontDemiBold)
         }
         self.imgSlider.image = UIImage.init(named: imgSlider)
         self.imgSlider.contentMode = .center

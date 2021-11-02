@@ -722,6 +722,8 @@ extension ERSideOpenCreateEditSecondVC{
             self.txtLocationType.layer.cornerRadius = 3;
             self.txtLocationType.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
             txtLocationType.rightViewMode = .always;
+            txtLocationType.placeholder = "Search locations"
+
             
             
             break;
@@ -1408,6 +1410,18 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
             return false
         }
         
+        if txtLocationType.text == "Meeting URL"{
+            if   GeneralUtility.verifyUrl(urlString: txtDefaultLocation.text){
+                
+            }
+            else{
+                CommonFunctions().showError(title: "Error", message: StringConstants.URLERROR)
+                                    return false
+            }
+        }
+
+        
+        
         if isDeadlineEnabled{
             
             if txtDeadlineTime.text?.isEmpty ?? true{
@@ -1781,6 +1795,8 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
                 }
                 
             }) { (error, errorCode) in
+                
+                CommonFunctions().showError(title: "Error", message:error)
                 self.activityIndicator?.hide()
             }
             

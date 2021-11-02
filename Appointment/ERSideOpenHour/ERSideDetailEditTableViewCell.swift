@@ -35,6 +35,7 @@ class ERSideDetailEditTableViewCell: UITableViewCell {
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
             let nextLine1 = NSAttributedString.init(string: "\n")
 
+            
             let strTitleText = NSAttributedString.init(string: objERSideOHDetailModal.valueText
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
             

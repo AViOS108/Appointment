@@ -10,6 +10,14 @@ import Foundation
 import UIKit
 import CoreData
 
+
+
+
+
+
+
+
+
 class DashBoardViewModel  {
     var managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
     

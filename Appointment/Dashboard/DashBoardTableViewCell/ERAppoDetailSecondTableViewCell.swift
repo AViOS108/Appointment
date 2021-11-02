@@ -73,7 +73,7 @@ class ERAppoDetailSecondTableViewCell: UITableViewCell {
             let componentDay = GeneralUtility.dateComponent(date: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", component: .weekday,isUTC: true)
             let date = GeneralUtility.currentDateDetailType4(emiDate: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy",isUTC: true)
             
-            let timeStartEnd =    GeneralUtility.startAndEndDateDetail2(startDate: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", endDate: self.appoinmentDetailModalObj?.endDatetimeUTC ?? "")
+            let timeStartEnd =    GeneralUtility.startAndEndDateDetail2WithZ(startDate: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", endDate: self.appoinmentDetailModalObj?.endDatetimeUTC ?? "")
             
             let meetingCompleteTime = "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " + date + ", " + timeStartEnd
             

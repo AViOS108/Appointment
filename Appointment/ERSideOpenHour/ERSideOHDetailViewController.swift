@@ -46,7 +46,7 @@ class ERSideOHDetailViewController: SuperViewController {
         ERSideOpenHourDetailVM().OpenHourDelete(param: param, deleteAll: "0", id: (self.identifier)!
             , { (data) in
                 activityIndicator.hide()
-             CommonFunctions().showError(title: "", message: "successfully deleted !!!")
+             CommonFunctions().showError(title: "", message: "Successfully deleted !!!")
                 self.delegate.deleteDelgateRefresh();
                 self.navigationController?.popViewController(animated: false)
         }) { (error, errorCode) in
@@ -94,6 +94,9 @@ class ERSideOHDetailViewController: SuperViewController {
 
     
     var objERSideOpenHourDetail: ERSideOpenHourDetail?
+    var objERSideParticipantModal: ERSideParticipantModal?
+
+    
     var identifier : String!
     var activityIndicator: ActivityIndicatorView?
 
@@ -271,18 +274,15 @@ class ERSideOHDetailViewController: SuperViewController {
         self.objModalArray.append(LocationModalValue)
         
         var participants = "NA"
-                if (objERSideOpenHourDetail?.participants) != nil{
-                    if objERSideOpenHourDetail?.participants!.count ?? 0 > 0 {
-                        participants = "\(objERSideOpenHourDetail?.participants!.count ?? 0)"
+                if ( self.objERSideParticipantModal) != nil{
+                    if  self.objERSideParticipantModal!.total > 0 {
+                        participants = "\(self.objERSideParticipantModal!.total)"
                     }
-//                    if objERSideOpenHourDetail?.participants!.count ?? 0 > 1 {
-//                        participants = participants + ", + \((objERSideOpenHourDetail?.participants!.count ?? 0) - 1 )"
-//                    }
                 }
         
         var privateModal = ERSideOHDetailModal();
-        privateModal.headLinetext = "Private open hours \n Total Students visible for this open hours"
-        privateModal.valueText = participants
+        privateModal.headLinetext = "Private open hours"
+        privateModal.valueText = "Total Students visible for this open hours \n" + participants
         privateModal.index = 10;
         self.objModalArray.append(privateModal)
         
@@ -318,17 +318,45 @@ class ERSideOHDetailViewController: SuperViewController {
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
         ERSideOpenHourDetailVM().fetchOpenHourDetail(id: identifier, { (data) in
             do {
-                self.activityIndicator?.hide()
                 self.objERSideOpenHourDetail = try
-                    JSONDecoder().decode(ERSideOpenHourDetail.self, from: data)
-                self.creatingModal()
-                self.viewInner.isHidden = false
-
+                JSONDecoder().decode(ERSideOpenHourDetail.self, from: data)
+                self.callParticipant()
             } catch   {
                 print(error)
             }
         }) { (error, errorCode) in
+            
+            
         }
+    }
+    
+    
+    func callParticipant(){
+        
+        let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+
+        let params = [
+            "_method":"post",
+            "limit": 2000,
+            "offset" :0,
+            ParamName.PARAMCSRFTOKEN : csrftoken] as Dictionary<String, AnyObject>
+        
+        ERSideOpenHourDetailVM().fetchStudentDetail(params: params, id: identifier, { (data) in
+            do {
+                self.activityIndicator?.hide()
+                self.objERSideParticipantModal = try
+                JSONDecoder().decode(ERSideParticipantModal.self, from: data)
+                self.creatingModal()
+                self.viewInner.isHidden = false
+                
+            } catch   {
+                print(error)
+            }
+        }) { (error, errorCode) in
+       
+        
+        }
+        
     }
     
     

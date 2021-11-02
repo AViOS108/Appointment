@@ -123,7 +123,7 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
         self.view.backgroundColor = ILColor.color(index: 22)
         let fontheavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
         
-        UIButton.buttonUIHandling(button: btnSetOpenHours, text: "Set new open hour", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3,fontType: fontheavy)
+        UIButton.buttonUIHandling(button: btnSetOpenHours, text: "Set Advising Appointment Hour", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3,fontType: fontheavy)
         
         UIButton.buttonUIHandling(button: btnDuplicate, text: "Duplicate Schedules", backgroundColor: .white, textColor: ILColor.color(index: 23), cornerRadius: 3,borderColor: ILColor.color(index: 23),borderWidth: 1, fontType: fontheavy)
         

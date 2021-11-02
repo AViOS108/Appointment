@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ElD-MW-Wjx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ElD-MW-Wjx">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -25,20 +26,20 @@
         <!--FAQ-->
         <scene sceneID="Bcb-6t-A2U">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="bqs-eQ-1Mp" customClass="FAQViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="bqs-eQ-1Mp" customClass="FAQViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qou-j6-qbO">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gct-fT-Qgh">
-                                <rect key="frame" x="0.0" y="20" width="768" height="954"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="934"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FAQTableViewCell" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FAQTableViewCell" rowHeight="50" id="4jE-UG-JB2" customClass="FAQTableViewCell" customModule="Resume" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="768" height="50"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FAQTableViewCell" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FAQTableViewCell" rowHeight="50" id="4jE-UG-JB2" customClass="FAQTableViewCell" customModule="Appointment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="768" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4jE-UG-JB2" id="WNq-i5-ufi">
-                                            <rect key="frame" x="0.0" y="0.0" width="742" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="742.5" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="colorzone" translatesAutoresizingMaskIntoConstraints="NO" id="Z4G-pA-B0Z">
@@ -49,7 +50,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xY3-Nc-vbo">
-                                                    <rect key="frame" x="55" y="15" width="677" height="20"/>
+                                                    <rect key="frame" x="55" y="15" width="677.5" height="20"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -79,6 +80,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="W0R-GX-dzA"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="W0R-GX-dzA" firstAttribute="trailing" secondItem="Gct-fT-Qgh" secondAttribute="trailing" id="Mxd-ll-Nbo"/>
@@ -86,7 +88,6 @@
                             <constraint firstItem="Gct-fT-Qgh" firstAttribute="leading" secondItem="W0R-GX-dzA" secondAttribute="leading" id="zUV-EO-JQp"/>
                             <constraint firstItem="Gct-fT-Qgh" firstAttribute="top" secondItem="W0R-GX-dzA" secondAttribute="top" constant="20" id="zn8-Tn-VzW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="W0R-GX-dzA"/>
                     </view>
                     <navigationItem key="navigationItem" title="FAQ" id="GSY-9O-84L">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="wj0-gl-2qN">
@@ -108,17 +109,17 @@
         <!--Title-->
         <scene sceneID="z76-DQ-ID3">
             <objects>
-                <viewController storyboardIdentifier="SubFAQViewController" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="3J5-Wm-jYB" customClass="SubFAQViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SubFAQViewController" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="3J5-Wm-jYB" customClass="SubFAQViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fZn-yB-i8h">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RZr-rp-8WT">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SubFAQHeaderTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SubFAQHeaderTableViewCell" rowHeight="50" id="rAm-cb-enx" customClass="SubFAQHeaderTableViewCell" customModule="Resume" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="768" height="50"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SubFAQHeaderTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SubFAQHeaderTableViewCell" rowHeight="50" id="rAm-cb-enx" customClass="SubFAQHeaderTableViewCell" customModule="Appointment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="768" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rAm-cb-enx" id="XfL-Kk-wtO">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
@@ -145,8 +146,8 @@
                                             <outlet property="headerTextLabel" destination="gyh-vE-kEo" id="JJg-pD-yoc"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SubFAQTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SubFAQTableViewCell" rowHeight="88" id="eOi-EW-3ch" customClass="SubFAQTableViewCell" customModule="Resume" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="78" width="768" height="88"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SubFAQTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SubFAQTableViewCell" rowHeight="88" id="eOi-EW-3ch" customClass="SubFAQTableViewCell" customModule="Appointment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="94.5" width="768" height="88"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eOi-EW-3ch" id="ejg-3H-N6C">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="88"/>
@@ -208,6 +209,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Htg-tg-o0l"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Htg-tg-o0l" firstAttribute="trailing" secondItem="RZr-rp-8WT" secondAttribute="trailing" id="7Cy-e9-6Nm"/>
@@ -215,7 +217,6 @@
                             <constraint firstItem="RZr-rp-8WT" firstAttribute="top" secondItem="Htg-tg-o0l" secondAttribute="top" id="c9y-6I-Sjd"/>
                             <constraint firstItem="Htg-tg-o0l" firstAttribute="bottom" secondItem="RZr-rp-8WT" secondAttribute="bottom" id="kD3-gS-STs"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Htg-tg-o0l"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="7kB-8C-ZjP">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="P9d-ZG-zAk">
@@ -236,13 +237,13 @@
         <!--Settings-->
         <scene sceneID="bHp-R8-wcQ">
             <objects>
-                <viewController storyboardIdentifier="SettingsViewController" automaticallyAdjustsScrollViewInsets="NO" id="ElD-MW-Wjx" customClass="SettingsViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" automaticallyAdjustsScrollViewInsets="NO" id="ElD-MW-Wjx" customClass="SettingsViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="s6L-S8-Zlb">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xqz-Zg-hL9">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="974"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="954"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBK-LL-Ur7">
                                         <rect key="frame" x="0.0" y="30" width="768" height="100"/>
@@ -267,7 +268,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jon.doe@vmock.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iOZ-6a-tZr">
-                                                <rect key="frame" x="120" y="45" width="618" height="21.5"/>
+                                                <rect key="frame" x="120" y="45" width="618" height="21"/>
                                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -282,7 +283,7 @@
                                                     <constraint firstAttribute="height" constant="15" id="NZJ-he-i8l"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="01a-51-AQo">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="01a-51-AQo">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="100"/>
                                                 <connections>
                                                     <action selector="profileButtonTapped:" destination="ElD-MW-Wjx" eventType="touchUpInside" id="iEH-nY-msk"/>
@@ -336,7 +337,7 @@
                                                     <constraint firstAttribute="height" constant="15" id="DDl-g2-btI"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tY0-Xs-lUa">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tY0-Xs-lUa">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <segue destination="rdz-As-CpD" kind="show" identifier="aboutSegue" id="JDe-B3-X5b"/>
@@ -386,7 +387,7 @@
                                                     <constraint firstAttribute="width" constant="18" id="KCi-X5-AxB"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Df-ll-fbe">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Df-ll-fbe">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
                                                 <connections>
                                                     <action selector="rateUsButtonTapped:" destination="ElD-MW-Wjx" eventType="touchUpInside" id="Xsl-UH-7cz"/>
@@ -437,7 +438,7 @@
                                                     <constraint firstAttribute="height" constant="15" id="8Sp-7t-0M4"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xVv-bm-LPV">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xVv-bm-LPV">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <action selector="blogButtonTapped:" destination="ElD-MW-Wjx" eventType="touchUpInside" id="Ti3-s5-s48"/>
@@ -486,7 +487,7 @@
                                                     <constraint firstAttribute="height" constant="15" id="zkW-ug-QxH"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHc-yg-1WF">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHc-yg-1WF">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <action selector="faqButtonTapped:" destination="ElD-MW-Wjx" eventType="touchUpInside" id="Xmm-oe-7uN"/>
@@ -536,7 +537,7 @@
                                                     <constraint firstAttribute="width" constant="18" id="u8u-lH-7LB"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d8Y-rK-J04">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d8Y-rK-J04">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <action selector="cupdateButtonTapped:" destination="ElD-MW-Wjx" eventType="touchUpInside" id="hQD-0q-hM7"/>
@@ -585,7 +586,7 @@
                                                     <constraint firstAttribute="height" constant="15" id="iJj-00-JNs"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q2t-GP-KRm">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q2t-GP-KRm">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <segue destination="J0B-Ob-dXb" kind="show" id="K6f-e2-mRk"/>
@@ -620,7 +621,7 @@
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="18"/>
                                                 </variation>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aJq-NP-MaW">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aJq-NP-MaW">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <action selector="logoutButtonTapped:" destination="ElD-MW-Wjx" eventType="touchUpInside" id="G91-nX-ZC9"/>
@@ -653,6 +654,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="iTm-VM-nHc"/>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="iTm-VM-nHc" firstAttribute="trailing" secondItem="iX1-U4-ndo" secondAttribute="trailing" id="1CN-8I-qtW"/>
@@ -676,7 +678,6 @@
                             <constraint firstItem="iX1-U4-ndo" firstAttribute="leading" secondItem="iTm-VM-nHc" secondAttribute="leading" id="xqy-zY-bYA"/>
                             <constraint firstItem="iTm-VM-nHc" firstAttribute="trailing" secondItem="vdh-WC-F0U" secondAttribute="trailing" id="z8u-E6-J2T"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="iTm-VM-nHc"/>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="un6-Wo-c5y"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
@@ -698,17 +699,17 @@
         <!--Title-->
         <scene sceneID="X5l-SU-oW7">
             <objects>
-                <viewController storyboardIdentifier="ContactsViewController" id="ch8-1D-GNE" customClass="ContactsViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactsViewController" id="ch8-1D-GNE" customClass="ContactsViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="A4q-ym-sWN">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tkq-Jl-KTa">
-                                <rect key="frame" x="0.0" y="50" width="768" height="974"/>
+                                <rect key="frame" x="0.0" y="70" width="768" height="954"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactTableViewCell" rowHeight="90" id="KTO-3T-5U0" customClass="ContactTableViewCell" customModule="Resume" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="768" height="90"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactTableViewCell" rowHeight="90" id="KTO-3T-5U0" customClass="ContactTableViewCell" customModule="Appointment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="768" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KTO-3T-5U0" id="wZc-sD-LbA">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="90"/>
@@ -804,6 +805,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="60b-Ym-lbk"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="60b-Ym-lbk" firstAttribute="bottom" secondItem="Tkq-Jl-KTa" secondAttribute="bottom" id="9U7-JB-ix9"/>
@@ -811,7 +813,6 @@
                             <constraint firstItem="Tkq-Jl-KTa" firstAttribute="top" secondItem="60b-Ym-lbk" secondAttribute="top" id="aq3-kk-uCh"/>
                             <constraint firstItem="60b-Ym-lbk" firstAttribute="trailing" secondItem="Tkq-Jl-KTa" secondAttribute="trailing" id="xct-fK-MNU"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="60b-Ym-lbk"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="oaE-3l-D6A">
                         <barButtonItem key="rightBarButtonItem" title="Send" style="done" id="NJr-aD-LRi" userLabel="Send">
@@ -833,13 +834,13 @@
         <!--Earn More Uploads-->
         <scene sceneID="uvw-mj-KoL">
             <objects>
-                <viewController storyboardIdentifier="InviteViewController" hidesBottomBarWhenPushed="YES" id="J0B-Ob-dXb" customClass="InviteViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InviteViewController" hidesBottomBarWhenPushed="YES" id="J0B-Ob-dXb" customClass="InviteViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Ql-Qi-v9p">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJV-hd-vHL">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hNR-ZG-9sx">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="1"/>
@@ -1085,6 +1086,7 @@ to spread the word</string>
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="d1V-a9-ptL"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="d1V-a9-ptL" firstAttribute="bottom" secondItem="jJV-hd-vHL" secondAttribute="bottom" id="Pnz-bi-mUa"/>
@@ -1093,7 +1095,6 @@ to spread the word</string>
                             <constraint firstItem="jJV-hd-vHL" firstAttribute="top" secondItem="d1V-a9-ptL" secondAttribute="top" id="tzG-ra-NM3"/>
                             <constraint firstItem="d1V-a9-ptL" firstAttribute="trailing" secondItem="jJV-hd-vHL" secondAttribute="trailing" id="vpq-Yk-4w6"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="d1V-a9-ptL"/>
                     </view>
                     <navigationItem key="navigationItem" title="Earn More Uploads" id="DZy-JB-eos">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="hb8-VD-nVX">
@@ -1119,15 +1120,16 @@ to spread the word</string>
         <!--Upload-->
         <scene sceneID="8GC-rs-6CH">
             <objects>
-                <viewController storyboardIdentifier="ProfilePictureViewController" id="pu6-o8-Z5u" customClass="ProfilePictureViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfilePictureViewController" id="pu6-o8-Z5u" customClass="ProfilePictureViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BG2-vD-u3i">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HO1-r4-QQp">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                             </imageView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="7xP-QX-onn"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="7xP-QX-onn" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="HO1-r4-QQp" secondAttribute="bottom" id="5Mt-jK-dSf"/>
@@ -1137,7 +1139,6 @@ to spread the word</string>
                             <constraint firstItem="HO1-r4-QQp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7xP-QX-onn" secondAttribute="leading" id="P0Z-xM-nNb"/>
                             <constraint firstItem="HO1-r4-QQp" firstAttribute="centerX" secondItem="7xP-QX-onn" secondAttribute="centerX" id="rZP-ui-cnl"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="7xP-QX-onn"/>
                     </view>
                     <navigationItem key="navigationItem" title="Upload" id="5IS-4U-Bam">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="qL3-fC-llb">
@@ -1164,13 +1165,13 @@ to spread the word</string>
         <!--Profile View Controller-->
         <scene sceneID="vK7-b4-cAT">
             <objects>
-                <viewController storyboardIdentifier="ProfileViewController" hidesBottomBarWhenPushed="YES" id="wHF-6X-GSz" customClass="ProfileViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" hidesBottomBarWhenPushed="YES" id="wHF-6X-GSz" customClass="ProfileViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="si6-Dj-Kdo">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Sy-DW-OLY">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="974"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="954"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKY-9V-f0a">
                                         <rect key="frame" x="0.0" y="20" width="768" height="100"/>
@@ -1333,8 +1334,8 @@ to spread the word</string>
                                                     <constraint firstItem="emP-v3-yAa" firstAttribute="top" secondItem="Nnu-y5-chB" secondAttribute="top" id="r1X-hg-DJ5"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fM-Ql-eVv">
-                                                <rect key="frame" x="596" y="100" width="66" height="40"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fM-Ql-eVv">
+                                                <rect key="frame" x="584" y="100" width="72" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="e0Q-1h-j7L"/>
                                                 </constraints>
@@ -1354,8 +1355,8 @@ to spread the word</string>
                                                     <action selector="cancelButtonTapped:" destination="wHF-6X-GSz" eventType="touchUpInside" id="IGY-qD-smw"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lgq-U8-Mc3">
-                                                <rect key="frame" x="682" y="100" width="66" height="40"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lgq-U8-Mc3">
+                                                <rect key="frame" x="676" y="100" width="72" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="jnD-uc-1Kk"/>
                                                 </constraints>
@@ -1413,7 +1414,7 @@ to spread the word</string>
                                                     <constraint firstAttribute="height" constant="15" id="doW-cO-IdH"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Aj-Ln-HRC">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Aj-Ln-HRC">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <action selector="changePasswordButtonTapped:" destination="wHF-6X-GSz" eventType="touchUpInside" id="rF2-oR-fyI"/>
@@ -1444,6 +1445,7 @@ to spread the word</string>
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="DMI-4v-emJ"/>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="DMI-4v-emJ" firstAttribute="trailing" secondItem="qqR-gO-SUF" secondAttribute="trailing" id="0VY-Au-4r2"/>
@@ -1459,7 +1461,6 @@ to spread the word</string>
                             <constraint firstItem="DMI-4v-emJ" firstAttribute="trailing" secondItem="3Sy-DW-OLY" secondAttribute="trailing" id="scr-RQ-JII"/>
                             <constraint firstItem="zDQ-dm-iPe" firstAttribute="leading" secondItem="DMI-4v-emJ" secondAttribute="leading" id="yQl-f4-dX7"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="DMI-4v-emJ"/>
                     </view>
                     <navigationItem key="navigationItem" id="Yfs-Tn-j0L">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="Ddg-Q2-PRz">
@@ -1492,15 +1493,15 @@ to spread the word</string>
         <!--Change Password View Controller-->
         <scene sceneID="mhg-Ge-64o">
             <objects>
-                <viewController storyboardIdentifier="ChangePasswordViewController" hidesBottomBarWhenPushed="YES" id="CAa-UB-Nif" customClass="ChangePasswordViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChangePasswordViewController" hidesBottomBarWhenPushed="YES" id="CAa-UB-Nif" customClass="ChangePasswordViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bVY-Ur-8zb">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lNk-WM-Q2i">
                                 <rect key="frame" x="0.0" y="20" width="768" height="40"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Old Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Ah-Td-E8O" customClass="CustomUITextField" customModule="Resume" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Old Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Ah-Td-E8O" customClass="CustomUITextField" customModule="Appointment" customModuleProvider="target">
                                         <rect key="frame" x="20" y="0.0" width="688" height="40"/>
                                         <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -1516,7 +1517,7 @@ to spread the word</string>
                                             <outlet property="delegate" destination="CAa-UB-Nif" id="Gmf-OI-TID"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBJ-Ls-orj">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mBJ-Ls-orj">
                                         <rect key="frame" x="708" y="0.0" width="50" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Qd1-9g-jt5"/>
@@ -1549,7 +1550,7 @@ to spread the word</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0k6-on-rST">
                                 <rect key="frame" x="0.0" y="61" width="768" height="40"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1kX-YC-a4v" customClass="CustomUITextField" customModule="Resume" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1kX-YC-a4v" customClass="CustomUITextField" customModule="Appointment" customModuleProvider="target">
                                         <rect key="frame" x="20" y="0.0" width="688" height="40"/>
                                         <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -1565,7 +1566,7 @@ to spread the word</string>
                                             <outlet property="delegate" destination="CAa-UB-Nif" id="21c-SI-oCo"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5l-6I-4OL">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5l-6I-4OL">
                                         <rect key="frame" x="708" y="0.0" width="50" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Ah3-Sr-gyo"/>
@@ -1598,7 +1599,7 @@ to spread the word</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BUv-7U-o7I">
                                 <rect key="frame" x="0.0" y="102" width="768" height="40"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a9Y-GL-e9u" customClass="CustomUITextField" customModule="Resume" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a9Y-GL-e9u" customClass="CustomUITextField" customModule="Appointment" customModuleProvider="target">
                                         <rect key="frame" x="20" y="0.0" width="688" height="40"/>
                                         <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -1614,7 +1615,7 @@ to spread the word</string>
                                             <outlet property="delegate" destination="CAa-UB-Nif" id="UnI-7I-ujX"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tag-MS-XqE">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tag-MS-XqE">
                                         <rect key="frame" x="708" y="0.0" width="50" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="8dA-rm-dMC"/>
@@ -1645,7 +1646,7 @@ to spread the word</string>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password should contain at least 8 characters, one uppercase character, one lowercase character, one number." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eL9-YK-lIV">
-                                <rect key="frame" x="10" y="164" width="748" height="36"/>
+                                <rect key="frame" x="10" y="164" width="748" height="17.5"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="13"/>
                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1654,6 +1655,7 @@ to spread the word</string>
                                 </variation>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="SpI-qA-okk"/>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="SpI-qA-okk" firstAttribute="trailing" secondItem="lNk-WM-Q2i" secondAttribute="trailing" id="1FN-4G-5eA"/>
@@ -1669,7 +1671,6 @@ to spread the word</string>
                             <constraint firstItem="SpI-qA-okk" firstAttribute="trailing" secondItem="eL9-YK-lIV" secondAttribute="trailing" constant="10" id="u1i-gE-pqr"/>
                             <constraint firstItem="SpI-qA-okk" firstAttribute="trailing" secondItem="0k6-on-rST" secondAttribute="trailing" id="yXs-Y5-kmW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="SpI-qA-okk"/>
                     </view>
                     <navigationItem key="navigationItem" id="djY-2x-wbM">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="eOz-Yp-W3E">
@@ -1697,13 +1698,13 @@ to spread the word</string>
         <!--About And Help View Controller-->
         <scene sceneID="j75-oq-Ka0">
             <objects>
-                <viewController storyboardIdentifier="AboutAndHelpViewController" hidesBottomBarWhenPushed="YES" id="rdz-As-CpD" customClass="AboutAndHelpViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AboutAndHelpViewController" hidesBottomBarWhenPushed="YES" id="rdz-As-CpD" customClass="AboutAndHelpViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L7W-6G-uhU">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3NL-WL-UQt">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="974"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="954"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ILLUSTRATION" translatesAutoresizingMaskIntoConstraints="NO" id="w3G-Ei-XJR">
                                         <rect key="frame" x="256" y="50" width="256" height="226"/>
@@ -1724,7 +1725,7 @@ to spread the word</string>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="18"/>
                                                 </variation>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pjn-74-SwD">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pjn-74-SwD">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <action selector="aboutButtonTapped:" destination="rdz-As-CpD" eventType="touchUpInside" id="TJu-cb-OdG"/>
@@ -1756,7 +1757,7 @@ to spread the word</string>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="18"/>
                                                 </variation>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbQ-uI-VyN">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbQ-uI-VyN">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <segue destination="s6j-WR-heY" kind="push" identifier="termsSegue" id="c4e-gE-byT"/>
@@ -1787,7 +1788,7 @@ to spread the word</string>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="18"/>
                                                 </variation>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWg-0I-e7n">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWg-0I-e7n">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <segue destination="s6j-WR-heY" kind="push" identifier="privacySegue" id="iww-fz-ceT"/>
@@ -1818,7 +1819,7 @@ to spread the word</string>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="18"/>
                                                 </variation>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23e-RX-GYE">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23e-RX-GYE">
                                                 <rect key="frame" x="0.0" y="0.0" width="768" height="40"/>
                                                 <connections>
                                                     <action selector="supportButtonTapped:" destination="rdz-As-CpD" eventType="touchUpInside" id="eVI-a9-qZf"/>
@@ -1849,6 +1850,7 @@ to spread the word</string>
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="qTi-Py-3Wi"/>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="qTi-Py-3Wi" firstAttribute="trailing" secondItem="yIP-dl-Rwm" secondAttribute="trailing" id="08n-nk-G8L"/>
@@ -1864,7 +1866,6 @@ to spread the word</string>
                             <constraint firstItem="qTi-Py-3Wi" firstAttribute="bottom" secondItem="3NL-WL-UQt" secondAttribute="bottom" id="oJg-IR-15Z"/>
                             <constraint firstItem="3NL-WL-UQt" firstAttribute="top" secondItem="qTi-Py-3Wi" secondAttribute="top" id="wyF-m3-mLR"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="qTi-Py-3Wi"/>
                     </view>
                     <navigationItem key="navigationItem" id="56f-w1-xss">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="Bd5-OF-3Zy">
@@ -1882,20 +1883,20 @@ to spread the word</string>
         <!--About-->
         <scene sceneID="Jsy-CI-BTR">
             <objects>
-                <viewController storyboardIdentifier="AboutViewController" id="u11-Wu-TG1" customClass="AboutViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AboutViewController" id="u11-Wu-TG1" customClass="AboutViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3c8-UP-JgY">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="xiP-hU-xUn">
-                                <rect key="frame" x="307.5" y="453.5" width="153" height="67"/>
+                                <rect key="frame" x="307.5" y="443.5" width="153" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="153" id="3Yc-oO-fai"/>
                                     <constraint firstAttribute="height" constant="67" id="E0j-sx-PgC"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 2017 VMock All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3K-Zr-6LJ">
-                                <rect key="frame" x="2" y="541.5" width="764" height="21.5"/>
+                                <rect key="frame" x="2" y="531.5" width="764" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -1904,8 +1905,8 @@ to spread the word</string>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VMock Resume" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M1W-xV-KfX">
-
-                                <rect key="frame" x="322" y="897" width="124.5" height="21"/>                                <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
+                                <rect key="frame" x="320.5" y="877" width="127.5" height="21"/>
+                                <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=regular">
@@ -1913,8 +1914,7 @@ to spread the word</string>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aIL-xl-lHo">
-                                <rect key="frame" x="20" y="933" width="728" height="21"/>
-
+                                <rect key="frame" x="20" y="913" width="728" height="21"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -1923,6 +1923,7 @@ to spread the word</string>
                                 </variation>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="kJu-hf-jQ2"/>
                         <color key="backgroundColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="O3K-Zr-6LJ" firstAttribute="centerX" secondItem="kJu-hf-jQ2" secondAttribute="centerX" id="5fy-QK-u7k"/>
@@ -1937,7 +1938,6 @@ to spread the word</string>
                             <constraint firstItem="aIL-xl-lHo" firstAttribute="top" secondItem="M1W-xV-KfX" secondAttribute="bottom" constant="15" id="ikz-2W-9NJ"/>
                             <constraint firstItem="M1W-xV-KfX" firstAttribute="centerX" secondItem="kJu-hf-jQ2" secondAttribute="centerX" id="wUQ-FQ-8Nd"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="kJu-hf-jQ2"/>
                     </view>
                     <navigationItem key="navigationItem" title="About" id="w3R-Sh-L5j">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="f5Z-bW-hiH">
@@ -1958,32 +1958,69 @@ to spread the word</string>
         <!--Web View Controller-->
         <scene sceneID="PXg-32-hnT">
             <objects>
-                <viewController storyboardIdentifier="WebViewController" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="s6j-WR-heY" customClass="WebViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewController" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="s6j-WR-heY" customClass="WebViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ib5-7S-2JM">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsA-Iv-Tb7">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="955"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kca-ta-lkb">
+                                <rect key="frame" x="0.0" y="954" width="768" height="0.0"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5f-wZ-bUm">
+                                        <rect key="frame" x="14" y="8" width="67" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="qw3-Fa-rg6"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <connections>
+                                            <action selector="downloadResumeTaped:" destination="s6j-WR-heY" eventType="touchUpInside" id="csc-KQ-af4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNn-5F-art">
+                                        <rect key="frame" x="106" y="8" width="67" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="BkP-xR-hnH"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <connections>
+                                            <action selector="printResumeTaped:" destination="s6j-WR-heY" eventType="touchUpInside" id="mMj-Qf-4bc"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                <constraints>
+                                    <constraint firstItem="U5f-wZ-bUm" firstAttribute="leading" secondItem="Kca-ta-lkb" secondAttribute="leading" constant="14" id="1n8-fG-ZUP"/>
+                                    <constraint firstItem="U5f-wZ-bUm" firstAttribute="top" secondItem="Kca-ta-lkb" secondAttribute="top" constant="8" id="DqJ-tu-WHs"/>
+                                    <constraint firstAttribute="height" id="EtW-XC-EQZ"/>
+                                    <constraint firstItem="eNn-5F-art" firstAttribute="centerY" secondItem="U5f-wZ-bUm" secondAttribute="centerY" id="hQt-l2-iLN"/>
+                                    <constraint firstItem="eNn-5F-art" firstAttribute="leading" secondItem="U5f-wZ-bUm" secondAttribute="trailing" constant="25" id="viK-q3-XxC"/>
+                                </constraints>
+                            </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="9DN-ky-Lj1"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="9DN-ky-Lj1" firstAttribute="bottom" secondItem="tsA-Iv-Tb7" secondAttribute="bottom" id="5LG-W4-eSR"/>
-                            <constraint firstItem="tsA-Iv-Tb7" firstAttribute="bottom" secondItem="9DN-ky-Lj1" secondAttribute="bottom" id="Fm3-Wf-x1I"/>
+                            <constraint firstItem="9DN-ky-Lj1" firstAttribute="trailing" secondItem="Kca-ta-lkb" secondAttribute="trailing" id="AMB-IA-6oV"/>
                             <constraint firstItem="tsA-Iv-Tb7" firstAttribute="leading" secondItem="9DN-ky-Lj1" secondAttribute="leading" id="KLs-5v-Zpb"/>
                             <constraint firstItem="tsA-Iv-Tb7" firstAttribute="trailing" secondItem="9DN-ky-Lj1" secondAttribute="trailing" id="N3q-4e-qnO"/>
+                            <constraint firstItem="Kca-ta-lkb" firstAttribute="leading" secondItem="9DN-ky-Lj1" secondAttribute="leading" id="RcW-sO-jG4"/>
                             <constraint firstItem="tsA-Iv-Tb7" firstAttribute="top" secondItem="9DN-ky-Lj1" secondAttribute="top" id="UL8-6x-BAL"/>
                             <constraint firstItem="9DN-ky-Lj1" firstAttribute="trailing" secondItem="tsA-Iv-Tb7" secondAttribute="trailing" id="bDp-tx-fEM"/>
                             <constraint firstItem="tsA-Iv-Tb7" firstAttribute="top" secondItem="9DN-ky-Lj1" secondAttribute="top" id="e9U-6k-cn4"/>
                             <constraint firstItem="tsA-Iv-Tb7" firstAttribute="leading" secondItem="9DN-ky-Lj1" secondAttribute="leading" id="eVc-4A-Tw1"/>
+                            <constraint firstItem="Kca-ta-lkb" firstAttribute="bottom" secondItem="9DN-ky-Lj1" secondAttribute="bottom" id="oAq-mH-uWr"/>
+                            <constraint firstItem="Kca-ta-lkb" firstAttribute="top" secondItem="tsA-Iv-Tb7" secondAttribute="bottom" constant="-1" id="yK8-BR-Yc8"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="9DN-ky-Lj1"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="2de-Ej-StY">
@@ -2013,34 +2050,38 @@ to spread the word</string>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="X4L-zf-yQu" id="Eja-Yr-kc9"/>
+                        <outlet property="downloadResume" destination="U5f-wZ-bUm" id="NFB-of-ApO"/>
+                        <outlet property="printResume" destination="eNn-5F-art" id="ufe-Od-2bq"/>
+                        <outlet property="resumePrintView" destination="Kca-ta-lkb" id="8j1-k0-p26"/>
+                        <outlet property="resumePrintViewLayoutconstraint" destination="EtW-XC-EQZ" id="Lj7-qx-IbP"/>
                         <outlet property="webview" destination="tsA-Iv-Tb7" id="NAa-wx-d3l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nje-cz-Jfy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2025" y="999"/>
+            <point key="canvasLocation" x="2025" y="998.43749999999989"/>
         </scene>
         <!--Blur View Controller-->
         <scene sceneID="vgj-Sa-b5l">
             <objects>
-                <viewController storyboardIdentifier="BlurViewController" id="58i-wv-k0D" customClass="BlurViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BlurViewController" id="58i-wv-k0D" customClass="BlurViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wzf-4v-72H">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xOx-BK-gWs">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2lG-wz-Q9c">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="QvT-lz-mZx">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="★★ ACCESS THIS WITH VMOCK PREMIUM ★★" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHs-UD-Pej">
-                                <rect key="frame" x="195.5" y="421.5" width="377.5" height="21.5"/>
+                                <rect key="frame" x="180" y="431.5" width="408" height="21"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -2049,9 +2090,9 @@ to spread the word</string>
                                 </variation>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qwi-Fi-BjB">
-                                <rect key="frame" x="299" y="498" width="170" height="120.5"/>
+                                <rect key="frame" x="299" y="507.5" width="170" height="120.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZH-Vy-gZ6">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZH-Vy-gZ6">
                                         <rect key="frame" x="0.0" y="0.0" width="170" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -2080,7 +2121,7 @@ to spread the word</string>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8p-Kr-XlX">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8p-Kr-XlX">
                                         <rect key="frame" x="0.0" y="80.5" width="170" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -2106,9 +2147,10 @@ to spread the word</string>
                                 </subviews>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crown" translatesAutoresizingMaskIntoConstraints="NO" id="CGl-z2-h4I">
-                                <rect key="frame" x="357.5" y="367.5" width="53" height="39"/>
+                                <rect key="frame" x="357.5" y="377.5" width="53" height="39"/>
                             </imageView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="91c-jQ-eqd"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qwi-Fi-BjB" firstAttribute="top" secondItem="aHs-UD-Pej" secondAttribute="bottom" constant="55" id="2SH-F1-9jj"/>
@@ -2126,7 +2168,6 @@ to spread the word</string>
                             <constraint firstItem="aHs-UD-Pej" firstAttribute="centerY" secondItem="91c-jQ-eqd" secondAttribute="centerY" constant="-80" id="txf-A9-bUR"/>
                             <constraint firstItem="91c-jQ-eqd" firstAttribute="trailing" secondItem="xOx-BK-gWs" secondAttribute="trailing" id="wYi-jP-p4F"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="91c-jQ-eqd"/>
                     </view>
                     <connections>
                         <outlet property="backgroundImageView" destination="xOx-BK-gWs" id="Ky4-vD-lCh"/>
@@ -2139,13 +2180,13 @@ to spread the word</string>
         <!--Payment Gateway Web View Controller-->
         <scene sceneID="sv5-OQ-0uV">
             <objects>
-                <viewController storyboardIdentifier="PaymentGatewayWebViewController" automaticallyAdjustsScrollViewInsets="NO" id="EpT-og-a0t" customClass="PaymentGatewayWebViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PaymentGatewayWebViewController" automaticallyAdjustsScrollViewInsets="NO" id="EpT-og-a0t" customClass="PaymentGatewayWebViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OLa-cW-lS1">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="984"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="984"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qb1-VH-OKL">
-                                <rect key="frame" x="0.0" y="56" width="712" height="928"/>
+                                <rect key="frame" x="0.0" y="56" width="704" height="928"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -2153,6 +2194,7 @@ to spread the word</string>
                                 </wkWebViewConfiguration>
                             </wkWebView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Dcy-4Z-1CE"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Dcy-4Z-1CE" firstAttribute="trailing" secondItem="qb1-VH-OKL" secondAttribute="trailing" id="6le-5O-c1v"/>
@@ -2160,7 +2202,6 @@ to spread the word</string>
                             <constraint firstItem="Dcy-4Z-1CE" firstAttribute="bottom" secondItem="qb1-VH-OKL" secondAttribute="bottom" id="QnO-tP-ckx"/>
                             <constraint firstItem="qb1-VH-OKL" firstAttribute="top" secondItem="Dcy-4Z-1CE" secondAttribute="top" id="Spr-rR-INF"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Dcy-4Z-1CE"/>
                     </view>
                     <navigationItem key="navigationItem" id="wv8-yJ-0me">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="AZW-HW-VWs">
@@ -2181,9 +2222,9 @@ to spread the word</string>
         <!--Payment Navigation Bar View Controller-->
         <scene sceneID="1f9-9c-fKg">
             <objects>
-                <navigationController storyboardIdentifier="PaymentNavigationBarViewController" id="F85-xB-R2u" customClass="PaymentNavigationBarViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PaymentNavigationBarViewController" id="F85-xB-R2u" customClass="PaymentNavigationBarViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tYl-1Q-PNf">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -2199,10 +2240,10 @@ to spread the word</string>
             <objects>
                 <viewController id="QwJ-Tn-oEa" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SbH-fK-cjH">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="CUj-xK-5Et"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="1pl-Q4-I1B"/>
                 </viewController>
@@ -2213,28 +2254,27 @@ to spread the word</string>
         <!--Upgrade-->
         <scene sceneID="8CX-v1-BwT">
             <objects>
-                <viewController storyboardIdentifier="PremiumAccountDetailsViewController" title="Upgrade" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="Ah0-IP-1Kx" customClass="PremiumAccountDetailsViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PremiumAccountDetailsViewController" title="Upgrade" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="Ah0-IP-1Kx" customClass="PremiumAccountDetailsViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Syw-Uo-je1">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="984"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="984"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GfM-da-OFe">
-                                <rect key="frame" x="0.0" y="56" width="712" height="878"/>
+                                <rect key="frame" x="0.0" y="56" width="704" height="878"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="WG8-zq-YIG">
-                                    <rect key="frame" x="0.0" y="0.0" width="712" height="118"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="704" height="118"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crown" translatesAutoresizingMaskIntoConstraints="NO" id="WL0-QO-QuL">
-                                            <rect key="frame" x="329.5" y="20" width="53" height="37"/>
+                                            <rect key="frame" x="325.5" y="20" width="53" height="37"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="53" id="TWl-Ii-JXe"/>
                                                 <constraint firstAttribute="height" constant="37" id="eJt-ub-fy4"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="★★ Get more with VMock Premium ★★" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="HLB-Ih-HYl">
-                                            <rect key="frame" x="10" y="79" width="692" height="21"/>
-
+                                            <rect key="frame" x="10" y="79" width="684" height="21"/>
                                             <fontDescription key="fontDescription" name="SanFranciscoText-Bold" family="San Francisco Text" pointSize="16"/>
                                             <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -2254,11 +2294,11 @@ to spread the word</string>
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PremiumAccountTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PremiumAccountTableViewCell" rowHeight="100" id="UPE-7T-euR" customClass="PremiumAccountTableViewCell" customModule="Resume" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="146" width="712" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PremiumAccountTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PremiumAccountTableViewCell" rowHeight="100" id="UPE-7T-euR" customClass="PremiumAccountTableViewCell" customModule="Appointment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="162.5" width="704" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UPE-7T-euR" id="ljv-As-Mwh">
-                                            <rect key="frame" x="0.0" y="0.0" width="712" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="704" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iBX-iL-yJv">
@@ -2269,7 +2309,7 @@ to spread the word</string>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tG-Vy-I4C">
-                                                    <rect key="frame" x="60" y="21" width="577" height="19.5"/>
+                                                    <rect key="frame" x="60" y="21" width="568" height="19.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19.5" id="bqH-lF-eLz"/>
                                                     </constraints>
@@ -2281,7 +2321,7 @@ to spread the word</string>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1M7-iD-br6">
-                                                    <rect key="frame" x="60" y="50.5" width="632" height="28.5"/>
+                                                    <rect key="frame" x="60" y="50.5" width="624" height="28.5"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2290,7 +2330,7 @@ to spread the word</string>
                                                     </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paymentTick" translatesAutoresizingMaskIntoConstraints="NO" id="kaJ-NM-W4j">
-                                                    <rect key="frame" x="657" y="23" width="20" height="14"/>
+                                                    <rect key="frame" x="648" y="23" width="20" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="kRH-Ci-lEP"/>
                                                         <constraint firstAttribute="height" constant="14" id="lf3-f9-rnR"/>
@@ -2324,8 +2364,8 @@ to spread the word</string>
                                     <outlet property="delegate" destination="Ah0-IP-1Kx" id="Oh4-K1-HtF"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCq-rR-9eH">
-                                <rect key="frame" x="0.0" y="934" width="712" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCq-rR-9eH">
+                                <rect key="frame" x="0.0" y="934" width="704" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ZFS-Ru-Nhh"/>
@@ -2342,6 +2382,7 @@ to spread the word</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Cz4-n5-B46"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="OCq-rR-9eH" firstAttribute="leading" secondItem="Cz4-n5-B46" secondAttribute="leading" id="DbV-mH-frs"/>
@@ -2352,7 +2393,6 @@ to spread the word</string>
                             <constraint firstItem="Cz4-n5-B46" firstAttribute="trailing" secondItem="OCq-rR-9eH" secondAttribute="trailing" id="yxc-NM-zrf"/>
                             <constraint firstItem="Cz4-n5-B46" firstAttribute="trailing" secondItem="GfM-da-OFe" secondAttribute="trailing" id="z0Z-QA-suQ"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Cz4-n5-B46"/>
                     </view>
                     <navigationItem key="navigationItem" title="Upgrade" id="fed-9b-PJl">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="QFm-UR-JJL">
@@ -2386,27 +2426,27 @@ to spread the word</string>
         <!--Receipts-->
         <scene sceneID="Iha-zn-CVd">
             <objects>
-                <viewController storyboardIdentifier="RecieptsViewController" automaticallyAdjustsScrollViewInsets="NO" id="3ON-Lk-G8d" customClass="RecieptsViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RecieptsViewController" automaticallyAdjustsScrollViewInsets="NO" id="3ON-Lk-G8d" customClass="RecieptsViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sqE-h2-qnR">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="984"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="984"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CEy-Jz-nrW">
-                                <rect key="frame" x="0.0" y="0.0" width="712" height="934"/>
+                                <rect key="frame" x="0.0" y="0.0" width="704" height="934"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LatestRecieptTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LatestRecieptTableViewCell" id="g0h-wu-W6U" customClass="LatestRecieptTableViewCell" customModule="Resume" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="712" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LatestRecieptTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LatestRecieptTableViewCell" id="g0h-wu-W6U" customClass="LatestRecieptTableViewCell" customModule="Appointment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="704" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g0h-wu-W6U" id="Nor-UH-deg">
-                                            <rect key="frame" x="0.0" y="0.0" width="712" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="704" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VZL-pf-jHt">
-                                                    <rect key="frame" x="10" y="5" width="692" height="34"/>
+                                                    <rect key="frame" x="10" y="5" width="684" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFA-Q5-fpk">
-                                                            <rect key="frame" x="645.5" y="180" width="34.5" height="17"/>
+                                                            <rect key="frame" x="637.5" y="180" width="34.5" height="17"/>
                                                             <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="14"/>
                                                             <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2418,20 +2458,20 @@ to spread the word</string>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you! Your payment is successful, and a summary of your order has been mailed to you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mw2-B7-2DH">
-                                                    <rect key="frame" x="25" y="21" width="662" height="0.0"/>
+                                                    <rect key="frame" x="26" y="21" width="652" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tickCircle" translatesAutoresizingMaskIntoConstraints="NO" id="CHA-fD-QQA">
-                                                    <rect key="frame" x="332.5" y="41" width="47" height="47"/>
+                                                    <rect key="frame" x="328.5" y="41" width="47" height="47"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="47" id="Hzj-6h-NHt"/>
                                                         <constraint firstAttribute="width" constant="47" id="cR2-to-zoK"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="Order ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GkU-Af-FGx">
-                                                    <rect key="frame" x="20" y="127.5" width="59.5" height="19.5"/>
+                                                    <rect key="frame" x="20" y="127.5" width="60.5" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2449,55 +2489,55 @@ to spread the word</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Amount Paid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdg-fR-FxW">
-                                                    <rect key="frame" x="599" y="127.5" width="93" height="19.5"/>
+                                                    <rect key="frame" x="591" y="127.5" width="93" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbW-aC-V1H">
-                                                    <rect key="frame" x="655" y="157" width="37" height="18"/>
+                                                    <rect key="frame" x="647" y="157" width="37" height="18"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="asC-pX-Zpn">
-                                                    <rect key="frame" x="20" y="212" width="672" height="2"/>
+                                                    <rect key="frame" x="20" y="212" width="664" height="2"/>
                                                     <color key="backgroundColor" red="0.93333333333333335" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="4no-d1-syX"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="Payment Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="88u-eg-OmA">
-                                                    <rect key="frame" x="20" y="224" width="672" height="19.5"/>
+                                                    <rect key="frame" x="20" y="224" width="664" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ulg-5h-xIn">
-                                                    <rect key="frame" x="20" y="253.5" width="672" height="19.5"/>
+                                                    <rect key="frame" x="20" y="253.5" width="664" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="66E-s1-uAI">
-                                                    <rect key="frame" x="20" y="283" width="672" height="2"/>
+                                                    <rect key="frame" x="20" y="283" width="664" height="2"/>
                                                     <color key="backgroundColor" red="0.93333333330000001" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="fbv-tC-HsS"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sT-Uy-3dT">
-                                                    <rect key="frame" x="20" y="14" width="672" height="0.0"/>
+                                                    <rect key="frame" x="20" y="14" width="664" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="Phone: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rMR-Yl-XYg">
-                                                    <rect key="frame" x="20" y="24" width="672" height="0.0"/>
+                                                    <rect key="frame" x="20" y="24" width="664" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" verticalCompressionResistancePriority="749" text="Address Address Address Address Address Address Address Address Address Address" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRV-Cs-PyD">
-                                                    <rect key="frame" x="20" y="34" width="672" height="0.0"/>
+                                                    <rect key="frame" x="20" y="34" width="664" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2561,18 +2601,18 @@ to spread the word</string>
                                             <outlet property="phoneLabel" destination="rMR-Yl-XYg" id="EiY-gs-JNP"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="RecieptTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RecieptTableViewCell" id="KTW-O4-0cc" customClass="RecieptTableViewCell" customModule="Resume" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="712" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="RecieptTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RecieptTableViewCell" id="KTW-O4-0cc" customClass="RecieptTableViewCell" customModule="Appointment" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="88.5" width="704" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KTW-O4-0cc" id="v8L-zC-Rw8">
-                                            <rect key="frame" x="0.0" y="0.0" width="712" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="704" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tEQ-U7-f55">
-                                                    <rect key="frame" x="10" y="5" width="692" height="34"/>
+                                                    <rect key="frame" x="10" y="5" width="684" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eO-el-SZb">
-                                                            <rect key="frame" x="645.5" y="46" width="34.5" height="17"/>
+                                                            <rect key="frame" x="637.5" y="46" width="34.5" height="17"/>
                                                             <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="14"/>
                                                             <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2584,7 +2624,7 @@ to spread the word</string>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" text="Order ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHS-pp-Xgy">
-                                                    <rect key="frame" x="20" y="31" width="59.5" height="0.0"/>
+                                                    <rect key="frame" x="20" y="31" width="60.5" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2602,57 +2642,55 @@ to spread the word</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount Paid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZi-MD-N9m">
-                                                    <rect key="frame" x="599" y="31" width="93" height="19"/>
-
+                                                    <rect key="frame" x="591" y="31" width="93" height="19"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMK-Ww-Ol5">
-                                                    <rect key="frame" x="655" y="60" width="37" height="18"/>
-
+                                                    <rect key="frame" x="647" y="60" width="37" height="18"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EkD-UJ-aUY">
-                                                    <rect key="frame" x="20" y="115.5" width="672" height="2"/>
+                                                    <rect key="frame" x="20" y="115.5" width="664" height="2"/>
                                                     <color key="backgroundColor" red="0.93333333330000001" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="Cmv-Ju-tRZ"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="Payment Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1F-sJ-6Uc">
-                                                    <rect key="frame" x="20" y="127.5" width="672" height="19.5"/>
+                                                    <rect key="frame" x="20" y="127.5" width="664" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bte-Bq-xPI">
-                                                    <rect key="frame" x="20" y="157" width="672" height="19.5"/>
+                                                    <rect key="frame" x="20" y="157" width="664" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zxn-VT-alq">
-                                                    <rect key="frame" x="20" y="186.5" width="672" height="2"/>
+                                                    <rect key="frame" x="20" y="186.5" width="664" height="2"/>
                                                     <color key="backgroundColor" red="0.93333333330000001" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="V6p-Ss-xij"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gG-WB-dFd">
-                                                    <rect key="frame" x="20" y="198.5" width="672" height="20"/>
+                                                    <rect key="frame" x="20" y="198.5" width="664" height="20"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" ambiguous="YES" text="Phone: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAE-uJ-cpD">
-                                                    <rect key="frame" x="20" y="228.5" width="672" height="19.5"/>
+                                                    <rect key="frame" x="20" y="228.5" width="664" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Address Address Address Address Address Address Address Address Address Address" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Fw-0G-WiX">
-                                                    <rect key="frame" x="20" y="34" width="672" height="0.0"/>
+                                                    <rect key="frame" x="20" y="34" width="664" height="0.0"/>
                                                     <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                                     <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2717,8 +2755,8 @@ to spread the word</string>
                                     <outlet property="delegate" destination="3ON-Lk-G8d" id="2Ou-3n-wcm"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HjR-I9-aOk">
-                                <rect key="frame" x="0.0" y="934" width="712" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HjR-I9-aOk">
+                                <rect key="frame" x="0.0" y="934" width="704" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="NW2-YY-rUG"/>
@@ -2732,16 +2770,16 @@ to spread the word</string>
                                 </connections>
                             </button>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invoice" translatesAutoresizingMaskIntoConstraints="NO" id="oM4-36-rBH">
-                                <rect key="frame" x="241.5" y="377.5" width="229" height="229"/>
+                                <rect key="frame" x="237.5" y="377.5" width="229" height="229"/>
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No payments history" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59F-Ot-Atb">
-                                <rect key="frame" x="280.5" y="627.5" width="151.5" height="19"/>
-
+                                <rect key="frame" x="278" y="627.5" width="148" height="19"/>
                                 <fontDescription key="fontDescription" name="SanFranciscoText-Regular" family="San Francisco Text" pointSize="16"/>
                                 <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="nlv-sE-X95"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="59F-Ot-Atb" firstAttribute="centerX" secondItem="nlv-sE-X95" secondAttribute="centerX" id="5vj-ye-qjW"/>
@@ -2756,7 +2794,6 @@ to spread the word</string>
                             <constraint firstItem="nlv-sE-X95" firstAttribute="bottom" secondItem="HjR-I9-aOk" secondAttribute="bottom" id="nDY-Uw-Vqo"/>
                             <constraint firstItem="nlv-sE-X95" firstAttribute="trailing" secondItem="CEy-Jz-nrW" secondAttribute="trailing" id="wrP-6E-rSW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="nlv-sE-X95"/>
                     </view>
                     <navigationItem key="navigationItem" title="Receipts" id="7lp-Ew-Jkq"/>
                     <connections>
@@ -2779,7 +2816,7 @@ to spread the word</string>
             <objects>
                 <navigationController storyboardIdentifier="InviteNavigationViewController" id="Dv7-aw-2GF" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LU4-bO-xqH">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -2793,13 +2830,13 @@ to spread the word</string>
         <!--Paypal Web View Controller-->
         <scene sceneID="EmS-lX-Fbq">
             <objects>
-                <viewController storyboardIdentifier="PaypalWebViewController" id="Vz1-hU-oF1" customClass="PaypalWebViewController" customModule="Resume" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PaypalWebViewController" id="Vz1-hU-oF1" customClass="PaypalWebViewController" customModule="Appointment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dNp-Ln-Xuw">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="984"/>
+                        <rect key="frame" x="0.0" y="0.0" width="704" height="984"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7aq-Ll-zd2">
-                                <rect key="frame" x="0.0" y="56" width="712" height="928"/>
+                                <rect key="frame" x="0.0" y="56" width="704" height="928"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -2807,6 +2844,7 @@ to spread the word</string>
                                 </wkWebViewConfiguration>
                             </wkWebView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="CdD-oP-0vA"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="CdD-oP-0vA" firstAttribute="trailing" secondItem="7aq-Ll-zd2" secondAttribute="trailing" id="FvB-JK-t5f"/>
@@ -2814,7 +2852,6 @@ to spread the word</string>
                             <constraint firstItem="CdD-oP-0vA" firstAttribute="bottom" secondItem="7aq-Ll-zd2" secondAttribute="bottom" id="Z1f-b5-1Qf"/>
                             <constraint firstItem="7aq-Ll-zd2" firstAttribute="top" secondItem="CdD-oP-0vA" secondAttribute="top" id="jLe-ju-kWN"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="CdD-oP-0vA"/>
                     </view>
                     <navigationItem key="navigationItem" id="bYp-mj-vRD">
                         <barButtonItem key="leftBarButtonItem" image="Back" id="Nru-ov-2CL">
@@ -2839,7 +2876,7 @@ to spread the word</string>
         <segue reference="K6f-e2-mRk"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="Back" width="13" height="19"/>
+        <image name="Back" width="48" height="48"/>
         <image name="Disclosure" width="7" height="12"/>
         <image name="FAQ icon" width="27" height="24"/>
         <image name="ILLUSTRATION" width="200" height="176.5"/>
@@ -2864,5 +2901,8 @@ to spread the word</string>
         <image name="tickCircle" width="47" height="47"/>
         <image name="twitter_invite" width="64" height="64"/>
         <image name="whistle_invite" width="20" height="20"/>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

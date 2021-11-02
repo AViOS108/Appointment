@@ -74,9 +74,19 @@ class ERUpdateStatusAddNextStepViewController: SuperViewController,UITextViewDel
         customize()
         pickerViewSetUp()
         viewModal()
-        var strTextTitle = "Next steps - Rachel Hudson"
         
-        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:strTextTitle);
+        if self.appoinmentDetailModalObj?.requests?.count ?? 0 > 1{
+            var strTextTitle = "Next steps - " + ((self.appoinmentDetailModalObj?.requests?[0].studentDetails?.name) ?? "") + "others"
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:strTextTitle);
+
+        }
+        else{
+            var strTextTitle = "Next steps - " + ((self.appoinmentDetailModalObj?.requests?[0].studentDetails?.name) ?? "")
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:strTextTitle);
+
+        }
+        
+        
 
         // Do any additional setup after loading the view.
     }
@@ -142,7 +152,7 @@ class ERUpdateStatusAddNextStepViewController: SuperViewController,UITextViewDel
         txtStandardResponse.backgroundColor = ILColor.color(index: 22)
         txtDateTime.backgroundColor = ILColor.color(index: 22)
         
-        
+
         txtTime.backgroundColor = ILColor.color(index: 48)
         self.txtTime.font = fontMedium
         self.txtTime.layer.borderColor = ILColor.color(index: 27).cgColor
@@ -174,7 +184,7 @@ class ERUpdateStatusAddNextStepViewController: SuperViewController,UITextViewDel
         
         
         self.txtTime.placeholder =  "HH:MM"
-        self.txtDateTime .placeholder =  "DD/MM/YYYY"
+        self.txtDateTime.placeholder =  "dd MMM, yyyy"
         datePickerTiming(txtInput: txtTime, tag: 998)
         
         
@@ -229,7 +239,8 @@ extension ERUpdateStatusAddNextStepViewController:UIPickerViewDelegate,UIPickerV
     
     func dateSelected(calenderModal: CalenderModal, index: Int) {
         
-        txtDateTime.text = calenderModal.StrDate
+        let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:calenderModal.StrDate ?? "" , fromDateF: "yyyy-MM-dd", toDateFormate: "dd MMM, yyyy")
+        txtDateTime.text =  dateSelectedValue
         
     }
     
@@ -268,14 +279,15 @@ extension ERUpdateStatusAddNextStepViewController:UIPickerViewDelegate,UIPickerV
         
          let endTime =  GeneralUtility.dateConvertToUTC(emiDate: txtTime.text!, withDateFormat: "hh:mm a", todateFormat: "HH:mm")
         
-        let timeSelected =  (txtDateTime.text ?? "") + " " + (endTime + ":00" )
+        let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:txtDateTime.text ?? "", fromDateF: "dd MMM, yyyy", toDateFormate: "yyyy-MM-dd")
+        let timeSelected =  dateSelectedValue + " " + (endTime + ":00" )
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
 
         let params = [
             "_method" : "post",
             "appointment_id": "\(self.appoinmentDetailModalObj?.id ?? 0 )",
             "due_datetime" : timeSelected,
-            "data":(txtView.text ?? "")!,
+            "data":txtView.text ?? "" ,
             "student_ids":studentArr,
             ParamName.PARAMCSRFTOKEN : csrftoken,
 
@@ -289,6 +301,9 @@ extension ERUpdateStatusAddNextStepViewController:UIPickerViewDelegate,UIPickerV
             
         }) {
             (error, errorCode) in
+            
+            CommonFunctions().showError(title: "Error", message: error)
+
             activityIndicator.hide()
         };
         
@@ -464,8 +479,10 @@ extension ERUpdateStatusAddNextStepViewController:UIPickerViewDelegate,UIPickerV
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        txtStandardResponse.text = arrPicker[row]
+        txtStandardResponse.text = arrPicker[row];
         txtView.text = txtStandardResponse.text
+        txtView.textColor = .black
+        
     }
 }
 

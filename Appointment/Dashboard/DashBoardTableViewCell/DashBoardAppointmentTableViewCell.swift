@@ -170,12 +170,12 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
 
             {
                 
-                let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +
+                let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "  " +   "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +
                                                                                                 
                                                                                                 GeneralUtility.startAndEndDateDetail(startDate: self.appointmentModal.startDatetimeUTC ?? "", endDate: self.appointmentModal.endDatetimeUTC ?? "")
                                                                                                
                                                                                                , _returnType: String.self)
-                                                       , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontHeavy]);
+                                                       , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontBook]);
                 let nextLine1 = NSAttributedString.init(string: "\n")
                 
                 let image1Attachment = NSTextAttachment()
@@ -199,17 +199,17 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
                 
                 
                 
-                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.appointmentModal.location, _returnType: String.self)
+                let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "  " +  self.appointmentModal.location! ?? "", _returnType: String.self)
                                                       , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 13),NSAttributedString.Key.font : fontBook]);
                 let para = NSMutableParagraphStyle.init()
                 //            para.alignment = .center
                 para.lineSpacing = 4
                 strHeaderDesc.append(imageMeeting)
-                strHeaderDesc.append(imageSpace)
+//                strHeaderDesc.append(imageSpace)
                 strHeaderDesc.append(strTiTle)
                 strHeaderDesc.append(nextLine1)
                 strHeaderDesc.append(imageLocation)
-                strHeaderDesc.append(imageSpace)
+//                strHeaderDesc.append(imageSpace)
                 strHeaderDesc.append(strType)
 
                 strHeaderDesc.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeaderDesc.length))
@@ -237,9 +237,9 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
 //                self.imageView?.isHidden = false
 //            }
 
-            let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+            let fontHeavy2 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
 
-            UIButton.buttonUIHandling(button: btnFeedback, text: "Cancel Appointment", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),borderColor: ILColor.color(index: 23), borderWidth: 1,fontType:fontHeavy2)
+            UIButton.buttonUIHandling(button: btnFeedback, text: "Cancel Appointment", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontHeavy2)
             
             btnFeedback.cornerRadius = 3
             btnFeedback.sizeToFit()

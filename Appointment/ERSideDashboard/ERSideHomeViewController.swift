@@ -40,6 +40,8 @@ class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
         
         UIView.animate(withDuration: 0.25, animations: {
                    self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+                self.viewContainer.isHidden = true
+
                })
         
         let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
@@ -54,6 +56,8 @@ class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
         
         UIView.animate(withDuration: 0.25, animations: {
                    self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+                    self.viewContainer.isHidden = true
+
                })
         
         let objERSideOpenHourListVC = ERSideOpenHourListVC.init(nibName: "ERSideOpenHourListVC", bundle: nil)
@@ -76,6 +80,8 @@ class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
         
         UIView.animate(withDuration: 0.25, animations: {
             self.btnFloatingButton.transform = CGAffineTransform(rotationAngle: 0)
+            self.viewContainer.isHidden = true
+
         })
      
         
@@ -106,7 +112,7 @@ class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
                            options: [],
                            animations: {
                             
-                            self.nslayoutConstrintFloatingHeight.constant = 130
+                            self.nslayoutConstrintFloatingHeight.constant = 174
                             self.viewContainer.layoutIfNeeded()
                             
                             //Do all animations here
@@ -367,7 +373,7 @@ class ERSideHomeViewController: SuperViewController,ErSideOpenHourTCDelegate  {
     override func viewDidAppear(_ animated: Bool) {
         slideMenuController()?.addLeftGestures()
 
-        GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"Schedule");
+        GeneralUtility.customeNavigationBarMyAppoinment(viewController: self,title:"Home");
         foatingViewCustomization();
         
     }

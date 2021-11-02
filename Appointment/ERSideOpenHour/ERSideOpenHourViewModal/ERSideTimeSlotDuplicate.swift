@@ -57,7 +57,7 @@ class ERSideTimeSlotDuplicate: UIView {
     func customization()  {
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE11)
         
-        UILabel.labelUIHandling(label: lblTimeSlot, text:  objtimeSlotDuplicateModal.timeStart + "-" + objtimeSlotDuplicateModal.timeEnd, textColor: ILColor.color(index: 42), isBold: false, fontType: fontBook)
+        UILabel.labelUIHandling(label: lblTimeSlot, text:  objtimeSlotDuplicateModal.timeStart + "  -  " + objtimeSlotDuplicateModal.timeEnd, textColor: ILColor.color(index: 42), isBold: false, fontType: fontBook)
         
         switch  self.objStudentListType {
         case .groupType:

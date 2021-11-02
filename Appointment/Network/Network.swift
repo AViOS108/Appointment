@@ -210,9 +210,7 @@ class Network {
                               }
                           }
                           else {
-                           
-                           completion(response.data!)
-                           
+                           completion(response.data!)                           
                        }
                       case .failure(let error):
                           if LogoutHandler.shouldLogout(errorCode: error._code){

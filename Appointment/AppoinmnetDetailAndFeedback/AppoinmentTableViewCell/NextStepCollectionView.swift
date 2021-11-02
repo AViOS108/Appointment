@@ -124,6 +124,6 @@ extension NextStepCollectionView: NotesCollectionViewlayoutDelegate {
         }
         //    label.attributedText = attributedText
         label.sizeToFit()
-        return 55 +  label.frame.height
+        return 61 +  label.frame.height
     }
 }

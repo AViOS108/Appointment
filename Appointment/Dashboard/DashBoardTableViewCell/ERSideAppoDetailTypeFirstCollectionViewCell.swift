@@ -12,7 +12,7 @@ import UIKit
 protocol ERSideAppoDetailTypeFirstCollectionViewCellDelegate {
     func moveCollectionView(backward :Bool)
     func acceptDeclineApi(isAccept : Bool,selectedRow : Int)
-    func sendEmail()
+    func sendEmail(email :String)
 
 }
 
@@ -59,7 +59,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
             delegate.acceptDeclineApi(isAccept: true, selectedRow: indexPathRow)
         }
         else{
-            delegate.sendEmail()
+            delegate.sendEmail(email: self.requestDetail?.studentDetails?.email ?? "")
         }
         
     }
@@ -97,7 +97,17 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
         buttonArrowLogic()
         nameIntialandImageLogic()
         viewButtonContainerLogic()
-        lblDescription.attributedText = descriptionLogic()
+        
+        if isStudent ?? false{
+            lblDescription.attributedText = descriptionStudentLogic()
+
+        }
+        else{
+            lblDescription.attributedText = descriptionLogic()
+
+        }
+        
+        lblName .attributedText = nameLogic()
         topParticipantsCustomization()
         topRequestedParticipantsCustomization() 
     }
@@ -135,13 +145,32 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
         self.lblInitialName.isHidden = false
         viewbuttonContainer.borderWithWidth(1, color: ILColor.color(index:22))
 
-        let stringImg = GeneralUtility.startNameCharacter(stringName: self.requestDetail?.studentDetails?.name ?? " ")
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        var stringImg = ""
+        if isStudent ?? false{
+             stringImg = GeneralUtility.startNameCharacter(stringName: self.appoinmentDetailModalObj!.coachDetailApi?.name ?? " ")
+
+        }
+        else{
+             stringImg = GeneralUtility.startNameCharacter(stringName: self.requestDetail?.studentDetails?.name ?? " ")
+
+        }
+        
         if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE15)
         {
             UILabel.labelUIHandling(label: lblInitialName, text: GeneralUtility.optionalHandling(_param: stringImg, _returnType: String.self), textColor:.black , isBold: false , fontType: fontMedium, isCircular: true,  backgroundColor:.white ,cornerRadius: radius,borderColor:UIColor.black,borderWidth: 1 )
             lblInitialName.textAlignment = .center
             lblInitialName.layer.borderColor = UIColor.black.cgColor
         }
+        
+    }
+    
+    
+    
+    
+    
+    
+    func nameLogic() -> NSAttributedString{
         
         let strHeader = NSMutableAttributedString.init()
         
@@ -167,6 +196,10 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
                 let nextLine1 = NSAttributedString.init(string: "\n")
                 let strType = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: roles, _returnType: String.self)
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
+                
+                let strDescription = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.appoinmentDetailModalObj!.coachDetailApi?.coachInfo.summary, _returnType: String.self)
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
+
                 let para = NSMutableParagraphStyle.init()
                 //            para.alignment = .center
                 para.lineSpacing = 1
@@ -174,8 +207,10 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
                 strHeader.append(nextLine1)
                 strHeader.append(strType)
                 strHeader.append(nextLine1)
+                strHeader.append(strType)
+                strHeader.append(strDescription)
+
                 strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-                lblName.attributedText = strHeader
             }
         }
         else{
@@ -194,15 +229,16 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
                 strHeader.append(strType)
                 strHeader.append(nextLine1)
                 strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-                lblName.attributedText = strHeader
+              
             }
             
         }
-        
-      
-        
-       
+        return strHeader
     }
+    
+    
+    
+    
     
     func descriptionLogic() -> NSAttributedString{
         let strHeader = NSMutableAttributedString.init()
@@ -282,6 +318,120 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
         }
         
         return strHeader
+    }
+    func descriptionStudentLogic() -> NSAttributedString{
+        
+
+        let strHeaderDescription = NSMutableAttributedString.init()
+        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14),let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
+            
+        {
+            
+            
+            let strTitle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Purpose", _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontHeavy]);
+            
+            let nextLine1 = NSAttributedString.init(string: "\n")
+            let strDescText = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Description", _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 35),NSAttributedString.Key.font : fontMedium]);
+            
+            let strFunctionText = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Functions: ", _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontMedium]);
+            
+            let strFunctionValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param:  self.description(requestDetail: requestDetail.targetFunctions), _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 36),NSAttributedString.Key.font : fontBook]);
+            
+            
+            let strnIndustriesText = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Industries: ", _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontMedium]);
+            
+            
+            let strnIndustriesValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param:  self.description(requestDetail: requestDetail.targetIndustries), _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 36),NSAttributedString.Key.font : fontBook]);
+            
+            
+            let strnCompaniesText = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Companies: ", _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:34),NSAttributedString.Key.font : fontMedium]);
+            
+            
+            let strnCompaniesValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.description(requestDetail: requestDetail.targetCompanies), _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 36),NSAttributedString.Key.font : fontBook]);
+            
+            
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            para.lineSpacing = 18
+            strHeaderDescription.append(strTitle)
+            strHeaderDescription.append(nextLine1)
+            strHeaderDescription.append(nextLine1)
+
+            strHeaderDescription.append(strDescText)
+            if self.description(requestDetail: requestDetail.targetFunctions) != "" {
+                strHeaderDescription.append(nextLine1)
+                strHeaderDescription.append(strFunctionText)
+                strHeaderDescription.append(strFunctionValue)
+            }
+            
+            if self.description(requestDetail: requestDetail.targetIndustries) != "" {
+                strHeaderDescription.append(nextLine1)
+                strHeaderDescription.append(strnIndustriesText)
+                strHeaderDescription.append(strnIndustriesValue)
+            }
+            if self.description(requestDetail: requestDetail.targetCompanies) != "" {
+                strHeaderDescription.append(nextLine1)
+                strHeaderDescription.append(strnCompaniesText)
+                strHeaderDescription.append(strnCompaniesValue)
+            }
+            
+            if self.description(requestDetail: requestDetail.targetCompanies) == "" && self.description(requestDetail: requestDetail.targetIndustries) == "" &&  self.description(requestDetail: requestDetail.targetFunctions) == ""{
+                let strnCompaniesValue = NSAttributedString.init(string: "Not Available"
+                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 36),NSAttributedString.Key.font : fontBook]);
+                
+                strHeaderDescription.append(nextLine1)
+                strHeaderDescription.append(strnCompaniesValue)
+
+            }
+            var attachmentValue = "No attachment available"
+            
+            if let attachment = self.requestDetail.attachmentInfo{
+                if attachment.count > 0 {
+                    attachmentValue = attachment[0].fileName ?? "";
+
+                }
+            }
+            
+            let strattachmentText = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Attachments", _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 42),NSAttributedString.Key.font : fontHeavy]);
+            
+            let strattachmentValue  = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: attachmentValue, _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 37),NSAttributedString.Key.font : fontBook]);
+            strHeaderDescription.append(nextLine1)
+            strHeaderDescription.append(nextLine1)
+
+            strHeaderDescription.append(strattachmentText)
+            strHeaderDescription.append(nextLine1)
+            strHeaderDescription.append(strattachmentValue)
+
+        }
+        
+        return strHeaderDescription
+        
+    }
+    func description(requestDetail:Array<String>?)-> String{
+        
+        if let requestDetailI = requestDetail {
+            if requestDetailI.count > 0 {
+                let strInbetween = requestDetailI.joined(separator: ",")
+                return strInbetween
+            }
+            else{
+                return ""
+            }
+        }
+        else{
+            return ""
+
+        }
     }
     
     func viewButtonContainerLogic()
@@ -368,8 +518,6 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
             // past
         }
     }
-    
-    
     
     
     

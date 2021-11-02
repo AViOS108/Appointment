@@ -25,9 +25,10 @@ protocol ERSideStudentListViewControllerDelegate{
 
 class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,ERFilterViewControllerDelegate {
     
+    @IBOutlet weak var lblNoStudent: UILabel!
     
     override   func selectedStudentPrivateHour(sender: UIButton) {
-      
+        
     }
     
     var objStudentListType : StudentListType!
@@ -58,22 +59,32 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
     
     @IBAction func btnFilterTapped(_ sender: Any) {
         
-        let objERFilterViewController = ERFilterViewController.init(nibName: "ERFilterViewController", bundle: nil)
-//        objERFilterViewController.modalPresentationStyle = .overFullScreen
-        objERFilterViewController.objERFilterTag = self.objERFilterTag
-        objERFilterViewController.delegate = self
-        objERFilterViewController.objFilterTypeView = .ER
-
-        self.navigationController?.pushViewController(objERFilterViewController, animated: false)
-//        self.present(objERFilterViewController, animated: false) {
-//
-//        }
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            let objERFilterViewController = ERFilterViewController.init(nibName: "ERFilterViewController", bundle: nil)
+            objERFilterViewController.objERFilterTag = self.objERFilterTag
+            objERFilterViewController.delegate = self
+            objERFilterViewController.objFilterTypeView = .Student
+            
+            self.navigationController?.pushViewController(objERFilterViewController, animated: false)
+            
+        }
+        else
+        {
+            let objERFilterViewController = ERFilterViewController.init(nibName: "ERFilterViewController", bundle: nil)
+            objERFilterViewController.objERFilterTag = self.objERFilterTag
+            objERFilterViewController.delegate = self
+            objERFilterViewController.objFilterTypeView = .ER
+            self.navigationController?.pushViewController(objERFilterViewController, animated: false)
+        }
     }
     
     var objStudentDetailModalSelected : StudentDetailModal?
     var objStudentDetailModal : StudentDetailModal?
     var objStudentDetailModalCopy : StudentDetailModal?
-var isSearchEnabled = false
+
+    var isSearchEnabled = false
     @IBOutlet weak var tblView: UITableView!
     
     @IBOutlet weak var btnAddStudent: UIButton!
@@ -123,7 +134,21 @@ var isSearchEnabled = false
         else{
             self.objStudentDetailModalSelected = StudentDetailModal.init(total: 0, items: [StudentDetailModalItem]())
         }
-         self.customization();
+        self.customization();
+        self.modalRedefine()
+        
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false{
+
+            lblStudentNumber.isHidden = true
+            btnStudentListNext.isHidden = true
+            btnStudentListPrev.isHidden = true
+        }
+        else{
+
+        }
+
         // Do any additional setup after loading the view.
     }
     
@@ -144,7 +169,72 @@ var isSearchEnabled = false
     }
     
     
+    func callingViewModal(isbackGroundHit : Bool)  {
+        
+        let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+
+        var param = [ ParamName.PARAMCSRFTOKEN : csrftoken] as [String : AnyObject]
+        if filterAdded.isEmpty{
+            
+        }
+        else{
+            param["filters"] = self.filterAdded as AnyObject
+        }
+        
+        var dashBoardViewModal = DashBoardViewModel()
+        dashBoardViewModal.viewController = self
+        dashBoardViewModal.isbackGroundHit = isbackGroundHit
+        dashBoardViewModal.fetchCall(params: param,success: { (dashboardModel) in
+            self.objStudentDetailModal =   self.modelMapping(objdataFeedingModal: dashboardModel)
+            self.objStudentDetailModalSelected =  self.modelMappingSelected(objStudentDetailModal:  self.objStudentDetailModal!)
+            
+            self.customization()
+            self.modalRedefine()
+
+
+            
+        }) { (error, errorCode) in
+            
+        }
+    }
     
+    
+    func modelMappingSelected(objStudentDetailModal : StudentDetailModal) -> StudentDetailModal{
+    
+        var studentDetailModalI = objStudentDetailModal;
+        studentDetailModalI.items = objStudentDetailModal.items?.filter({$0.isSelected == true})
+        return studentDetailModalI
+    }
+    
+    func modelMapping(objdataFeedingModal : DashBoardModel) -> StudentDetailModal{
+        
+        var objStudentDetailModal = StudentDetailModal()
+        objStudentDetailModal.total = objdataFeedingModal.count
+        var itemsArr =  [StudentDetailModalItem]()
+
+        for items in objdataFeedingModal.items{
+            
+            var roles = ""
+            var index = 0
+            for role in items.roles{
+                roles.append(role.displayName ?? "")
+                index = index + 1;
+                if items.roles.count > 1{
+                    if index == items.roles.count{
+                    }
+                    else{
+                        roles.append(", ")
+                    }
+                }
+            }
+            var objStudentDetailModalItem = StudentDetailModalItem.init(id: items.id, firstName: items.name, lastName: "", email: nil, invitationID:nil, benchmark: Benchmark.init(name: roles, id: 1), tags: nil)
+            objStudentDetailModalItem.isSelected = items.isSelected;
+            itemsArr.append(objStudentDetailModalItem)
+        }
+        objStudentDetailModal.items = itemsArr
+        
+        return objStudentDetailModal
+    }
     
     func callViewModal()  {
         
@@ -155,7 +245,7 @@ var isSearchEnabled = false
                       "limit" : 20,
                       "includes" : arrayInclude,
                       "csrf_token" : UserDefaultsDataSource(key: "csrf_token").readData() as! String
-            ] as [String : AnyObject]
+        ] as [String : AnyObject]
         if filterAdded.isEmpty{
             
         }
@@ -169,9 +259,10 @@ var isSearchEnabled = false
             do {
                 self.activityIndicator?.hide()
                 self.objStudentDetailModal = try
-                    JSONDecoder().decode(StudentDetailModal.self, from: data)
+                JSONDecoder().decode(StudentDetailModal.self, from: data)
                 
                 self.customization();
+                self.modalRedefine()
             } catch   {
                 print(error)
                 self.activityIndicator?.hide()
@@ -206,28 +297,40 @@ var isSearchEnabled = false
                 return false
             }
         })
-       
+        
         self.allStudentSelectedImage()
         
         self.objStudentDetailModalCopy = self.objStudentDetailModal
         
     }
     
-
     
-       @objc override func buttonClicked(sender: UIBarButtonItem) {
+    
+    @objc override func buttonClicked(sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
         
-
-          }
-       
+        
+    }
+    
     
     
     
     
     func customization()  {
         self.viewSearch.isHidden = false
-        self.tblView.isHidden = false
+        
+        if self.objStudentDetailModal?.items?.count ?? 0 > 0{
+            self.tblView.isHidden = false
+            self.lblNoStudent.isHidden = true
+            
+        }
+        else{
+            self.lblNoStudent.isHidden = false
+            self.tblView.isHidden = true
+            let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+            UILabel.labelUIHandling(label: lblNoStudent, text: "No Student found", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy1)
+        }
+        
         self.viewSelection.isHidden = false
         
         btnSelectAll.setImage(UIImage.init(named: "check_box"), for: .normal);
@@ -237,15 +340,22 @@ var isSearchEnabled = false
         btnStudentListPrev.setImage(UIImage.init(named: "back_dark"), for: .normal);
         
         self.viewSelection.borderWithWidth(1, color: ILColor.color(index: 48))
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false{
+            GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Community Member", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+
+        }
+        else{
+            GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Student", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+
+        }
         
-        GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
-       
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16)
         UIButton.buttonUIHandling(button: btnAddStudent, text: "Add", backgroundColor: ILColor.color(index: 23), textColor: .white, cornerRadius: 3, fontType: fontHeavy)
         
         btnAddStudent.isHidden = false
         
-        modalRedefine()
+        
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13),  let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         {
             UILabel.labelUIHandling(label: lblSelectAll, text: "Select all", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)
@@ -379,8 +489,13 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
                    makeCopyModalInSync()
                }
         
-         GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
-        
+           let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+           if isStudent ?? false{
+               GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Community Member", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+           }
+           else{
+               GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Student", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+           }
         
            self.tblView.reloadData()
            
@@ -449,7 +564,15 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
                   if isSearchEnabled {
                       makeCopyModalInSync()
                   }
-                  GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Candidates", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+            
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+            if isStudent ?? false{
+                GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Community Member", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+            }
+            else{
+                GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Student", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+            }
+            
                   self.tblView.reloadData()
             break
             
@@ -477,6 +600,16 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
                 let index = self.objStudentDetailModal?.items!.firstIndex(where: {$0.id == items.id}) ?? 0
                 self.objStudentDetailModal?.items!.removeAll(where: {$0.id == items.id})
                 self.objStudentDetailModal?.items!.insert(selectedId!, at: index)
+                let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+                if isStudent ?? false{
+                    GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Community Member", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+
+                }
+                else{
+                    GeneralUtility.customeNavigationBarWithBackAndSelectedStudent(viewController: self, title: "Select Student", numberStudent: "\((self.objStudentDetailModalSelected?.items?.count) ?? 0)")
+                }
+                
+
                 self.tblView.reloadData()
 
             }
@@ -501,23 +634,51 @@ extension ERSideStudentListViewController: ERSideStudentListTableViewCellDelegat
         
         if searchBar.text != ""
         {
-            makeFilterModal()
-            callViewModal()
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+
+            if isStudent ?? false{
+                self.objStudentDetailModal = self.objStudentDetailModalCopy
+                if searchBar.text != ""
+                {
+                    let filteredItems =  self.objStudentDetailModal?.items!.filter{
+                        let emailPrimary = $0.email?.primary ?? ""
+                        let emailSecondary = $0.email?.secondary ?? ""
+                        return   ( $0.firstName!.lowercased().contains(searchBar.text!.lowercased())  || $0.lastName!.lowercased().contains(searchBar.text!.lowercased()) || emailPrimary.lowercased().contains(searchBar.text!.lowercased()) || emailSecondary.lowercased().contains(searchBar.text!.lowercased())  )
+                    }
+                    self.objStudentDetailModal?.items = filteredItems
+                    self.customization();
+
+                }
+                
+            }
+            else{
+                makeFilterModal()
+
+            }
         }
         txtSearchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
-            
             isSearchEnabled = false
-            makeFilterModal()
-            callViewModal()
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+            if isStudent ?? false{
+                self.objStudentDetailModal = self.objStudentDetailModalCopy
+                self.customization();
+            }
+            else{
+                makeFilterModal()
+                
+            }
             txtSearchBar.resignFirstResponder()
-            
+
         }
+       
         
     }
+        
+
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -569,63 +730,145 @@ extension ERSideStudentListViewController{
     
     func makeFilterModal(){
         
-        var benchMark = Array<Int>()
-        var tag = Array <Dictionary<String,AnyObject>>()
-        if let objTags  = self.objERFilterTag{
-            for objERFlter in self.objERFilterTag!{
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+        
+            if let tags = self.objERFilterTag{
+                self.filterAdded = Dictionary<String,Any>()
                 
-                if objERFlter.id == -999{
-                    
-                    let selectedBenchMarkArr =  objERFlter.objTagValue?.filter({ $0.isSelected == true
-                    })
-                    if (selectedBenchMarkArr?.count ?? 0) > 0{
-                        for selectedBench in selectedBenchMarkArr!{
-                            benchMark.append(selectedBench.eRFilterid!)
+                
+                for filter in tags{
+                    if  filter.id == 1 {
+                        let roles =       filter.objTagValue?.filter({
+                            $0.isSelected == true
+                        })
+                        if (roles?.count ?? 0) > 0 {
+                            var roleID = [String]()
+                            for selectedTag in roles!{
+                                roleID.append(selectedTag.machineName)
+                            }
+                            self.filterAdded["roles"] = roleID
                         }
                     }
-                    
-                }
-                else{
-                    let selectedTagArr =    objERFlter.objTagValue?.filter({$0.isSelected == true})
-                    if (selectedTagArr?.count ?? 0) > 0 {
-                        var tagSelected = [String]()
-                        for selectedTag in selectedTagArr!{
-                            tagSelected.append(selectedTag.tagValueText!)
+                    else if filter.id == 2{
+                        let industries =       filter.objTagValue?.filter({
+                            $0.isSelected == true
+                        })
+                        if (industries?.count ?? 0) > 0 {
+                            var industriesSelected = [Dictionary<String,Any>]()
+                            for selectedTag in industries!{
+                                var dicIndustries = Dictionary<String,Any>()
+                                dicIndustries = ["display_name": selectedTag.tagValueText,"id":selectedTag.id]
+                                industriesSelected.append(dicIndustries)
+                            }
+                            self.filterAdded["industries"] = industriesSelected
                         }
-                        let category  = ["category" : objERFlter.category ?? "",
-                                         "values" : tagSelected] as [String : AnyObject]
-                        tag.append(category);
+                    }
+                    else if filter.id == 3{
+                        let expertise =       filter.objTagValue?.filter({
+                            $0.isSelected == true
+                        })
+                        if (expertise?.count ?? 0) > 0 {
+                            var expertisesSelected = [Dictionary<String,Any>]()
+                            for selectedTag in expertise!{
+                                var dicexpertise = Dictionary<String,Any>()
+                                dicexpertise = ["display_name": selectedTag.tagValueText,"id":selectedTag.id]
+                                expertisesSelected.append(dicexpertise)
+                            }
+                            self.filterAdded["expertise"] = expertisesSelected
+                        }
+                    }
+                    else if filter.id == 4{
+                        let clubs =       filter.objTagValue?.filter({
+                            $0.isSelected == true
+                        })
+                        if (clubs?.count ?? 0) > 0 {
+                            var clubIDs = [Int]()
+                            for selectedTag in clubs!{
+                                clubIDs.append(selectedTag.id)
+                            }
+                            self.filterAdded["clubs"] = clubIDs
+                        }
                     }
                 }
-            }
-            if benchMark.count > 0 {
-                filterAdded["benchmarks"] = benchMark as AnyObject
-            }
-            if !tag.isEmpty {
-                filterAdded["tags"] = tag as AnyObject
             }
             
-        }
-     
-        if txtSearchBar.text?.isEmpty ?? true{
-            if filterAdded["name_email"] != nil{
-                filterAdded.removeValue(forKey: "name_email")
+            if txtSearchBar.text?.isEmpty ?? true{
+                if filterAdded["name_email"] != nil{
+                    filterAdded.removeValue(forKey: "name_email")
+                }
             }
-        }
-        else{
-            filterAdded["name_email"] = txtSearchBar.text as AnyObject?
+            else{
+                filterAdded["name_email"] = txtSearchBar.text as AnyObject?
+            }
+            
+            
+            self.callingViewModal(isbackGroundHit: false)
+
         }
         
-        if benchMark.count == 0 && tag.isEmpty && (txtSearchBar.text?.isEmpty ?? true) {
-            filterAdded = Dictionary<String,AnyObject>()
+        else{
+            var benchMark = Array<Int>()
+            var tag = Array <Dictionary<String,AnyObject>>()
+            if let objTags  = self.objERFilterTag{
+                for objERFlter in self.objERFilterTag!{
+                    
+                    if objERFlter.id == -999{
+                        
+                        let selectedBenchMarkArr =  objERFlter.objTagValue?.filter({ $0.isSelected == true
+                        })
+                        if (selectedBenchMarkArr?.count ?? 0) > 0{
+                            for selectedBench in selectedBenchMarkArr!{
+                                benchMark.append(selectedBench.eRFilterid!)
+                            }
+                        }
+                        
+                    }
+                    else{
+                        let selectedTagArr =    objERFlter.objTagValue?.filter({$0.isSelected == true})
+                        if (selectedTagArr?.count ?? 0) > 0 {
+                            var tagSelected = [String]()
+                            for selectedTag in selectedTagArr!{
+                                tagSelected.append(selectedTag.tagValueText!)
+                            }
+                            let category  = ["category" : objERFlter.category ?? "",
+                                             "values" : tagSelected] as [String : AnyObject]
+                            tag.append(category);
+                        }
+                    }
+                }
+                if benchMark.count > 0 {
+                    filterAdded["benchmarks"] = benchMark as AnyObject
+                }
+                if !tag.isEmpty {
+                    filterAdded["tags"] = tag as AnyObject
+                }
+                
+            }
+         
+            if txtSearchBar.text?.isEmpty ?? true{
+                if filterAdded["name_email"] != nil{
+                    filterAdded.removeValue(forKey: "name_email")
+                }
+            }
+            else{
+                filterAdded["name_email"] = txtSearchBar.text as AnyObject?
+            }
+            
+            if benchMark.count == 0 && tag.isEmpty && (txtSearchBar.text?.isEmpty ?? true) {
+                filterAdded = Dictionary<String,AnyObject>()
+            }
+            callViewModal()
         }
         
     }
     
+    
+   
     func passFilter(selectedFilter: [ERFilterTag]?) {
         self.objERFilterTag = selectedFilter;
         makeFilterModal()
-        callViewModal()
+        
     }
     
 }

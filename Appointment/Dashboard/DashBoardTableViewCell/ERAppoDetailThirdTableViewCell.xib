@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,6 +23,12 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r5h-H9-Hmb">
                                 <rect key="frame" x="8" y="8" width="262" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZn-36-6gO">
+                                <rect key="frame" x="18" y="37" width="290" height="35"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -116,9 +122,13 @@
                             <constraint firstAttribute="bottom" secondItem="zXW-tz-h4r" secondAttribute="bottom" constant="6" id="W1h-XV-8VW"/>
                             <constraint firstItem="zXW-tz-h4r" firstAttribute="top" secondItem="r5h-H9-Hmb" secondAttribute="bottom" constant="8" id="aEm-fT-YC2"/>
                             <constraint firstItem="zXW-tz-h4r" firstAttribute="leading" secondItem="qNx-eT-DEu" secondAttribute="leading" constant="8" id="aU2-gs-AxP"/>
+                            <constraint firstItem="LZn-36-6gO" firstAttribute="top" secondItem="zXW-tz-h4r" secondAttribute="top" id="abr-fk-Xrw"/>
+                            <constraint firstItem="LZn-36-6gO" firstAttribute="trailing" secondItem="zXW-tz-h4r" secondAttribute="trailing" id="gsu-1G-VWZ"/>
                             <constraint firstItem="r5h-H9-Hmb" firstAttribute="top" secondItem="qNx-eT-DEu" secondAttribute="top" constant="8" id="iFL-Qp-EGB"/>
                             <constraint firstItem="r5h-H9-Hmb" firstAttribute="leading" secondItem="qNx-eT-DEu" secondAttribute="leading" constant="8" id="kWJ-qS-qHz"/>
+                            <constraint firstItem="LZn-36-6gO" firstAttribute="leading" secondItem="zXW-tz-h4r" secondAttribute="leading" constant="10" id="rJb-Nj-iwu"/>
                             <constraint firstAttribute="trailing" secondItem="xRf-RS-mBA" secondAttribute="trailing" constant="8" id="vnf-M8-5WY"/>
+                            <constraint firstItem="LZn-36-6gO" firstAttribute="bottom" secondItem="zXW-tz-h4r" secondAttribute="bottom" id="ynb-MP-I7C"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -133,6 +143,7 @@
             <connections>
                 <outlet property="btnViewFeedback" destination="xRf-RS-mBA" id="gyA-jS-Vmy"/>
                 <outlet property="lblCandidateText" destination="r5h-H9-Hmb" id="7Id-vM-mPM"/>
+                <outlet property="lblNoFeedback" destination="LZn-36-6gO" id="9eR-gp-3zj"/>
                 <outlet property="nslayoutViewRatingHeight" destination="pUi-bm-p1f" id="Hzp-4y-5NT"/>
                 <outlet property="viewContainer" destination="qNx-eT-DEu" id="Brk-4r-S9j"/>
                 <outlet property="viewRating" destination="zXW-tz-h4r" id="FUS-US-Bvu"/>

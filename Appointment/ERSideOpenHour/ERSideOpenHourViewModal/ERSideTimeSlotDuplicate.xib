@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,8 +14,8 @@
             <rect key="frame" x="0.0" y="0.0" width="376" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SeR-xH-CuY">
-                    <rect key="frame" x="7" y="10" width="30" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SeR-xH-CuY">
+                    <rect key="frame" x="0.0" y="8" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="8gL-fz-4oX"/>
                         <constraint firstAttribute="width" constant="30" id="EfD-94-Ral"/>
@@ -24,24 +24,24 @@
                         <action selector="btnTimeSlotTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="yzr-pE-uxy"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jnU-V6-R6k">
-                    <rect key="frame" x="45" y="14.5" width="323" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jnU-V6-R6k">
+                    <rect key="frame" x="34" y="12.5" width="334" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="SeR-xH-CuY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="2YY-Wc-07W"/>
+                <constraint firstItem="SeR-xH-CuY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="2YY-Wc-07W"/>
                 <constraint firstItem="jnU-V6-R6k" firstAttribute="centerY" secondItem="SeR-xH-CuY" secondAttribute="centerY" id="6bR-aA-pQB"/>
                 <constraint firstAttribute="trailing" secondItem="jnU-V6-R6k" secondAttribute="trailing" constant="8" id="8xL-k4-nh1"/>
-                <constraint firstItem="SeR-xH-CuY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="7" id="DUI-3d-GRa"/>
+                <constraint firstItem="SeR-xH-CuY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="DUI-3d-GRa"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SeR-xH-CuY" secondAttribute="bottom" constant="2" id="SZH-F6-q2z"/>
-                <constraint firstItem="jnU-V6-R6k" firstAttribute="leading" secondItem="SeR-xH-CuY" secondAttribute="trailing" constant="8" id="nkO-dJ-vr5"/>
+                <constraint firstItem="jnU-V6-R6k" firstAttribute="leading" secondItem="SeR-xH-CuY" secondAttribute="trailing" constant="4" id="nkO-dJ-vr5"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="btnTimeSlot" destination="SeR-xH-CuY" id="SF6-bl-raq"/>
                 <outlet property="lblTimeSlot" destination="jnU-V6-R6k" id="AFA-00-ptF"/>

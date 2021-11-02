@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -49,7 +50,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="1" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uzp-7d-kQG">
-                                <rect key="frame" x="52" y="13.5" width="224" height="23.5"/>
+                                <rect key="frame" x="52" y="4" width="224" height="42"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -57,14 +58,16 @@
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zva-r9-QlK">
                                 <rect key="frame" x="0.0" y="57" width="320" height="1"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="5j8-1M-vcs"/>
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="o2u-1W-y5R"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="zva-r9-QlK" firstAttribute="top" secondItem="uzp-7d-kQG" secondAttribute="bottom" constant="11" id="88c-CP-K1g"/>
                             <constraint firstItem="K9Q-r4-mcw" firstAttribute="centerY" secondItem="PtX-F1-xgf" secondAttribute="centerY" constant="-5" id="Fkx-iV-NyV"/>
                             <constraint firstItem="cok-5j-cXC" firstAttribute="top" secondItem="K9Q-r4-mcw" secondAttribute="top" id="ILB-et-QH0"/>
                             <constraint firstItem="uzp-7d-kQG" firstAttribute="centerY" secondItem="cok-5j-cXC" secondAttribute="centerY" id="Mhe-8d-kHx"/>
@@ -80,11 +83,11 @@
                             <constraint firstItem="Y8u-zE-yvv" firstAttribute="centerY" secondItem="uzp-7d-kQG" secondAttribute="centerY" id="gUr-lc-mg4"/>
                             <constraint firstItem="uzp-7d-kQG" firstAttribute="centerY" secondItem="K9Q-r4-mcw" secondAttribute="centerY" id="ltJ-cp-R2j"/>
                             <constraint firstItem="K9Q-r4-mcw" firstAttribute="leading" secondItem="PtX-F1-xgf" secondAttribute="leading" constant="8" id="p0V-3U-hnx"/>
+                            <constraint firstItem="uzp-7d-kQG" firstAttribute="top" secondItem="o2u-1W-y5R" secondAttribute="top" constant="4" id="qf1-vJ-Kpi"/>
                             <constraint firstAttribute="height" constant="60" id="rio-xv-sma"/>
                             <constraint firstItem="cok-5j-cXC" firstAttribute="bottom" secondItem="K9Q-r4-mcw" secondAttribute="bottom" id="w9C-be-fwK"/>
                             <constraint firstAttribute="trailing" secondItem="zva-r9-QlK" secondAttribute="trailing" id="xgz-2m-hCp"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="o2u-1W-y5R"/>
                     </view>
                 </subviews>
                 <constraints>
@@ -106,4 +109,9 @@
             <point key="canvasLocation" x="137.68115942028987" y="99.776785714285708"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

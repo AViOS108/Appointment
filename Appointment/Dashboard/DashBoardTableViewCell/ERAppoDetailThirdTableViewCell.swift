@@ -11,6 +11,7 @@ import UIKit
 class ERAppoDetailThirdTableViewCell: UITableViewCell {
     @IBOutlet weak var viewContainer: UIView!
     
+    @IBOutlet weak var lblNoFeedback: UILabel!
     @IBOutlet weak var lblCandidateText: UILabel!
     @IBOutlet weak var nslayoutViewRatingHeight: NSLayoutConstraint!
     var viewController : UIViewController!
@@ -77,21 +78,24 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
         
         
         let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
+        UILabel.labelUIHandling(label: lblNoFeedback, text: "Feedback not given", textColor: ILColor.color(index: 42), isBold: false, fontType: fontMedium)
         
         var feedbackText = ""
         
         if isStudent ?? false {
-            
-            
             btnViewFeedback.isHidden = false
             let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
             if self.appoinmentDetailModalObj?.requests?[0].feedback != nil{
                 UIButton.buttonUIHandling(button: btnViewFeedback, text: "View Feedback", backgroundColor: .clear, textColor: ILColor.color(index: 23), fontType: fontHeavy)
+                lblNoFeedback.isHidden = true
 
             }
             else
             {
                 UIButton.buttonUIHandling(button: btnViewFeedback, text: "Leave a Feedback", backgroundColor: .clear, textColor: ILColor.color(index: 23), fontType: fontHeavy)
+                viewRating.isHidden = true
+
 
             }
             

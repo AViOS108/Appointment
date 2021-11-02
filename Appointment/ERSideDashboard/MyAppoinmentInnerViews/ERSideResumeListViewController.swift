@@ -126,21 +126,23 @@ extension ERSideResumeListViewController: UITableViewDelegate,UITableViewDataSou
 
 extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate{
     
-    func taskProvidedToVC(taskType: ERSideResumeListTaskProvidedBycell, resumeID: Int) {
+    
+    
+    func taskProvidedToVC(taskType: ERSideResumeListTaskProvidedBycell, resumeID: Int, name: String) {
         if taskType == .view{
-            apitHitForResumeView(resumeID: resumeID)
+            apitHitForResumeView(resumeID: resumeID, name: name)
         }
         else if taskType == .download{
-            apitHitForDownloadResume(resumeID: resumeID)
+            apitHitForDownloadResume(resumeID: resumeID, name: name)
         }
         else{
-            apitHitForPrintResume(resumeID: resumeID)
+            apitHitForPrintResume(resumeID: resumeID, name: name)
 
         }
     }
     
     
-    func apitHitForPrintResume(resumeID: Int){
+    func apitHitForPrintResume(resumeID: Int,name: String){
         
         activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
         
@@ -150,7 +152,7 @@ extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                     
-                    self.openWebView(url: json["\(resumeID)"] as! String)
+                    self.openWebView(url: json["\(resumeID)"] as! String, resumeID: resumeID, name: name)
                    }
                 
             } catch  {
@@ -167,7 +169,7 @@ extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate
     
     
     
-    func apitHitForDownloadResume(resumeID: Int){
+    func apitHitForDownloadResume(resumeID: Int,name: String){
         
         activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
         
@@ -225,7 +227,7 @@ extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate
     }
     
     
-    func apitHitForResumeView(resumeID: Int){
+    func apitHitForResumeView(resumeID: Int,name: String){
         
         activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
         
@@ -233,7 +235,7 @@ extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate
             self.activityIndicator?.hide()
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                    self.openWebView(url: json["\(resumeID)"] as! String)
+                    self.openWebView(url: json["\(resumeID)"] as! String, resumeID: resumeID, name: name)
                    }
                 
             } catch  {
@@ -248,10 +250,12 @@ extension ERSideResumeListViewController : ERSideResumeListTableViewCellDelegate
         
     }
     
-    func openWebView(url:String){
+    func openWebView(url:String,resumeID: Int,name : String){
         let wvc = UIStoryboard.webViewer()
         wvc.webUrl =  url
+        wvc.resumeID = resumeID
         wvc.isResumeWebView = true
+        wvc.name = name
         self.navigationController?.pushViewController(wvc, animated: true)
     }
     

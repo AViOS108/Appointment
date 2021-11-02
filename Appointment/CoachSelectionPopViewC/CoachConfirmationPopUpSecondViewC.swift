@@ -33,6 +33,7 @@ class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate
     
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var viewOuter: UIView!
+    @IBOutlet weak var viewSeperator: UIView!
 
     var resueStudentFunctionI : StudentFunctionSurvey!
     var resueStudentIndustryI : [StudentIndustrySurvey]!
@@ -65,13 +66,7 @@ class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate
     
     @IBOutlet weak var tblView: UITableView!
     
-    // Design Changes
-    
-    @IBOutlet weak var lblTimingFrom: UILabel!
-    @IBOutlet weak var lblTimingTo: UILabel!
-    @IBOutlet weak var lblAvailableSlots: UILabel!
-    @IBOutlet weak var lblLocation: UILabel!
-    
+
 
     @IBOutlet weak var lblImageView: UILabel!
     @IBOutlet weak var imgView: UIImageView!
@@ -97,8 +92,8 @@ class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate
         
         tblView.register(UINib.init(nibName: "ConfirmationPopUpSecondTableViewCell", bundle: nil), forCellReuseIdentifier: "ConfirmationPopUpSecondTableViewCell")
         tblView.register(UINib.init(nibName: "ConfirmationPopupFileShareTableViewCell", bundle: nil), forCellReuseIdentifier: "ConfirmationPopupFileShareTableViewCell")
-        
-        
+        tblView.register(UINib.init(nibName: "ConfirmationAvailableSlotTableViewCell", bundle: nil), forCellReuseIdentifier: "ConfirmationAvailableSlotTableViewCell")
+        viewSeperator.backgroundColor = ILColor.color(index: 54)
         self.modalFormation();
         self.tblView.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
         
@@ -145,18 +140,18 @@ class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate
     
     func makeModal(indexpath : IndexPath)->[SearchTextFieldItem]{
         
-        if indexpath.row == 0{
+        if indexpath.row == 1{
             return searchArrayPurpose
         }
         
-        if indexpath.row == 2{
+        if indexpath.row == 3{
             return searchArrayFunction
         }
-        else if indexpath.row == 3{
+        else if indexpath.row == 4{
             
             return searchArrayIndustry
         }
-        else if indexpath.row == 4{
+        else if indexpath.row == 5{
             
             return searchGlobalCompanies
         }
@@ -178,14 +173,15 @@ class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate
         }
         tblView.delegate = self
         tblView.dataSource = self
-        self.viewContainer.cornerRadius = 3;
         let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
 
         UIButton.buttonUIHandling(button: btnCancel, text: "Cancel", backgroundColor:.white , textColor: ILColor.color(index: 23), fontType: fontHeavy)
         UIButton.buttonUIHandling(button: btnConfirm, text: "Confirm", backgroundColor:.white , textColor: ILColor.color(index: 23), fontType: fontHeavy)
-        
-        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"Schedule");
+        self.viewOuter.backgroundColor = ILColor.color(index: 22)
+        self.viewContainer.dropShadowER()
+
+        GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"Confirm Appointment");
     }
     
     @objc override func buttonClicked(sender: UIBarButtonItem) {
@@ -194,20 +190,28 @@ class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate
     override func viewDidAppear(_ animated: Bool) {
         self.view.backgroundColor = ILColor.color(index: 22)
         self.coachInfo()
-        self.customizationTimeSlot()
-        self.customizationLocation()
 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row != 1 && indexPath.row != arraYHeader.count{
+        
+        
+        if indexPath.row == 0{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ConfirmationAvailableSlotTableViewCell", for: indexPath) as! ConfirmationAvailableSlotTableViewCell
+            cell.results = self.results
+            cell.customization()
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
+            return cell
+        }
+        
+        if indexPath.row != 2 && indexPath.row != (arraYHeader.count + 1){
             let cell = tableView.dequeueReusableCell(withIdentifier: "ConfirmationPopUpFirstTableViewCell", for: indexPath) as! ConfirmationPopUpFirstTableViewCell
             cell.indexPath = indexPath
             cell.delegate = self
             cell.arrNameSurvey = self.makeModal(indexpath: indexPath)
             cell.tblview = self.tblView
 //            cell.viewController = self.tblView
-            if indexPath.row == 4{
+            if indexPath.row == 5{
                 cell.isAPiHIt = true
             }
             else{
@@ -219,7 +223,7 @@ class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         }
-        else if indexPath.row == arraYHeader.count{
+        else if indexPath.row == (arraYHeader.count + 1){
             let cell = tableView.dequeueReusableCell(withIdentifier: "ConfirmationPopupFileShareTableViewCell", for: indexPath) as! ConfirmationPopupFileShareTableViewCell
             cell.viewControllerI = self
             cell.docUploaded = self.docUploaded
@@ -240,7 +244,7 @@ class CoachConfirmationPopUpSecondViewC: SuperViewController,UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arraYHeader.count + 1;
+        return arraYHeader.count + 2;
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
@@ -291,7 +295,7 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
     func changeModal(searchItem: SearchTextFieldItem, indexPAth: IndexPath, isAdded: Bool) {
         
         
-        if indexPAth.row == 0{
+        if indexPAth.row == 1{
             let selectedId = searchArrayPurpose.filter({$0.id == searchItem.id})[0]
             selectedId.isSelected = isAdded
             let index = self.searchArrayPurpose.firstIndex(where: {$0.id == searchItem.id}) ?? 0
@@ -299,14 +303,14 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
             self.searchArrayPurpose.insert(selectedId, at: index)
         }
         
-       else if indexPAth.row == 2{
+       else if indexPAth.row == 3{
             let selectedId = searchArrayFunction.filter({$0.id == searchItem.id})[0]
             selectedId.isSelected = isAdded
             let index = self.searchArrayFunction.firstIndex(where: {$0.id == searchItem.id}) ?? 0
             self.searchArrayFunction.removeAll(where: {$0.id == searchItem.id})
             self.searchArrayFunction.insert(selectedId, at: index)
         }
-        else if indexPAth.row == 3{
+        else if indexPAth.row == 4{
             let selectedId = searchArrayIndustry.filter({$0.id == searchItem.id})[0]
             selectedId.isSelected = isAdded
             let index = self.searchArrayIndustry.firstIndex(where: {$0.id == searchItem.id}) ?? 0
@@ -314,7 +318,7 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
             self.searchArrayIndustry.insert(selectedId, at: index)
             
         }
-        else if indexPAth.row == 4{
+        else if indexPAth.row == 5{
             let selectedId = searchGlobalCompanies.filter({$0.id == searchItem.id})[0]
             selectedId.isSelected = isAdded
             let index = self.searchGlobalCompanies.firstIndex(where: {$0.id == searchItem.id}) ?? 0
@@ -422,7 +426,10 @@ extension CoachConfirmationPopUpSecondViewC: changeModalConfirmationPopUpDelegat
             activityIndicator.hide()
             
             self.delegate.refreshSelectionView(isBack: false, results: self.results)
-            self.navigationController?.popViewController(animated: false)
+            
+            GeneralUtility.alertViewPopTooneViewController(title: "Success", message: "Adhoc Appointment Created Successfully !!!", viewController: self, buttons: ["Ok"])
+
+            
             
 
         }) { (error, errorCode) in
@@ -449,73 +456,7 @@ extension CoachConfirmationPopUpSecondViewC: ConfirmationPopupFileShareTableView
 // Design Changes
 extension CoachConfirmationPopUpSecondViewC{
     
-    func customizationTimeSlot(){
-        
-        let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
-        UILabel.labelUIHandling(label: lblAvailableSlots, text: "Available Slots", textColor: ILColor.color(index: 59), isBold: true, fontType: fontHeavy)
-        
-        if let fontMediumI =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14), let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
-        {
-            let strHeader = NSMutableAttributedString.init()
-            let strTiTle = NSAttributedString.init(string: "Start Time"
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 42),NSAttributedString.Key.font : fontMedium]);
-            let nextLine1 = NSAttributedString.init(string: "\n")
-
-            let strTime = NSAttributedString.init(string: GeneralUtility.currentDateDetailType3(emiDate: results.startDatetimeUTC)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 53),NSAttributedString.Key.font : fontMediumI]);
-            
-            
-            let para = NSMutableParagraphStyle.init()
-            //            para.alignment = .center
-            strHeader.append(strTiTle)
-            strHeader.append(nextLine1)
-            strHeader.append(strTime)
-            
-            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-            
-            
-            
-            lblTimingFrom.attributedText = strHeader
-        }
-        if let fontMediumI =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14),let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
-        {
-            let strHeader = NSMutableAttributedString.init()
-            let nextLine1 = NSAttributedString.init(string: "\n")
-
-            let strTiTle = NSAttributedString.init(string: "End Time"
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 42),NSAttributedString.Key.font : fontMedium]);
-            let strTime = NSAttributedString.init(string: GeneralUtility.currentDateDetailType3(emiDate: results.endDatetimeUTC)
-                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 53),NSAttributedString.Key.font : fontMediumI]);
-            let para = NSMutableParagraphStyle.init()
-            strHeader.append(strTiTle)
-            strHeader.append(nextLine1)
-            strHeader.append(strTime)
-            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-            lblTimingTo.attributedText = strHeader
-        }
-
-    }
-    
-    func customizationLocation(){
-        
-        if   let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12),let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE12)
-        {
-            let strHeader = NSMutableAttributedString.init()
-            let nextLine1 = NSAttributedString.init(string: "\n")
-            
-            let strTiTle = NSAttributedString.init(string: "Location/ Meeting Link"
-                                                   , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 59),NSAttributedString.Key.font : fontHeavy]);
-            let strlocation = NSAttributedString.init(string: self.results.location
-                                                      , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 34),NSAttributedString.Key.font : fontBook]);
-            let para = NSMutableParagraphStyle.init()
-            strHeader.append(strTiTle)
-            strHeader.append(nextLine1)
-            strHeader.append(strlocation)
-            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
-            lblLocation.attributedText = strHeader
-        }
-        
-    }
+   
     
     func coachInfo(){
         
