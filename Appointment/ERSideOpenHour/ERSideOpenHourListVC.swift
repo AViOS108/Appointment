@@ -34,6 +34,15 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
         self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
     }
     
+    // BlackOut
+    
+    @IBOutlet weak var btnBlackOut: UIButton!
+    
+    @IBAction func btnBlackOutTapped(_ sender: Any) {
+        let objAddBlackOutDateVC = AddBlackOutDateVC.init(nibName: "AddBlackOutDateVC", bundle: nil)
+        self.navigationController?.pushViewController(objAddBlackOutDateVC, animated: false)
+    }
+    
     //Zero State
     
     @IBOutlet weak var viewZeroState: UIView!
@@ -43,7 +52,6 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
     
     // TimeZOne
     @IBOutlet weak var txtTimeZone: LeftPaddedTextField!
-    @IBOutlet weak var lblTimeZone: UILabel!
     var   timeZoneViewController : TimeZoneViewController!
     var timeZOneArr = [TimeZoneSel]()
     var dashBoardViewModal = DashBoardViewModel()
@@ -74,10 +82,11 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
         zeroStateLogic()
         btnSetOpenHours.isHidden = true
         btnDuplicate.isHidden = true
-        
+        btnBlackOut.isHidden = true
         calenderView()
         dashBoardViewModal.viewController = self
         dashBoardViewModal.fetchTimeZoneCall { (timeArr) in
+            self.btnBlackOut.isHidden = false
             self.timeZOneArr = timeArr
             self.setTimeZoneTextField()
             self.viewModalCalling()
@@ -128,8 +137,9 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
         UIButton.buttonUIHandling(button: btnDuplicate, text: "Duplicate Schedules", backgroundColor: .white, textColor: ILColor.color(index: 23), cornerRadius: 3,borderColor: ILColor.color(index: 23),borderWidth: 1, fontType: fontheavy)
         
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: " Advising Appointment Hour")
-        
-        
+        let fontheavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+
+        UIButton.buttonUIHandling(button: btnBlackOut, text: "Add Blackout Date", backgroundColor: .clear, textColor: ILColor.color(index: 23), fontType: fontheavy1)
     }
     
     
@@ -181,6 +191,12 @@ extension ERSideOpenHourListVC:ERSideOpenhourVMDelegate{
     }
     
 }
+// BlackOut
+
+
+
+
+
 
 // Collection DateCalender Horizontal
 
@@ -329,7 +345,6 @@ extension ERSideOpenHourListVC : TimeZoneViewControllerDelegate {
     func setTimeZoneTextField()  {
         let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE12)
         let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE11)
-        UILabel.labelUIHandling(label: lblTimeZone, text: "Time Zone", textColor:ILColor.color(index: 42) , isBold: false, fontType: fontMedium)
         for timeZone in timeZOneArr{
             if timeZone.offset == GeneralUtility().currentOffset() && timeZone.identifier == GeneralUtility().getCurrentTimeZone(){
                 selectedTextZone = timeZone.displayName!

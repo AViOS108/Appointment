@@ -347,6 +347,11 @@ class Urls {
         
     }
     
+    func createManySpans() -> String {
+        return "\(typeEvent1)community/activity/block/create-many-spans"
+        
+    }
+    
     func openHourECList() -> String {
         return "\(typeEvent1)students/external-appointment-slots"
         
@@ -483,6 +488,7 @@ class Urls {
     func studentFunctionList() -> String {
         return "\(typeJob1)students/functional-area/list"
     }
+   
     
     func studentIndustriesList() -> String {
         return "\(typeJob2)student/industries"
@@ -717,4 +723,9 @@ class Urls {
            return "\(type9)student/career_services/clubs?_=\(Id)"
            
        }
+    
+    func blackOutReasonList() -> String {
+        return "\(typeEvent1)community/activity/block/list-reasons"
+    }
+    
 }

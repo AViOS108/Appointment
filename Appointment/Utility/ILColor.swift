@@ -276,9 +276,14 @@ import UIKit
             return UIColor.init(red: 112/255, green: 112/255, blue: 112/255, alpha: 1.0)
         }
           else if index == 65 {
-            //grayish
             return UIColor.init(red: 0/255, green: 162/255, blue: 227/255, alpha: 1.0)
         }
+        
+        else if index == 66 {
+          //grayish
+          return UIColor.init(red: 42/255, green: 42/255, blue: 42/255, alpha: 1.0)
+      }
+
         return UIColor.clear
     }
 }

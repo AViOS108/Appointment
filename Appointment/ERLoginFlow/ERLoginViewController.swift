@@ -229,7 +229,7 @@ class ERLoginViewController: UIViewController {
                     self.activityIndicator?.hide()
                     if GeneralUtility.optionalHandling(_param: response[ParamName.PARAMERLOGINCAPTCHACHALLENGEATTEMPTCHALLLENGES][ParamName.PARAMERLOGINCAPTCHACHALLENGEACCOUNTUNLOCK][ParamName.PARAMERLOGINCAPTCHACHALLENGEATTEMPTLEFT].int, _returnType: Int.self)  > 0
                     {
-                        let vc = ERLoginViewController.init(nibName: "ERLoginViewController", bundle: nil);
+                         let vc = ERLoginViewController.init(nibName: "ERLoginViewController", bundle: nil);
                         if let  dicCaptcha = response[ParamName.PARAMERLOGINCAPTCHACHALLENGEATTEMPTCHALLLENGES][ParamName.PARAMERLOGINCAPTCHACHALLENGE].dictionary {
                             vc.viewTypeEr = .all
                             vc.captchaToken = dicCaptcha[ParamName.PARAMERLOGINTOKENC]?.string

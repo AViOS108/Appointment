@@ -61,8 +61,8 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
         }
         else
         {
-            arrImage = ["user","noun_schedule_3370222","noun_schedule_694983","noun_logout_1153738-2"];
-             arrName = ["Profile", "Scheduled Appointments","Set Advising Appointment Hour","Logout"];
+            arrImage = ["user","noun_schedule_3370222","noun_schedule_694983","blackDateIcon",  "noun_logout_1153738-2"];
+             arrName = ["Profile", "Scheduled Appointments","Set Advising Appointment Hour","Add Blackout Date","Logout"];
         }
         tblview.reloadData()
 
@@ -105,6 +105,9 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
         if let fn = UserDefaults.standard.object(forKey: "firstName"){
             firstName = fn as! String
         }
+        
+        
+        
 
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14)
         let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -193,8 +196,11 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
             }
             
         case 3:
+            delegateRedirection.redirectToParticularViewController(type: .blackout)
+        case 4:
             delegateRedirection.redirectToParticularViewController(type: .logOut)
 
+            
         default:
             delegateRedirection.redirectToParticularViewController(type: .profile)
         }

@@ -22,6 +22,7 @@ struct timeSlotDuplicateModal {
     var timeStart : String!
     var timeEnd : String!
     var isSelected = false
+
     var id : Int!
 }
 

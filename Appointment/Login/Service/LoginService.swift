@@ -99,6 +99,16 @@ class LoginService{
 //                    }
 //                }
                 SubscriptionType.set(value: response["isPremium"].bool)
+                
+                let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+                if isStudent ?? false {
+                    UserDefaultsDataSource(key: "benchmark").writeData(response["benchmark"].string)
+
+                }
+                else
+                {
+                }
+                
                 UserDefaultsDataSource(key: "canPay").writeData(response["canPay"].bool)
                 UserDefaultsDataSource(key: "canRefer").writeData(response["canRefer"].bool)
                 UserDefaultsDataSource(key: "userEmail").writeData(response["email"].string)

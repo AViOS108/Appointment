@@ -196,6 +196,7 @@ class AdhocFlowSecondViewController: SuperViewController {
         formingModal()
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
         var localTimeZoneAbbreviation: String { return TimeZone.current.description }
+        
         let selectedUserPurposeArr = self.searchArrayPurpose.filter({$0.isSelected == true})
         var user_purpose_ids = [String]()
         for purpose in selectedUserPurposeArr{

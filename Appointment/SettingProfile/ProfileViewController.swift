@@ -21,28 +21,54 @@ protocol ProfileViewControllerDelegate: NSObjectProtocol {
 class ProfileViewController: SuperViewController,UINavigationControllerDelegate {
 
    
-    @IBOutlet weak var emailLabel: UILabel!
        @IBOutlet weak var nameLabel: UILabel!
-       @IBOutlet weak var firstNameTextField: UITextField!
-       @IBOutlet weak var lastNameTextField: UITextField!
        @IBOutlet weak var addImageButton: UIButton!
        @IBOutlet weak var editButton: UIButton!
-    
-       @IBOutlet weak var firstNameContainerview: UIView!
-       @IBOutlet weak var lastNameContainerview: UIView!
-       
-       @IBOutlet weak var editNameViewHeightConstraints: NSLayoutConstraint!
-    
+    @IBOutlet weak var viewInner: UIView!
+    @IBOutlet weak var chnagePwdLabel: UILabel!
+
+    @IBOutlet weak var viewTop: UIView!
+    @IBOutlet weak var viewChangePwd: UIView!
+
+
     var imagePicker : UIImagePickerController?
     var activityView: ActivityIndicatorView?
+    
     let activityImageIndicator =  UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     var profileUrl: String?
     weak var delegate : ProfileViewControllerDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        customizedUI()
-        self.editNameViewHeightConstraints.constant = 0
+
+        activityImageIndicator.cornerRadius = addImageButton.frame.size.width / 2
+        addImageButton.cornerRadius = addImageButton.frame.size.width / 2
+        viewTop.cornerRadius = 3;
+        viewChangePwd.cornerRadius = 3;
+        if  let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
+        {
+            UILabel.labelUIHandling(label: chnagePwdLabel, text: "Change Password", textColor: ILColor.color(index: 62), isBold: true, fontType: fontHeavy)
+
+        }
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            self.customizedUI()
+        }
+        else{
+            if UserDefaultsDataSource(key: "roles").readData() != nil {
+                self.customizedUI()
+            }
+            else{
+                viewInner.isHidden = true
+                activityView = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
+
+                self.updateProfile(isType: -1)
+            }
+        }
+        
+       
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +76,9 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
         
         self.title = "Edit Profile"
         GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self,title:"Back");
+    }
+    override func viewDidAppear(_ animated: Bool) {
+       
     }
     
     @objc override func buttonClicked(sender: UIBarButtonItem) {
@@ -71,20 +100,73 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
         }else{
             nameLabel.text = "\(firstName)"
         }
+        let userEmail : String = (UserDefaultsDataSource(key: "userEmail").readData() as? String) ?? ""
         
-        firstNameTextField.text = UserDefaultsDataSource(key: "firstName").readData() as! String?
-        lastNameTextField.text = UserDefaultsDataSource(key: "lastName").readData()as! String?
-        emailLabel.text = UserDefaultsDataSource(key: "userEmail").readData() as! String?
+        var roles = "";
+        
+        
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            roles = UserDefaultsDataSource(key: "benchmark").readData() as? String ?? ""
+        }
+        else
+        {
+            if let roleStored : [String] = UserDefaultsDataSource(key: "roles").readData() as? [String]{
+                var index = 0
+                for roleI in  roleStored {
+                    if index != 0{
+                        roles.append(" ")
+                    }
+                    roles.append(roleI)
+                    roles.append(" ")
+                    index = index + 1;
+                    if index != roleStored.count{
+                        roles.append("•")
+                    }
+                }
+            }
+        }
+        
+       
+        
+        
+        if   let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14) ,
+             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14) ,
+             let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13) {
+            let strHeader = NSMutableAttributedString.init()
+            let strTiTle = NSAttributedString.init(string: firstName
+                                                   , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:62),NSAttributedString.Key.font : fontHeavy]);
+            
+            let strType = NSAttributedString.init(string: roles
+                                                  , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 62),NSAttributedString.Key.font : fontBook]);
+            let strEmail = NSAttributedString.init(string: userEmail
+                                                  , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 7),NSAttributedString.Key.font : fontMedium]);
+            let nextLine1 = NSAttributedString.init(string: "\n")
+
+            let para = NSMutableParagraphStyle.init()
+            //            para.alignment = .center
+            para.lineSpacing = 4
+            strHeader.append(strTiTle)
+            strHeader.append(nextLine1)
+            strHeader.append(strType)
+            strHeader.append(nextLine1)
+            strHeader.append(strEmail)
+
+            strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
+            nameLabel.attributedText = strHeader
+        }
         
         activityImageIndicator.hidesWhenStopped = true
         addImageButton.bringSubviewToFront(activityImageIndicator)
         addImageButton.addSubview(activityImageIndicator, withInsetConstraints: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         activityImageIndicator.style = .white
-        activityImageIndicator.cornerRadius = addImageButton.frame.size.width / 2
         activityImageIndicator.backgroundColor = UIColor.fromHex(0x000000, alpha: 0.6)
         addImageButton.contentMode = .scaleAspectFill
         setProfilePicture()
+        UIButton.buttonUIHandling(button:editButton, text: "", backgroundColor: .clear, buttonImage: UIImage.init(named: "imageCircle"))
         
+//        addActivityIndicator(show: true)
+
     }
 
     
@@ -92,6 +174,7 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
         profileUrl = UserDefaultsDataSource(key: "userProfile").readData() as? String
         self.addImageButton.imageView?.contentMode = .scaleAspectFill
         activityImageIndicator.startAnimating()
+        
         if let profUrl = profileUrl, let url = URL(string: profUrl) {
         self.addImageButton.af_setBackgroundImage(for: .normal, url: url, placeholderImage: UIImage.init(named: "Profile"), filter: nil, progress: nil, progressQueue: .main) { (image) in
                 self.activityImageIndicator.stopAnimating()
@@ -196,12 +279,7 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
     }
     
     @IBAction func editButtonTapped(_ sender: Any) {
-        view.layoutIfNeeded()
-        self.editNameViewHeightConstraints.constant = 150
-        UIView.animate(withDuration: 0.5, animations: {
-            self.view.layoutIfNeeded()
-            self.editButton.alpha = 0
-        })
+      
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -209,62 +287,8 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
         self.navigationController?.popViewController(animated: true)
     }
 
-    @IBAction func cancelButtonTapped(_ sender: Any) {
-        closeKeyboard()
-        closeEditableNameView()
-    }
     
-    func closeEditableNameView(){
-        view.layoutIfNeeded()
-        self.editNameViewHeightConstraints.constant = 0
-        UIView.animate(withDuration: 0.25, animations: {
-            self.view.layoutIfNeeded()
-            self.editButton.alpha = 1
-        })
-    }
-    
-    @IBAction func doneButtonTaped(_ sender: UIButton) {
-        closeKeyboard()
-        firstNameTextField.text = firstNameTextField.text?.trimmingCharacters(in: .whitespaces)
-        lastNameTextField.text = lastNameTextField.text?.trimmingCharacters(in: .whitespaces)
-        if self.firstNameTextField.text == "" || lastNameTextField.text == ""{
-            if self.firstNameTextField.text == "" {
-                CommonFunctions().showError(title: "Error", message: "Please enter the first Name")
-                firstNameContainerview.shake()
-            }else if lastNameTextField.text == ""{
-                CommonFunctions().showError(title: "Error", message: "Please enter the last Name")
-                lastNameContainerview.shake()
-            }
-        }else if !(firstNameTextField.text?.isValidName())!{
-            CommonFunctions().showError(title: "Error", message: "First name should contain only letters and spaces")
-        }else if !(lastNameTextField.text?.isValidName())!{
-            CommonFunctions().showError(title: "Error", message: "Last name should contain only letters and spaces")
-        }else{
-            sender.isEnabled = false
-            let params = ["first_name":firstNameTextField.text!,
-                          "last_name": lastNameTextField.text!]
-            activityView =  ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: "Updating your profile")
-            UserInfoService().updateProfile(params: params as Dictionary<String, AnyObject>,{ response in
-                GoogleAnalyticsUtility().logEvent(GoogleAnalyticsEvent(category: "Settings", action: "Change Name", label: "Success"))
-                sender.isEnabled = true
-                CommonFunctions().showSuccess(title: "Success", message: "Name changed successfully")
-                UserDefaultsDataSource(key: "firstName").writeData(self.firstNameTextField.text!)
-                UserDefaultsDataSource(key: "lastName").writeData(self.lastNameTextField.text!)
-               self.activityView?.hide()
-                self.closeEditableNameView()
-                self.customizedUI()
-                self.delegate?.profileViewControllerDidUpdate()
-            }, failure: { (error,errorCode) in
-                sender.isEnabled = true
-                self.firstNameTextField.text = UserDefaultsDataSource(key: "firstName").readData() as! String?
-                self.lastNameTextField.text = UserDefaultsDataSource(key: "lastName").readData() as! String?
-                self.lastNameTextField.resignFirstResponder()
-                self.firstNameTextField.resignFirstResponder()
-                self.activityView?.hide()
-                CommonFunctions().showError(title: "Error", message: error)
-            })
-        }
-    }
+ 
 
     func uploadImageToServerStudent(image: UIImage){
         addActivityIndicator(show: true)
@@ -382,6 +406,19 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
                 self.addActivityIndicator(show: false)
                 self.setProfilePicture();
             }
+            if isType == -1 {
+                self.activityView?.hide()
+              
+                
+                var roles : [String] = [];
+                for roleI in json["roles"].array!{
+                    roles.append(roleI["display_name"].string ?? "")
+                }
+                UserDefaultsDataSource(key: "roles").writeData(roles)
+                self.customizedUI()
+                self.viewInner.isHidden = false
+            }
+            
         } failure: { (error, errorCode) in
             self.addActivityIndicator(show: false)
             CommonFunctions().showError(title: "Error", message: Network().errorMsgFailure(errorCode))
@@ -398,8 +435,6 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
     }
     
     func closeKeyboard(){
-        firstNameTextField.resignFirstResponder()
-        lastNameTextField.resignFirstResponder()
     }
 }
 

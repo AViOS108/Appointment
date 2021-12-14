@@ -232,6 +232,8 @@
 		1A78316924F8DA480054AAF8 /* CoachImageOverlayLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A78316824F8DA480054AAF8 /* CoachImageOverlayLayout.swift */; };
 		1A79151D25383C7900BC0AA7 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A79151B25383C7900BC0AA7 /* FeedbackViewController.swift */; };
 		1A79151E25383C7900BC0AA7 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A79151C25383C7900BC0AA7 /* FeedbackViewController.xib */; };
+		1A81A8FE2742537100DD729A /* ERSideTimeSlotBlackOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A81A8FD2742537100DD729A /* ERSideTimeSlotBlackOut.swift */; };
+		1A81A9002742537D00DD729A /* ERSideTimeSlotBlackOut.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A81A8FF2742537D00DD729A /* ERSideTimeSlotBlackOut.xib */; };
 		1A85BE8D25891AEC00E72A3A /* ERSideStudentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A85BE8B25891AEC00E72A3A /* ERSideStudentListViewController.swift */; };
 		1A85BE8E25891AEC00E72A3A /* ERSideStudentListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A85BE8C25891AEC00E72A3A /* ERSideStudentListViewController.xib */; };
 		1A85BE9125891F6B00E72A3A /* ERSideStudentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A85BE8F25891F6B00E72A3A /* ERSideStudentListTableViewCell.swift */; };
@@ -256,6 +258,9 @@
 		1A8B5043251B6A0E00111C77 /* NoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5041251B6A0E00111C77 /* NoteCollectionViewCell.swift */; };
 		1A8B5044251B6A0E00111C77 /* NoteCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8B5042251B6A0E00111C77 /* NoteCollectionViewCell.xib */; };
 		1A8B5046251C73E400111C77 /* NotesCollectionViewlayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B5045251C73E400111C77 /* NotesCollectionViewlayout.swift */; };
+		1A8D7300273A612A00F5118D /* AddBlackOutDateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8D72FE273A612A00F5118D /* AddBlackOutDateVC.swift */; };
+		1A8D7301273A612A00F5118D /* AddBlackOutDateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8D72FF273A612A00F5118D /* AddBlackOutDateVC.xib */; };
+		1A8D7309273BBFD600F5118D /* AddBlackOutViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8D7308273BBFD600F5118D /* AddBlackOutViewModal.swift */; };
 		1A9532CA256B859C00EC3D1F /* ERSideMyAppoinmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9532C8256B859C00EC3D1F /* ERSideMyAppoinmentTableViewCell.swift */; };
 		1A9532CB256B859C00EC3D1F /* ERSideMyAppoinmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9532C9256B859C00EC3D1F /* ERSideMyAppoinmentTableViewCell.xib */; };
 		1A9532CE256D334500EC3D1F /* ERSideFloatingVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9532CC256D334500EC3D1F /* ERSideFloatingVCViewController.swift */; };
@@ -568,6 +573,8 @@
 		1A78316824F8DA480054AAF8 /* CoachImageOverlayLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachImageOverlayLayout.swift; sourceTree = "<group>"; };
 		1A79151B25383C7900BC0AA7 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		1A79151C25383C7900BC0AA7 /* FeedbackViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
+		1A81A8FD2742537100DD729A /* ERSideTimeSlotBlackOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideTimeSlotBlackOut.swift; sourceTree = "<group>"; };
+		1A81A8FF2742537D00DD729A /* ERSideTimeSlotBlackOut.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERSideTimeSlotBlackOut.xib; sourceTree = "<group>"; };
 		1A85BE8B25891AEC00E72A3A /* ERSideStudentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideStudentListViewController.swift; sourceTree = "<group>"; };
 		1A85BE8C25891AEC00E72A3A /* ERSideStudentListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERSideStudentListViewController.xib; sourceTree = "<group>"; };
 		1A85BE8F25891F6B00E72A3A /* ERSideStudentListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideStudentListTableViewCell.swift; sourceTree = "<group>"; };
@@ -592,6 +599,9 @@
 		1A8B5041251B6A0E00111C77 /* NoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A8B5042251B6A0E00111C77 /* NoteCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteCollectionViewCell.xib; sourceTree = "<group>"; };
 		1A8B5045251C73E400111C77 /* NotesCollectionViewlayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCollectionViewlayout.swift; sourceTree = "<group>"; };
+		1A8D72FE273A612A00F5118D /* AddBlackOutDateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBlackOutDateVC.swift; sourceTree = "<group>"; };
+		1A8D72FF273A612A00F5118D /* AddBlackOutDateVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddBlackOutDateVC.xib; sourceTree = "<group>"; };
+		1A8D7308273BBFD600F5118D /* AddBlackOutViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBlackOutViewModal.swift; sourceTree = "<group>"; };
 		1A9532C8256B859C00EC3D1F /* ERSideMyAppoinmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideMyAppoinmentTableViewCell.swift; sourceTree = "<group>"; tabWidth = 3; };
 		1A9532C9256B859C00EC3D1F /* ERSideMyAppoinmentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ERSideMyAppoinmentTableViewCell.xib; sourceTree = "<group>"; };
 		1A9532CC256D334500EC3D1F /* ERSideFloatingVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERSideFloatingVCViewController.swift; sourceTree = "<group>"; };
@@ -774,6 +784,7 @@
 		1A546FFC24B59460005F1058 = {
 			isa = PBXGroup;
 			children = (
+				1A8D72FD273A609D00F5118D /* BlackOutDate */,
 				1A4939CF2692DBA400A4C8A5 /* SettingProfile */,
 				1A6A77372643BFDA0022DC27 /* AdHocFlow */,
 				1A61EFE1250616C500257CB5 /* CoachSelectionPopViewC */,
@@ -1280,6 +1291,27 @@
 			path = AppoinmentTableViewCell;
 			sourceTree = "<group>";
 		};
+		1A8D72FD273A609D00F5118D /* BlackOutDate */ = {
+			isa = PBXGroup;
+			children = (
+				1A8D7305273BBF8700F5118D /* BlackOutDateViewModal */,
+				1A8D72FE273A612A00F5118D /* AddBlackOutDateVC.swift */,
+				1A8D72FF273A612A00F5118D /* AddBlackOutDateVC.xib */,
+				1A81A8FD2742537100DD729A /* ERSideTimeSlotBlackOut.swift */,
+				1A81A8FF2742537D00DD729A /* ERSideTimeSlotBlackOut.xib */,
+			);
+			name = BlackOutDate;
+			path = Appointment/BlackOutDate;
+			sourceTree = "<group>";
+		};
+		1A8D7305273BBF8700F5118D /* BlackOutDateViewModal */ = {
+			isa = PBXGroup;
+			children = (
+				1A8D7308273BBFD600F5118D /* AddBlackOutViewModal.swift */,
+			);
+			path = BlackOutDateViewModal;
+			sourceTree = "<group>";
+		};
 		1A9532D0256E868100EC3D1F /* ERSideOpenHour */ = {
 			isa = PBXGroup;
 			children = (
@@ -1524,6 +1556,7 @@
 				1A78314924F8D37F0054AAF8 /* HorizontalAppointmentInfoCollectionViewCell.xib in Resources */,
 				1A85BE96258B9EF400E72A3A /* ERFilterViewController.xib in Resources */,
 				1A0053AB251761180065C63E /* DashBoardAppointmentTableViewCell.xib in Resources */,
+				1A81A9002742537D00DD729A /* ERSideTimeSlotBlackOut.xib in Resources */,
 				1AB459A02577619200E3671C /* ERSideOpenCreateEditVC.xib in Resources */,
 				1A6CAFA1251E006A000C9887 /* NextStepCollectionViewCell.xib in Resources */,
 				1A78315724F8D3D20054AAF8 /* CoachListingTableViewCell.xib in Resources */,
@@ -1593,6 +1626,7 @@
 				1A54701524B5946D005F1058 /* Assets.xcassets in Resources */,
 				1A54710524B5DF64005F1058 /* SelectUserTypeViewController.xib in Resources */,
 				1A044061255E51F500339BBE /* ERSideAppointmentTableViewCell.xib in Resources */,
+				1A8D7301273A612A00F5118D /* AddBlackOutDateVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1787,6 +1821,7 @@
 				1ACBCF8126170C7A0063B972 /* ERAppoDetailFirstCollectionViewLayout.swift in Sources */,
 				1A5470DB24B5D2AE005F1058 /* InitialsImageView.swift in Sources */,
 				1A85BE95258B9EF400E72A3A /* ERFilterViewController.swift in Sources */,
+				1A81A8FE2742537100DD729A /* ERSideTimeSlotBlackOut.swift in Sources */,
 				1A54706D24B5D241005F1058 /* CheckStatusViewController.swift in Sources */,
 				1A5470A324B5D264005F1058 /* Configuration.swift in Sources */,
 				1A61EFEB250753AE00257CB5 /* IndustriesFunctionViewModal.swift in Sources */,
@@ -1818,6 +1853,7 @@
 				1A54711424B5E2E0005F1058 /* NibView.swift in Sources */,
 				1A54707524B5D241005F1058 /* ModifiedRegisterViewController.swift in Sources */,
 				1A54708424B5D242005F1058 /* ForgotPasswordService.swift in Sources */,
+				1A8D7300273A612A00F5118D /* AddBlackOutDateVC.swift in Sources */,
 				1A21EF1225E4D2C8009EDDCC /* ERStartEndTImeView.swift in Sources */,
 				1A9532D7256FBD4400EC3D1F /* ERSideOpenhourVM.swift in Sources */,
 				1A5470A524B5D264005F1058 /* UserInfoService.swift in Sources */,
@@ -1900,6 +1936,7 @@
 				1A67F083250208EE00CCC00B /* CoachSelectionTableView.swift in Sources */,
 				1A5470A724B5D264005F1058 /* TrackingServices.swift in Sources */,
 				1A54711724B5E2E0005F1058 /* UIButton.swift in Sources */,
+				1A8D7309273BBFD600F5118D /* AddBlackOutViewModal.swift in Sources */,
 				1A54707C24B5D241005F1058 /* CommunityListViewController.swift in Sources */,
 				1A5470D524B5D2AE005F1058 /* Tooltip.swift in Sources */,
 				1A5470F724B5D2AE005F1058 /* Debouncer.swift in Sources */,

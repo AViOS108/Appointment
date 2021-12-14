@@ -413,7 +413,11 @@ extension ERSideHomeViewController : ERHomeViewModalVMDelegate,ERSideHeaderColle
             let navigationController = UINavigationController.init(rootViewController: objERSideOpenHourListVC)
             self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
             break
-            
+        case .blackout:
+            let objAddBlackOutDateVC = AddBlackOutDateVC.init(nibName: "AddBlackOutDateVC", bundle: nil)
+//            let navigationController = UINavigationController.init(rootViewController: objAddBlackOutDateVC)
+            self.navigationController?.pushViewController(objAddBlackOutDateVC, animated: false)
+            break
         default:
             break;
         }

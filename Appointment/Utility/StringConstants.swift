@@ -123,6 +123,7 @@ class StringConstants{
 
     static let ERRCOMMENTCANCELDECLINEAPPO = "Please enter comment"
 
+    static let ERRDATEBLACKOUT = "Please enter correct date"
 
     
 }

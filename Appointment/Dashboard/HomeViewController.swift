@@ -22,6 +22,8 @@ enum RedirectionType {
     case appointmentDetail
     case cancelAppoinment
     case logOut
+    case blackout
+
     case adhoc
     case setAppo
 

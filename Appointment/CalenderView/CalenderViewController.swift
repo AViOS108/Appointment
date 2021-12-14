@@ -23,7 +23,18 @@ class CalenderViewController: UIViewController,UIGestureRecognizerDelegate {
         
         let myView = Bundle.loadView(fromNib: "CalenderView", withType: CalenderView.self)
         myView.index = index
-        myView.frame = CGRect.init(x: 0, y: abs(pointSign!.y), width: self.view.frame.width, height: self.view.frame.height-abs(pointSign!.y));
+        
+        var height = self.view.frame.height-abs(pointSign!.y)
+        
+        if height < 350 {
+            myView.frame = CGRect.init(x: 0, y: abs(pointSign!.y) - 350, width: self.view.frame.width, height: self.view.frame.height-abs(pointSign!.y) + 350);
+
+        }
+        else{
+            myView.frame = CGRect.init(x: 0, y: abs(pointSign!.y), width: self.view.frame.width, height: self.view.frame.height-abs(pointSign!.y));
+
+        }
+        
         myView.viewControllerI = self
         myView.pointSign = pointSign
         myView.delegate = (viewControllerI as! CalenderViewDelegate)

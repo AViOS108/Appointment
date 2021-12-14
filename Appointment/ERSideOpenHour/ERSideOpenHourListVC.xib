@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ERSideOpenHourListVC" customModule="Appointment" customModuleProvider="target">
             <connections>
+                <outlet property="btnBlackOut" destination="pEt-8w-tfk" id="cqJ-5Y-Rxr"/>
                 <outlet property="btnDuplicate" destination="fda-Sd-cFW" id="5K9-cz-1TQ"/>
                 <outlet property="btnMonthDecrease" destination="5oL-8G-zlP" id="T41-iy-d2j"/>
                 <outlet property="btnMonthIncrease" destination="1LB-nK-66d" id="EUW-m5-1CH"/>
@@ -19,7 +20,6 @@
                 <outlet property="imageViewZeroState" destination="gJH-hD-2CO" id="8Yn-1E-aGp"/>
                 <outlet property="lblDate" destination="lWt-HY-ORy" id="FGv-Vf-qG7"/>
                 <outlet property="lblMonth" destination="puZ-Me-vE6" id="i7A-3p-m3X"/>
-                <outlet property="lblTimeZone" destination="MLk-kH-QAM" id="CoC-Ve-bDU"/>
                 <outlet property="lblZeroState" destination="Cl0-Ao-qv3" id="Bsr-RT-gl0"/>
                 <outlet property="nslayoutbtnDuplicateHeight" destination="REJ-8K-DZV" id="daW-g4-4v8"/>
                 <outlet property="tblView" destination="V6r-V8-rnM" id="4Ys-kY-KMy"/>
@@ -125,38 +125,38 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o2o-bT-9dy" userLabel="ViewTimeZone">
                     <rect key="frame" x="0.0" y="142" width="414" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLk-kH-QAM">
-                            <rect key="frame" x="8" y="4" width="0.0" height="42"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jFD-lD-95U" customClass="LeftPaddedTextField" customModule="Appointment" customModuleProvider="target">
-                            <rect key="frame" x="18" y="8" width="388" height="34"/>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" horizontalCompressionResistancePriority="1" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jFD-lD-95U" customClass="LeftPaddedTextField" customModule="Appointment" customModuleProvider="target">
+                            <rect key="frame" x="8" y="8" width="348" height="34"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nXX-On-B4M">
-                            <rect key="frame" x="18" y="8" width="388" height="34"/>
+                            <rect key="frame" x="8" y="8" width="348" height="34"/>
                             <connections>
                                 <action selector="btnSelectTimeZoneTapped:" destination="-1" eventType="touchUpInside" id="rcb-4U-FJx"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="999" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pEt-8w-tfk">
+                            <rect key="frame" x="376" y="8" width="30" height="34"/>
+                            <connections>
+                                <action selector="btnBlackOutTapped:" destination="-1" eventType="touchUpInside" id="9vH-C7-h67"/>
                             </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="jFD-lD-95U" secondAttribute="trailing" constant="8" id="1Pl-kX-Nen"/>
-                        <constraint firstAttribute="bottom" secondItem="MLk-kH-QAM" secondAttribute="bottom" constant="4" id="3MO-ne-d6L"/>
                         <constraint firstItem="nXX-On-B4M" firstAttribute="top" secondItem="jFD-lD-95U" secondAttribute="top" id="4Oz-ig-r8s"/>
-                        <constraint firstItem="MLk-kH-QAM" firstAttribute="top" secondItem="o2o-bT-9dy" secondAttribute="top" constant="4" id="8iM-42-HkW"/>
                         <constraint firstItem="jFD-lD-95U" firstAttribute="top" secondItem="o2o-bT-9dy" secondAttribute="top" constant="8" id="B1b-T4-3dK"/>
-                        <constraint firstItem="jFD-lD-95U" firstAttribute="leading" secondItem="MLk-kH-QAM" secondAttribute="trailing" constant="10" id="E8T-Md-oPl"/>
-                        <constraint firstItem="MLk-kH-QAM" firstAttribute="leading" secondItem="o2o-bT-9dy" secondAttribute="leading" constant="8" id="LH6-Hy-ycf"/>
+                        <constraint firstAttribute="bottom" secondItem="pEt-8w-tfk" secondAttribute="bottom" constant="8" id="B87-4W-xnU"/>
                         <constraint firstItem="nXX-On-B4M" firstAttribute="bottom" secondItem="jFD-lD-95U" secondAttribute="bottom" id="M5a-ik-Dnb"/>
+                        <constraint firstAttribute="trailing" secondItem="pEt-8w-tfk" secondAttribute="trailing" constant="8" id="NUK-ui-B4S"/>
                         <constraint firstAttribute="bottom" secondItem="jFD-lD-95U" secondAttribute="bottom" constant="8" id="NtO-om-Rx2"/>
                         <constraint firstItem="nXX-On-B4M" firstAttribute="trailing" secondItem="jFD-lD-95U" secondAttribute="trailing" id="WJM-Bk-RFu"/>
+                        <constraint firstItem="pEt-8w-tfk" firstAttribute="top" secondItem="o2o-bT-9dy" secondAttribute="top" constant="8" id="Wen-8k-6Id"/>
                         <constraint firstAttribute="height" constant="50" id="hmz-hs-ilX"/>
                         <constraint firstItem="nXX-On-B4M" firstAttribute="leading" secondItem="jFD-lD-95U" secondAttribute="leading" id="nyV-hK-3xb"/>
+                        <constraint firstItem="jFD-lD-95U" firstAttribute="leading" secondItem="o2o-bT-9dy" secondAttribute="leading" constant="8" id="q42-7r-dm5"/>
+                        <constraint firstItem="pEt-8w-tfk" firstAttribute="leading" secondItem="nXX-On-B4M" secondAttribute="trailing" constant="20" id="yR1-Td-Hmn"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weB-G8-0Zt">
