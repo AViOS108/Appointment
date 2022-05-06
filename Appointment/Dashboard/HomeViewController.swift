@@ -41,7 +41,8 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         
     
         if markAllSelected{
-            
+
+            btnMarkAll.setTitle("Mark All", for: .normal)
             let allCoach  = self.dataFeedingModal?.items.map{  dataItem -> Item  in
                 var itemSelected = dataItem
                 itemSelected.isSelected = false
@@ -55,7 +56,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
             self.reloadTablviewCocahList()
         }
         else{
-            
+            btnMarkAll.setTitle("UnMark All", for: .normal)
             let allCoach  = self.dataFeedingModal?.items.map{  dataItem -> Item  in
                 var itemSelected = dataItem
                 itemSelected.isSelected = true

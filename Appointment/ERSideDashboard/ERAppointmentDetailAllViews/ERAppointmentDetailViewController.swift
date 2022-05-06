@@ -12,7 +12,8 @@ protocol ERAppointmentDetailViewControllerDeleagte {
     func refreshTableView()
 }
 
-class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate,UITableViewDataSource {
+class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate,UITableViewDataSource,feedbackViewControllerDelegate {
+    
     @IBOutlet weak var viewButtonContainer: UIView!
     @IBOutlet weak var btnFinalAppoinment: UIButton!
     var viewController : UIViewController?
@@ -273,8 +274,6 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
                     cell.layoutIfNeeded()
                     return cell
                 }
-                
-                
               
             }
         }
@@ -358,7 +357,7 @@ extension ERAppointmentDetailViewController : ERSideAppoinmentDetailModalDeletga
     
     
     func feedbackSucessFullySent() {
-
+        self.refreshTableView()
     }
     
     func sendAppoinmentData(appoinmentDetailModalObj: ApooinmentDetailAllNewModal?, isSucess: Bool) {

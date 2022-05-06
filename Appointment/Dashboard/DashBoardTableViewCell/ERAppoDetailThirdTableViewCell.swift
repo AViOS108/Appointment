@@ -89,14 +89,30 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
             if self.appoinmentDetailModalObj?.requests?[0].feedback != nil{
                 UIButton.buttonUIHandling(button: btnViewFeedback, text: "View Feedback", backgroundColor: .clear, textColor: ILColor.color(index: 23), fontType: fontHeavy)
                 lblNoFeedback.isHidden = true
+                viewRating.isHidden = false
+
 
             }
             else
             {
-                UIButton.buttonUIHandling(button: btnViewFeedback, text: "Leave a Feedback", backgroundColor: .clear, textColor: ILColor.color(index: 23), fontType: fontHeavy)
                 viewRating.isHidden = true
+                
+                if (self.appoinmentDetailModalObj?.state == "confirmed" && self.appoinmentDetailModalObj?.requests?[0].hasAttended == 1)
+                {
+                    if let feedback = self.appoinmentDetailModalObj?.requests?[0].feedback{
+                        btnViewFeedback.isHidden = true
+                    }
+                    else{
+                        btnViewFeedback.isHidden = false
+                        UIButton.buttonUIHandling(button: btnViewFeedback, text: "Leave a Feedback", backgroundColor:.clear ,textColor: ILColor.color(index: 23),fontType:fontHeavy)
+                    }
+                }
+                else{
+                    btnViewFeedback.isHidden = true
+                }
 
-
+                
+                
             }
             
             feedbackText = "Feedback"
@@ -106,8 +122,6 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
             feedbackText = "Candidate’s Feedback"
             btnViewFeedback.isHidden = true
         }
-        
-        
         
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13)
         UILabel.labelUIHandling(label: lblCandidateText, text: feedbackText, textColor: ILColor.color(index: 34), isBold: false, fontType: fontHeavy)

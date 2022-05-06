@@ -362,12 +362,12 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
                 let hasattendence = results.requests?[0].hasAttended
                 if hasattendence == 1{
                     UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Attended", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 58),fontType:fontHeavy2)
-                    btnUpdateStatus.isUserInteractionEnabled = false
+                    btnUpdateStatus.isUserInteractionEnabled = true
 
                 }
                 else{
                     UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Not Attended", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 57),fontType:fontHeavy2)
-                    btnUpdateStatus.isUserInteractionEnabled = false
+                    btnUpdateStatus.isUserInteractionEnabled = true
 
                 }
             }

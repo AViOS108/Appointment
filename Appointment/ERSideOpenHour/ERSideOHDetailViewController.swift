@@ -123,11 +123,11 @@ class ERSideOHDetailViewController: SuperViewController {
         
         var purposeModal = ERSideOHDetailModal();
         purposeModal.headLinetext = "Purpose"
-        var purpose = "NA"
+        var purpose = ""
         if (objERSideOpenHourDetail?.purposes) != nil{
             var index = 0
             for objPurpose in (objERSideOpenHourDetail?.purposes)!{
-                purpose = objPurpose.purposeText ?? ""
+                purpose = purpose + (objPurpose.purposeText ?? "")
                 index = index + 1;
                 if objERSideOpenHourDetail?.purposes?.count ?? 0 > index{
                     purpose = purpose + ","

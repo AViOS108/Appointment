@@ -26,6 +26,21 @@ class HomeMyAppointmentTableViewController: UITableViewController {
         viewControllerI.tblView.dataSource = self
         viewControllerI.tblView.delegate = self
         viewControllerI.tblView.reloadData()
+        
+        if viewControllerI.dataFeedingAppointmentModal?.results?.filter({$0.typeERSide == viewControllerI.selectedHorizontal}).count == 0 {
+            viewControllerI.tblView.isHidden = true
+            viewControllerI.viewZeroState.isHidden = false
+            let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
+            viewControllerI.viewZeroState.backgroundColor = ILColor.color(index: 22)
+            UILabel.labelUIHandling(label: viewControllerI.lblZeroState, text: "No Appointments available", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontMedium)
+            viewControllerI.imageViewZeroState.image = UIImage.init(named: "noAppointment")
+        }
+        else {
+            viewControllerI.tblView.isHidden = false
+            viewControllerI.viewZeroState.isHidden = true
+
+
+        }
     }
     
         

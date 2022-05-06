@@ -128,12 +128,14 @@ class DashBoardStudentAppointmentVM {
         
         var arrCreatedBy = Array<Int>()
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        _ = dateFormatter.string(from: Date())
-        for coach in dashBoardModal.items{
-            arrCreatedBy.append(coach.id)
-        }
+        
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            _ = dateFormatter.string(from: Date())
+            for coach in dashBoardModal.items{
+                arrCreatedBy.append(coach.id)
+            }
+        
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
         var localTimeZoneAbbreviation: String { return TimeZone.current.identifier }
         var states = [String](), has_request = [String](),with_request = [String]() ;
@@ -160,25 +162,53 @@ class DashBoardStudentAppointmentVM {
        }
         
         
+        var param :  [String : AnyObject];
         
-        var param = [
-            ParamName.PARAMFILTERSEL : [
-                "states" : states,
-                "coach_ids":arrCreatedBy,
-                "timezone":localTimeZoneAbbreviation,
-                "has_request":[
-                    "states" : has_request
+        if index == 2 || index == 3 {
+             param = [
+                ParamName.PARAMFILTERSEL : [
+                    "states" : states,
+                    "coach_ids":arrCreatedBy,
+                    "timezone":localTimeZoneAbbreviation,
+                    "has_request":[
+                        "states" : has_request
+                    ],
+                    "with_request":[
+                        "states" : with_request
+                    ],
+                    
+                   
                 ],
-                "with_request":[
-                    "states" : with_request
-                ],
+                ParamName.PARAMINTIMEZONEEL :localTimeZoneAbbreviation,
+                ParamName.PARAMCSRFTOKEN : csrftoken
                 
-               
-            ],
-            ParamName.PARAMINTIMEZONEEL :localTimeZoneAbbreviation,
-            ParamName.PARAMCSRFTOKEN : csrftoken
-            
-            ] as [String : AnyObject]
+                ] as [String : AnyObject]
+        }
+        else{
+             param = [
+                ParamName.PARAMFILTERSEL : [
+                    "states" : states,
+//                    "coach_ids":arrCreatedBy,
+                    "timezone":localTimeZoneAbbreviation,
+                    "has_request":[
+                        "states" : has_request
+                    ],
+                    "with_request":[
+                        "states" : with_request
+                    ],
+                    
+                   
+                ],
+                ParamName.PARAMINTIMEZONEEL :localTimeZoneAbbreviation,
+                ParamName.PARAMCSRFTOKEN : csrftoken
+                
+                ] as [String : AnyObject]
+        }
+        
+        
+        
+        
+        
         
         
         if index == 1{

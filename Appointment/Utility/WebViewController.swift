@@ -121,6 +121,8 @@ class WebViewController: SuperViewController {
             UIButton.buttonUIHandling(button: printResume, text: " Print Resume", backgroundColor: .clear, textColor: ILColor.color(index: 23),  buttonImage: UIImage.init(named: "printImageBlue"), fontType: fontHeavy)
             UIButton.buttonUIHandling(button: downloadResume, text: " Download Resume", backgroundColor: .clear, textColor: ILColor.color(index: 23),  buttonImage: UIImage.init(named: "downloadImage"), fontType: fontHeavy)
             
+            activityIndicatorI = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
+
         }
     }
     
@@ -181,7 +183,7 @@ extension WebViewController : WKNavigationDelegate,WKUIDelegate{
    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if activityIndicator != nil{
-            activityIndicator.startAnimating()
+            activityIndicatorI?.hide()
 
         }
         if isResumeWebView{
@@ -206,10 +208,10 @@ extension WebViewController : WKNavigationDelegate,WKUIDelegate{
     }
     
      public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!){
-        if activityIndicator != nil{
-            activityIndicator.startAnimating()
-
-        }
+//        if activityIndicatorI == nil{
+//            activityIndicatorI = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.FetchingCoachSelection)
+//
+//        }
     }
     
  

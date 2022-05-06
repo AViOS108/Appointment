@@ -184,7 +184,7 @@ class Network {
     
     func makeApiEventRequest(_ addHeader : Bool,url : String,methodType: HTTPMethod ,params : Dictionary<String,AnyObject>,header: Dictionary<String,String>,completion: @escaping (_ parsedJSON: Data) -> Void , failure : @escaping (_ error: String,_ errorCode: Int) -> Void){
            
-        let requestParams = params
+           let requestParams = params 
               if(!addHeader){
                alamoFireManager.request(url, method: methodType, parameters: requestParams, encoding: JSONEncoding.default).responseData{
                       response in

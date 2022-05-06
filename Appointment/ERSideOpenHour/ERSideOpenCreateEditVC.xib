@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -657,7 +657,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MkN-Tj-qF9">
-                                                    <rect key="frame" x="125.33333333333334" y="343" width="105.33333333333334" height="40"/>
+                                                    <rect key="frame" x="125.33333333333333" y="343" width="151.33333333333337" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="2KK-Lc-i4V"/>
@@ -707,7 +707,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODz-P8-5Qb">
-                                                    <rect key="frame" x="125.33333333333334" y="343" width="105.33333333333334" height="40"/>
+                                                    <rect key="frame" x="125.33333333333333" y="343" width="151.33333333333337" height="40"/>
                                                     <connections>
                                                         <action selector="btnShowCalenderTapped:" destination="-1" eventType="touchUpInside" id="ltm-2c-mZF"/>
                                                     </connections>
@@ -746,7 +746,7 @@
                                                 <constraint firstItem="vfB-Ru-Qc6" firstAttribute="centerY" secondItem="LJt-Pr-fep" secondAttribute="centerY" id="WDz-yN-S4a"/>
                                                 <constraint firstItem="cjR-7V-Swt" firstAttribute="top" secondItem="I7q-Aw-faK" secondAttribute="bottom" constant="8" id="aaM-mg-hDD"/>
                                                 <constraint firstItem="vfB-Ru-Qc6" firstAttribute="leading" secondItem="LJt-Pr-fep" secondAttribute="trailing" constant="8" id="b4r-gt-AzV"/>
-                                                <constraint firstItem="MkN-Tj-qF9" firstAttribute="width" secondItem="Hzf-Bg-mbq" secondAttribute="width" multiplier="0.27877" id="ebC-vK-x3G"/>
+                                                <constraint firstItem="MkN-Tj-qF9" firstAttribute="width" secondItem="Hzf-Bg-mbq" secondAttribute="width" multiplier="0.4" id="ebC-vK-x3G"/>
                                                 <constraint firstItem="8vq-0T-iUE" firstAttribute="leading" secondItem="2k8-az-OjN" secondAttribute="trailing" constant="20" id="fNW-sB-pTa"/>
                                                 <constraint firstItem="MkN-Tj-qF9" firstAttribute="leading" secondItem="wPL-04-p30" secondAttribute="trailing" constant="25" id="gaI-y6-vPp"/>
                                                 <constraint firstItem="nCl-c7-D2N" firstAttribute="leading" secondItem="Hzf-Bg-mbq" secondAttribute="leading" id="hFZ-0A-xmg"/>

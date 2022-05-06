@@ -58,7 +58,7 @@ class LoginParentViewController: CustomizedViewController {
     func getCustomization(){
         LoginService().getCustomizations({ response in
             self.activityIndicator?.hide()
-            if let mobileEnabled = response["mobile_is_resume_enabled"].int, mobileEnabled == 1{
+            if let mobileEnabled = response["is_appointments_enabled"].int, mobileEnabled == 1{
                 UserDefaultsDataSource(key: "loggedIn").writeData(true)
                 AppDataSync.shared.beginTimer()
                 (UIApplication.shared.delegate as? AppDelegate)?.checkLoginState()

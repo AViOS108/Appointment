@@ -47,14 +47,22 @@ class CoachImageOverlayView: UIView, UICollectionViewDataSource,UICollectionView
         if let layout = viewCollection?.collectionViewLayout as? CoachHorizontalSelectionLayout {
             layout.contentWidth = 0
             layout.cache = []
-            layout.numberOfColumns = viewcontrollerI.selectedDataFeedingModal?.items.count as! Int + 1
+            layout.numberOfColumns = (viewcontrollerI.selectedDataFeedingModal?.items.count  as? Int ?? 0 ) + 1
         }
         viewCollection.reloadData()
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (viewcontrollerI.selectedDataFeedingModal?.items.count)! + 1
+        
+        if let count = viewcontrollerI.selectedDataFeedingModal?.items.count {
+            
+            return count + 1
+        }
+        else {
+            return 0
+        }
+        
      }
      
       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

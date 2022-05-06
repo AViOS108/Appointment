@@ -22,7 +22,7 @@ class HorizontalAppointmentInfoCollectionViewCell: UICollectionViewCell {
     
     func customization(){
         let strHeader = NSMutableAttributedString.init()
-        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontMedium =  UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE14)
+        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE16), let fontMedium =  UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE14)
             
         {
             let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: self.studentHeader?.title, _returnType: String.self)

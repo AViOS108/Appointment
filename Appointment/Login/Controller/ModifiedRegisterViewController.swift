@@ -243,7 +243,7 @@ class ModifiedRegisterViewController: UIViewController {
         activityIndicator = ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: StringConstants.communityInfoApiLoader)
         LoginService().getCustomizations({ response in
             self.activityIndicator?.hide()
-            if let mobileEnabled = response["mobile_is_resume_enabled"].int, mobileEnabled == 1{
+            if let mobileEnabled = response["is_appointments_enabled"].int, mobileEnabled == 1{
                 if let detailsRequired = response["are_user_details_required"].int,detailsRequired == 1{
                     UserDefaultsDataSource(key: "areDetailsRequired").writeData(true)
                 }else{

@@ -229,6 +229,14 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     }
     
     
+    override func viewDidAppear(_ animated: Bool) {
+        registerForKeyboardNotifications()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        deRegisterKeyboardNotifications()
+    }
+    
     func customization()  {
         self.addInputAccessoryForTextFields(textFields: [txtGroupLimit], dismissable: true, previousNextable: true)
 
@@ -236,7 +244,6 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
 
         self.addInputAccessoryForTextFields(textFields: [txtDeadline,txtDeadlineTime], dismissable: true, previousNextable: true)
 
-        registerForKeyboardNotifications()
 
         nslayoutConstarintDefaultHeight.constant = 0
         self.viewLocationDefault.isHidden = true
@@ -369,6 +376,7 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
             }
         }
    }
+    
     
     func deRegisterKeyboardNotifications() {
         
@@ -754,6 +762,8 @@ extension ERSideOpenCreateEditSecondVC{
             self.txtLocationType.layer.borderWidth = 1;
             self.txtLocationType.layer.cornerRadius = 3;
             self.txtLocationType.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
+            txtLocationType.placeholder = "Search locations"
+
             txtLocationType.rightViewMode = .always;
             break
             
@@ -990,16 +1000,108 @@ extension ERSideOpenCreateEditSecondVC{
         
         switch self.objviewTypeOpenHour {
         case .editOpenHour:
-                self.nslayoutConstraintDeadlineHeight.priority = UILayoutPriority(rawValue: 1);
-                nslayoutConstraintDeadlineHeight.priority = UILayoutPriority(rawValue: 1000)
-                nslayoutConstraintDeadlineHeight.constant = 0
-                self
-                    .viewDeadlineContainer.isHidden = true
+             
+            self.nslayoutConstraintDeadlineHeight.priority = UILayoutPriority(rawValue: 1);
+            
+            pickerViewSetUp(txtInput: txtDeadline, tag: 193)
+            
+            
+            UIButton.buttonUIHandling(button: btnDeadlineEnabled, text: "", backgroundColor: .clear, textColor: .clear, buttonImage: UIImage.init(named: "check_box"))
+            
+            let fontHeavy1 = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
+            UILabel.labelUIHandling(label: lblDeadlineEnabled, text: "Add Deadline", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy1)
+            
+            
+            let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+            
+            UILabel.labelUIHandling(label: lblDeadlineInfo, text: "Deadline for candidates to book appointment slot", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
+            
+            UILabel.labelUIHandling(label: lblBefore, text: "Before", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
+            
+            UILabel.labelUIHandling(label: lblDeadlineFooter, text: "Eg: For appointment at 11:00 AM, 18th Dec 2020, candidates will have to book this particular slot by 05:00 PM, 17th Dec 2020", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
+            
+            
+            let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
+            
+            txtDeadline.backgroundColor = ILColor.color(index: 48)
+            self.txtDeadline.font = fontMedium
+            self.txtDeadline.layer.borderColor = ILColor.color(index: 27).cgColor
+            self.txtDeadline.layer.borderWidth = 1;
+            self.txtDeadline.layer.cornerRadius = 3;
+            self.txtDeadline.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
+            txtDeadline.rightViewMode = .always;
+            
+            
+            txtDeadlineTime.backgroundColor = ILColor.color(index: 48)
+            self.txtDeadlineTime.font = fontMedium
+            self.txtDeadlineTime.layer.cornerRadius = 3;
+            self.txtDeadlineTime.layer.borderColor = ILColor.color(index: 27).cgColor
+            self.txtDeadlineTime.layer.borderWidth = 1;
+            
+            let imageView3 = UIImageView.init(image: UIImage.init(named: "Calendar-1"))
+            imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
+            self.txtDeadlineTime.leftView = imageView3
+            txtDeadlineTime.leftViewMode = .always;
+            datePickerTiming(txtInput: txtDeadlineTime)
+           
+            self.viewDeadlineContainer.layoutIfNeeded();
+            nslayoutConstraintDeadlineHeight.priority = UILayoutPriority(rawValue: 1000)
+            calculatedHeightDeadineView =   self.viewDeadlineContainer.frame.size.height
+            
+            var bookingDeadlineDays = " "
+            
+            if let bookingDeadlineDaysBefore = objERSideOpenHourPrefilledDetail?.appointmentConfig?.bookingDeadlineDaysBefore
+            {
+                if !bookingDeadlineDaysBefore.isEmpty{
+                    if bookingDeadlineDaysBefore == "1"{
+                        bookingDeadlineDays = "1 day before Appointment "
+                    }
+                    else if bookingDeadlineDaysBefore == "2"{
+                        bookingDeadlineDays = "2 day before Appointment "
+                        
+                    }
+                    else if bookingDeadlineDaysBefore == "3"{
+                        bookingDeadlineDays = "3 day before Appointment "
+                        
+                    }
+                    else{
+                        bookingDeadlineDays = "4 day before Appointment "
+                    }
+                }
+            }
+            
+            self.txtDeadline.text = bookingDeadlineDays
+
+            
+            if let bookingDeadlineTimeonDay = objERSideOpenHourPrefilledDetail?.appointmentConfig?.bookingDeadlineTimeonDay
+            {
                 
-                self.viewHeaderDeadline.isHidden = true
-                
-                nslayoutDeadlineHeaderViewheight.priority = UILayoutPriority(rawValue: 1000)
-                nslayoutDeadlineHeaderViewheight.constant = 0
+                if !bookingDeadlineTimeonDay.isEmpty{
+                    let timeDay = (Int(bookingDeadlineTimeonDay))
+                    let hour = (timeDay!/3600)
+                    if  hour <= 12{
+                        let mintue = (timeDay! % 3600)/60
+                        txtDeadlineTime.text = (String(format: "%02d", hour) + ":" + String(format: "%02d", mintue)  + " AM ")
+                    }else{
+                        let mintue = (timeDay! % 3600)/60
+                        txtDeadlineTime.text = (String(format: "%02d", hour - 12) + ":" + String(format: "%02d", mintue)  + " PM ")
+                    }
+                }
+            }
+            if bookingDeadlineDays != " "{
+                btnDeadlineEnabled.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+                enableDeadline()
+                isDeadlineEnabled = true
+
+
+            }
+            else{
+                btnDeadlineEnabled.setImage(UIImage.init(named: "check_box"), for: .normal);
+                disabledDeadline()
+                isDeadlineEnabled = false
+
+            }
+            
             break
         case .setOpenHour:
            
@@ -1448,12 +1550,9 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
         
     }
     
-    
-    
-    
+
     
     func dataFeeding() -> Dictionary<String,AnyObject> {
-        
         
         switch objviewTypeOpenHour {
         case .setOpenHour:
@@ -1625,7 +1724,6 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
                }
                
                
-               
                var  user_purpose_ids = [String]()
                
                let selectedUserPurposeArr = self.objOpenHourModalSubmit.userPurposeId.filter({$0.isSelected == true})
@@ -1682,9 +1780,6 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
                
                params["appointment_config"] = paramsInner
                
-               
-            
-               
                return params as Dictionary<String,AnyObject>
             
             break
@@ -1692,10 +1787,6 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
             return Dictionary<String,AnyObject>()
             break
         }
-        
-        
-   
-        
         
     }
     

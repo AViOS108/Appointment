@@ -456,7 +456,7 @@ extension ERSideHomeViewController:UIGestureRecognizerDelegate{
         self.viewFloatingOuter.isHidden = true
         
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        UILabel.labelUIHandling(label: lblSetOpen, text: " Set Advising Appoinment Hours ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
+        UILabel.labelUIHandling(label: lblSetOpen, text: " Set Advising Appoinment Hour ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
         UILabel.labelUIHandling(label: lblNextDuplicate, text: " Duplicate Schedule ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
         
         UILabel.labelUIHandling(label: lblAddHOc, text: " Add Ad hoc Appointment ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)

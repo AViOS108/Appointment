@@ -19,6 +19,8 @@ class ERSideFIrstTypeCollectionView: UICollectionView, UICollectionViewDataSourc
     var appoinmentDetailAllModalObj: ApooinmentDetailAllNewModal?
     var delegateI : ERSideFIrstTypeCollectionViewDelegate!
     var viewController : UIViewController!
+    var selectedfragmentNumber = 1;
+
     override func layoutSubviews() {
         super.layoutSubviews()
         self.invalidateIntrinsicContentSize()
@@ -58,6 +60,7 @@ class ERSideFIrstTypeCollectionView: UICollectionView, UICollectionViewDataSourc
         
         cell.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj
         cell.index = self.appoinmentDetailAllModalObj?.status ?? 2
+        cell.selectedfragmentNumber = selectedfragmentNumber
         cell.indexPathRow = indexPath.row
         cell.delegate = self
         cell.customization();
@@ -128,9 +131,13 @@ extension ERSideFIrstTypeCollectionView : ERSideAppoDetailTypeFirstCollectionVie
     }
     func moveCollectionView(backward: Bool) {
         if backward {
+             selectedfragmentNumber = selectedfragmentNumber - 1;
+
             self.scrollToPreviousItem()
         }
         else{
+            selectedfragmentNumber = selectedfragmentNumber + 1;
+
             self.scrollToNextItem()
         }
     }

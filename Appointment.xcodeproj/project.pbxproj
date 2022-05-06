@@ -2143,7 +2143,7 @@
 				CODE_SIGN_ENTITLEMENTS = Appointment/Appointment.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = 2J62BWA9ZJ;
 				INFOPLIST_FILE = Appointment/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2170,7 +2170,7 @@
 				CODE_SIGN_ENTITLEMENTS = Appointment/Appointment.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = 2J62BWA9ZJ;
 				INFOPLIST_FILE = Appointment/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

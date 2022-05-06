@@ -284,7 +284,6 @@ class ERSideOpenCreateEditVC: SuperViewController,UIPickerViewDelegate,UIPickerV
     var dataPurposeModal: ERSidePurposeDetailModalArr?
     var  dataPurposeNewModal : ERSidePurposeDetailNewModalArr?
     var objERSideOPenHourModal : ERSideOPenHourModal?
-
     var timeZOneArr: [TimeZoneSel]!
     var searchArrayPurpose = [SearchTextFieldItem]()
 
@@ -2235,7 +2234,7 @@ extension ERSideOpenCreateEditVC{
             let imageView3 = UIImageView.init(image: UIImage.init(named: "Calendar-1"))
             
             imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
-            
+            txtEndsOnDate.placeholder = "dd MMM, yyyy"
             self.txtEndsOnDate.leftView = imageView3
             txtEndsOnDate.leftViewMode = .always;
             

@@ -20,6 +20,7 @@ protocol ERSideAppoDetailTypeFirstCollectionViewCellDelegate {
 
 class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
   
+    @IBOutlet weak var lblNumber: UILabel!
     @IBOutlet weak var nslayoutConstraintContainerTop: NSLayoutConstraint!
     @IBOutlet weak var viewContainer: UIView!
     var appoinmentDetailModalObj : AppoinmentDetailModalNew?
@@ -33,8 +34,10 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var viewRequestedParticipant: UIView!
     @IBOutlet weak var lblRequestedParticipant: UILabel!
-    
+    var selectedfragmentNumber = 1;
+
     @IBAction func btnLeftArrowTapped(_ sender: Any) {
+        lblNumber.text = "\(selectedfragmentNumber) of \(appoinmentDetailModalObj?.requests?.count ?? 0)"
         delegate.moveCollectionView(backward: true)
     }
     
@@ -45,7 +48,8 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var btnRightArrow: UIButton!
     
     @IBAction func btnRightArrowTapped(_ sender: Any) {
-        delegate.moveCollectionView(backward: false)
+        lblNumber.text = "\(selectedfragmentNumber) of \(appoinmentDetailModalObj?.requests?.count ?? 0)"
+           delegate.moveCollectionView(backward: false)
     }
     
     @IBOutlet weak var viewbuttonContainer: UIView!
@@ -115,7 +119,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
     
     func topParticipantsCustomization()  {
         
-        if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
+        if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE12)
         {
             UILabel.labelUIHandling(label: lblTopParticipants, text: GeneralUtility.optionalHandling(_param: "Total Participants: " + "\(appoinmentDetailModalObj?.requests?.count ?? 0)" , _returnType: String.self),isBold: false , fontType: fontMedium)
             lblTopParticipants.textAlignment = .center
@@ -127,9 +131,11 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
     }
     
     func topRequestedParticipantsCustomization()  {
-        if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE13)
+        if let fontMedium = UIFont(name: "FontMedium".localized(), size: Device.FONTSIZETYPE12)
         {
-            UILabel.labelUIHandling(label: lblRequestedParticipant, text: GeneralUtility.optionalHandling(_param: "Requested Participants: "+"\(appoinmentDetailModalObj?.requests?.count ?? 0)", _returnType: String.self),isBold: false , fontType: fontMedium)
+            
+            let searchPurposeSelected =  appoinmentDetailModalObj?.requests?.filter({ $0.state == "pending"  }).count;
+            UILabel.labelUIHandling(label: lblRequestedParticipant, text: GeneralUtility.optionalHandling(_param: "Requested Participants: "+"\(searchPurposeSelected ?? 0)", _returnType: String.self),isBold: false , fontType: fontMedium)
             lblRequestedParticipant.textAlignment = .center
         }
         viewRequestedParticipant.layoutIfNeeded()
@@ -453,6 +459,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
                     UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:.white , textColor: ILColor.color(index: 34),buttonImage:UIImage.init(named: ""),fontType:fontMedium)
                     btnAccept.setImage(nil, for: .normal)
                     btnAccept.isUserInteractionEnabled = false
+                    viewSeprator.isHidden = true
  
                 }
                 else{
@@ -461,7 +468,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
                             UIButton.buttonUIHandling(button: btnAccept, text: "Request Expired", backgroundColor:.white ,textColor: ILColor.color(index: 34),fontType:fontMedium)
                             btnAccept.setImage(nil, for: .normal)
                             btnAccept.isUserInteractionEnabled = false
-
+                            viewSeprator.isHidden = true
                         }
                         else if requestDetail.state == "accepted" || requestDetail.state == "auto_accepted" {
                             UIButton.buttonUIHandling(button: btnAccept, text: "Accepted", backgroundColor:.white ,textColor: ILColor.color(index: 58),fontType:fontMedium)
@@ -523,6 +530,12 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
     
     func buttonArrowLogic(){
         
+        
+        
+        if index != 3{
+            viewRequestedParticipant.isHidden = true
+        }
+        
         if appoinmentDetailModalObj?.requests?.count ?? 0 > 1{
             btnLeftArrow.isHidden = false
             btnRightArrow.isHidden = false
@@ -542,21 +555,19 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
                 btnRightArrow.isUserInteractionEnabled = true
                 btnRightArrow.alpha = 1
             }
+            lblNumber.isHidden = false
+            let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE10)
+            UILabel.labelUIHandling(label: lblNumber, text: "\(selectedfragmentNumber) of \(appoinmentDetailModalObj?.requests?.count ?? 0)", textColor: ILColor.color(index: 42), isBold: false, fontType: fontBook)
         }
         else{
+            lblNumber.isHidden = true
+
             btnLeftArrow.isHidden = true
             btnRightArrow.isHidden = true
             viewTopParticipants.isHidden = true
             viewRequestedParticipant.isHidden = true
             nslayoutConstraintContainerTop.constant = 0
         }
-        
-        if index != 3{
-            viewTopParticipants.isHidden = true
-            viewRequestedParticipant.isHidden = true
-            nslayoutConstraintContainerTop.constant = 0
-        }
-        
         btnRightArrow.setImage(UIImage.init(named: "GroupArrowRight"), for: .normal)
         btnLeftArrow.setImage(UIImage.init(named: "GroupArrowleft"), for: .normal)
     }

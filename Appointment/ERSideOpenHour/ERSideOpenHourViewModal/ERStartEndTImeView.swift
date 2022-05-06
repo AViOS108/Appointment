@@ -35,9 +35,9 @@ class ERStartEndTImeView: UIView {
     var objtimeDifference : timeDifference!
     
     var viewconTroller : UIViewController!
-    @IBOutlet weak var txtStartTime: UITextField!
+    @IBOutlet weak var txtStartTime: TexFieldWithoutPast!
     
-    @IBOutlet weak var txtEndTime: UITextField!
+    @IBOutlet weak var txtEndTime: TexFieldWithoutPast!
     
     @IBOutlet weak var btnDelete: UIButton!
     

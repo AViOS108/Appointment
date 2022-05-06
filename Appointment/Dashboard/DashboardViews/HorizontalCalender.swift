@@ -65,7 +65,7 @@ class HorizontalCalender: UIView,UICollectionViewDelegate,UICollectionViewDataSo
             invalidTimeR()
             let studentHeaaderObject1 = StudentHeaderModel.init(describtion: "Check your coach's available dates and time to request an appointment instantly", title: "Schedule an Appointment", ImageName: "header3")
             
-            let studentHeaaderObject2 = StudentHeaderModel.init(describtion: "See notes and next shared by the coach after your appointment. You can also make your own notes!", title: "Notes and Next Steps", ImageName: "header1")
+            let studentHeaaderObject2 = StudentHeaderModel.init(describtion: "See notes and next shared by the coach after your appointment. You can also make your own notes!", title: "Notes & Next Steps", ImageName: "header1")
             
             let studentHeaaderObject = StudentHeaderModel.init(describtion: "Know your career coaches and schedule appointments with them to solve all your career-related problems!", title: "Coaching Appointments", ImageName: "header2")
             
