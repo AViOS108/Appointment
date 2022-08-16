@@ -166,7 +166,7 @@ class DashBoardAppointmentTableViewCell: UITableViewCell {
             let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
             var componentDay = GeneralUtility.dateComponent(date: self.appointmentModal.startDatetimeUTC!, component: .weekday)
 
-            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE13), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+            if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE10), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE10)
 
             {
                 

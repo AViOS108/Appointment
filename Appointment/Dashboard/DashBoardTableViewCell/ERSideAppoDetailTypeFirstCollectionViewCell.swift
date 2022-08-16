@@ -184,16 +184,21 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
         if isStudent ?? false{
             var roles = ""
             var index = 0
-            for role in self.appoinmentDetailModalObj!.coachDetailApi!.roles{
-                roles.append(role.displayName ?? "")
-                index = index + 1;
-                if self.appoinmentDetailModalObj!.coachDetailApi!.roles.count > 1{
-                    if index == self.appoinmentDetailModalObj!.coachDetailApi!.roles.count{
+            
+            if let detailApi = self.appoinmentDetailModalObj!.coachDetailApi {
+//                if let rolesI = detailApi.roles{
+                    for role in detailApi.roles{
+                        roles.append(role.displayName ?? "")
+                        index = index + 1;
+                        if self.appoinmentDetailModalObj!.coachDetailApi!.roles.count > 1{
+                            if index == self.appoinmentDetailModalObj!.coachDetailApi!.roles.count{
+                            }
+                            else{
+                                roles.append(", ")
+                            }
+                        }
                     }
-                    else{
-                        roles.append(", ")
-                    }
-                }
+//                }
             }
             
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook = UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE13){
@@ -307,7 +312,7 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
             para.lineSpacing = 3
-            strHeader.append(strPurposeText)
+          strHeader.append(strPurposeText)
             strHeader.append(nextLine1)
             strHeader.append(strPurposeValue)
             strHeader.append(nextLine1)
@@ -332,6 +337,25 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
         if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14),let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14)
             
         {
+            var purpose = ""
+            var index = 0
+            for userpurpose in (self.requestDetail.purposes)!{
+                if let displayName = userpurpose.purposeText {
+                    purpose.append(displayName)
+                    index = index + 1
+                    if index >= self.requestDetail.purposes?.count ?? 0{
+                    }
+                    else{
+                        purpose.append(",")
+                    }
+                }
+            }
+            if purpose.isEmpty {
+                purpose = "Not Available"
+            }
+            
+            let strPurposeValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: purpose, _returnType: String.self)
+                , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 37),NSAttributedString.Key.font : fontBook]);
             
             
             let strTitle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "Purpose", _returnType: String.self)
@@ -367,10 +391,11 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
             para.lineSpacing = 18
-            strHeaderDescription.append(strTitle)
+           strHeaderDescription.append(strTitle)
             strHeaderDescription.append(nextLine1)
+            strHeaderDescription.append(strPurposeValue)
             strHeaderDescription.append(nextLine1)
-
+//            strHeaderDescription.append(nextLine1)
             strHeaderDescription.append(strDescText)
             if self.description(requestDetail: requestDetail.targetFunctions) != "" {
                 strHeaderDescription.append(nextLine1)
@@ -412,8 +437,6 @@ class ERSideAppoDetailTypeFirstCollectionViewCell: UICollectionViewCell {
             let strattachmentValue  = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: attachmentValue, _returnType: String.self)
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 37),NSAttributedString.Key.font : fontBook]);
             strHeaderDescription.append(nextLine1)
-            strHeaderDescription.append(nextLine1)
-
             strHeaderDescription.append(strattachmentText)
             strHeaderDescription.append(nextLine1)
             strHeaderDescription.append(strattachmentValue)

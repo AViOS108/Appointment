@@ -130,7 +130,7 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
         
         switch self.objviewTypeOpenHour {
         case .setOpenHour:
-            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Set Advising Appointment Hour")
             break;
         case .duplicateSetHour:
             
@@ -138,7 +138,7 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
             
             break;
         case .editOpenHour:
-            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Open Hours" + " - " + dateFormatter.string(from: self.dateSelected))
+            GeneralUtility.customeNavigationBarWithOnlyBack(viewController: self, title: "Edit Advising Appointment Hour")
             break;
         default:
             break;
@@ -239,12 +239,8 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     
     func customization()  {
         self.addInputAccessoryForTextFields(textFields: [txtGroupLimit], dismissable: true, previousNextable: true)
-
         self.addInputAccessoryForTextFields(textFields: [txtApointmentType , txtReuestAppro,txtLocationType], dismissable: true, previousNextable: true)
-
         self.addInputAccessoryForTextFields(textFields: [txtDeadline,txtDeadlineTime], dismissable: true, previousNextable: true)
-
-
         nslayoutConstarintDefaultHeight.constant = 0
         self.viewLocationDefault.isHidden = true
         self.viewInner.isHidden = false
@@ -285,7 +281,7 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
             PickerSelectedTag = 192;
         }
         else  if textField.tag == 193{
-            arrPicker = ["1 day before Appointment","2 day before Appointment","3 day before Appointment","4 day before Appointment"]
+            arrPicker = ["1 day before Appointment","2 days before Appointment","3 days before Appointment","4 days before Appointment"]
             PickerSelectedTag = 193;
         }
         else  if textField.tag == 194{
@@ -359,7 +355,7 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
             selectedTypeLocation(row: row)
         }
         else if PickerSelectedTag == 193{
-            arrPicker = ["1 day before Appointment","2 day before Appointment","3 day before Appointment","4 day before Appointment"]
+            arrPicker = ["1 day before Appointment","2 days before Appointment","3 days before Appointment","4 days before Appointment"]
             txtDeadline.text = arrPicker[row]
         }
             
@@ -381,7 +377,7 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     func deRegisterKeyboardNotifications() {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func registerForKeyboardNotifications()  {
@@ -397,14 +393,11 @@ class ERSideOpenCreateEditSecondVC: SuperViewController,UIPickerViewDelegate,UIP
     @objc func keyboardWillHide(notification: NSNotification) {
         
         if activeField != nil{
-            
         }
         else
         {
             return
         }
-        
-        
         let kbSize = ((notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue)!
         self.viewScroll.contentSize = CGSize.init(width: self.viewScroll.contentSize.width, height: self.viewScroll.contentSize.height - kbSize.size.height)
         keyBooradAlreadyShown = false
@@ -548,7 +541,8 @@ extension ERSideOpenCreateEditSecondVC
             self.txtGroupLimit.layer.borderWidth = 1;
             self.txtGroupLimit.layer.cornerRadius = 3;
             self.txtGroupLimit.placeholder = "Enter Participants Limit"
-            
+            prefilledValueAppointmentType()
+
             break
         case .editOpenHour:
             pickerViewSetUp(txtInput: txtApointmentType, tag: 194)
@@ -645,7 +639,8 @@ extension ERSideOpenCreateEditSecondVC{
             self.txtReuestAppro.text = "Automatic Approval"
             self.txtReuestAppro.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
             txtReuestAppro.rightViewMode = .always;
-            
+            prefilledValueRequestApproval()
+
            
             break
             
@@ -709,9 +704,9 @@ extension ERSideOpenCreateEditSecondVC{
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
             {
                 let strHeader = NSMutableAttributedString.init()
-                let strTiTle = NSAttributedString.init(string: "Location"
+                let strTiTle = NSAttributedString.init(string: "Location Type"
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-                let strType = NSAttributedString.init(string: "  ⃰"
+                let strType = NSAttributedString.init(string: " ⃰"
                     , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
                 let para = NSMutableParagraphStyle.init()
                 //            para.alignment = .center
@@ -730,7 +725,7 @@ extension ERSideOpenCreateEditSecondVC{
             self.txtLocationType.layer.cornerRadius = 3;
             self.txtLocationType.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
             txtLocationType.rightViewMode = .always;
-            txtLocationType.placeholder = "Search locations"
+            txtLocationType.placeholder = "Location"
 
             
             
@@ -744,7 +739,7 @@ extension ERSideOpenCreateEditSecondVC{
                 let strHeader = NSMutableAttributedString.init()
                 let strTiTle = NSAttributedString.init(string: "Location"
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-                let strType = NSAttributedString.init(string: "  ⃰"
+                let strType = NSAttributedString.init(string: " ⃰"
                     , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
                 let para = NSMutableParagraphStyle.init()
                 //            para.alignment = .center
@@ -762,9 +757,11 @@ extension ERSideOpenCreateEditSecondVC{
             self.txtLocationType.layer.borderWidth = 1;
             self.txtLocationType.layer.cornerRadius = 3;
             self.txtLocationType.rightView = UIImageView.init(image: UIImage.init(named: "Drop-down_arrow"))
-            txtLocationType.placeholder = "Search locations"
+            txtLocationType.placeholder = "Location"
 
             txtLocationType.rightViewMode = .always;
+            prefilledValueLocation()
+
             break
             
         case .editOpenHour :
@@ -775,7 +772,7 @@ extension ERSideOpenCreateEditSecondVC{
                 let strHeader = NSMutableAttributedString.init()
                 let strTiTle = NSAttributedString.init(string: "Location"
                     , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-                let strType = NSAttributedString.init(string: "  ⃰"
+                let strType = NSAttributedString.init(string: " ⃰"
                     , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
                 let para = NSMutableParagraphStyle.init()
                 //            para.alignment = .center
@@ -1014,7 +1011,7 @@ extension ERSideOpenCreateEditSecondVC{
             
             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             
-            UILabel.labelUIHandling(label: lblDeadlineInfo, text: "Deadline for candidates to book appointment slot", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
+            UILabel.labelUIHandling(label: lblDeadlineInfo, text: "Deadline for students to book/cancel an appointment slot", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
             
             UILabel.labelUIHandling(label: lblBefore, text: "Before", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
             
@@ -1043,7 +1040,7 @@ extension ERSideOpenCreateEditSecondVC{
             self.txtDeadlineTime.leftView = imageView3
             txtDeadlineTime.leftViewMode = .always;
             datePickerTiming(txtInput: txtDeadlineTime)
-           
+            txtDeadlineTime.placeholder = "HH:MM"
             self.viewDeadlineContainer.layoutIfNeeded();
             nslayoutConstraintDeadlineHeight.priority = UILayoutPriority(rawValue: 1000)
             calculatedHeightDeadineView =   self.viewDeadlineContainer.frame.size.height
@@ -1057,15 +1054,15 @@ extension ERSideOpenCreateEditSecondVC{
                         bookingDeadlineDays = "1 day before Appointment "
                     }
                     else if bookingDeadlineDaysBefore == "2"{
-                        bookingDeadlineDays = "2 day before Appointment "
+                        bookingDeadlineDays = "2 days before Appointment "
                         
                     }
                     else if bookingDeadlineDaysBefore == "3"{
-                        bookingDeadlineDays = "3 day before Appointment "
+                        bookingDeadlineDays = "3 days before Appointment "
                         
                     }
                     else{
-                        bookingDeadlineDays = "4 day before Appointment "
+                        bookingDeadlineDays = "4 days before Appointment "
                     }
                 }
             }
@@ -1118,7 +1115,7 @@ extension ERSideOpenCreateEditSecondVC{
                 
                 let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
                 
-                UILabel.labelUIHandling(label: lblDeadlineInfo, text: "Deadline for candidates to book appointment slot", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
+                UILabel.labelUIHandling(label: lblDeadlineInfo, text: "Deadline for students to book/cancel an appointment slot", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
                 
                 UILabel.labelUIHandling(label: lblBefore, text: "Before", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
                 
@@ -1147,6 +1144,7 @@ extension ERSideOpenCreateEditSecondVC{
                 imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
                 self.txtDeadlineTime.leftView = imageView3
                 txtDeadlineTime.leftViewMode = .always;
+            txtDeadlineTime.placeholder = "HH:MM"
                 datePickerTiming(txtInput: txtDeadlineTime)
                 
                 
@@ -1169,7 +1167,7 @@ extension ERSideOpenCreateEditSecondVC{
                 
                 let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
                 
-                UILabel.labelUIHandling(label: lblDeadlineInfo, text: "Deadline for candidates to book appointment slot", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
+                UILabel.labelUIHandling(label: lblDeadlineInfo, text: "Deadline for students to book/cancel an appointment slot", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
                 
                 UILabel.labelUIHandling(label: lblBefore, text: "Before", textColor: ILColor.color(index: 40), isBold: false, fontType: fontBook)
                 
@@ -1197,7 +1195,8 @@ extension ERSideOpenCreateEditSecondVC{
                 let imageView3 = UIImageView.init(image: UIImage.init(named: "Calendar-1"))
                 imageView3.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
                 self.txtDeadlineTime.leftView = imageView3
-                txtDeadlineTime.leftViewMode = .always;
+                 txtDeadlineTime.leftViewMode = .always;
+            txtDeadlineTime.placeholder = "HH:MM"
                 datePickerTiming(txtInput: txtDeadlineTime)
                 
                 
@@ -1252,7 +1251,6 @@ extension ERSideOpenCreateEditSecondVC{
         objERSideStudentListViewController.objStudentDetailModalSelected = self.objStudentDetailModalSelected
         objERSideStudentListViewController.delegate = self
         objERSideStudentListViewController.objStudentListType = .groupType
-        
         self.navigationController?.pushViewController(objERSideStudentListViewController, animated: false)
         
     }
@@ -1260,34 +1258,96 @@ extension ERSideOpenCreateEditSecondVC{
     
     
     func isPrivateEnabledAlready()  {
-        if self.totalStudentParticipant == self.objERSideOpenHourPrefilledDetail?.participants?.count{
+        
+        
+        guard self.objERSideOpenHourPrefilledDetail?.participants != nil else {
             isPrivateEnabled = false
+            return
+        }
+        
+        
+        
+        if self.objERSideOpenHourPrefilledDetail?.participants?.count ?? 0 > 0{
+            isPrivateEnabled = true
+
         }
         else{
-            isPrivateEnabled = true
-            
-            if (self.objStudentDetailModalI?.items?.count ?? 0) > 0
-            {
-                
-                self.objStudentDetailModalSelected = StudentDetailModal()
-                self.objStudentDetailModalSelected?.total = self.objERSideOpenHourPrefilledDetail?.participants?.count
-                 self.objStudentDetailModalSelected?.items = [StudentDetailModalItem]()
-                for student in (self.objStudentDetailModalI?.items)!{
-                    var studentSelected = self.objERSideOpenHourPrefilledDetail?.participants?.filter({$0.studentID == student.invitationID});
-                    
-                    if studentSelected?.count ?? 0 > 0{
-                        self.objStudentDetailModalSelected?.items?.append(student)
+            isPrivateEnabled = false
 
-                    }
-                    else{
-                    }
-                }
-                
-            }
+//            if (self.objStudentDetailModalI?.items?.count ?? 0) > 0
+//            {
+//
+//                self.objStudentDetailModalSelected = StudentDetailModal()
+//                self.objStudentDetailModalSelected?.total = self.objERSideOpenHourPrefilledDetail?.participants?.count
+//                 self.objStudentDetailModalSelected?.items = [StudentDetailModalItem]()
+//                for student in (self.objStudentDetailModalI?.items)!{
+//                    var studentSelected = self.objERSideOpenHourPrefilledDetail?.participants?.filter({$0.studentID == student.invitationID});
+//                    
+//                    if studentSelected?.count ?? 0 > 0{
+//                        self.objStudentDetailModalSelected?.items?.append(student)
+//
+//                    }
+//                    else{
+//                    }
+//                }
+//
+//            }
             
         }
         
     }
+    
+    
+//
+//        func callParticipant(offset:Int){
+//
+//            let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+//
+//            let params = [
+//                "_method":"post",
+//                "limit": 2000,
+//                "offset" :offset,
+//                ParamName.PARAMCSRFTOKEN : csrftoken] as Dictionary<String, AnyObject>
+//
+//            ERSideOpenHourDetailVM().fetchStudentDetail(params: params, id: identifier, { (data) in
+//                do {
+//
+//                    if self.objERSideParticipantModal != nil
+//                    {
+//
+//                        var objERSideParticipantModal = try
+//                        JSONDecoder().decode(ERSideParticipantModal.self, from: data);
+//                        self.objERSideParticipantModal?.results.append(contentsOf: objERSideParticipantModal.results);
+//
+//
+//                    }
+//                    else{
+//                        self.objERSideParticipantModal = try
+//                        JSONDecoder().decode(ERSideParticipantModal.self, from: data)
+//
+//                    }
+//
+//                    if (self.objERSideParticipantModal?.total ?? 0) > (self.objERSideParticipantModal?.results.count ?? 0) {
+//                        self.offset = self.offset + 2000
+//                        self.callParticipant(offset: self.offset)
+//
+//                    }
+//                    else{
+//                        self.activityIndicator?.hide()
+//                        self.creatingModal()
+//                        self.viewInner.isHidden = false
+//                    }
+//
+//
+//                } catch   {
+//                    print(error)
+//                }
+//            }) { (error, errorCode) in
+//
+//
+//            }
+//
+//        }
     
     
     func customPrivate()  {
@@ -1372,10 +1432,7 @@ extension ERSideOpenCreateEditSecondVC{
         case .duplicateSetHour:
             let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-            
             let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE13)
-            
-            
             UIButton.buttonUIHandling(button: btnPrivateOpenHour, text: "", backgroundColor: .clear, textColor: .clear, buttonImage: UIImage.init(named: "check_box"))
             UILabel.labelUIHandling(label: lblPrivateOpenHour, text: "Private Open Hours", textColor: ILColor.color(index: 40), isBold: false, fontType: fontHeavy)
             if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
@@ -1400,8 +1457,19 @@ extension ERSideOpenCreateEditSecondVC{
             UILabel.labelUIHandling(label: lblPrivateInfo, text: "Total candidates visible for this open hour", textColor: ILColor.color(index: 40), isBold: false, fontType: fontMedium1)
             nslayoutConstarintViewPrivateContainer.priority = UILayoutPriority(rawValue: 1000)
             calculatedHeightPrivateView = viewPrivateContainer.frame.height
-            viewPrivateContainer.isHidden = true
-            nslayoutConstarintViewPrivateContainer.constant = 0
+            self.isPrivateEnabledAlready()
+            if isPrivateEnabled{
+                viewPrivateContainer.isHidden = false
+                nslayoutConstarintViewPrivateContainer.constant = calculatedHeightPrivateView
+                self.lblCountStudent.text = "\(objERSideOpenHourPrefilledDetail?.participants?.count ?? 0)"
+                btnPrivateOpenHour.setImage(UIImage.init(named: "Check_box_selected"), for: .normal);
+
+            }
+            else{
+                btnPrivateOpenHour.setImage(UIImage.init(named: "check_box"), for: .normal);
+                viewPrivateContainer.isHidden = true
+                nslayoutConstarintViewPrivateContainer.constant = 0
+            }
             break
             
         default:
@@ -1457,7 +1525,7 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
         self.objOpenHourModalSubmit.locationValue = self.txtDefaultLocation.text
         
         if isDeadlineEnabled{
-            let deadline_days_before = ["1 day before Appointment","2 day before Appointment","3 day before Appointment","4 day before Appointment"]
+            let deadline_days_before = ["1 day before Appointment","2 days before Appointment","3 days before Appointment","4 days before Appointment"]
             let deadline_days_beforeI = ["1","2","3","4"]
             let indexLocation = deadline_days_before.firstIndex(where: {$0 == txtDeadline.text})
             self.objOpenHourModalSubmit.deadline_days_before = deadline_days_beforeI[indexLocation ?? 0]
@@ -1496,7 +1564,7 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
                  return false
             }
             
-            if (Int(txtGroupLimit.text ?? "0") ?? 0 > 15) || Int(txtGroupLimit.text ?? "0") ?? 0 <= 0 {
+            if (Int(txtGroupLimit.text ?? "0") ?? 0 >= 15) || Int(txtGroupLimit.text ?? "0") ?? 0 <= 1 {
                 CommonFunctions().showError(title: "Error", message: StringConstants.GROUPLIMITRANGEERROR)
                  return false
             }
@@ -1806,11 +1874,11 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
                     
                     let index = self.navigationController?.viewControllers.firstIndex(where: { $0.isKind(of: ERSideOpenHourListVC.self) })
                     if index != nil{
-                        GeneralUtility.alertViewPopOutToParticularViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"], index: index ?? 1)
+                        GeneralUtility.alertViewPopOutToParticularViewController(title: "Success", message: StringConstants.KSUCCESSOPENHOURCREATED, viewController: self, buttons: ["Ok"], index: index ?? 1)
                         
                     }
                     else{
-                        GeneralUtility.alertViewPopOutViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"])
+                        GeneralUtility.alertViewPopOutViewController(title: "Success", message: StringConstants.KSUCCESSOPENHOURCREATED, viewController: self, buttons: ["Ok"])
                     }
                     
                     
@@ -1838,14 +1906,12 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
                     
                     let index = self.navigationController?.viewControllers.firstIndex(where: { $0.isKind(of: ERSideOpenHourListVC.self) })
                     if index != nil{
-                        GeneralUtility.alertViewPopOutToParticularViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"], index: index ?? 1)
+                        GeneralUtility.alertViewPopOutToParticularViewController(title: "Success", message: StringConstants.KSUCCESSOPENHOURCREATED, viewController: self, buttons: ["Ok"], index: index ?? 1)
                         
                     }
                     else{
-                        GeneralUtility.alertViewPopOutViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"])
+                        GeneralUtility.alertViewPopOutViewController(title: "Success", message: StringConstants.KSUCCESSOPENHOURCREATED, viewController: self, buttons: ["Ok"])
                     }
-                    
-                    
                     
                     
                 } catch   {
@@ -1869,11 +1935,11 @@ extension ERSideOpenCreateEditSecondVC: ERSideStudentListViewControllerDelegate 
                     
                     let index = self.navigationController?.viewControllers.firstIndex(where: { $0.isKind(of: ERSideOpenHourListVC.self) })
                     if index != nil{
-                        GeneralUtility.alertViewPopOutToParticularViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"], index: index ?? 1)
+                        GeneralUtility.alertViewPopOutToParticularViewController(title: "Success", message: StringConstants.KSUCCESSOPENHOURCREATED, viewController: self, buttons: ["Ok"], index: index ?? 1)
                         
                     }
                     else{
-                        GeneralUtility.alertViewPopOutViewController(title: "Success", message: "Open Hour Created Successfully !!!", viewController: self, buttons: ["Ok"])
+                        GeneralUtility.alertViewPopOutViewController(title: "Success", message: StringConstants.KSUCCESSOPENHOURCREATED, viewController: self, buttons: ["Ok"])
                     }
                     
                     

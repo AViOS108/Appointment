@@ -16,7 +16,7 @@ class RegisterViewController: LoginParentViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var nameContainerView: UIView!
     @IBOutlet weak var passwordContainerView: UIView!
-    @IBOutlet weak var passwordTextField: CustomUITextField!
+    @IBOutlet weak var passwordTextField: CustomUITextFieldNoPaste!
     @IBOutlet weak var signUpButton: UIButton!
     var activeField: UITextField?
     @IBOutlet weak var captchaImageHeightConstraint: NSLayoutConstraint!

@@ -43,20 +43,11 @@ class CheckStatusViewController: CustomizedViewController {
                       self.navigationController?.pushViewController(social, animated: false)
                       
                   } else {
-                      // Fallback on earlier versions
-                  }
-            
-            
-            
-        }
+                      CommonFunctions().showError(title: "Error", message: "Feature is only supported in iOS 13 and above")
 
-        
-        
-        
-        
-        
-      
-        
+                      
+                  }
+        }
     }
     @IBOutlet weak var stackVIew: UIStackView!
     @IBOutlet weak var scrollView: UIScrollView!

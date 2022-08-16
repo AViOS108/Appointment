@@ -135,11 +135,8 @@ class ERAppoDetailThirdTableViewCell: UITableViewCell {
                     }
                     else{
                         btn.setImage(UIImage.init(named: "noun_Star_select"), for: .normal)
-
                     }
-                    
                 }
-                
             }
             else{
                 self.btnCoachPreciseGrp.forEach { (btn) in

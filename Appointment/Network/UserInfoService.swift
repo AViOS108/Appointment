@@ -40,8 +40,19 @@ class UserInfoService{
     }
     
     func updatePasswordCall(params: Dictionary<String,AnyObject>, _ success :@escaping (JSON) -> Void,failure :@escaping (String,Int) -> Void ){
+        
+        var urlPwd = ""
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        if isStudent ?? false {
+            urlPwd = Urls().updatePasswordStudent()
+        }
+        else
+        {
+            urlPwd = Urls().updatePassword()
+            
+        }
         let headers: Dictionary<String,String> = ["Authorization": "Bearer \(UserDefaults.standard.object(forKey: "accessToken")!)"]
-        Network().makeApiRequest(true, url: Urls().updatePassword(), methodType: .post, params: params, header: headers, completion: {
+        Network().makeApiRequest(true, url:urlPwd, methodType: .post, params: params, header: headers, completion: {
             response in
             if response["error"]["code"] != JSON.null{
                 if response["error"]["errors"] != JSON.null {

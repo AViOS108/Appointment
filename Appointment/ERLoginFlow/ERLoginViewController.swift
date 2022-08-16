@@ -251,7 +251,7 @@ class ERLoginViewController: UIViewController {
                         self.btnSign.backgroundColor = ILColor.color(index: 6);
                         self.btnSign.setTitleColor(.black, for: .normal)
 
-                        CommonFunctions().showError(title: "Error", message: GeneralUtility.optionalHandling(_param: response[ParamName.PARAMERLOGINERROR][ParamName.PARAMERLOGINMESSAGE].string, _returnType: String.self));
+                        CommonFunctions().showError(title: "", message: GeneralUtility.optionalHandling(_param: "Your account has been locked. Try Logging in after some time.", _returnType: String.self));
                         
 
                     }

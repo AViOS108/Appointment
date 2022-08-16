@@ -11,7 +11,7 @@ import UIKit
 class CalenderViewController: UIViewController,UIGestureRecognizerDelegate {
     
     var pointSign : CGPoint?
-    var viewControllerI : UIViewController?
+    var viewControllerI : SuperViewController?
     var index : Int?
     var pointedArrow = false
     
@@ -19,15 +19,16 @@ class CalenderViewController: UIViewController,UIGestureRecognizerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         
         let myView = Bundle.loadView(fromNib: "CalenderView", withType: CalenderView.self)
         myView.index = index
         myView.frame = CGRect.init(x: 0, y: abs(pointSign!.y), width: self.view.frame.width, height: self.view.frame.height-abs(pointSign!.y));
-        myView.viewControllerI = self
+        myView.viewControllerI = viewControllerI
         myView.pointSign = pointSign
         myView.delegate = (viewControllerI as! CalenderViewDelegate)
-        
         myView.customize()
         //        myView.bringSubviewToFront( self.view)
         self.view.addSubview(myView);

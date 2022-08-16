@@ -489,12 +489,7 @@ class HomeViewController: SuperViewController,UISearchBarDelegate {
         txtSearchBar.placeholder = "Search by Role/Name"
         txtSearchBar.backgroundColor = .clear
         txtSearchBar.delegate = self
-        
-
     }
-    
-    
-    
     
 }
 
@@ -899,12 +894,22 @@ extension HomeViewController : ERFilterViewControllerDelegate {
             {
                 let filteredItems =  self.dataFeedingModal?.items.filter{
                     return   ( $0.name.lowercased().contains(searchBar.text!.lowercased())
-                                || $0.coachInfo.headline!.lowercased().contains(searchBar.text!.lowercased()))
+                                || $0.coachInfo.headline!.lowercased().contains(searchBar.text!.lowercased()
+                                                                               )
+                               ||  ($0.roles.filter { $0.machineName!.lowercased().contains(searchBar.text!.lowercased())
+                               || $0.displayName!.lowercased().contains(searchBar.text!.lowercased())
+                        
+                        
+                    }).count > 0
+                    
+                    )
                 }
+                
                 self.dataFeedingModal?.items = filteredItems!
-                self.zeroStateLogic()
-                self.reloadTablviewCocahList()
             }
+            self.zeroStateLogic()
+            self.reloadTablviewCocahList()
+
             searchBar.resignFirstResponder();
         }
         searchBar.resignFirstResponder();

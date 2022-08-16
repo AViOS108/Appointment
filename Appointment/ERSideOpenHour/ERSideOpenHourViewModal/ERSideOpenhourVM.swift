@@ -213,8 +213,8 @@ class ERSideCreateEditOHVM {
         switch self.objviewTypeOpenHour {
         case .duplicateSetHour:
             
-            dispatchGroup.enter()
-            fetchDuplicatePurpose()
+//            dispatchGroup.enter()
+//            fetchDuplicatePurpose()
             dispatchGroup.enter()
             hitApiForTimeZone()
             dispatchGroup.enter()
@@ -247,11 +247,11 @@ class ERSideCreateEditOHVM {
             
             switch self.objviewTypeOpenHour {
             case .duplicateSetHour:
-                if self.purposeNewArr != nil && self.timeZOneArr.count > 0 && self.objERSideOPenHourModal != nil {
+                if  self.timeZOneArr.count > 0 && self.objERSideOPenHourModal != nil {
                     
                     self.objERSideCreateEditOHVMAllModal = ERSideCreateEditOHVMAllModal()
                     self.objERSideCreateEditOHVMAllModal?.timeZOneArr = self.timeZOneArr
-                    self.objERSideCreateEditOHVMAllModal?.purposeNewArr = self.purposeNewArr
+//                    self.objERSideCreateEditOHVMAllModal?.purposeNewArr = self.purposeNewArr
                     self.objERSideCreateEditOHVMAllModal?.objERSideOPenHourModal = self.objERSideOPenHourModal
                     
                     self.delegate.sentDataToERSideCreateEditOHVC(dataModalAll: self.objERSideCreateEditOHVMAllModal , success: true)
@@ -378,6 +378,11 @@ class ERSideCreateEditOHVM {
         }
         
     }
+    
+    
+    
+    
+    
   
     
     func hitApiForPurpose()
@@ -436,20 +441,11 @@ class ERSideOpenEditSecondVM {
         
     }
     
-    
-   
-    
-   
-    
-    
 
 }
 
 
 class ERSideStudentListViewModal {
-    
-    
-    
     
     
     
@@ -526,9 +522,6 @@ class ERSideStudentListViewModal {
         }
     
     
-    
-    
-    
     func fetchTags(_ success :@escaping (Data) -> Void,failure :@escaping (String,Int) -> Void )
     {
         
@@ -539,9 +532,6 @@ class ERSideStudentListViewModal {
         }
         
     }
-    
-    
-    
     
     
 }

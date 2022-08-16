@@ -10,16 +10,12 @@ import UIKit
 
 class AdhocFlowFirstViewController: SuperViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate {
     
-    
-    
-    
+
     
     func logicForSlotDurationTiming() -> Array<Dictionary<String,String>>{
-        
-        
+    
         var arrSlot = Array<Dictionary<String,String>>()
-        
-        
+       
         for view : ERStartEndTImeView in arrERStartEndTImeView{
             
             let dateFormatter = DateFormatter()
@@ -86,7 +82,7 @@ class AdhocFlowFirstViewController: SuperViewController,UIPickerViewDelegate,UIP
                 return false
             }
             
-            if (Int(txtGroupLimit.text ?? "0") ?? 0 > 15) || Int(txtGroupLimit.text ?? "0") ?? 0 <= 0 {
+            if (Int(txtGroupLimit.text ?? "0") ?? 0 >= 15) || Int(txtGroupLimit.text ?? "0") ?? 0 <= 1 {
                 CommonFunctions().showError(title: "Error", message: StringConstants.GROUPLIMITRANGEERROR)
                 return false
             }
@@ -336,11 +332,8 @@ class AdhocFlowFirstViewController: SuperViewController,UIPickerViewDelegate,UIP
             }
         }) { (error, errorCode) in
             activityIndicator.hide()
-            
         }
-        
     }
-    
 }
 
 
@@ -350,7 +343,7 @@ extension AdhocFlowFirstViewController{
     
     func customizeHeader(){
         
-        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
+        if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE14), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE15)
             
         {
             let strHeader = NSMutableAttributedString.init()
@@ -373,12 +366,12 @@ extension AdhocFlowFirstViewController{
             let strHeader = NSMutableAttributedString.init()
             let strTiTle = NSAttributedString.init(string: "Set Date"
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-            let strType = NSAttributedString.init(string: "  ⃰"
+            let strType = NSAttributedString.init(string: " ⃰"
                 , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
             strHeader.append(strTiTle)
-            
+            strHeader.append(strType)
             strHeader.addAttribute(NSAttributedString.Key.paragraphStyle, value: para, range: NSMakeRange(0, strHeader.length))
             lblDate.attributedText = strHeader
         }
@@ -457,7 +450,7 @@ extension AdhocFlowFirstViewController
     func deRegisterKeyboardNotifications() {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func registerForKeyboardNotifications()  {
@@ -617,13 +610,11 @@ extension AdhocFlowFirstViewController
         }
     }
     
-    
-    
-    
 }
 
 extension AdhocFlowFirstViewController: CalenderViewDelegate{
     func dateSelected(calenderModal: CalenderModal, index: Int) {
+        selectedDateCalander = calenderModal.StrDate
         let dateInRequiredFormate =     GeneralUtility.currentDateDetailType4(emiDate: calenderModal.StrDate!, fromDateF: "yyyy-MM-dd", toDateFormate: "dd MMM, yyyy")
         txtDateSelected.text = dateInRequiredFormate
         let dateFormatter = DateFormatter()
@@ -656,7 +647,7 @@ extension AdhocFlowFirstViewController:DeleteParticularStartTimeViewDelegate,Ref
             let strHeader = NSMutableAttributedString.init()
             let strTiTle = NSAttributedString.init(string: "Start Time"
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-            let strType = NSAttributedString.init(string: "  ⃰"
+            let strType = NSAttributedString.init(string: " ⃰"
                 , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
@@ -671,7 +662,7 @@ extension AdhocFlowFirstViewController:DeleteParticularStartTimeViewDelegate,Ref
             let strHeader = NSMutableAttributedString.init()
             let strTiTle = NSAttributedString.init(string: "End Time"
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-            let strType = NSAttributedString.init(string: "  ⃰"
+            let strType = NSAttributedString.init(string: " ⃰"
                 , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
@@ -875,11 +866,12 @@ extension AdhocFlowFirstViewController:DeleteParticularStartTimeViewDelegate,Ref
                 startEndTime.tag = index
                 startEndTime.btnDelete.tag = index
                 
-                startEndTime.customization()
+                
                 self.viewContainerStartEnd.addSubview(startEndTime)
                 viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :startEndTime ]))
                 viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[viewPrevious]-(4)-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["viewPrevious":viewPrevious!,"view" :startEndTime ]))
                 self.addInputAccessoryForTextFields(textFields: [startEndTime.txtStartTime,startEndTime.txtEndTime], dismissable: true, previousNextable: true)
+//                startEndTime.customization()
                 arrERStartEndTImeView.append(startEndTime)
             }
             else
@@ -894,11 +886,10 @@ extension AdhocFlowFirstViewController:DeleteParticularStartTimeViewDelegate,Ref
                 let startEndTime = ERStartEndTImeView().loadView() as! ERStartEndTImeView
                 startEndTime.tag = 1
                 startEndTime.noDeleteBtn = true
-                
+           
                 startEndTime.btnDelete.tag = 1
                 startEndTime.delegate = self
                 startEndTime.viewconTroller = self
-                startEndTime.customization()
                 let indexSelected = arrPickerI.firstIndex(where: {$0 == "custom"})
                 startEndTime.objtimeDifference =  timeDifference(rawValue: Int(indexSelected ?? 0))
                 startEndTime.translatesAutoresizingMaskIntoConstraints = false
@@ -906,12 +897,16 @@ extension AdhocFlowFirstViewController:DeleteParticularStartTimeViewDelegate,Ref
                 viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :startEndTime ]))
                 viewContainerStartEnd.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]-0-|", options: NSLayoutConstraint.FormatOptions(rawValue : 0), metrics: nil, views: ["view" :startEndTime ]))
                 self.addInputAccessoryForTextFields(textFields: [startEndTime.txtStartTime,startEndTime.txtEndTime], dismissable: true, previousNextable: true)
+                startEndTime.customization()
+
                 if self.objERSideOpenHourPrefilledDetail != nil{
                     startEndTime.txtStartTime.text = (GeneralUtility.currentDateDetailType3(emiDate: self.objERSideOpenHourPrefilledDetail?.startDatetimeUTC ?? "12:00 PM "))
                     startEndTime.txtEndTime.text = (GeneralUtility.currentDateDetailType3(emiDate: self.objERSideOpenHourPrefilledDetail?.endDatetimeUTC ?? "12:00 PM "))
                     startEndTime.isTimeValid = true
                     startEndTime.isBothTimeField = true
                 }
+                startEndTime.setNeedsLayout()
+                startEndTime.layoutIfNeeded()
                 arrERStartEndTImeView.append(startEndTime)
             }
         }

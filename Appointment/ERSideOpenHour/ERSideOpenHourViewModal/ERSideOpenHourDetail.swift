@@ -23,7 +23,7 @@ struct ERSideOpenHourDetail: Codable {
     let startDatetimeUTC, endDatetimeUTC: String?
     let createdByID: Int?
     let purposes: [PurposeNewAPI]?
-    let participants: [ParticipantNewAPI]?
+    var participants: [ParticipantNewAPI]?
     let timezone, location, locationType: String?
     let appointmentConfig: AppointmentConfig?
     let identifier: String?

@@ -96,14 +96,22 @@ extension ERSideFIrstTypeCollectionView :ERAppoDetailFirstCollectionViewLayoutDe
         cell.indexPathRow = indexPath.row
         cell.requestDetail = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj?.requests![indexPath.row]
         cell.appoinmentDetailModalObj = self.appoinmentDetailAllModalObj?.appoinmentDetailModalObj
+        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
 
-        label.attributedText = cell.descriptionLogic()
+        if isStudent ?? false{
+            label.attributedText = cell.descriptionStudentLogic()
+
+        }
+        else{
+            label.attributedText = cell.descriptionLogic()
+
+        }
         label1.attributedText = cell.nameLogic()
         label.sizeToFit()
         label1.sizeToFit()
-        let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+        
         if isStudent ?? false {
-            return label.frame.height + label1.frame.height
+            return 250.0
         }
         else
         {

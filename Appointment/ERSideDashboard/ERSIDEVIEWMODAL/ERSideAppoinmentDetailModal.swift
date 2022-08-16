@@ -158,6 +158,7 @@ class ERSideAppoinmentDetailModal{
                 print(error)
             }
             
+            
             if isStudent ?? true{
                 self.coachDetailApi(coachId: self.appoinmentDetailModalObj?.coachID ?? 0)
             }

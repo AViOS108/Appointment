@@ -14,9 +14,38 @@
  
 
 
+//// MARK: - Welcome
+//struct StudentDetailModal: Codable {
+//    var total: Int?
+//    var items: [StudentDetailModalItem]?
+//}
+//
+//
+//
+//
+//// MARK: - Item
+//struct StudentDetailModalItem: Codable {
+//    let id: Int?
+//    var isSelected = false
+//    let firstName, lastName: String?
+//    let email: Email?
+//    let invitationID: Int?
+//    let benchmark: Benchmark?
+//    let tags: Tags?
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case id
+//        case firstName = "first_name"
+//        case lastName = "last_name"
+//        case email
+//        case invitationID = "invitation_id"
+//        case benchmark, tags
+//    }
+//}
 
 struct ERSideParticipantModal: Codable {
-    let results: [ERSideParticipantModalResult]
+    var results: [ERSideParticipantModalResult]
     let total: Int
 }
 
@@ -101,15 +130,14 @@ struct StudentDetailModal: Codable {
 
 // MARK: - Item
 struct StudentDetailModalItem: Codable {
-    let id: Int?
+    var id: Int?
     var isSelected = false
-    let firstName, lastName: String?
-    let email: Email?
-    let invitationID: Int?
-    let benchmark: Benchmark?
-    let tags: Tags?
+    var firstName, lastName: String?
+    var email: Email?
+    var invitationID: Int?
+    var benchmark: Benchmark?
+    var tags: Tags?
 
-   
     enum CodingKeys: String, CodingKey {
         case id
         case firstName = "first_name"

@@ -231,15 +231,7 @@ class HorizontalCalender: UIView,UICollectionViewDelegate,UICollectionViewDataSo
 
 
        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-         print("1111111")
        }
-       
-    
-    
-    
-    
-    
-    
 }
 
 

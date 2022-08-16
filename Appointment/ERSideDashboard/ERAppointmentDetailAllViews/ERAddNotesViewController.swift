@@ -538,7 +538,7 @@ extension ERAddNotesViewController {
     func deRegisterKeyboardNotifications() {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func registerForKeyboardNotifications()  {
@@ -546,12 +546,8 @@ extension ERAddNotesViewController {
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown2(aNotification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
 //
 //          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-//
+////
 
     }
-    
-    
-    
-    
     
 }

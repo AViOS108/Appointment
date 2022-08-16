@@ -17,7 +17,7 @@ class LoginWithEmailViewController: LoginParentViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: CustomUITextField!
+    @IBOutlet weak var passwordTextField: CustomUITextFieldNoPaste!
     var activeField: UITextField?
     var distanceMoved : CGFloat!
     var email: String!

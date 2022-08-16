@@ -43,7 +43,7 @@ class ConfirmationAvailableSlotTableViewCell: UITableViewCell {
     func customizationTimeSlot(){
         
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE12)
-        UILabel.labelUIHandling(label: lblAvailableSlots, text: "Available Slots", textColor: ILColor.color(index: 59), isBold: true, fontType: fontHeavy)
+        UILabel.labelUIHandling(label: lblAvailableSlots, text: "Selected Slot", textColor: ILColor.color(index: 59), isBold: true, fontType: fontHeavy)
         
         if let fontMediumI =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE14), let fontMedium =  UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12)
         {

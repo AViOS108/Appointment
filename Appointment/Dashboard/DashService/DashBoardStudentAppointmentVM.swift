@@ -450,7 +450,7 @@ class StudentSideFilterVM {
             
             
             var erfilterTagExp = ERFilterTag.init(id: 3)
-            erfilterTagExp.categoryTitle = "Expertise"
+            erfilterTagExp.categoryTitle = "Coach Expertise"
             var objTagValueArrExp =  [TagValueObject]()
             for items in expertise{
                 var objTagValue = TagValueObject()
@@ -466,7 +466,7 @@ class StudentSideFilterVM {
             
             
             var erfilterTagClub = ERFilterTag.init(id:4)
-            erfilterTagClub.categoryTitle = "Club Affliation"
+            erfilterTagClub.categoryTitle = "Club Affiliations"
             var objTagValueArrClub =  [TagValueObject]()
             for items in clubs{
                 var objTagValue = TagValueObject()

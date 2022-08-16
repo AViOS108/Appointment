@@ -62,7 +62,7 @@ class SliderViewController: UIViewController, UITableViewDelegate,UITableViewDat
         else
         {
             arrImage = ["user","noun_schedule_3370222","noun_schedule_694983","noun_logout_1153738-2"];
-             arrName = ["Profile", "Scheduled Appointments","Set Advising Appointment Hour","Logout"];
+             arrName = ["Profile", "Ad hoc Appointment","Set Advising Appointment Hour","Logout"];
         }
         tblview.reloadData()
 

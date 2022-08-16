@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -113,10 +114,10 @@
                                     </connections>
                                 </textField>
                             </subviews>
+                            <viewLayoutGuide key="safeArea" id="70E-0R-88t"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="110" id="DhO-na-ScY"/>
                             </constraints>
-                            <viewLayoutGuide key="safeArea" id="70E-0R-88t"/>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="geD-XR-t5E">
                             <rect key="frame" x="20" y="258.5" width="374" height="50"/>
@@ -141,7 +142,7 @@
                                         <outlet property="delegate" destination="-1" id="HyV-KM-Ux1"/>
                                     </connections>
                                 </textField>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIu-ns-lIN">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIu-ns-lIN">
                                     <rect key="frame" x="314" y="0.0" width="60" height="48"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -171,7 +172,7 @@
                                 <constraint firstItem="gIu-ns-lIN" firstAttribute="top" secondItem="geD-XR-t5E" secondAttribute="top" id="wIE-iM-G6a"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Col-se-hmF">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Col-se-hmF">
                             <rect key="frame" x="20" y="501.5" width="374" height="50"/>
                             <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -194,6 +195,7 @@
                             </connections>
                         </button>
                     </subviews>
+                    <viewLayoutGuide key="safeArea" id="378-z6-gwY"/>
                     <constraints>
                         <constraint firstItem="Col-se-hmF" firstAttribute="top" secondItem="vb7-Qd-Bp5" secondAttribute="bottom" constant="34" id="0Sa-9Y-7nI"/>
                         <constraint firstItem="geD-XR-t5E" firstAttribute="leading" secondItem="wMg-4E-gj9" secondAttribute="leading" id="3cc-Bn-F3H"/>
@@ -215,7 +217,6 @@
                         <constraint firstItem="378-z6-gwY" firstAttribute="trailing" secondItem="Col-se-hmF" secondAttribute="trailing" constant="20" id="kzH-sx-VLd"/>
                         <constraint firstItem="378-z6-gwY" firstAttribute="trailing" secondItem="wMg-4E-gj9" secondAttribute="trailing" constant="20" id="qNj-v9-Gcm"/>
                     </constraints>
-                    <viewLayoutGuide key="safeArea" id="378-z6-gwY"/>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gb9-vd-sGy">
                     <rect key="frame" x="10" y="67" width="83" height="30"/>
@@ -230,6 +231,7 @@
                     </connections>
                 </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XUB-U0-ged" secondAttribute="trailing" id="29q-hf-WkH"/>
@@ -243,7 +245,6 @@
                 <constraint firstItem="XUB-U0-ged" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="qab-w8-4h0"/>
                 <constraint firstItem="Gb9-vd-sGy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="rUn-gI-yED"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="27.536231884057973" y="89.732142857142847"/>
         </view>
     </objects>

@@ -21,7 +21,7 @@ class ERUpdateStatusAddNextStepViewController: SuperViewController,UITextViewDel
     @IBOutlet weak var viewScroll: UIScrollView!
     var keyBoardHieght : CGFloat = 0.0;
     var delegate : ERUpdateStatusAddNextStepViewControllerDelegate!
-    
+
     @IBOutlet weak var txtTime: UITextField!
     @IBOutlet weak var viewinner: UIView!
     @IBOutlet weak var viewContainer: UIView!
@@ -239,6 +239,8 @@ extension ERUpdateStatusAddNextStepViewController:UIPickerViewDelegate,UIPickerV
     
     func dateSelected(calenderModal: CalenderModal, index: Int) {
         
+        selectedDateCalander = calenderModal.StrDate
+
         let dateSelectedValue =     GeneralUtility.currentDateDetailType4(emiDate:calenderModal.StrDate ?? "" , fromDateF: "yyyy-MM-dd", toDateFormate: "dd MMM, yyyy")
         txtDateTime.text =  dateSelectedValue
         
@@ -314,7 +316,7 @@ extension ERUpdateStatusAddNextStepViewController:UIPickerViewDelegate,UIPickerV
     func deRegisterKeyboardNotifications() {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func registerForKeyboardNotifications()  {

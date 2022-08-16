@@ -17,6 +17,7 @@ class ERSideOpenHourListVC: SuperViewController,ErSideOpenHourTCDelegate {
     @IBAction func btnDuplicateTapped(_ sender: Any) {
         let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
         objERSideOpenHourListVC.objviewTypeOpenHour = .duplicateSetHour
+        
         objERSideOpenHourListVC.delegate = self
         objERSideOpenHourListVC.dateSelected = self.dateSelected
         self.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)

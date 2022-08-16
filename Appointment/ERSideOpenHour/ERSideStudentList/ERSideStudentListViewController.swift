@@ -100,7 +100,21 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
             
         }
         else{
-            CommonFunctions().showError(title: "", message: "Please select any student")
+            
+            let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+            if isStudent ?? false{
+
+                CommonFunctions().showError(title: "", message: "Please select atleast one Community Member")
+
+                txtSearchBar.placeholder = "Select Community Member"
+
+            }
+            else{
+                CommonFunctions().showError(title: "", message: "Please select atleast one student")
+
+            }
+           
+            
         }
         
         
@@ -117,15 +131,13 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
         txtSearchBar.backgroundColor = UIColor.clear
         txtSearchBar.isTranslucent = true
         txtSearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-        txtSearchBar.placeholder = "Search Student"
         txtSearchBar.backgroundColor = .clear
         
         self.viewSearch.isHidden = true
         self.tblView.isHidden = true
         self.viewSelection.isHidden = true
         
-        
-        txtSearchBar.placeholder = "Search Student"
+       
         txtSearchBar.backgroundColor = .clear
         
         if self.objStudentDetailModalSelected != nil{
@@ -144,10 +156,14 @@ class ERSideStudentListViewController: SuperViewController,UISearchBarDelegate,U
             lblStudentNumber.isHidden = true
             btnStudentListNext.isHidden = true
             btnStudentListPrev.isHidden = true
-        }
-        else{
+            txtSearchBar.placeholder = "Select Community Member"
 
         }
+        else{
+            txtSearchBar.placeholder = "Search Student"
+
+        }
+       
 
         // Do any additional setup after loading the view.
     }

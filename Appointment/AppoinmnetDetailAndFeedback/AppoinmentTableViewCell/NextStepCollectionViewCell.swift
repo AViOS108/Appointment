@@ -51,7 +51,7 @@ class NextStepCollectionViewCell: UICollectionViewCell {
         
         if isNextStep {
             let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
-            UILabel.labelUIHandling(label: lblNoNextSteps, text: "Not Available !!!", textColor: ILColor.color(index: 39), isBold: false, fontType: fontBook)
+            UILabel.labelUIHandling(label: lblNoNextSteps, text: "No next steps yet.", textColor: ILColor.color(index: 39), isBold: false, fontType: fontBook)
             viewContainer.isHidden = true
             lblNoNextSteps.isHidden = false
 
@@ -71,8 +71,6 @@ class NextStepCollectionViewCell: UICollectionViewCell {
                 
             }
 
-            
-            
         }
         
     }

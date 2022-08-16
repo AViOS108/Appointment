@@ -32,7 +32,7 @@ class ERSideOHDetailViewController: SuperViewController {
     @IBOutlet weak var tblview: UITableView!
     @IBOutlet weak var lblDetailHeader: UILabel!
     @IBOutlet weak var btnDeleteFooter: UIButton!
-    
+    var offset = 0;
     
     func deleteApi(){
         
@@ -46,7 +46,7 @@ class ERSideOHDetailViewController: SuperViewController {
         ERSideOpenHourDetailVM().OpenHourDelete(param: param, deleteAll: "0", id: (self.identifier)!
             , { (data) in
                 activityIndicator.hide()
-             CommonFunctions().showError(title: "", message: "Successfully deleted !!!")
+             CommonFunctions().showError(title: "", message: "Successfully Deleted !!!")
                 self.delegate.deleteDelgateRefresh();
                 self.navigationController?.popViewController(animated: false)
         }) { (error, errorCode) in
@@ -85,11 +85,37 @@ class ERSideOHDetailViewController: SuperViewController {
             let objERSideOpenHourListVC = ERSideOpenCreateEditVC.init(nibName: "ERSideOpenCreateEditVC", bundle: nil)
             objERSideOpenHourListVC.dateSelected = self.dateSelected
             objERSideOpenHourListVC.delegate = self.delegate
+            objERSideOpenHourListVC.objStudentDetailModal = self.mappingtwpoModels()
             objERSideOpenHourListVC.objviewTypeOpenHour = .editOpenHour
             objERSideOpenHourListVC.objERSideOpenHourPrefilledDetail = self.objERSideOpenHourDetail
             self.viewControllerI.navigationController?.pushViewController(objERSideOpenHourListVC, animated: false)
         }
     }
+    
+    
+    
+    func mappingtwpoModels() -> StudentDetailModal{
+
+         
+        var objStudentModel = StudentDetailModal()
+        var items = [StudentDetailModalItem]()
+        var participants = [ParticipantNewAPI]()
+
+        objStudentModel.total = self.objERSideParticipantModal?.total
+        for participantModel in self.objERSideParticipantModal!.results{
+            
+            
+            var objParticipants  = ParticipantNewAPI.init(id: participantModel.id, studentID: participantModel.id)
+            var objStudentDetailModalItem = StudentDetailModalItem.init(id: participantModel.id, firstName: participantModel.firstName, lastName: participantModel.lastName, email: nil, invitationID:nil, benchmark: participantModel.benchmark, tags: nil)
+            items.append(objStudentDetailModalItem)
+            participants.append(objParticipants)
+            
+        }
+        self.objERSideOpenHourDetail?.participants = participants
+        objStudentModel.items = items
+        return objStudentModel
+    }
+    
     var viewControllerI : UIViewController!
 
     
@@ -210,15 +236,15 @@ class ERSideOHDetailViewController: SuperViewController {
                     bookingDeadlineDays = "1 day before Appointment "
                 }
                 else if bookingDeadlineDaysBefore == "2"{
-                    bookingDeadlineDays = "2 day before Appointment "
+                    bookingDeadlineDays = "2 days before Appointment "
                     
                 }
                 else if bookingDeadlineDaysBefore == "3"{
-                    bookingDeadlineDays = "3 day before Appointment "
+                    bookingDeadlineDays = "3 days before Appointment "
                     
                 }
                 else{
-                    bookingDeadlineDays = "4 day before Appointment "
+                    bookingDeadlineDays = "4 days before Appointment "
                 }
                   bookingDeadlineDays.append(" ( before ")
             }
@@ -273,6 +299,9 @@ class ERSideOHDetailViewController: SuperViewController {
         LocationModalValue.index = 9;
         self.objModalArray.append(LocationModalValue)
         
+        
+//        objERSideOpenHourDetail?.participants = self.objERSideParticipantModal;
+        
         var participants = "NA"
                 if ( self.objERSideParticipantModal) != nil{
                     if  self.objERSideParticipantModal!.total > 0 {
@@ -320,7 +349,7 @@ class ERSideOHDetailViewController: SuperViewController {
             do {
                 self.objERSideOpenHourDetail = try
                 JSONDecoder().decode(ERSideOpenHourDetail.self, from: data)
-                self.callParticipant()
+                self.callParticipant(offset: self.offset)
             } catch   {
                 print(error)
             }
@@ -331,23 +360,45 @@ class ERSideOHDetailViewController: SuperViewController {
     }
     
     
-    func callParticipant(){
+    func callParticipant(offset:Int){
         
         let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
 
         let params = [
             "_method":"post",
             "limit": 2000,
-            "offset" :0,
+            "offset" :offset,
             ParamName.PARAMCSRFTOKEN : csrftoken] as Dictionary<String, AnyObject>
         
         ERSideOpenHourDetailVM().fetchStudentDetail(params: params, id: identifier, { (data) in
             do {
-                self.activityIndicator?.hide()
-                self.objERSideParticipantModal = try
-                JSONDecoder().decode(ERSideParticipantModal.self, from: data)
-                self.creatingModal()
-                self.viewInner.isHidden = false
+                
+                if self.objERSideParticipantModal != nil
+                {
+                    
+                    var objERSideParticipantModal = try
+                    JSONDecoder().decode(ERSideParticipantModal.self, from: data);
+                    self.objERSideParticipantModal?.results.append(contentsOf: objERSideParticipantModal.results);
+                    
+                    
+                }
+                else{
+                    self.objERSideParticipantModal = try
+                    JSONDecoder().decode(ERSideParticipantModal.self, from: data)
+
+                }
+                
+                if (self.objERSideParticipantModal?.total ?? 0) > (self.objERSideParticipantModal?.results.count ?? 0) {
+                    self.offset = self.offset + 2000
+                    self.callParticipant(offset: self.offset)
+                    
+                }
+                else{
+                    self.activityIndicator?.hide()
+                    self.creatingModal()
+                    self.viewInner.isHidden = false
+                }
+                
                 
             } catch   {
                 print(error)

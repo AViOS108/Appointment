@@ -62,6 +62,9 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
     }
 
     func customizedUI(){
+        editButton.isEnabled = true
+        editButton.isUserInteractionEnabled = true
+        editButton.setImage(UIImage.init(named: "noun_edit_648236"), for: .normal)
         var firstName = ""
         if let fn = UserDefaultsDataSource(key: "firstName").readData() {
             firstName = fn as! String
@@ -241,8 +244,13 @@ class ProfileViewController: SuperViewController,UINavigationControllerDelegate 
             CommonFunctions().showError(title: "Error", message: "Last name should contain only letters and spaces")
         }else{
             sender.isEnabled = false
+            let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
+
             let params = ["first_name":firstNameTextField.text!,
-                          "last_name": lastNameTextField.text!]
+                          "last_name": lastNameTextField.text!,
+                          "_method" : "patch",
+                          ParamName.PARAMCSRFTOKEN : csrftoken
+             ]
             activityView =  ActivityIndicatorView.showActivity(view: self.navigationController!.view, message: "Updating your profile")
             UserInfoService().updateProfile(params: params as Dictionary<String, AnyObject>,{ response in
                 GoogleAnalyticsUtility().logEvent(GoogleAnalyticsEvent(category: "Settings", action: "Change Name", label: "Success"))

@@ -47,7 +47,6 @@ class ERAppointmentDetailViewController: SuperViewController,UITableViewDelegate
     @IBOutlet weak var tblVIew: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = ILColor.color(index: 22)
         activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: StringConstants.FetchingCoachSelection)
         appoinmentViewModal.selectedResultID = self.selectedResult.id
@@ -391,7 +390,7 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
                mail.setMessageBody("", isHTML: true)
                present(mail, animated: true)
            } else {
-               // show failure alert
+               CommonFunctions.alertViewLogout(title: "", message: "Please configure the mail app Properly", viewController: self, buttons: ["Ok"])
            }
     }
     
@@ -556,7 +555,7 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
             self.activityIndicator?.hide()
             if success{
                 
-                CommonFunctions().showError(title: "", message: "Successfully Deleted")
+                CommonFunctions().showError(title: "", message: "Successfully Deleted !!!")
                 
                 self.refreshApi()
             }
@@ -598,8 +597,6 @@ extension ERAppointmentDetailViewController : NotesAppointmentTableViewCellDeleg
                 self.navigationController?.pushViewController(objERAddNotesViewController, animated: false)
 
             }
-            
-           
         }
         
     }

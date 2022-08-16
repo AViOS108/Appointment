@@ -587,6 +587,15 @@ class GeneralUtility {
            
        }
     
+    
+    public  class func months(dateFirst : String, dateSecond : String) -> Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date1 = dateFormatter.date(from: dateFirst)!
+        let date2 = dateFormatter.date(from: dateSecond)!
+        return Calendar.current.dateComponents([.month], from: date1, to: date2).month ?? 0
+    }
+    
     public  class func   differenceBetweenTwoDateInSec(dateFirst : String, dateSecond : String,dateformatter : String) -> Int {
               let dateFormatter = DateFormatter()
               dateFormatter.dateFormat = dateformatter
@@ -825,7 +834,7 @@ class GeneralUtility {
             formatter.dateFormat = "dd MMM yyyy hh:mm a"
             let strTime = formatter.string(from: date)
             formatter.timeZone = TimeZone.init(identifier: token)
-            formatter.dateFormat = "hh:mm a"
+            formatter.dateFormat = "dd MMM yyyy hh:mm a"
             let endTime = formatter.string(from: enddate)
             return strTime + " - " + endTime
             //.lowercased()
@@ -838,17 +847,32 @@ class GeneralUtility {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         //           let token = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
-        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
+//        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
         var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
         if let date = formatter.date(from: startDate), let enddate = formatter.date(from: endDate) {
-            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+//            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
             formatter.dateFormat = "hh:mm a"
             let strTime = formatter.string(from: date)
-            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+//            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
             formatter.dateFormat = "hh:mm a"
             let endTime = formatter.string(from: enddate)
             return strTime + " - " + endTime
             //.lowercased()
+        }
+        return ""
+    }
+    
+    public  class func   startAndEndDateDetailWithoutChange(startDate : String,endDate : String) -> String {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
+        if let date = formatter.date(from: startDate), let enddate = formatter.date(from: endDate) {
+            formatter.dateFormat = "hh:mm a"
+            let strTime = formatter.string(from: date)
+            formatter.dateFormat = "hh:mm a"
+            let endTime = formatter.string(from: enddate)
+            return strTime + " - " + endTime
         }
         return ""
     }
@@ -859,13 +883,13 @@ class GeneralUtility {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         //           let token = UserDefaultsDataSource(key: "timeZoneOffset").readData() as! String
-        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
+//        formatter.timeZone = TimeZone.init(abbreviation: "UTC")
         var localTimeZoneAbbreviation: String { return TimeZone.current.abbreviation() ?? "" }
         if let date = formatter.date(from: startDate), let enddate = formatter.date(from: endDate) {
-            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+//            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
             formatter.dateFormat = "hh:mm a"
             let strTime = formatter.string(from: date)
-            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
+//            formatter.timeZone = TimeZone.init(identifier: TimeZone.current.identifier)
             formatter.dateFormat = "hh:mm a z"
             let endTime = formatter.string(from: enddate)
             return strTime + " - " + endTime
@@ -953,6 +977,24 @@ class GeneralUtility {
         
         return ""
     }
+    
+    
+    public  class func   dateConvertOneformateToAnother(emiDate : String,withDateFormat: String,todateFormat:String) -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = withDateFormat
+        
+        let date = dateFormatter.date(from: emiDate)
+        dateFormatter.dateFormat = todateFormat
+//        dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        
+        if let dateF  = date{
+            return dateFormatter.string(from: dateF)
+        }
+        
+        return ""
+    }
+    
     public  class func   dateConvertToUTCDuplicate(emiDate : String,withDateFormat: String,todateFormat:String) -> String {
               
               let dateFormatter = DateFormatter()

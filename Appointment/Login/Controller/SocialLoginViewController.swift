@@ -147,7 +147,16 @@ extension SocialLoginViewController: WKNavigationDelegate {
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
         return }
-        print("decidePolicyFor - url: \(url)")
+        print("decidePolicyFor - url: \(url.description)")
+        
+        
+
+            if url.path.contains( "login-cancel"){
+                self.dismiss(animated: false) {
+
+                }
+            }
+
         
         if url.host == Urls.runningHost {
             if (url.absoluteString.range(of: "error_reason") != nil){

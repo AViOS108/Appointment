@@ -76,6 +76,9 @@ class StringConstants{
     
     static let AcceptOpenHour = "Accepting Request... "
 
+    
+    static let AppointmentOverlaps = "Appointment slot overlaps with the existing ones on this date and time. "
+
     static let NEXTSTEPCOMPLETION = "Submitting Request... "
 
     static let SubmittingDandCOpenHour = "Submitting Request... "
@@ -122,7 +125,10 @@ class StringConstants{
     static let ERRDUPLICATETIMESLOTSELECTED = "Please select atleast one time slot"
 
     static let ERRCOMMENTCANCELDECLINEAPPO = "Please enter comment"
+    
+    static let KSUCCESSOPENHOURCREATED = "You have successfully added Advising Appointments!"
 
+    
 
     
 }

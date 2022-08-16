@@ -331,7 +331,7 @@ extension AdhocFlowSecondViewController: ERSideADHOCAPISecondVCDelegate, ERSideS
             let strHeader = NSMutableAttributedString.init()
             let strTiTle = NSAttributedString.init(string: "Select Student"
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-            let strType = NSAttributedString.init(string: "  ⃰"
+            let strType = NSAttributedString.init(string: " ⃰"
                 , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
@@ -365,7 +365,7 @@ extension AdhocFlowSecondViewController: SearchViewControllerDelegate {
             let strHeader = NSMutableAttributedString.init()
             let strTiTle = NSAttributedString.init(string: "Location Type"
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-            let strType = NSAttributedString.init(string: "  ⃰"
+            let strType = NSAttributedString.init(string: " ⃰"
                 , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
@@ -389,7 +389,7 @@ extension AdhocFlowSecondViewController: SearchViewControllerDelegate {
             let strHeader = NSMutableAttributedString.init()
             let strTiTle = NSAttributedString.init(string: "Location/Meeting Link"
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-            let strType = NSAttributedString.init(string: "  ⃰"
+            let strType = NSAttributedString.init(string: " ⃰"
                 , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
@@ -430,7 +430,7 @@ extension AdhocFlowSecondViewController: SearchViewControllerDelegate {
             let strHeader = NSMutableAttributedString.init()
             let strTiTle = NSAttributedString.init(string: "Purpose"
                 , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index: 31),NSAttributedString.Key.font : fontHeavy]);
-            let strType = NSAttributedString.init(string: "  ⃰"
+            let strType = NSAttributedString.init(string: " ⃰"
                 , attributes: [NSAttributedString.Key.foregroundColor : UIColor.red,NSAttributedString.Key.font : fontHeavy]);
             let para = NSMutableParagraphStyle.init()
             //            para.alignment = .center
@@ -663,7 +663,7 @@ extension AdhocFlowSecondViewController{
     func deRegisterKeyboardNotifications() {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func registerForKeyboardNotifications()  {

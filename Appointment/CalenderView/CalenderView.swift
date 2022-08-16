@@ -34,7 +34,7 @@ class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,U
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var nslayoutConstraintCollectionHeight: NSLayoutConstraint!
     var pointSign : CGPoint?
-    var viewControllerI : UIViewController?
+    var viewControllerI : SuperViewController?
     @IBOutlet weak var lblMonth: UILabel!
     var numberOFDays, firstWeekDay: Int!
     
@@ -51,6 +51,14 @@ class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,U
         self.tag = 19682
         btnLeft.setImage(UIImage.init(named: "Left_arrow"), for: .normal)
         btnRight.setImage(UIImage.init(named: "right_arrow"), for: .normal)
+        
+        let Todayformatter = DateFormatter()
+        Todayformatter.dateFormat = "yyyy-MM-dd"
+        let todayDate = Todayformatter.string(from: Date())
+        if let objDate = viewControllerI?.selectedDateCalander {
+            currentIndex  = GeneralUtility.months(dateFirst: todayDate, dateSecond: objDate )
+        }
+        
         creatModalForSelectMonth()
         self.tapGesture();
         if let point = self.pointSign
@@ -99,15 +107,18 @@ class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,U
             }
             return true
        }
-    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//        let indexPath = IndexPath(item: 12, section: 0)
+//        self.collectionView.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: true)
+//    }
     
     func creatModalForSelectMonth()  {
+        
         
         let Todayformatter = DateFormatter()
         Todayformatter.dateFormat = "yyyy-MM-dd"
         let todayDate = Todayformatter.string(from: Date())
-        
-        
         
         calenderModalArr = [CalenderModal]()
         let dateFormatter = DateFormatter()
@@ -162,18 +173,24 @@ class CalenderView: UIView,UICollectionViewDataSource,UICollectionViewDelegate,U
                 let date = Calendar.current.date(byAdding: comps2, to: startOfMonth)!
                 calenderMo.StrDate = dateFormatter.string(from: date)
                 
-                if todayDate == calenderMo.StrDate{
-                    calenderMo.isSelected = true
-
+                if let objsetDayAndTimeI = viewControllerI?.selectedDateCalander {
+                    if objsetDayAndTimeI == calenderMo.StrDate{
+                        calenderMo.isSelected = true
+                    }
+                    else{
+                        calenderMo.isSelected = false
+                    }
                 }
                 else{
-                    calenderMo.isSelected = false
-
+                    if todayDate == calenderMo.StrDate{
+                        calenderMo.isSelected = true
+                    }
+                    else{
+                        calenderMo.isSelected = false
+                    }
                 }
-                
             }
             calenderModalArr.append(calenderMo)
-            
             index = index + 1;
         }
        
@@ -307,7 +324,6 @@ extension CalenderView:CalenderCollectionViewCellDelegate
             return
         }
         let indexAlreadySelected =    self.calenderModalArr.firstIndex(where: {$0.isSelected == true})
-        
         if let index = indexAlreadySelected
         {
             var calenderAlreadySelected = self.calenderModalArr[indexAlreadySelected!];
@@ -325,8 +341,6 @@ extension CalenderView:CalenderCollectionViewCellDelegate
         viewControllerI!.dismiss(animated: false) {
                 }
         delegate.dateSelected(calenderModal: calenderIndexSelected, index: self.index!);
-        
     }
-    
     
 }

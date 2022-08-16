@@ -71,7 +71,7 @@ class ERAppoDetailSecondTableViewCell: UITableViewCell {
             
             let weekDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
             let componentDay = GeneralUtility.dateComponent(date: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", component: .weekday,isUTC: true)
-            let date = GeneralUtility.currentDateDetailType4(emiDate: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy",isUTC: true)
+            let date = GeneralUtility.currentDateDetailType4(emiDate: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", fromDateF: "yyyy-MM-dd HH:mm:ss", toDateFormate: "dd MMM yyyy",isUTC: false)
             
             let timeStartEnd =    GeneralUtility.startAndEndDateDetail2WithZ(startDate: self.appoinmentDetailModalObj?.startDatetimeUTC ?? "", endDate: self.appoinmentDetailModalObj?.endDatetimeUTC ?? "")
             
@@ -93,17 +93,75 @@ class ERAppoDetailSecondTableViewCell: UITableViewCell {
             
             var status = ""
             
-            if index == 2{
-                status = "Upcoming"
-            }
-            else if index == 3 {
-                status = "Pending"
-            }
-            else
-            {
-                status = "Past"
-            }
+//            if index == 2{
+//                status = "Upcoming"
+//            }
+//            else if index == 3 {
+//                status = "Pending"
+//            }
+//            else
+//            {
+//                status = "Past"
+//            }
                 
+            if (appoinmentDetailModalObj?.requests?[0].state == "rejected") {
+                
+                status = "Rejected"
+
+            } else if (index ==  2) {
+               
+                if  GeneralUtility.isPastDate(date: appoinmentDetailModalObj?.startDatetimeUTC ?? "") && !GeneralUtility.isPastDate(date: appoinmentDetailModalObj?.endDatetimeUTC ?? "") {
+                    
+                    status = "Ongoing"
+                }
+                    
+                else if appoinmentDetailModalObj?.state == "pending" && appoinmentDetailModalObj?.state == "accepted"
+                    {
+                    status = "To be finalized"
+                    
+                    }
+                else {
+                    status = "Confirmed"
+                    }
+                  }
+            else if (index == 3) {
+                
+                    if (GeneralUtility.isPastDate(date: appoinmentDetailModalObj?.startDatetimeUTC ?? "")) {
+                        
+                        status = "Request Expired"
+
+                    } else if (appoinmentDetailModalObj?.requests?[0].state == "pending") {
+                        
+                        status = "Pending"
+
+                    }
+                  }
+            else if (index == 4) {
+                
+                if (appoinmentDetailModalObj?.state == "confirmed") {
+                        status = "Completed"
+
+                        
+                    } else if (appoinmentDetailModalObj?.state == "pending") {
+                        
+                        status = "Request Expired"
+
+                    } else if (appoinmentDetailModalObj?.state == "cancelled") {
+                        
+                        status = "Cancelled"
+
+
+                    } else if (appoinmentDetailModalObj?.state == "rejected") {
+                        
+                        status = "Rejected"
+
+                    } else {
+                        
+                        status = "Unknown Status"
+                        }
+                  }
+            
+            
             
             let strStatusValue = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: status, _returnType: String.self)
                                                          , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:37),NSAttributedString.Key.font : fontBook]);

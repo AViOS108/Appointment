@@ -121,7 +121,7 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         
         {
             let strTiTle = NSAttributedString.init(string: GeneralUtility.optionalHandling(_param: "  " +  "\(weekDay[(componentDay?.weekday ?? 1) - 1]), " +
-                                                                                             GeneralUtility.startAndEndDateDetail2(startDate: self.results.startDatetimeUTC ?? "", endDate: self.results.endDatetimeUTC ?? "")
+                                                                                             GeneralUtility.startAndEndDateDetailWithoutChange(startDate: self.results.startDatetimeUTC ?? "", endDate: self.results.endDatetimeUTC ?? "")
                                                                                            , _returnType: String.self)
                                                    , attributes: [NSAttributedString.Key.foregroundColor : ILColor.color(index:13),NSAttributedString.Key.font : fontBook]);
             let nextLine1 = NSAttributedString.init(string: "\n")
@@ -359,17 +359,25 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
                 btnUpdateStatus.isUserInteractionEnabled = true
             }
             else{
-                let hasattendence = results.requests?[0].hasAttended
-                if hasattendence == 1{
-                    UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Attended", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 58),fontType:fontHeavy2)
-                    btnUpdateStatus.isUserInteractionEnabled = true
+                if  let hasattendence = results.requests?[0].hasAttended {
+                    if hasattendence == 1{
+                        UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Attended", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 58),fontType:fontHeavy2)
+                        btnUpdateStatus.isUserInteractionEnabled = true
+
+                    }
+                    else{
+                        UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Not Attended", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 57),fontType:fontHeavy2)
+                        btnUpdateStatus.isUserInteractionEnabled = true
+
+                    }
 
                 }
                 else{
-                    UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Not Attended", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 57),fontType:fontHeavy2)
+                    
+                    UIButton.buttonUIHandling(button: btnUpdateStatus, text: "Update Attendance Status", backgroundColor:UIColor.white ,textColor: ILColor.color(index: 23),fontType:fontHeavy2)
                     btnUpdateStatus.isUserInteractionEnabled = true
-
                 }
+                
             }
             if  let fontMedium = UIFont(name: "FontMediumWithoutNext".localized(), size: Device.FONTSIZETYPE12), let fontBook =  UIFont(name: "FontBook".localized(), size: Device.FONTSIZETYPE14)
             
@@ -425,9 +433,6 @@ class ERSideMyAppoinmentTableViewCell: UITableViewCell {
         viewContainer.layer.shadowOpacity = 0.7
         viewContainer.layer.shadowRadius = 4.0
     }
-    
-    
-    
     
     
     

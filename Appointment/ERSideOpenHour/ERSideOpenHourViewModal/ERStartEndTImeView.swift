@@ -24,7 +24,7 @@ enum timeDifference : Int {
 }
 
 
-class ERStartEndTImeView: UIView {
+class ERStartEndTImeView: SuperViewClass {
     
     @IBOutlet weak var viewContainer: UIView!
     
@@ -53,6 +53,7 @@ class ERStartEndTImeView: UIView {
     
     func customization()  {
         
+        self.layoutIfNeeded()
         if noDeleteBtn {
             btnDelete.setImage(UIImage.init(named: "crossDeletion"), for: .normal);
             btnDelete.isHidden = true
@@ -73,7 +74,7 @@ class ERStartEndTImeView: UIView {
         self.txtStartTime.layer.borderColor = ILColor.color(index: 27).cgColor
         self.txtStartTime.layer.borderWidth = 1;
         self.txtStartTime.layer.cornerRadius = 3;
-        let imageView = UIImageView.init(image: UIImage.init(named: "Calendar-1"))
+        let imageView = UIImageView.init(image: UIImage.init(named: "clocktimetools"))
         imageView.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
         
         self.txtStartTime.leftView = imageView
@@ -82,7 +83,7 @@ class ERStartEndTImeView: UIView {
         txtEndTime.delegate = (viewconTroller as! UITextFieldDelegate)
         txtStartTime.delegate = (viewconTroller as! UITextFieldDelegate)
 
-        self.addInputAccessoryForTextFields(textFields: [txtEndTime,txtStartTime], dismissable: true, previousNextable: true)
+        self.addInputAccessoryForTextFields(textFields: [txtStartTime,txtEndTime], dismissable: true, previousNextable: true)
 
         
         
@@ -91,9 +92,9 @@ class ERStartEndTImeView: UIView {
         self.txtEndTime.layer.borderColor = ILColor.color(index: 27).cgColor
         self.txtEndTime.layer.borderWidth = 1;
         self.txtEndTime.layer.cornerRadius = 3;
-        let imageView1 = UIImageView.init(image: UIImage.init(named: "Calendar-1"))
+        let imageView1 = UIImageView.init(image: UIImage.init(named: "clocktimetools"))
         
-        imageView1.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
+        imageView1.frame = CGRect(x: 10.0, y: 0.0, width: 20, height: 20)
         
         self.txtEndTime.leftView = imageView1
         txtEndTime.leftViewMode = .always;
@@ -107,7 +108,9 @@ class ERStartEndTImeView: UIView {
     }
     
     
-    
+    override func actnResignKeyboard() {
+        self.endEditing(true)
+    }
     
     
        func datePickerTiming(txtInput : UITextField, tag : Int)  {
@@ -238,7 +241,8 @@ class ERStartEndTImeView: UIView {
                                     isTimeValid = false
                                }
         }
-        
+        delegate.deleteViewWith(tag: 999)
+
     }
         
     

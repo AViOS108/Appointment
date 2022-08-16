@@ -18,7 +18,7 @@ class CoachSelectionViewController: SuperViewController {
    @IBOutlet weak var noOpenHour: UIView!
     @IBOutlet weak var lblNoOpenHour: UILabel!
 
-    
+
     var objOpenHourCoachModal :OpenHourCoachModal!
     @IBOutlet weak var viewHorizontalCoachSelection: UIView!
     @IBOutlet weak var nslayoutConstraintHeightCoachSelectionView: NSLayoutConstraint!
@@ -394,6 +394,7 @@ extension CoachSelectionViewController: CoachImageOverlayViewDelegate,ERSideStud
             objERSideStudentListViewController.objStudentDetailModal = self.modelMapping(objdataFeedingModal: self.dataFeedingModal!)
             objERSideStudentListViewController.objStudentDetailModalSelected = self.modelMappingSelected(objStudentDetailModal: self.modelMapping(objdataFeedingModal: self.dataFeedingModal!))
             objERSideStudentListViewController.delegate = self
+            
             objERSideStudentListViewController.objStudentListType = .groupType
             self.navigationController?.pushViewController(objERSideStudentListViewController, animated: false)
             
@@ -485,6 +486,7 @@ extension CoachSelectionViewController {
 
 extension CoachSelectionViewController: CalenderViewDelegate{
     func dateSelected(calenderModal: CalenderModal,index : Int) {
+        selectedDateCalander = calenderModal.StrDate
         self.calenderModal = calenderModal;
         self.convertNextDate(index: self.dateDifferenceLogic())
         self.formingModal()

@@ -10,7 +10,8 @@ import UIKit
 
 class SuperViewController: UIViewController {
 
-    
+    var selectedDateCalander : String?
+
     @objc func buttonClickedLeft(sender: UIBarButtonItem) {
 
        }

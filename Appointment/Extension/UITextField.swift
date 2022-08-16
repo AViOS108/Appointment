@@ -38,6 +38,23 @@ class LeftPaddedTextField: UITextField {
 
 
 class TexFieldWithoutPast : UITextField {
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x: bounds.origin.x + 20, y: bounds.origin.y, width: bounds.width-40, height: bounds.height)
+    }
+
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x: bounds.origin.x + 20, y: bounds.origin.y, width: bounds.width-40, height: bounds.height)
+    }
+
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x: bounds.origin.x + 20, y: bounds.origin.y, width: bounds.width-40, height: bounds.height)
+    }
+    
+    override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x: 4   , y: bounds.height/2 - 6, width: 12, height: 12)
+    }
+    
+  
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
            if action == #selector(UIResponderStandardEditActions.paste(_:)) {
                return false

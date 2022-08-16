@@ -13,37 +13,72 @@ class Urls {
     static let stagingHost = "dashboard-staging.vmock.com"
     static let liveHost = "www.vmock.com"
     
-    static let testEnv = "https://api-dboard-test.vmock.com/"
-    static let stagingEnv = "https://api-dboard-staging.vmock.com/"
-    static let liveEnv = "https://api-dashboard.vmock.com/"
+    static let testEnv = "https://api-uat-us-candidate.vmock.com/"
+    static let stagingEnv = "https://api-staging-us-candidate.vmock.k.com/"
+    static let liveEnv = "https://api-prod-us-candidate.vmock.com/"
     
-    static let testEnvJobs = "https://jobsdev.vmock.com/"
-    static let stagingEnvJobs = "https://api-scm-staging.vmock.com/"
-    static let liveEnvJobs = "https://api-scm.vmock.com/"
+    static let testEnvJobs = "https://api-uat-us-cmc.vmock.com/"
+    static let stagingEnvJobs = "https://api-staging-us-cmc.vmock.com/"
+    static let liveEnvJobs = "https://api-prod-us-cmc.vmock.com/"
     
-    static let devEnvEvents = "https://employerdev.vmock.com/khagesh/api/calendar-management/public/"
-    static let testEnvEvents = "https://employerdev.vmock.com/khagesh/api/test-calendar-management/public/"
-    
-    static let stagingEnvEvents = "https://api-employer-staging.vmock.com/calendar-management/"
-    static let liveEnvEvents = "https://api-employer.vmock.com/calendar-management/"
-    
-    
-    static let devStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
- 
-    static let stagingStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
 
-    static let liveStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
-
-       
-    static let devRoleList = "https://employerdev.vmock.com/khagesh/api/test-community-user-management/public/"
     
-       static let stagingRoleList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+//    static let devEnvEvents = "https://employerdev.vmock.com/khagesh/api/calendar-management/public/"
 
-       static let liveRoleList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+    
+
+    
+    
+    static let testEnvAppoList = "https://api-uat-us-cmc.vmock.com/cmc-community-user-management/"
+    static let stagingEnvAppoList = "https://api-staging-us-cmc.vmock.com/cmc-community-user-management/"
+    static let liveEnvAppoList = "https://api-prod-us-cmc.vmock.com/cmc-community-user-management/"
+    
+    static let testEnvEvents = "https://api-uat-us-cmc.vmock.com/cmc-calendar-management-system/"
+    static let stagingEnvEvents = "https://api-staging-us-cmc.vmock.com/cmc-calendar-management-system/"
+    static let liveEnvEvents = "https://api-prod-us-cmc.vmock.com/cmc-calendar-management-system/"
   
-    static let devResumeView =   "https://employerdev.vmock.com/khagesh/api/test-resume-management/public/"
-    static let stagingResumeView =   "https://employerdev.vmock.com/khagesh/api/test-resume-management/public/"
-    static let liveResumeView =   "https://employerdev.vmock.com/khagesh/api/test-resume-management/public/"
+    
+    
+//    static let testEnvEvents = "https://employerdev.vmock.com/khagesh/api/test-calendar-management/public/"
+//
+//    static let stagingEnvEvents = "https://api-employer-staging.vmock.com/calendar-management/"
+//    static let liveEnvEvents = "https://api-employer.vmock.com/calendar-management/"
+    
+    
+//https://api-prod-us-cmc.vmock.com/cmc-student-view/
+    
+//    static let devStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+//
+//    static let stagingStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+//
+//    static let liveStudentList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+
+    static let devStudentList = "https://api-uat-us-cmc.vmock.com/cmc-student-view/"
+    static let stagingStudentList = "https://api-staging-us-cmc.vmock.com/cmc-student-view/"
+    static let liveStudentList = "https://api-prod-us-cmc.vmock.com/cmc-student-view/"
+    
+//    static let devRoleList = "https://employerdev.vmock.com/khagesh/api/test-community-user-management/public/"
+//   static let stagingRoleList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+//   static let liveRoleList = "https://employerdev.vmock.com/khagesh/api/test-student-view/public/"
+    
+    static let devRoleList = "https://api-uat-us-cmc.vmock.com/cmc-student-view/"
+    static let stagingRoleList = "https://api-staging-us-cmc.vmock.com/cmc-student-view/"
+    static let liveRoleList = "https://api-prod-us-cmc.vmock.com/cmc-student-view/"
+   
+    
+    
+   
+  
+//    static let devResumeView =   "https://employerdev.vmock.com/khagesh/api/test-resume-management/public/"
+//    static let stagingResumeView =   "https://employerdev.vmock.com/khagesh/api/test-resume-management/public/"
+//    static let liveResumeView =   "https://employerdev.vmock.com/khagesh/api/test-resume-management/public/"
+
+    static let devResumeView =   "https://api-uat-us-cmc.vmock.com/cmc-resume-management/"
+    static let stagingResumeView =   "https://api-staging-us-cmc.vmock.com/cmc-resume-management/"
+    static let liveResumeView =   "https://api-prod-us-cmc.vmock.com/cmc-resume-management/"
+
+    
+    
 
     
     static let testShareEvents = "https://temp3.vmock.com/dashboard/events/my-events"
@@ -51,8 +86,10 @@ class Urls {
     static let liveShareEvents = "https://vmock.com/dashboard/events/my-events"
     
     
-    static let testEnvNotes = "https://employerdev.vmock.com/khagesh/api/test-notes/public/"
-    
+    static let testEnvNotes = "https://api-uat-us-cmc.vmock.com/cmc-notes/"
+    static let StageEnvNotes = "https://api-staging-us-cmc.vmock.com/cmc-notes/"
+    static let LiveEnvNotes = "https://api-prod-us-cmc.vmock.com/cmc-notes/"
+
     
     
     
@@ -63,6 +100,9 @@ class Urls {
     static let runningEnvEvents = testEnvEvents
     static let SharingEvents = testShareEvents
     static let runningEnvNotes = testEnvNotes
+    static let runningEnvAppoList = testEnvAppoList
+
+    
     
     static let runningEnvStudentList = devStudentList
 
@@ -78,7 +118,8 @@ class Urls {
     static let runningEnvEvents = testEnvEvents
     static let SharingEvents = testShareEvents
     static let runningEnvNotes = testEnvNotes
-    
+    static let runningEnvAppoList = testEnv
+
     static let runningEnvStudentList = devStudentList
     static let runningEnvRoleList = devRoleList
     static let runningEnvResumeView = devResumeView
@@ -89,6 +130,9 @@ class Urls {
     //        static let runningEnvJobs = liveEnvJobs
     //        static let runningEnvEvents = liveEnvEvents
     //        static let SharingEvents = liveShareEvents
+//    static let runningEnvAppoList = testEnv stagingEnvAppoList
+
+    
     #endif
     
     //    var type1 = "\(devEnv)ravindra2/dashboard/accounts/public/api/v1/"
@@ -96,18 +140,37 @@ class Urls {
     //    var type3 = "\(devEnv)geetika/dashboard-api-resume-parser/public/v1/"
     //    var type4 = "\(devEnv)geetika/analytics/public/v1/"
     
-    var type1 = "\(runningEnv)accounts/api/v1/"
-    var type2 = "\(runningEnv)nf/v1/"
-    var type3 = "\(runningEnv)rp/v1/resume/mobile/"
-    var type4 = "\(runningEnv)r-analytics/v1/"
-    var type5 = "\(runningEnv)cf-notes/v1/"
-    var type6 = "\(runningEnv)tracking/"
-    var type7 = "\(runningEnv)survey/v1/"
+    //    var type1 = "\(runningEnv)accounts/api/v1/"
+        var type1 = "\(runningEnv)dashboard-api-accounts/api/v1/"
+        
+       
+     //   var type2 = "\(runningEnv)nf/v1/"
+        var type2 = "\(runningEnv)api-network-feedback/v1/"
+        
+        
+    //    var type3 = "\(runningEnv)rp/v1/resume/mobile/"
+        
+        var type3 = "\(runningEnv)dashboard-api-resume-parser/v1/resume/mobile/"
+
+    //    var type4 = "\(runningEnv)r-analytics/v1/"
+        
+        var type4 = "\(runningEnv)dashboard-api-resume-analytics/v1/"
+        
+        
+    //    var type5 = "\(runningEnv)cf-notes/v1/"
+        var type5 = "\(runningEnv)career-fit-notes/v1/"
+
+        
+    //    var type6 = "\(runningEnv)tracking/"
+        var type6 = "\(runningEnv)dashboard-api-tracking/"
+
+        var type7 = "\(runningEnv)dashboard-api-survey/v1/"
     
     var type8 = "\(runningEnvStudentList)api/v1/"
 
     var type9 = "\(runningEnvRoleList)api/v1/"
     var type10 = "\(runningEnvResumeView)api/v1/"
+    var type11 = "\(runningEnvAppoList)api/v1/"
 
 
     var typeJob1 = "\(runningEnvJobs)ats/api/v1/"
@@ -123,9 +186,9 @@ class Urls {
     var typeEvent1 = "\(runningEnvEvents)api/v1/"
     var typeEvent2 = "\(runningEnvEvents)api/v2/"
     
-    var ErLoginType1 = "\(runningEnvJobs)accounts/api/v2/"
-    var ErLoginType2 = "\(runningEnvJobs)accounts/api/v1/"
-    
+    var ErLoginType1 = "\(runningEnvJobs)jobs-api-accounts/api/v2/"
+    var ErLoginType2 = "\(runningEnvJobs)jobs-api-accounts/api/v1/"
+
     
     
     
@@ -203,6 +266,9 @@ class Urls {
     func updatePassword() -> String {
         return "\(ErLoginType1)password/change"
     }
+    func updatePasswordStudent() -> String {
+        return "\(type1)profile/password"
+    }
     
     func getPaymentDetails() -> String{
         return "\(type1)payments/button"
@@ -218,7 +284,7 @@ class Urls {
     
     
     func coachListStudentSide() -> String{
-        return "\(type9)student/career_services/members/appointments"
+        return "\(type11)student/career_services/members/appointments"
     }
     
     func uploadProfilePicture() -> String{
@@ -378,12 +444,12 @@ class Urls {
         if isStudent ?? false
         {
             
-            return "\(type9)student/career_services/coach-details/" + id
+            return "\(type11)student/career_services/coach-details/" + id
             
         }
         else
         {
-            return "\(type9)student/career_services/coach-details/" + id
+            return "\(type11)student/career_services/coach-details/" + id
 
         }
         

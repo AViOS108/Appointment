@@ -54,11 +54,11 @@ class ERCancelViewController: SuperViewController,UIGestureRecognizerDelegate,UI
     
     
     func validation() -> Bool {
-        
-        if txtView.text.isEmpty{
-            CommonFunctions().showError(title: "Error", message: StringConstants.ERRCOMMENTCANCELDECLINEAPPO)
-            return false
-        }
+//
+//        if txtView.text.isEmpty{
+//            CommonFunctions().showError(title: "Error", message: StringConstants.ERRCOMMENTCANCELDECLINEAPPO)
+//            return false
+//        }
         
         return true
     }

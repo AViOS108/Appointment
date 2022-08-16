@@ -196,8 +196,6 @@ ERSideMyAppoinmentTableViewCellDelegate{
     override func viewWillAppear(_ animated: Bool) {
         
         
-
-        
         if self.isMovingFromParent{
           print("pu")
         }
@@ -655,7 +653,7 @@ extension ERSideMyAppointmentVC:ERHomeViewModalVMDelegate,ERSideMyAppointmentCol
                 
                 if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
                 {
-                    UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No upcoming meetings to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+                    UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No upcoming appointments to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
                 }
             }
             else{
@@ -757,7 +755,7 @@ extension ERSideMyAppointmentVC:ERHomeViewModalVMDelegate,ERSideMyAppointmentCol
                     
                     if let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE18)
                            {
-                               UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No upcoming meetings to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
+                               UILabel.labelUIHandling(label: lblNoAppointmentFound, text: "No upcoming appointments to show", textColor:ILColor.color(index: 28) , isBold: false, fontType: fontHeavy)
                     }
                 }
             }
@@ -805,7 +803,7 @@ extension ERSideMyAppointmentVC:UIGestureRecognizerDelegate{
         self.viewFloatingOuter.isHidden = true
         
         let fontHeavy = UIFont(name: "FontHeavy".localized(), size: Device.FONTSIZETYPE15)
-        UILabel.labelUIHandling(label: lblSetOpen, text: " Set Advising Appoinment Hour ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
+        UILabel.labelUIHandling(label: lblSetOpen, text: " Set Advising Appointment Hour ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
         UILabel.labelUIHandling(label: lblNextDuplicate, text: " Duplicate Schedule ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)
         
         UILabel.labelUIHandling(label: lblAddHOc, text: " Add Ad hoc Appointment ", textColor: .white, isBold: false, fontType: fontHeavy,cornerRadius: 3)

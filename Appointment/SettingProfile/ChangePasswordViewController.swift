@@ -61,16 +61,36 @@ class ChangePasswordViewController: SuperViewController,UITextFieldDelegate {
            }else{
                activityIndicator = ActivityIndicatorView.showActivity(view: self.view, message: "Updating your password")
             let csrftoken = UserDefaultsDataSource(key: "csrf_token").readData() as! String
-            let params = [
-                "_method":"post",
-                "old_password": txtOldPassword.text!,
-                "password" : txtNewPassword.text!,
-                ParamName.PARAMCSRFTOKEN : csrftoken]
+               
+               var method = ""
+               let isStudent = UserDefaultsDataSource(key: "student").readData() as? Bool
+               
+               var params = Dictionary<String,String>()
+               if isStudent ?? false {
+                   method = "patch"
+                    params = [
+                       "_method":method,
+                       "old_password": txtOldPassword.text!,
+                       "new_password" : txtNewPassword.text!,
+                       ParamName.PARAMCSRFTOKEN : csrftoken]
+               }
+               else
+               {
+                   method = "post"
+                    params = [
+                       "_method":method,
+                       "old_password": txtOldPassword.text!,
+                       "password" : txtNewPassword.text!,
+                       ParamName.PARAMCSRFTOKEN : csrftoken]
+               }
+               
+           
             
                UserInfoService().updatePasswordCall(params: params as Dictionary<String, AnyObject>,{ response in
                    CommonFunctions().showSuccess(title: "Success", message: "Password updated successfully")
                    GoogleAnalyticsUtility().logEvent(GoogleAnalyticsEvent(category: "Settings", action: "Change Password", label: "Success"))
                    self.activityIndicator?.hide()
+                   LogoutHandler.logout(removeEmail: true);
                    self.navigationController?.popViewController(animated: true)
                }, failure: {(error,errorCode) in
                    self.activityIndicator?.hide()
